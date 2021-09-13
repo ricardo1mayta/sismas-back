@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /apps/becacloud/cloud/sigmaweb/
+hooks:
+   BeforeInstall:
+     - location: deploy.before.sh
+       timeout: 180
+       runas: root
+   AfterInstall:
+     - location: deploy.after.sh
+       timeout: 180
+       runas: root

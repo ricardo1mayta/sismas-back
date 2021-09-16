@@ -44,7 +44,7 @@ public class Personal implements Serializable {
     @JoinColumn(name = "id_obra_per", foreignKey = @ForeignKey(name = "fk_personal_obra"))
     private Obra obraPer;
 
-    @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"personal", "hibernateLazyInitializer", "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_pers_per", foreignKey = @ForeignKey(name = "fk_personal_persona"))
     private Persona idPersona;
@@ -69,6 +69,9 @@ public class Personal implements Serializable {
 
     @Column(nullable = true, name = "idparentcont_emer_per")
     private Integer idParentContEmerPer;
+
+    @Column(nullable = false, length = 50, name = "nrodoc_per")
+    private String nroDocPer;
 
     // ******* ASEGURADO *******
     @Column(nullable = true, length = 20, name = "numero_essalud_per")
@@ -599,6 +602,14 @@ public class Personal implements Serializable {
 
     public void setIdPersona(Persona idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public String getNroDocPer() {
+        return nroDocPer;
+    }
+
+    public void setNroDocPer(String nroDocPer) {
+        this.nroDocPer = nroDocPer;
     }
 
     private static final long serialVersionUID = 1L;

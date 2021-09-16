@@ -32,6 +32,11 @@ public class usuarioDTO implements Serializable {
         this.nomComplUser = nomComplUser;
     }
 
+    public usuarioDTO() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
     public Long getIdUser() {
         return idUser;
     }

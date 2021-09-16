@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 
 @Entity
 @Table(name = "mg_persona")
@@ -34,8 +35,8 @@ public class Persona implements Serializable {
     @Column(name = "id_persona", nullable = false)
     private Long idPersona;
 
-    @Column(nullable = true, length = 6, name = "idobra")
-    private Obra obraPers;
+    @Column(nullable = true, length = 6, name = "idobra_pers")
+    private String obraPers;
 
     // ******* PERSONALES *******
     @Column(nullable = false, length = 33, name = "ape_paterno_Pers")
@@ -136,28 +137,34 @@ public class Persona implements Serializable {
     @JsonIgnoreProperties({"alumnosDist", "familiaDistr", "padreDistr", "madreDistr", "otrosDistr", "personalDistr",
             "hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iddistdomi_Pers", foreignKey = @ForeignKey(name = "fk_persona_distrPersonal"))
+    @JoinColumn(name = "iddistdomi_pers", foreignKey = @ForeignKey(name = "fk_persona_distrPersonal"))
     private Distrito idDistDomiPers;
 
-    @Column(nullable = true, length = 200, name = "observaciondomi_Pers")
+    @Column(nullable = true, length = 200, name = "observaciondomi_pers")
     private String observacionDomiPers;
 
     // ******* GENERALES *******
-    @Column(nullable = false, name = "fechaing_Pers")
+    @Column(nullable = false, name = "fechaing_pers")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPers;
 
-    @Column(nullable = false, name = "creapor_Pers", length = 30)
+    @Column(nullable = false, name = "creapor_pers", length = 30)
     private String creaPorPers;
 
-    @Column(nullable = true, name = "fechamodi_Pers")
+    @Column(nullable = true, name = "fechamodi_pers")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPers;
-    @Column(nullable = true, name = "modipor_Pers", length = 30)
+
+    @Column(nullable = true, name = "modipor_pers", length = 30)
     private String modiPorPers;
-/*
+
+    @Column(nullable = true, name = "cod_inter_pers")
+    private Long codInterPers;
+
+    //---------------------------- * ----------------------------
+
     @JsonIgnoreProperties({"idPersona", "hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersona", cascade = CascadeType.ALL)
     private List<Personal> personal;
@@ -165,7 +172,7 @@ public class Persona implements Serializable {
     public Persona() {
         this.personal = new ArrayList<>();
     }
-*/
+
     public Long getIdPersona() {
         return idPersona;
     }
@@ -174,11 +181,11 @@ public class Persona implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public Obra getObraPers() {
+    public String getObraPers() {
         return obraPers;
     }
 
-    public void setObraPers(Obra obraPers) {
+    public void setObraPers(String obraPers) {
         this.obraPers = obraPers;
     }
 
@@ -436,5 +443,13 @@ public class Persona implements Serializable {
 
     public void setModiPorPers(String modiPorPers) {
         this.modiPorPers = modiPorPers;
+    }
+
+    public Long getCodInterPers() {
+        return codInterPers;
+    }
+
+    public void setCodInterPers(Long codInterPers) {
+        this.codInterPers = codInterPers;
     }
 }

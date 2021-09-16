@@ -16,12 +16,15 @@ public class PersonalDatosListDTO implements Serializable {
     private String fotoPer;
     private String codigoPer;
     private String nroDocPers;
+    private String emailcorp;
+    private String emailpers;
     private Byte sexoPers;
     private Boolean estadoPer;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaAutorizaPer;
 
-    public PersonalDatosListDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, String fotoPer, String codigoPer, String nroDocPers, Byte sexoPers, Boolean estadoPer, Date fechaAutorizaPer) {
+    public PersonalDatosListDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, String fotoPer, String codigoPer, String nroDocPers, String emailcorp, String emailpers, Byte sexoPers, Boolean estadoPer, Date fechaAutorizaPer) {
         this.idPersonal = idPersonal;
         this.idobra = idobra;
         this.idPerSigma = idPerSigma;
@@ -32,6 +35,8 @@ public class PersonalDatosListDTO implements Serializable {
         this.fotoPer = fotoPer;
         this.codigoPer = codigoPer;
         this.nroDocPers = nroDocPers;
+        this.emailcorp = emailcorp;
+        this.emailpers = emailpers;
         this.sexoPers = sexoPers;
         this.estadoPer = estadoPer;
         this.fechaAutorizaPer = fechaAutorizaPer;
@@ -120,6 +125,22 @@ public class PersonalDatosListDTO implements Serializable {
 
     public void setNroDocPers(String nroDocPers) {
         this.nroDocPers = nroDocPers;
+    }
+
+    public String getEmailcorp() {
+        return emailcorp;
+    }
+
+    public void setEmailcorp(String emailcorp) {
+        this.emailcorp = emailcorp;
+    }
+
+    public String getEmailpers() {
+        return emailpers;
+    }
+
+    public void setEmailpers(String emailpers) {
+        this.emailpers = emailpers;
     }
 
     public Byte getSexoPers() {

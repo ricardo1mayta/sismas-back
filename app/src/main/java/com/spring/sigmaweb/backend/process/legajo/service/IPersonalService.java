@@ -20,6 +20,8 @@ public interface IPersonalService {
 
     public List<PersonalDatosListDTO> findByObraAndEstadoPerList(String obraname, Boolean estadoper);
 
+    public List<PersonalDatosListDTO> findByObraAndEstadoPerTestList (String obraname, Integer estadoper);
+
     public Personal save(Personal personal);
 
     public Integer updateFechaConfirPersonal(Long idpersonal);

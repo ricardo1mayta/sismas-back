@@ -51,6 +51,12 @@ public class PersonalRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/personalobraandestadotest/{obraname}/{estadoper}")
+    public List<PersonalDatosListDTO> showpersonalObraAndEstadoListDTO(@PathVariable String obraname, @PathVariable Integer estadoper) {
+        return personalservice.findByObraAndEstadoPerTestList(obraname, estadoper);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalporidandobra/{idpersonal}/{obraname}")
     public Personal showpersonalDTO(@PathVariable Long idpersonal, @PathVariable String obraname) {
         return personalservice.findByIdPersonalAndObraname(idpersonal, obraname);

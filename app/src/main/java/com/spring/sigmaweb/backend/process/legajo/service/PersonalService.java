@@ -78,6 +78,12 @@ public class PersonalService implements IPersonalService{
 
     @Override
     @Transactional(readOnly = true)
+    public List<PersonalDatosListDTO> findByObraAndEstadoPerTestList(String obraname, Integer estadoper) {
+        return personalDao.findByObraAndEstadoPerTestList(obraname,estadoper);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PersonalDatosListDTO findByObraAndidPersonalBasico(String obraname, Long idpersonal) {
         return personalDao.findByObraAndidPersonalBasico(obraname, idpersonal);
     }

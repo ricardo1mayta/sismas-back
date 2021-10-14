@@ -76,7 +76,7 @@ public class SideNavItem implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngItem;
 
-    @Column(nullable = false, name = "creapor_item", length = 30)
+    @Column(nullable = false, name = "creapor_item", length = 100)
     private String creaPorItem;
 
     @Column(nullable = true, name = "fechamodi_Item")
@@ -84,7 +84,7 @@ public class SideNavItem implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiItem;
 
-    @Column(nullable = true, name = "modipor_Item", length = 30)
+    @Column(nullable = true, name = "modipor_Item", length = 100)
     private String modiPorItem;
 
     @JsonIgnoreProperties({"idItem","hibernateLazyInitializer", "handler"})

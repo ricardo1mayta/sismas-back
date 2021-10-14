@@ -44,7 +44,7 @@ public class Modulo implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngMod;
 
-    @Column(nullable = false, name = "creapor_mod", length = 30)
+    @Column(nullable = false, name = "creapor_mod", length = 100)
     private String creaPorMod;
 
     @Column(nullable = true, name = "fechamodi_mod")
@@ -52,7 +52,7 @@ public class Modulo implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiMod;
 
-    @Column(nullable = true, name = "modipor_mod", length = 30)
+    @Column(nullable = true, name = "modipor_mod", length = 100)
     private String modiPorMod;
 
     @JsonIgnoreProperties({ "moduloItem", "hibernateLazyInitializer", "handler" })

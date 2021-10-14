@@ -105,7 +105,7 @@ public class Personal implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPer;
 
-    @Column(nullable = false, name = "creapor_per", length = 30)
+    @Column(nullable = false, name = "creapor_per", length = 100)
     private String creaPorPer;
 
     @Column(nullable = true, name = "fecha_activo_per")
@@ -123,7 +123,7 @@ public class Personal implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPer;
 
-    @Column(nullable = true, name = "modipor_per", length = 30)
+    @Column(nullable = true, name = "modipor_per", length = 100)
     private String modiPorPer;
 
     @Column(nullable = true, name = "fechaautoriza_per")

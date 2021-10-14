@@ -55,7 +55,7 @@ public class RolSideNavItem implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaUltModiRolItem;
 
-    @Column(nullable = true, name = "modipor_rolitem", length = 30)
+    @Column(nullable = true, name = "modipor_rolitem", length = 100)
     private String modiPorUltRolItem;
 
     @PrePersist

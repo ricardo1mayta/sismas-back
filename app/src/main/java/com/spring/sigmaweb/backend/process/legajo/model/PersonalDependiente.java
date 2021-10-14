@@ -87,7 +87,7 @@ public class PersonalDependiente  implements Serializable{
     @Column(nullable = true, length = 100, name = "nombre_insteduc_perdep")
     private String nombreInstEducPerDep;
 
-    @Column(nullable = false, name = "creapor_perdep", length = 30)
+    @Column(nullable = false, name = "creapor_perdep", length = 100)
     private String creaPorPerDep;
 
     @Column(nullable = false, name = "fechaing_perdep")
@@ -100,7 +100,7 @@ public class PersonalDependiente  implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPerDep;
 
-    @Column(nullable = true, name = "modipor_perdep", length = 30)
+    @Column(nullable = true, name = "modipor_perdep", length = 100)
     private String modiPorPerDep;
 
     private static final long serialVersionUID = 1L;

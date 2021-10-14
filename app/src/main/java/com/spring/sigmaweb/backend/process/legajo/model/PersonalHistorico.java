@@ -54,7 +54,7 @@ public class PersonalHistorico implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCambECHist;
 
-    @Column(nullable = false, name = "creapor_hist", length = 30)
+    @Column(nullable = false, name = "creapor_hist", length = 100)
     private String creaPorHist;
 
     @Column(nullable = false, name = "fechaing_hist")
@@ -67,7 +67,7 @@ public class PersonalHistorico implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiHist;
 
-    @Column(nullable = true, name = "modipor_Hist", length = 30)
+    @Column(nullable = true, name = "modipor_Hist", length = 100)
     private String modiPorHist;
 
     @PrePersist

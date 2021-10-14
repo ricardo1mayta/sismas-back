@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IDistritoDao extends CrudRepository<Distrito, Long>  {
     @Query("select d from Distrito d inner join Provincia p on d.provincia=p.idProv "
-            + "where p.idProv=?1")
+            + "where p.idProv=?1 " +
+            "order by d.nombreDist")
     public List<Distrito> findByProvincia(Long idProv);
 }

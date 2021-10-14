@@ -149,7 +149,7 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPers;
 
-    @Column(nullable = false, name = "creapor_pers", length = 30)
+    @Column(nullable = false, name = "creapor_pers", length = 100)
     private String creaPorPers;
 
     @Column(nullable = true, name = "fechamodi_pers")
@@ -157,7 +157,7 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPers;
 
-    @Column(nullable = true, name = "modipor_pers", length = 30)
+    @Column(nullable = true, name = "modipor_pers", length = 100)
     private String modiPorPers;
 
     @Column(nullable = true, name = "cod_inter_pers")

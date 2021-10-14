@@ -7,17 +7,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ITablasTablaDao extends CrudRepository<TablasTabla,Long>{
-    public List<TablasTabla> findByTipoTab(Integer tipotab);
+    public List<TablasTabla> findByTipoTabOrderByDescripTabAsc(Integer tipotab);
 
     public TablasTabla findByCodigoTab(Integer codigoTab);
 
     @Query("select t "
             + "from TablasTabla t "
-            + "where tipoTab=?1 and codigoTab in ?2")
+            + "where tipoTab=?1 and codigoTab in ?2 " +
+            "order by t.descripTab")
     public List<TablasTabla> findByCodigoList(Integer tipotab,Integer[] listCodigos);
 
     @Query("select t "
             + "from TablasTabla t "
-            + "where tipoTab=?1 and codigoTab not in ?2")
+            + "where tipoTab=?1 and codigoTab not in ?2" +
+            " order by t.descripTab")
     public List<TablasTabla> findByCodigoListNot(Integer tipotab,Integer[] listCodigos);
 }

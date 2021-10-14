@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.generic.service;
 import com.spring.sigmaweb.backend.process.generic.model.TablasTabla;
 import com.spring.sigmaweb.backend.process.generic.repository.ITablasTablaDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ public class TablasTablaService implements ITablasTablaService{
     @Override
     @Transactional(readOnly = true)
     public List<TablasTabla> findByTipoTab(Integer tipotab) {
-        return tablastablaDao.findByTipoTab(tipotab);
+        return tablastablaDao.findByTipoTabOrderByDescripTabAsc(tipotab);
     }
 
     @Override

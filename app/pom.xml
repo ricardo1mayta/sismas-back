@@ -95,7 +95,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>application</finalName>
+		<finalName>application-v1</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

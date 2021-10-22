@@ -89,6 +89,18 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PersonalDatosListDTO> findByNroDocPersAndIdObra(String obraname, String nrodocpers) {
+        return personalDao.findByNroDocPersAndIdObra(obraname, nrodocpers);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalDatosListDTO> findByCodigoPerAndIdObra(String obraname, String codigoPer) {
+        return personalDao.findByCodigoPerAndIdObra(obraname, codigoPer);
+    }
+
+    @Override
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist) {
         personalHistoricoDao.saveAll(persoHist);
         return null;
@@ -99,4 +111,7 @@ public class PersonalService implements IPersonalService{
         //
         return personalHistoricoDao.buscarPorIdPersonalAndObraAndTipo(idpers, idobra, tipo);
     }
+
+
+
 }

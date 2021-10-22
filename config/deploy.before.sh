@@ -1,6 +1,9 @@
 #!/bin/bash
 
-rm -rf /apps/becacloud/cloud/sigmaweb
-mkdir /apps/becacloud/cloud/sigmaweb
-#Parando el Servicio
-/usr/local/bin/docker-compose -f /apps/becacloud/docker-compose.yml down
+rm -rf /apps/becacloud/cloud/sigmaweb/*
+
+#agregando
+# nuevo comando
+docker container stop sigma-web-v1 || true
+docker container rm sigma-web-v1 || true
+docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}") || true

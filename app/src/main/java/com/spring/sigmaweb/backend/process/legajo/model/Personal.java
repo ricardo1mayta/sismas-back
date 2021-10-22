@@ -31,8 +31,8 @@ import com.spring.sigmaweb.backend.process.generic.model.Persona;
 
 public class Personal implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id_personal", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_personal", nullable = false, unique = true)
     private Long idPersonal;
 
     @Column(name = "idper_sigma", nullable = false)

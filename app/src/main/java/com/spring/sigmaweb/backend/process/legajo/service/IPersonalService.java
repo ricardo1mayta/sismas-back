@@ -28,6 +28,10 @@ public interface IPersonalService {
 
     public PersonalDatosListDTO findByObraAndidPersonalBasico(String obraname, Long idpersonal);
 
+    public List<PersonalDatosListDTO> findByNroDocPersAndIdObra(String obraname, String nrodocpers);
+
+    public List<PersonalDatosListDTO> findByCodigoPerAndIdObra(String obraname, String codigoPer);
+
     //Historico
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist);
 

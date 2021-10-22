@@ -120,7 +120,7 @@ public class UsuarioRestController {
 
             if (usuarioService.findByUsernameAndObra(newUser.getUsername(), obraname) == null) {
 
-                usuInsert.setUsername(newUser.getUsername().trim() + "." + obraname.trim());
+                usuInsert.setUsername(newUser.getUsername().trim() );//+ "." + obraname.trim());
                 usuInsert.setPassword(passwordEncoder.encode(newUser.getPassword().trim() ));
                 usuInsert.setEmailUser(newUser.getEmailUser().trim());
                 usuInsert.setActivo(newUser.getActivo());

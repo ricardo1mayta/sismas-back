@@ -2,5 +2,7 @@
 
 # creando directorios temporales
 systemctl status docker.service
-#/usr/local/bin/docker-compose -f /apps/becacloud/docker-compose.yml down 
-nohup /usr/local/bin/docker-compose -f /apps/becacloud/docker-compose.yml up > /dev/null 2>&1 &
+
+#agregando
+cd /apps/becacloud/cloud/sigmaweb/ && docker build -t sigma-web-v1 --build-arg environment=prod --no-cache .
+docker run -d --name sigma-web-v1 -p 8020:8020 sigma-web-v1:latest

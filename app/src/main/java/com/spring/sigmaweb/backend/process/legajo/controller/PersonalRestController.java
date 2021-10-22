@@ -1,29 +1,27 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.spring.sigmaweb.backend.process.generic.model.Distrito;
+import com.spring.sigmaweb.backend.process.generic.model.Obra;
+import com.spring.sigmaweb.backend.process.generic.model.Persona;
 import com.spring.sigmaweb.backend.process.generic.model.TablasTabla;
 import com.spring.sigmaweb.backend.process.generic.service.IDistritoService;
+import com.spring.sigmaweb.backend.process.generic.service.IObraService;
+import com.spring.sigmaweb.backend.process.generic.service.IPersonaService;
 import com.spring.sigmaweb.backend.process.generic.service.ITablasTablaService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -37,6 +35,12 @@ public class PersonalRestController {
 
     @Autowired
     private IDistritoService distritoservice;
+
+    @Autowired
+    private IObraService obraservice;
+
+    @Autowired
+    private IPersonaService personaService;
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalobralist/{obraname}")
@@ -86,6 +90,19 @@ public class PersonalRestController {
         return personalservice.findByObraAndidPersonalBasico(obraname, idpersonal);
     }
 
+    @Secured({"ROLE_PERS","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/personalobranumerodoc/{obraname}/{nrodocpers}")
+    public List<PersonalDatosListDTO> showpersonalObraAndNrodocDTO( @PathVariable String obraname,@PathVariable String nrodocpers) {
+        return personalservice.findByNroDocPersAndIdObra(obraname, nrodocpers);
+    }
+
+    @Secured({"ROLE_PERS","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/personalobracodigopers/{obraname}/{codigoPer}")
+    public List<PersonalDatosListDTO> showpersonalObraAndCodigoPersDTO( @PathVariable String obraname,@PathVariable String codigoPer) {
+        return personalservice.findByCodigoPerAndIdObra(obraname, codigoPer);
+    }
+
+
 
     @PutMapping("/personalupdatefechaConfir")
     public Integer updatepersonalFechaConfir(@RequestBody PersonalDatosListDTO personalUpd) {
@@ -102,6 +119,115 @@ public class PersonalRestController {
             }
         }
         return resp;
+    }
+
+    @PostMapping("/personalsave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> create(@RequestBody PersonalDatosPersonalesDTO personalDTO, BindingResult result) {
+        Personal personalNew = null;
+        Personal personalResult = null;
+        Persona personaNew = null;
+        Persona personaResult = null;
+        TablasTabla tablaT = tablastablaservice.findByCodigoTab(personalDTO.getIdTipoDocPer());
+        Optional<Distrito> distDomi = distritoservice.findById(personalDTO.getIdDistDomiPer());
+        Optional<Obra> obraNew = obraservice.findById(personalDTO.getIdobra());
+
+        Map<String, Object> response = new HashMap<>();
+
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            personaNew.setObraPers(personalDTO.getIdobra());
+            personaNew.setApePaternoPers(personalDTO.getApePaternoPers());
+            personaNew.setApeMaternoPers(personalDTO.getApeMaternoPers());
+            personaNew.setNombrePers(personalDTO.getNombrePers());
+            personaNew.setIdTipoDocPers(tablaT);
+            personaNew.setNroDocPers(personalDTO.getNroDocPers());
+            personaNew.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
+
+            tablaT=null;
+            tablaT = tablastablaservice.findByCodigoTab(personalDTO.getEstCivilPer());
+            personaNew.setEstCivilPers(tablaT);
+
+            personaNew.setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
+            personaNew.setSexoPers(personalDTO.getSexoPers());
+            personaNew.setCelularPers(personalDTO.getCelularPers());
+            personaNew.setCelularBPers(personalDTO.getCelularBPers());
+            personaNew.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
+            personaNew.setEmailPers(personalDTO.getEmailPers());
+            personaNew.setEmailCorPers(personalDTO.getEmailCorPers());
+            personaNew.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
+            //NACIMIENTO
+            personaNew.setFechaNacPers(personalDTO.getFechaNacPers());
+            personaNew.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
+            personaNew.setNacionalidadPers(personalDTO.getNacionalidadPers());
+            personaNew.setIdDistNacPers(personalDTO.getIdDistNacPers());
+            personaNew.setObservaNacPers(personalDTO.getObservaNacPers());
+            //DOMICILIO
+            personaNew.setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
+            personaNew.setDomicilioPers(personalDTO.getDomicilioPers());
+            personaNew.setNumeroDomiPers(personalDTO.getNroDocPers());
+            personaNew.setInteriorDomiPers(personalDTO.getInteriorDomiPers());
+            personaNew.setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
+            personaNew.setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers());
+            personaNew.setIdDistDomiPers(distDomi.get());
+            personaNew.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
+
+            personaNew.setCreaPorPers(personalDTO.getCreaPorPer());
+            personaNew.setCodInterPers(null);
+
+            //guardar personanew
+            personaResult = personaService.save(personaNew);
+
+            personalNew.setIdPerSigma(null);
+            personalNew.setObraPer(obraNew.get());
+            personalNew.setIdPersonal(personaResult.getIdPersona());
+            personalNew.setFotoPer(personalDTO.getIdobra() + "/" + personalDTO.getCodigoPer() + ".JPG");
+            personalNew.setEstadoPer(personalDTO.getEstadoPer());
+            personalNew.setContactoEmerPer(personalDTO.getContactoEmerPer());
+            personalNew.setTelefContEmerPer(personalDTO.getTelefContEmerPer());
+            personalNew.setIdParentContEmerPer(personalDTO.getIdParentContEmerPer());
+            personalNew.setNroDocPer(personalDTO.getNroDocPers());
+
+            personalNew.setNumeroEssaludPer(personalDTO.getNumeroEssaludPer());
+            personalNew.setIdEntidadEpsPer(personalDTO.getIdEntEPS());
+            personalNew.setNumeroEpsPer(personalDTO.getNumeroEpsPer());
+            personalNew.setIdTipoPensionPer(personalDTO.getIdTipoPensionPer());
+            personalNew.setIdEntidadPensPer(personalDTO.getIdEntPen());
+            personalNew.setNumeroPensionPer(personalDTO.getNumeroPensionPer());
+
+            personalNew.setFlgEsDiscapacitadoPer(personalDTO.getFlgEsDiscapacitadoPer());
+            personalNew.setEspecDiscapacidadPer(personalDTO.getEspecDiscapacidadPer());
+
+            personalNew.setFechaIngPer(personalDTO.getFechaIngPer());
+            personalNew.setCreaPorPer(personalDTO.getCreaPorPer());
+
+            if(personalDTO.getEstadoPer()){
+                personalNew.setFechaActivoPer(personalDTO.getFechaActivoPer());
+            }
+
+
+
+            personalNew=personalservice.save(personalNew);
+
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personal", personalNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/personalupdate/{idpersonal}/{obraname}")

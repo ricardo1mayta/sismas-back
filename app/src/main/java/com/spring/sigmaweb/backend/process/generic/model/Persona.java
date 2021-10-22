@@ -31,8 +31,8 @@ import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 @Table(name = "mg_persona")
 public class Persona implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id_persona", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_persona", nullable = false, unique = true)
     private Long idPersona;
 
     @Column(nullable = true, length = 6, name = "idobra_pers")

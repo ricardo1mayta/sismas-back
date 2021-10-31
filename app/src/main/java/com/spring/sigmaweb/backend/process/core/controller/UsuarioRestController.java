@@ -87,6 +87,11 @@ public class UsuarioRestController {
         return usuarioService.findByNotIdRolAndObra(listaR, idobra);
     }
 
+    @GetMapping("/usuariousernameobradto/{username}/{idobra}")
+    public usuarioDTO showUsurarioPorUsernameAndObra(@PathVariable String username, @PathVariable String idobra) {
+        return usuarioService.findByUsernameAndObraDTO(username,idobra);
+    }
+
     @GetMapping("/usuariosporobraandtipousuario/{idobra}/{tipouser}/{estado}")
     public List<usuarioDTO> showUsuariosPorObraAndTipoUsuario(@PathVariable String idobra, @PathVariable String tipouser,@PathVariable Integer estado) {
         return usuarioService.findByObraAndTipoUser(idobra, tipouser, estado);
@@ -300,7 +305,7 @@ public class UsuarioRestController {
             userAct.setIdcodTipoUser(usuUpdate.getIdcodTipoUser());
             userAct.setTipoUser(usuUpdate.getTipoUser());
             if (!usuUpdate.getPassword().trim().equals("")) {
-                System.out.println(usuUpdate.getPassword().trim());
+                //System.out.println(usuUpdate.getPassword().trim());
                 newPassWord = passwordEncoder.encode(usuUpdate.getPassword().trim());
                 userAct.setPassword(newPassWord);
             }
@@ -318,7 +323,7 @@ public class UsuarioRestController {
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "usuario creado con éxito!");
+        response.put("mensaje", "usuario actualizado con éxito!");
         response.put("usuario", UsuUpdate);
 
 
@@ -331,12 +336,12 @@ public class UsuarioRestController {
         Usuario userAct = usuarioService.findByIdUserAndObra(iduser, idobra);
         String PassWOld=passwordEncoder.encode(passOld.trim());
         if (userAct != null) {
-            if( userAct.getPassword() == PassWOld) {
+            if( passwordEncoder.matches(passOld,userAct.getPassword())) {
                 return true;
-            } else
+            } else {
                 return false;
-
-        }else {
+            }
+        } else {
             return false;
         }
     }

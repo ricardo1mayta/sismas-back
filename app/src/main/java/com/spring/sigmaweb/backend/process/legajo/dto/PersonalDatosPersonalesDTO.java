@@ -82,8 +82,7 @@ public class PersonalDatosPersonalesDTO implements Serializable {
     private Boolean flgEsDiscapacitadoPer;
     private String especDiscapacidadPer;
 
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaIngPer;
 
     private String creaPorPer;

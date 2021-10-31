@@ -9,7 +9,7 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
     public Persona findByIdPersonaAndObraPers(Long idPersona, String obraPers);
 
-    public Persona findByNroDocPersAndObraPers(Long nroDocPers, String obraPers);
+    public Persona findByNroDocPersAndObraPers(String nroDocPers, String obraPers);
 
 
 }

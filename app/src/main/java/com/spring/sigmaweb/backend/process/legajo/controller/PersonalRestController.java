@@ -23,6 +23,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Parser;
+
 @CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/legajo/personal")
@@ -126,8 +128,14 @@ public class PersonalRestController {
     public ResponseEntity<?> create(@RequestBody PersonalDatosPersonalesDTO personalDTO, BindingResult result) {
         Personal personalNew = null;
         Personal personalResult = null;
+
         Persona personaNew = null;
         Persona personaResult = null;
+
+        List<PersonalHistorico> historico = new ArrayList<PersonalHistorico>();
+        String direccion="";
+        PersonalHistorico itemHist = new PersonalHistorico();
+
         TablasTabla tablaT = tablastablaservice.findByCodigoTab(personalDTO.getIdTipoDocPer());
         Optional<Distrito> distDomi = distritoservice.findById(personalDTO.getIdDistDomiPer());
         Optional<Obra> obraNew = obraservice.findById(personalDTO.getIdobra());
@@ -145,53 +153,139 @@ public class PersonalRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            personaNew.setObraPers(personalDTO.getIdobra());
-            personaNew.setApePaternoPers(personalDTO.getApePaternoPers());
-            personaNew.setApeMaternoPers(personalDTO.getApeMaternoPers());
-            personaNew.setNombrePers(personalDTO.getNombrePers());
-            personaNew.setIdTipoDocPers(tablaT);
-            personaNew.setNroDocPers(personalDTO.getNroDocPers());
-            personaNew.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
+            //busca si existe una persona ya registrada con ese número de documento
+            personaResult = personaService.findByNroDocPersAndObraPers(personalDTO.getNroDocPers().trim(),personalDTO.getIdobra());
+            if (personaResult ==null) {
+                //se registra uno nuevo
+                personaNew = new Persona();
+                personaNew.setObraPers(personalDTO.getIdobra());
+                personaNew.setApePaternoPers(personalDTO.getApePaternoPers());
+                personaNew.setApeMaternoPers(personalDTO.getApeMaternoPers());
+                personaNew.setNombrePers(personalDTO.getNombrePers());
+                personaNew.setIdTipoDocPers(tablaT);
+                personaNew.setNroDocPers(personalDTO.getNroDocPers().trim());
+                personaNew.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
 
-            tablaT=null;
-            tablaT = tablastablaservice.findByCodigoTab(personalDTO.getEstCivilPer());
-            personaNew.setEstCivilPers(tablaT);
+                tablaT= new TablasTabla();
+                tablaT = tablastablaservice.findByCodigoTab(personalDTO.getEstCivilPer());
+                personaNew.setEstCivilPers(tablaT);
 
-            personaNew.setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
-            personaNew.setSexoPers(personalDTO.getSexoPers());
-            personaNew.setCelularPers(personalDTO.getCelularPers());
-            personaNew.setCelularBPers(personalDTO.getCelularBPers());
-            personaNew.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
-            personaNew.setEmailPers(personalDTO.getEmailPers());
-            personaNew.setEmailCorPers(personalDTO.getEmailCorPers());
-            personaNew.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
-            //NACIMIENTO
-            personaNew.setFechaNacPers(personalDTO.getFechaNacPers());
-            personaNew.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
-            personaNew.setNacionalidadPers(personalDTO.getNacionalidadPers());
-            personaNew.setIdDistNacPers(personalDTO.getIdDistNacPers());
-            personaNew.setObservaNacPers(personalDTO.getObservaNacPers());
-            //DOMICILIO
-            personaNew.setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
-            personaNew.setDomicilioPers(personalDTO.getDomicilioPers());
-            personaNew.setNumeroDomiPers(personalDTO.getNroDocPers());
-            personaNew.setInteriorDomiPers(personalDTO.getInteriorDomiPers());
-            personaNew.setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
-            personaNew.setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers());
-            personaNew.setIdDistDomiPers(distDomi.get());
-            personaNew.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
+                personaNew.setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
+                personaNew.setSexoPers(personalDTO.getSexoPers());
+                personaNew.setCelularPers(personalDTO.getCelularPers());
+                personaNew.setCelularBPers(personalDTO.getCelularBPers());
+                personaNew.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
+                personaNew.setEmailPers(personalDTO.getEmailPers());
+                personaNew.setEmailCorPers(personalDTO.getEmailCorPers());
+                personaNew.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
+                //NACIMIENTO
+                personaNew.setFechaNacPers(personalDTO.getFechaNacPers());
+                personaNew.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
+                personaNew.setNacionalidadPers(personalDTO.getNacionalidadPers());
+                personaNew.setIdDistNacPers(personalDTO.getIdDistNacPers());
+                personaNew.setObservaNacPers(personalDTO.getObservaNacPers());
+                //DOMICILIO
+                personaNew.setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
+                personaNew.setDomicilioPers(personalDTO.getDomicilioPers());
+                personaNew.setNumeroDomiPers(personalDTO.getNroDocPers());
+                personaNew.setInteriorDomiPers(personalDTO.getInteriorDomiPers());
+                personaNew.setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
+                personaNew.setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers());
+                personaNew.setIdDistDomiPers(distDomi.get());
+                personaNew.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
 
-            personaNew.setCreaPorPers(personalDTO.getCreaPorPer());
-            personaNew.setCodInterPers(null);
+                personaNew.setCreaPorPers(personalDTO.getCreaPorPer());
+                personaNew.setCodInterPers(null);
+                personaNew.setFechaIngPers(personalDTO.getFechaIngPer());
 
-            //guardar personanew
-            personaResult = personaService.save(personaNew);
+                //guardar personanew
+                personaResult = personaService.save(personaNew);
+            } else {
+                //actualiza la información con los datos nuevos de la persona
+                personaResult.setNombrePers(personalDTO.getNombrePers());
+                personaResult.setApePaternoPers(personalDTO.getApePaternoPers());
+                personaResult.setApeMaternoPers(personalDTO.getApeMaternoPers());
 
-            personalNew.setIdPerSigma(null);
+                personaResult.setIdTipoDocPers(tablaT);
+                personaResult.setNroDocPers(personalDTO.getNroDocPers());
+                personaResult.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
+
+                if(!personaResult.getEstCivilPers().getCodigoTab().equals( personalDTO.getEstCivilPer() ) ) {
+
+                    //guarda en historico
+                    itemHist.setTipoEstCivilHist(personaResult.getEstCivilPers().getCodigoTab());
+                    itemHist.setFechaCambECHist(personaResult.getFecCambioEstCivilPers());
+                    itemHist.setCreaPorHist(personalDTO.getModiPorPer());
+                    itemHist.setObraHist(obraNew.get());
+                    itemHist.setTipoHist("ESTCIV");
+                    historico.add(itemHist);
+                }
+
+                tablaT = tablastablaservice.findByCodigoTab(personalDTO.getEstCivilPer());
+                personaResult.setEstCivilPers(tablaT);
+                personaResult.setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
+
+                personaResult.setSexoPers(personalDTO.getSexoPers());
+                personaResult.setCelularPers(personalDTO.getCelularPers());
+                personaResult.setCelularBPers(personalDTO.getCelularBPers());
+                personaResult.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
+                personaResult.setEmailPers(personalDTO.getEmailPers());
+                personaResult.setEmailCorPers(personalDTO.getEmailCorPers());
+
+                personaResult.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
+                personaResult.setFechaNacPers(personalDTO.getFechaNacPers());
+                personaResult.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
+                personaResult.setNacionalidadPers(personalDTO.getNacionalidadPers());
+                personaResult.setIdDistNacPers(personalDTO.getIdDistNacPers());
+                personaResult.setObservaNacPers(personalDTO.getObservaNacPers());
+
+
+                if (!personaResult.getTipoViaDomiPers().equals(personalDTO.getTipoViaDomiPers()) ||
+                        !personaResult.getDomicilioPers().trim().equals(personalDTO.getDomicilioPers().trim()) ||
+                        !personaResult.getNumeroDomiPers().trim().equals(personalDTO.getNumeroDomiPers().trim()) ||
+                        !personaResult.getInteriorDomiPers().trim().equals(personalDTO.getInteriorDomiPers().trim()) ||
+                        !personaResult.getTipoZonaDomiPers().equals(personalDTO.getTipoZonaDomiPers()) ||
+                        !personaResult.getNombreZonaDomiPers().trim().equals( personalDTO.getNombreZonaDomiPers().trim()) ||
+                        !personaResult.getIdDistDomiPers().getIdDist().equals(personalDTO.getIdDistDomiPer()) ) {
+
+                    //guarda en historico
+                    itemHist = new PersonalHistorico();
+                    direccion="";
+                    if (personaResult.getTipoViaDomiPers() != null) {direccion = tablastablaservice.findByCodigoTab( personaResult.getTipoViaDomiPers() ).getDescrip2Tab() + " " + personaResult.getDomicilioPers() +" ";}
+                    if(personaResult.getNumeroDomiPers() != null) {direccion += personaResult.getNumeroDomiPers() +", ";}
+                    if(personaResult.getInteriorDomiPers() != null) {direccion += personaResult.getInteriorDomiPers() +" ";}
+                    if (personaResult.getTipoZonaDomiPers() != null) {direccion += tablastablaservice.findByCodigoTab( personaResult.getTipoZonaDomiPers() ).getDescrip2Tab() +" ";}
+                    if (personaResult.getNombreZonaDomiPers() != null) {direccion += personaResult.getNombreZonaDomiPers() +" - ";}
+
+                    if (personaResult.getIdDistDomiPers() != null) {direccion += personaResult.getIdDistDomiPers().getNombreDist(); }
+
+                    itemHist.setDireccionHist(direccion);
+                    itemHist.setCreaPorHist(personalDTO.getCreaPorPer());
+                    itemHist.setObraHist(obraNew.get());
+                    itemHist.setTipoHist("DIRECC");
+                    historico.add(itemHist);
+                }
+
+                personaResult.setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
+                personaResult.setDomicilioPers(personalDTO.getDomicilioPers().trim());
+                personaResult.setNumeroDomiPers(personalDTO.getNumeroDomiPers().trim());
+                personaResult.setInteriorDomiPers(personalDTO.getInteriorDomiPers().trim());
+                personaResult.setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
+                personaResult.setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers().trim());
+                personaResult.setIdDistDomiPers( distDomi.get());
+
+                personaResult.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
+
+                personaResult=personaService.save(personaResult);
+            }
+            //System.out.println(personaResult.getIdPersona());
+            personalNew = new Personal();
+            personalNew.setIdPerSigma(Long.valueOf(0));
             personalNew.setObraPer(obraNew.get());
-            personalNew.setIdPersonal(personaResult.getIdPersona());
+            personalNew.setIdPersona(personaResult);//(personaResult.getIdPersona());
             personalNew.setFotoPer(personalDTO.getIdobra() + "/" + personalDTO.getCodigoPer() + ".JPG");
             personalNew.setEstadoPer(personalDTO.getEstadoPer());
+            personalNew.setCodigoPer(personalDTO.getCodigoPer().trim());
             personalNew.setContactoEmerPer(personalDTO.getContactoEmerPer());
             personalNew.setTelefContEmerPer(personalDTO.getTelefContEmerPer());
             personalNew.setIdParentContEmerPer(personalDTO.getIdParentContEmerPer());
@@ -214,9 +308,27 @@ public class PersonalRestController {
                 personalNew.setFechaActivoPer(personalDTO.getFechaActivoPer());
             }
 
+            //data medica ?
+            personalNew.setFlgAsmaPer(false);
+            personalNew.setFlgcancerPer(false);
+            personalNew.setFlgDonaSangrePer(false);
+            personalNew.setFlgEnferPulmonPer(false);
+            personalNew.setFlgEnferCardioPer(false);
+            personalNew.setFlgEsDiabeticoPer(false);
+            personalNew.setFlgEsHipertensoPer(false);
+            personalNew.setFlgEsInmunoSupresorPer(false);
+            personalNew.setFlgTrabajoAltoRiesgoPer(false);
 
 
-            personalNew=personalservice.save(personalNew);
+
+            personalResult=personalservice.save(personalNew);
+
+            if (historico.size() > 0) {
+                for (PersonalHistorico h : historico) {
+                    h.setPersonalHist(personalResult);
+                }
+                personalservice.saveAll(historico);
+            }
 
 
         } catch(DataAccessException e) {
@@ -226,7 +338,7 @@ public class PersonalRestController {
         }
 
         response.put("mensaje", "El item ha sido creado con éxito!");
-        response.put("personal", personalNew);
+        response.put("personal", personalResult);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
@@ -297,7 +409,6 @@ public class PersonalRestController {
                 !PersonalAct.getIdPersona().getInteriorDomiPers().trim().equals(personalDTO.getInteriorDomiPers().trim()) ||
                 !PersonalAct.getIdPersona().getTipoZonaDomiPers().equals(personalDTO.getTipoZonaDomiPers()) ||
                 !PersonalAct.getIdPersona().getNombreZonaDomiPers().trim().equals( personalDTO.getNombreZonaDomiPers().trim()) ||
-                !PersonalAct.getIdPersona().getNombreZonaDomiPers().trim().equals(personalDTO.getNombreZonaDomiPers().trim()) ||
                 !PersonalAct.getIdPersona().getIdDistDomiPers().getIdDist().equals(personalDTO.getIdDistDomiPer()) ) {
 
             //guarda en historico
@@ -327,16 +438,12 @@ public class PersonalRestController {
         PersonalAct.getIdPersona().setIdDistDomiPers( distDomi.get());
 
         PersonalAct.getIdPersona().setObservacionDomiPers(personalDTO.getObservacionDomiPers());
-        //System.out.println(personalDTO.getFlgEsDiscapacitadoPer());
-        //System.out.println(personalDTO.getEspecDiscapacidadPer());
         PersonalAct.setFlgEsDiscapacitadoPer(personalDTO.getFlgEsDiscapacitadoPer());
-        //PersonalAct.setFlgEsVoluntariadoPer(personalDTO.getFlgEsVoluntariadoPer());
         PersonalAct.setEspecDiscapacidadPer(personalDTO.getEspecDiscapacidadPer());
         PersonalAct.setFechaActivoPer(personalDTO.getFechaActivoPer());
         PersonalAct.setFechaBajaPer(personalDTO.getFechaBajaPer());
         PersonalAct.setModiPorPer(personalDTO.getModiPorPer());
         PersonalAct.setFechaModiPer(new Date());
-
 
         if (historico.size() > 0) {
             for (PersonalHistorico h : historico) {

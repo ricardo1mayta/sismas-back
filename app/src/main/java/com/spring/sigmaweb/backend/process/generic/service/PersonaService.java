@@ -22,7 +22,13 @@ public class PersonaService implements IPersonaService{
     @Override
     @Transactional(readOnly = true)
     public Persona findByIdPersonaAndObraPers(Long idPersona, String obraPers) {
-        return findByIdPersonaAndObraPers(idPersona,obraPers);
+        return personaDao.findByIdPersonaAndObraPers(idPersona,obraPers);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Persona findByNroDocPersAndObraPers(String nroDocPers, String obraPers) {
+        return personaDao.findByNroDocPersAndObraPers(nroDocPers,obraPers);
     }
 
     @Override

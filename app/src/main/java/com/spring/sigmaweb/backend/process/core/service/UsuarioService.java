@@ -240,7 +240,40 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
     @Transactional(readOnly=true)
     public List<Rol> usuariosRolesPorUsuario(Long iduser, String idobra) {
         // TODO Auto-generated method stub
-        System.out.println(iduser +" , " + idobra);
         return usuarioDao.usuariosRolesPorUsuario(iduser, idobra);
     }
+
+    @Override
+    public usuarioDTO findByUsernameAndObraDTO(String username, String idobra) {
+
+        usuarioDTO users = usuarioDao.findByUsernameAndObraDTO(username, idobra);
+
+        List<FamiliarUserDTO> famiDNI = new ArrayList<FamiliarUserDTO>();
+        List<Rol> userRol = new ArrayList<Rol>();
+        String rolesString = "";
+
+
+        userRol = usuarioDao.usuariosRolesPorUsuario(users.getIdUser(), idobra);
+        for (Rol rol : userRol) {
+            rolesString = rol.getNombreRol() + " ";
+        }
+        users.setRoles(rolesString);
+        if(users.getTipoUser().equals("FAMIL")) {
+            /*famiDNI = familiaDao.finbByIdFamiAndObraAndNroDoc(usu.getIdcodTipoUser(), idobra, usu.getUsername());
+
+            if(famiDNI.size()>0) {
+                usu.setApePaternoUser(famiDNI.get(0).getApPaterno());
+                usu.setApeMaternoUser(famiDNI.get(0).getApMaterno());
+                usu.setNombresUser(famiDNI.get(0).getNombre());
+            }*/
+        }
+
+        if(users.getTipoUser().equals("EXTER")) {
+            users.setNomComplUser(users.getEmailUser());
+        } else {
+            users.setNomComplUser( this.nomCompleto(users.getApePaternoUser(), users.getApeMaternoUser(), users.getNombresUser()));
+        }
+        return users;
+    }
+
 }

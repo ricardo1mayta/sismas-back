@@ -54,5 +54,14 @@ public class ObraRestController {
         if (active == 0) return new ResponseStatusApp(false, "Actualmente nos encontramos en mantenimiento, por favor vuelva a intentar más tarde, gracias");
 
         return new ResponseStatusApp(false, "No tiene un valor asignado");
+
+
+    }
+
+    @GetMapping("/health")
+    public ArrayList<String>  health(){
+        ArrayList<String> nombreArray = new ArrayList();
+        nombreArray.add("{status : OK}");
+        return nombreArray;
     }
 }

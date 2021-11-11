@@ -1,0 +1,12 @@
+package com.spring.sigmaweb.backend.process.generic.service;
+
+import com.spring.sigmaweb.backend.process.generic.dto.ParametrosReporteDTO;
+import com.spring.sigmaweb.backend.process.generic.model.Reporte;
+
+import java.util.List;
+
+public interface IParametrosReporteService {
+    public List<ParametrosReporteDTO> findByParametrosPorReporte(Long idrepo);
+
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepo(String idmodulo, String tiporepo, Boolean estadorepo);
+}

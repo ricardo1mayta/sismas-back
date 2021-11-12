@@ -49,7 +49,7 @@ public class RolSideNavItemService implements IRolSideNavItemService{
         SidenavItemDTO menuItem =new SidenavItemDTO();
 
         for (RolSideNavItemMenuOrderDTO row : lista) {
-            System.out.println(row.getName());
+            //System.out.println(row.getName());
             menuItem = new SidenavItemDTO();
             menuItem.setName(row.getName());
             menuItem.setIcon(row.getIcon());

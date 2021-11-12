@@ -3,23 +3,6 @@ package com.spring.sigmaweb.backend.process.legajo.dto;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/*
-
-        {
-        @ConstructorResult(columns = {
-                @ColumnResult(name = "ape_Paterno"),
-                @ColumnResult(name = "ape_Materno"),
-                @ColumnResult(name = "nombre_colaborador"),
-                @ColumnResult(name = "estado", type = Boolean.class),
-                @ColumnResult(name = "documento"),
-                @ColumnResult(name = "nro_documento"),
-                @ColumnResult(name = "celular_personal"),
-                @ColumnResult(name = "celular_institucional"),
-                @ColumnResult(name = "email_personal"),
-                @ColumnResult(name = "email_institucional"),
-                @ColumnResult(name = "contacto_emerg"),
-                @ColumnResult(name = "parentesco_contacto_emerg"),
-                @ColumnResult(name = "telefono_contacto_emerg") }) })*/
 
 
 @SqlResultSetMapping(name = "ReportDirectorioPersonal", entities = @EntityResult(

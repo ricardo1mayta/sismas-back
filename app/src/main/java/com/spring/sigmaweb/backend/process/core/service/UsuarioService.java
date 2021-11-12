@@ -42,7 +42,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 
         String usernameD = username.trim().substring(0, username.trim().indexOf("*"));
         String codInternoD = username.trim().substring(username.trim().indexOf("*") + 1,username.trim().length());
-        System.out.println(usernameD +"-" + codInternoD);
+        //System.out.println(usernameD +"-" + codInternoD);
         Usuario usuario = usuarioDao.findByUsernameActivo(usernameD) ;//usuarioDao.findByUsernameAndObra(usernameD.trim(),obraD.trim());
         PersonalDTO personal = null;
         username=usernameD;
@@ -58,7 +58,9 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
                 if (personal == null ) {
                     logger.error("Error en el login: no existe el usuario '"+username+"' con código Interno '"+ codInternoD +"' en el sistema!");
                     throw new UsernameNotFoundException("Error en el login: no existe el usuario '"+username+"' con código Interno '"+ codInternoD +"' en el sistema!");
-                } else {System.out.println(personal.getApePaternoPers());}
+                } else {
+                    //System.out.println(personal.getApePaternoPers());
+                }
             } else if(usuario.getTipoUser().equals("EXTER")) {
 
             }

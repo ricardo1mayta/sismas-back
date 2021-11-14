@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("api")
+@RequestMapping("/api")
 public class ObraRestController {
     @Autowired
     private IObraService obraService;

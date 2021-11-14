@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("/legajo/entidad")
+@RequestMapping("sigmaweb/legajo/entidad")
 public class EntidadRestController {
     @Autowired
     private IEntidadService entidadservice;

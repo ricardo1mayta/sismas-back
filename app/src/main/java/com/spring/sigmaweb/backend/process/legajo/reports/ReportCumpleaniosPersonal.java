@@ -5,16 +5,15 @@ import java.io.Serializable;
 
 @SqlResultSetMapping(name="ReportCumpleaniosPersonal", entities = @EntityResult(
         entityClass = ReportCumpleaniosPersonal.class, fields = {
+            @FieldResult(name = "id_per", column = "id_per"),
             @FieldResult(name = "ape_Paterno", column = "ape_Paterno"),
             @FieldResult(name = "ape_Materno", column = "ape_Materno"),
             @FieldResult(name = "nombres", column = "nombres"),
             @FieldResult(name = "obra", column = "obra"),
-            @FieldResult(name = "celular_personal", column = "celular_personal"),
-            @FieldResult(name = "celular_institucional", column = "celular_institucional"),
-            @FieldResult(name = "telefono_fijo", column = "telefono_fijo"),
-            @FieldResult(name = "email_personal", column = "email_personal"),
-            @FieldResult(name = "email_institucional", column = "email_institucional"),
             @FieldResult(name = "fecha_nac", column = "fecha_nac"),
+            @FieldResult(name = "anio_nac", column = "anio_nac"),
+            @FieldResult(name = "mes_nac", column = "mes_nac"),
+            @FieldResult(name = "dia_nac", column = "dia_nac"),
             @FieldResult(name = "edad", column = "edad") }
         )
 )
@@ -22,34 +21,40 @@ import java.io.Serializable;
 @Entity
 public class ReportCumpleaniosPersonal implements Serializable {
     @Id
+    private Long id_per;
     private String ape_Paterno;
     private String ape_Materno;
     private String nombres;
     private String obra;
-    private String celular_personal;
-    private String celular_institucional;
-    private String telefono_fijo;
-    private String email_personal;
-    private String email_institucional;
     private String fecha_nac;
+    private String anio_nac;
+    private String mes_nac;
+    private String dia_nac;
     private Integer edad;
 
     public ReportCumpleaniosPersonal(){
         super();
     }
 
-    public ReportCumpleaniosPersonal(String ape_Paterno, String ape_Materno, String nombres, String obra, String celular_personal, String celular_institucional, String telefono_fijo, String email_personal, String email_institucional, String fecha_nac, Integer edad) {
+    public ReportCumpleaniosPersonal(Long id_per, String ape_Paterno, String ape_Materno, String nombres, String obra, String fecha_nac, String anio_nac, String mes_nac, String dia_nac, Integer edad) {
+        this.id_per = id_per;
         this.ape_Paterno = ape_Paterno;
         this.ape_Materno = ape_Materno;
         this.nombres = nombres;
         this.obra = obra;
-        this.celular_personal = celular_personal;
-        this.celular_institucional = celular_institucional;
-        this.telefono_fijo = telefono_fijo;
-        this.email_personal = email_personal;
-        this.email_institucional = email_institucional;
         this.fecha_nac = fecha_nac;
+        this.anio_nac = anio_nac;
+        this.mes_nac = mes_nac;
+        this.dia_nac = dia_nac;
         this.edad = edad;
+    }
+
+    public Long getId_per() {
+        return id_per;
+    }
+
+    public void setId_per(Long id_per) {
+        this.id_per = id_per;
     }
 
     public String getApe_Paterno() {
@@ -84,52 +89,36 @@ public class ReportCumpleaniosPersonal implements Serializable {
         this.obra = obra;
     }
 
-    public String getCelular_personal() {
-        return celular_personal;
-    }
-
-    public void setCelular_personal(String celular_personal) {
-        this.celular_personal = celular_personal;
-    }
-
-    public String getCelular_institucional() {
-        return celular_institucional;
-    }
-
-    public void setCelular_institucional(String celular_institucional) {
-        this.celular_institucional = celular_institucional;
-    }
-
-    public String getTelefono_fijo() {
-        return telefono_fijo;
-    }
-
-    public void setTelefono_fijo(String telefono_fijo) {
-        this.telefono_fijo = telefono_fijo;
-    }
-
-    public String getEmail_personal() {
-        return email_personal;
-    }
-
-    public void setEmail_personal(String email_personal) {
-        this.email_personal = email_personal;
-    }
-
-    public String getEmail_institucional() {
-        return email_institucional;
-    }
-
-    public void setEmail_institucional(String email_institucional) {
-        this.email_institucional = email_institucional;
-    }
-
     public String getFecha_nac() {
         return fecha_nac;
     }
 
     public void setFecha_nac(String fecha_nac) {
         this.fecha_nac = fecha_nac;
+    }
+
+    public String getAnio_nac() {
+        return anio_nac;
+    }
+
+    public void setAnio_nac(String anio_nac) {
+        this.anio_nac = anio_nac;
+    }
+
+    public String getMes_nac() {
+        return mes_nac;
+    }
+
+    public void setMes_nac(String mes_nac) {
+        this.mes_nac = mes_nac;
+    }
+
+    public String getDia_nac() {
+        return dia_nac;
+    }
+
+    public void setDia_nac(String dia_nac) {
+        this.dia_nac = dia_nac;
     }
 
     public Integer getEdad() {

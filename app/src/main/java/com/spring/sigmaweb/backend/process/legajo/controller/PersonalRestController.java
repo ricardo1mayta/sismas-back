@@ -27,7 +27,7 @@ import javax.swing.text.html.parser.Parser;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("/legajo/personal")
+@RequestMapping("sigmaweb/legajo/personal")
 public class PersonalRestController {
     @Autowired
     private IPersonalService personalservice;

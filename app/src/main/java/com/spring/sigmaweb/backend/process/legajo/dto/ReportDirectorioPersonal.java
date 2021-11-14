@@ -3,10 +3,9 @@ package com.spring.sigmaweb.backend.process.legajo.dto;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
-
 @SqlResultSetMapping(name = "ReportDirectorioPersonal", entities = @EntityResult(
     entityClass = ReportDirectorioPersonal.class, fields = {
+        @FieldResult(name = "id_per", column = "id_per"),
         @FieldResult(name = "ape_Paterno", column = "ape_Paterno"),
         @FieldResult(name = "ape_Materno", column = "ape_Materno"),
         @FieldResult(name = "nombre_colaborador", column = "nombre_colaborador"),
@@ -26,8 +25,9 @@ import java.io.Serializable;
 @Entity
 public class ReportDirectorioPersonal implements Serializable {
     @Id
-    private String ape_Paterno;
+    private Long id_per;
 
+    private String ape_Paterno;
     private String ape_Materno;
     private String nombre_colaborador;
     private String estado;
@@ -66,25 +66,14 @@ public class ReportDirectorioPersonal implements Serializable {
         this.direccion = direccion;
     }
 
-    /*  public ReportDirectorioPersonal(Object[] fromStoredProcedure) {
-            super();
-            this.ape_Paterno = (String)fromStoredProcedure[0];
-            this.ape_Materno = (String)fromStoredProcedure[1];
-            this.nombre_colaborador = (String)fromStoredProcedure[2];
-            this.estado = (Boolean) fromStoredProcedure[3];
-            this.documento = (String)fromStoredProcedure[4];
-            this.nro_documento = (String)fromStoredProcedure[5];
-            this.celular_personal = (String)fromStoredProcedure[6];
-            this.celular_institucional = (String)fromStoredProcedure[7];
-            this.telefono_fijo = (String)fromStoredProcedure[8];
-            this.email_personal = (String)fromStoredProcedure[9];
-            this.email_institucional = (String)fromStoredProcedure[10];
-            this.contacto_emerg = (String)fromStoredProcedure[11];
-            this.parentesco_contacto_emerg = (String)fromStoredProcedure[12];
-            this.telefono_contacto_emerg = (String)fromStoredProcedure[13];
-            this.direccion = (String)fromStoredProcedure[14];
-        }
-    */
+    public Long getId_per() {
+        return id_per;
+    }
+
+    public void setId_per(Long id_per) {
+        this.id_per = id_per;
+    }
+
     public String getApe_Paterno() {
         return ape_Paterno;
     }

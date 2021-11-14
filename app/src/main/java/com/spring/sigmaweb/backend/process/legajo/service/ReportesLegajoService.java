@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportOtrosDatosPersonal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,14 +41,31 @@ public class ReportesLegajoService implements IReportesLegajoService{
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_cumpleaniosColaborador", "ReportCumpleaniosPersonal");
 
         query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_textfilter", String.class, ParameterMode.IN);
-        query.registerStoredProcedureParameter("p_mes", Integer.class, ParameterMode.IN);
 
         query.setParameter("p_obra", obraname);
         query.setParameter("p_textfilter", textofiltro);
-        query.setParameter("p_mes", mes);
+        query.setParameter("p_estado", mes);
 
         List<ReportCumpleaniosPersonal> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReportOtrosDatosPersonal> reportOtrosDatosPersonal(String obraname, String estadoper, String textofiltro) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_otrosDatosPersonal", "ReportOtrosDatosPersonal");
+
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_textfilter", String.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", obraname);
+        query.setParameter("p_estado", estadoper);
+        query.setParameter("p_textfilter", textofiltro);
+
+        List<ReportOtrosDatosPersonal> result = query.getResultList();
 
         return result;
     }

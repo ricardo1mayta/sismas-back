@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/parametrosreportes")
+@RequestMapping("/sigmaweb/parametrosreportes")
 public class ParametrosReportesController {
 
     @Autowired

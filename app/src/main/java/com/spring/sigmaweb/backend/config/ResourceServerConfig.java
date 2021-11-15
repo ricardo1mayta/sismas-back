@@ -14,7 +14,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers(HttpMethod.GET,
-                        "sigmaweb/api/obras","/api/health","sigmaweb/api/versionapp", "sigmaweb/actuator/**", "sigmaweb/actuator", "oauth/token", "sigmaweb/api/obra/active/**","sigmaweb/sidenav/**", "sigmaweb/gradoAcademico/**").permitAll()
+                        "/sigmaweb/api/obras","/sigmaweb/api/health","/sigmaweb/api/versionapp", "/sigmaweb/actuator/**", "/sigmaweb/actuator", "/sigmaweb/oauth/token", "/sigmaweb/api/obra/active/**","/sigmaweb/sidenav/**", "/sigmaweb/gradoAcademico/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/familiaList/{idUser}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/api/alumnoFamiList/{idFami}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")

@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/sidenav/")
+@RequestMapping("/sigmaweb/sidenav/")
 public class RolSideNavItemRestController {
 
     @Autowired

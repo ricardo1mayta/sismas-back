@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/api")
+@RequestMapping("/sigmaweb/api")
 public class ProvinciaRestController {
     @Autowired
     private IProvinciaService provinciaService;

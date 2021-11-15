@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/roles")
+@RequestMapping("/sigmaweb/roles")
 public class RolRestController {
     @Autowired
     private IRolService rolService;

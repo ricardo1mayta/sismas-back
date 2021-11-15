@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/api")
+@RequestMapping("/sigmaweb/api")
 public class UsuarioRestController {
     String passwordBString1;
     String pass = "";

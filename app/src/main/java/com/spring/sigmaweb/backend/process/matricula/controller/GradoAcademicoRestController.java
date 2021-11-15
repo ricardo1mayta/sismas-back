@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("sigmaweb/gradoAcademico")
+@RequestMapping("/sigmaweb/gradoAcademico")
 public class GradoAcademicoRestController {
     @Autowired
     private IGradoAcademicoService gradoacademicoservice;

@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("sigmaweb/api")
+@RequestMapping("/sigmaweb/api")
 public class PaisRestController {
     @Autowired
     private IPaisService paisService;

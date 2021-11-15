@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("sigmaweb/legajo/reportes")
+@RequestMapping("/sigmaweb/legajo/reportes")
 public class ReportesLegajoController {
 
     @Autowired

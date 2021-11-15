@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("sigmaweb/legajo/personal/dependiente")
+@RequestMapping("/sigmaweb/legajo/personal/dependiente")
 public class PersonalDependientesRestController {
     @Autowired
     private IPersonalDependientesService personaldependienteservice;

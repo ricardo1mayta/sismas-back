@@ -15,12 +15,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers(HttpMethod.GET,
                         "/sigmaweb/api/obras","/sigmaweb/api/health","/sigmaweb/api/versionapp", "/sigmaweb/actuator/**", "/sigmaweb/actuator", "/sigmaweb/oauth/token", "/sigmaweb/api/obra/active/**","/sigmaweb/sidenav/**", "/sigmaweb/gradoAcademico/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/familiaList/{idUser}/{obraname}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/api/alumnoFamiList/{idFami}/{obraname}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/api/matricula/{idalum}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/api/matriculafamilia/{idfami}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/roles/**").hasAnyRole("ADMI")
-                .antMatchers(HttpMethod.GET, "/api/usuarios").hasRole("ADMI").anyRequest().authenticated().and().cors();
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/familiaList/{idUser}/{obraname}").hasAnyRole("FAMI","ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiList/{idFami}/{obraname}").hasAnyRole("FAMI","ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/matricula/{idalum}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/matriculafamilia/{idfami}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/roles/**").hasAnyRole("ADMI")
+                .antMatchers(HttpMethod.GET, "/sigmaweb/api/usuarios").hasRole("ADMI").anyRequest().authenticated().and().cors();
     }
 }

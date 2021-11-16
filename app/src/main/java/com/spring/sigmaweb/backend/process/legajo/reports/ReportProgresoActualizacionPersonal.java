@@ -3,56 +3,56 @@ package com.spring.sigmaweb.backend.process.legajo.reports;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@SqlResultSetMapping(name="ReportOtrosDatosPersonal", entities = @EntityResult(
-        entityClass = ReportOtrosDatosPersonal.class, fields = {
-        @FieldResult(name = "Id", column = "Id"),
+@SqlResultSetMapping(name="ReportProgresoActualizacionPersonal", entities = @EntityResult(
+        entityClass = ReportProgresoActualizacionPersonal.class, fields = {
+        @FieldResult(name = "id", column = "id"),
         @FieldResult(name = "ape_Paterno", column = "ape_Paterno"),
         @FieldResult(name = "ape_Materno", column = "ape_Materno"),
         @FieldResult(name = "nombres", column = "nombres"),
         @FieldResult(name = "obra", column = "obra"),
         @FieldResult(name = "codigo_interno", column = "codigo_interno"),
-        @FieldResult(name = "religion_profesa", column = "religion_profesa"),
-        @FieldResult(name = "es_discapacitado", column = "es_discapacitado"),
-        @FieldResult(name = "discapacidad", column = "discapacidad") }
+        @FieldResult(name = "fecha_autorizacion", column = "fecha_autorizacion"),
+        @FieldResult(name = "ult_fecha_actualizacion", column = "ult_fecha_actualizacion"),
+        @FieldResult(name = "cuenta", column = "cuenta") }
     )
 )
 
 @Entity
-public class ReportOtrosDatosPersonal implements Serializable {
+public class ReportProgresoActualizacionPersonal implements Serializable {
     @Id
-    private Long Id;
+    private Long id;
 
     private String ape_Paterno;
     private String ape_Materno;
-    private String nombres ;
+    private String nombres;
     private String obra;
     private String codigo_interno;
-    private String religion_profesa;
-    private String es_discapacitado;
-    private String discapacidad;
+    private String fecha_autorizacion;
+    private String ult_fecha_actualizacion;
+    private Double cuenta;
 
-    public ReportOtrosDatosPersonal(){
+    public ReportProgresoActualizacionPersonal(){
         super();
     }
 
-    public ReportOtrosDatosPersonal(Long id, String ape_Paterno, String ape_Materno, String nombres, String obra, String codigo_interno, String religion_profesa, String es_discapacitado, String discapacidad) {
-        Id = id;
+    public ReportProgresoActualizacionPersonal(Long id, String ape_Paterno, String ape_Materno, String nombres, String obra, String codigo_interno, String fecha_autorizacion, String ult_fecha_actualizacion, Double cuenta) {
+        this.id = id;
         this.ape_Paterno = ape_Paterno;
         this.ape_Materno = ape_Materno;
         this.nombres = nombres;
         this.obra = obra;
         this.codigo_interno = codigo_interno;
-        this.religion_profesa = religion_profesa;
-        this.es_discapacitado = es_discapacitado;
-        this.discapacidad = discapacidad;
+        this.fecha_autorizacion = fecha_autorizacion;
+        this.ult_fecha_actualizacion = ult_fecha_actualizacion;
+        this.cuenta = cuenta;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getApe_Paterno() {
@@ -95,27 +95,27 @@ public class ReportOtrosDatosPersonal implements Serializable {
         this.codigo_interno = codigo_interno;
     }
 
-    public String getReligion_profesa() {
-        return religion_profesa;
+    public String getFecha_autorizacion() {
+        return fecha_autorizacion;
     }
 
-    public void setReligion_profesa(String religion_profesa) {
-        this.religion_profesa = religion_profesa;
+    public void setFecha_autorizacion(String fecha_autorizacion) {
+        this.fecha_autorizacion = fecha_autorizacion;
     }
 
-    public String getEs_discapacitado() {
-        return es_discapacitado;
+    public String getUlt_fecha_actualizacion() {
+        return ult_fecha_actualizacion;
     }
 
-    public void setEs_discapacitado(String es_discapacitado) {
-        this.es_discapacitado = es_discapacitado;
+    public void setUlt_fecha_actualizacion(String ult_fecha_actualizacion) {
+        this.ult_fecha_actualizacion = ult_fecha_actualizacion;
     }
 
-    public String getDiscapacidad() {
-        return discapacidad;
+    public Double getCuenta() {
+        return cuenta;
     }
 
-    public void setDiscapacidad(String discapacidad) {
-        this.discapacidad = discapacidad;
+    public void setCuenta(Double cuenta) {
+        this.cuenta = cuenta;
     }
 }

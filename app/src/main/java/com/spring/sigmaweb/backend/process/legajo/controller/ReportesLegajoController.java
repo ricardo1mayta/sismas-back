@@ -2,7 +2,9 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportFamiliaresPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportOtrosDatosPersonal;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportProgresoActualizacionPersonal;
 import com.spring.sigmaweb.backend.process.legajo.service.IReportesLegajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -34,6 +36,18 @@ public class ReportesLegajoController {
     @GetMapping("/reportotrosdatoslegajo/{obraname}/{estadoper}/{textofiltro}")
     public List<ReportOtrosDatosPersonal> reportOtrosDatosLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable String textofiltro ){
         return reportelegajoService.reportOtrosDatosPersonal(obraname,estadoper,textofiltro);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportprogresoactualizacionlegajo/{obraname}/{estadoper}/{estadoaut}/{fechaInicio}/{fechaFin}")
+    public List<ReportProgresoActualizacionPersonal> reportProgesoActualizacionLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable String estadoaut, @PathVariable String fechaInicio, @PathVariable String fechaFin){
+        return reportelegajoService.reportProgresoActualizacionPersonal(obraname,estadoper, estadoaut,fechaInicio, fechaFin);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportfamiliareslegajo/{obraname}/{estadoper}/{idparentesco}")
+    public List<ReportFamiliaresPersonal> reportListaFamilaiesLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable Integer idparentesco){
+        return reportelegajoService.reportListaFamiliaresPersonal(obraname, estadoper,idparentesco);
     }
 
 }

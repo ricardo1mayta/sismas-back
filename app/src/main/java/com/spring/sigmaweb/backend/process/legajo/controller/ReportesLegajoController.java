@@ -1,10 +1,7 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportFamiliaresPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportOtrosDatosPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportProgresoActualizacionPersonal;
+import com.spring.sigmaweb.backend.process.legajo.reports.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IReportesLegajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -48,6 +45,30 @@ public class ReportesLegajoController {
     @GetMapping("/reportfamiliareslegajo/{obraname}/{estadoper}/{idparentesco}")
     public List<ReportFamiliaresPersonal> reportListaFamilaiesLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable Integer idparentesco){
         return reportelegajoService.reportListaFamiliaresPersonal(obraname, estadoper,idparentesco);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportListaasigfamilarlegajo/{obraname}/{estadoper}/{tipoasig}")
+    public List<ReportListAsignacionFamiliar> reportListaAsigFamilarLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable String tipoasig){
+        return reportelegajoService.reportListaAsignacionFamiliarPersonal(obraname, estadoper, tipoasig);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportListahijoslegajo/{obraname}/{estadoper}")
+    public List<ReporteListaHijosPersonal> reportListaHijosLegajo(@PathVariable String obraname, @PathVariable String estadoper){
+        return reportelegajoService.reportListaHijosPersonal(obraname, estadoper);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportListaentepslegajo/{obraname}/{estadoper}/{identidad}")
+    public List<ReportEntidadesEPSPersonal> reportListaEntEPSLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable Integer identidad){
+        return reportelegajoService.reportListaEntEPSPersonal(obraname, estadoper, identidad);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @GetMapping("/reportListaentpensionlegajo/{obraname}/{estadoper}/{tipopens}/{identidad}")
+    public List<ReportentidadesPensionPersonal> reportListaEntPensionLegajo(@PathVariable String obraname, @PathVariable String estadoper, @PathVariable Integer tipopens, @PathVariable Integer identidad){
+        return reportelegajoService.reportListaEntPensionPersonal(obraname, estadoper, tipopens, identidad);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportFamiliaresPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportOtrosDatosPersonal;
-import com.spring.sigmaweb.backend.process.legajo.reports.ReportProgresoActualizacionPersonal;
+import com.spring.sigmaweb.backend.process.legajo.reports.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,6 +104,70 @@ public class ReportesLegajoService implements IReportesLegajoService{
         query.setParameter("p_idParentesco", idparentesco);
 
         List<ReportFamiliaresPersonal> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReportListAsignacionFamiliar> reportListaAsignacionFamiliarPersonal(String obraname, String estadoper, String tipoasig) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_listaasignacionfamPersonal", "ReportListAsignacionFamiliar");
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_tipoAsignacion", String.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", obraname);
+        query.setParameter("p_estado", estadoper);
+        query.setParameter("p_tipoAsignacion", tipoasig);
+
+        List<ReportListAsignacionFamiliar> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReporteListaHijosPersonal> reportListaHijosPersonal(String obraname, String estadoper) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_listaHijosPersonal", "ReporteListaHijosPersonal");
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", obraname);
+        query.setParameter("p_estado", estadoper);
+
+        List<ReporteListaHijosPersonal> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReportEntidadesEPSPersonal> reportListaEntEPSPersonal(String obraname, String estadoper, Integer identidad) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_entidadEpsPersonal", "ReportEntidadesEPSPersonal");
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idEntidad", Integer.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", obraname);
+        query.setParameter("p_estado", estadoper);
+        query.setParameter("p_idEntidad", identidad);
+
+        List<ReportEntidadesEPSPersonal> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReportentidadesPensionPersonal> reportListaEntPensionPersonal(String obraname, String estadoper, Integer tipopens, Integer identidad) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_tipoPensionPersonal", "ReportentidadesPensionPersonal");
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_estado", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_tipopension", Integer.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idEntidad", Integer.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", obraname);
+        query.setParameter("p_estado", estadoper);
+        query.setParameter("p_tipopension", tipopens);
+        query.setParameter("p_idEntidad", identidad);
+
+        List<ReportentidadesPensionPersonal> result = query.getResultList();
 
         return result;
     }

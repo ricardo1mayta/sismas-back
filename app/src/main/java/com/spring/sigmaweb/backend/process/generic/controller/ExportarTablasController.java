@@ -20,14 +20,14 @@ public class ExportarTablasController {
 
 
 
-    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @Secured({"ROLE_ADMI", "ROLE_RRHH","ROLE_COLA"})
     @GetMapping("/exportartablassigma/{obraname}/{selectsql}/{fromsql}/{whsql}/{opcion}")
     public List<Object> exportarTablas(@PathVariable String obraname, @PathVariable String selectsql, @PathVariable String fromsql, @PathVariable String whsql,@PathVariable String opcion){
 
         return exportartablasService.exportTablaLegajo(obraname, opcion, selectsql, fromsql, whsql);
     }
 
-    @Secured({"ROLE_ADMI", "ROLE_RRHH"})
+    @Secured({"ROLE_ADMI", "ROLE_RRHH", "ROLE_COLA"})
     @GetMapping("/listacamposgrupo/{idgrupo}/{estadocampo}")
     public List<CamposTablaExportar> listaCamposPorGrupo(@PathVariable String idgrupo, @PathVariable Boolean estadocampo){
         return exportartablasService.findByIdGrupoCampoAndEstadoCampo(idgrupo, estadocampo);

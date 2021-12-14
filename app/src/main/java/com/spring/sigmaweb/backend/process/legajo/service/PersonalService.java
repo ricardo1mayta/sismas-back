@@ -57,9 +57,7 @@ public class PersonalService implements IPersonalService{
     @Override
     @Transactional
     public Integer updateFechaConfirPersonal(Long idpersonal) {
-
         return personalDao.updateFechaConfirPersonal(idpersonal);
-
     }
 
     @Override

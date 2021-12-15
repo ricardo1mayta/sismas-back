@@ -203,6 +203,28 @@ public class Personal implements Serializable {
     @Column(nullable = true, name = "bonoCargoTotal_per")
     private Double bonifCargoTotalPer;
 
+    //********************* datos contratos *********************
+    @Column(nullable = true, name = "identidad_haberes_per")
+    private Long idEntidadHaberesPer;
+
+    @Column(nullable = true, name = "identidad_cts_per")
+    private Long idEntidadCtsPer;
+
+    @Column(nullable = true, name = "idtipomoneda_cts_per")
+    private Long idTipoMonedaCtsPer;
+
+    @Column(nullable = true, length = 100, name = "nroctabac_haberes_per")
+    private String nroCtabacHaberesper;
+
+    @Column(nullable = true, length = 100, name = "nroctaintbac_haberes_per")
+    private String nroCtaintbacHaberesper;
+
+    @Column(nullable = true, length = 100, name = "nroctabac_cts_per")
+    private String nroCtabacCtsper;
+
+    @Column(nullable = true, length = 100, name = "nroctaintbac_cts_per")
+    private String nroCtaintbacCtsper;
+
     @JsonIgnoreProperties({ "personalDep", "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalDep", cascade = CascadeType.ALL)
     private List<PersonalDependiente> personalDependiente;
@@ -610,6 +632,62 @@ public class Personal implements Serializable {
 
     public void setNroDocPer(String nroDocPer) {
         this.nroDocPer = nroDocPer;
+    }
+
+    public Long getIdEntidadHaberesPer() {
+        return idEntidadHaberesPer;
+    }
+
+    public void setIdEntidadHaberesPer(Long idEntidadHaberesPer) {
+        this.idEntidadHaberesPer = idEntidadHaberesPer;
+    }
+
+    public Long getIdEntidadCtsPer() {
+        return idEntidadCtsPer;
+    }
+
+    public void setIdEntidadCtsPer(Long idEntidadCtsPer) {
+        this.idEntidadCtsPer = idEntidadCtsPer;
+    }
+
+    public Long getIdTipoMonedaCtsPer() {
+        return idTipoMonedaCtsPer;
+    }
+
+    public void setIdTipoMonedaCtsPer(Long idTipoMonedaCtsPer) {
+        this.idTipoMonedaCtsPer = idTipoMonedaCtsPer;
+    }
+
+    public String getNroCtabacHaberesper() {
+        return nroCtabacHaberesper;
+    }
+
+    public void setNroCtabacHaberesper(String nroCtabacHaberesper) {
+        this.nroCtabacHaberesper = nroCtabacHaberesper;
+    }
+
+    public String getNroCtaintbacHaberesper() {
+        return nroCtaintbacHaberesper;
+    }
+
+    public void setNroCtaintbacHaberesper(String nroCtaintbacHaberesper) {
+        this.nroCtaintbacHaberesper = nroCtaintbacHaberesper;
+    }
+
+    public String getNroCtabacCtsper() {
+        return nroCtabacCtsper;
+    }
+
+    public void setNroCtabacCtsper(String nroCtabacCtsper) {
+        this.nroCtabacCtsper = nroCtabacCtsper;
+    }
+
+    public String getNroCtaintbacCtsper() {
+        return nroCtaintbacCtsper;
+    }
+
+    public void setNroCtaintbacCtsper(String nroCtaintbacCtsper) {
+        this.nroCtaintbacCtsper = nroCtaintbacCtsper;
     }
 
     private static final long serialVersionUID = 1L;

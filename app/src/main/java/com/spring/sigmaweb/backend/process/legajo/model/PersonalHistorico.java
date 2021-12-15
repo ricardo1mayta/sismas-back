@@ -34,7 +34,7 @@ public class PersonalHistorico implements Serializable {
     @JoinColumn(name = "id_obra", foreignKey = @ForeignKey(name = "fk_personal_hist_obra"))
     private Obra obraHist;
 
-    @JsonIgnoreProperties(value = { "personalDependiente", "hibernateLazyInitializer",
+    @JsonIgnoreProperties(value = { "PersonalContrato", "personalDependiente", "hibernateLazyInitializer",
             "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_personal", foreignKey = @ForeignKey(name = "fk_personal_hist_personal"))

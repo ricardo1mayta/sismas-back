@@ -4,10 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosListDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosMedicosDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosPersonalesDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -331,6 +328,37 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "where o.idobra = ?1 and p.idPersonal=?2 and p.codigoPer=?3 "
     )
     public PersonalDTO findByObraAndidPersonalAndCodigoPer(String obraname, Long idpersonal, String codper);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosBancarios (p.idPersonal,"
+            + "	o.idobra,"
+            + "	ps.nombrePers,"
+            + "	ps.apePaternoPers,"
+            + "	ps.apeMaternoPers,"
+            + " p.codigoPer,"
+            + " doc.codigoTab as idTipoDocPer,"
+            + " doc.descripTab as descDocuPer,"
+            + "	ps.nroDocPers,"
+
+            + "eh.idEntidad as idEntidadHaberesPer, "
+            + "eh.nombreEnt as entidadHaberesPer, "
+            + "ec.idEntidad as idEntidadCtsPer, "
+            + "ec.nombreEnt as entidadCtsPer, "
+            + "tmo.codigoTab as idTipoMonedaCtsPer, "
+            + "tmo.descripTab as TipoMonedaCtsPer, "
+            + "p.nroCtabacHaberesper,"
+            + "p.nroCtaintbacHaberesper,"
+            + "p.nroCtabacCtsper, "
+            + "p.nroCtaintbacCtsper "
+            + ")"
+            + " from Personal p inner join Obra o on (p.obraPer = o.idobra) "
+            + " inner join Persona ps on (p.idPersona = ps.idPersona) "
+            + " inner join TablasTabla doc on (ps.idTipoDocPers = doc.codigoTab) "
+            + " left join TablasTabla tmo on (p.idTipoMonedaCtsPer = tmo.codigoTab) "
+            + " left join Entidad eh on (p.idEntidadHaberesPer = eh.idEntidad) "
+            + " left join Entidad ec on (p.idEntidadCtsPer = ec.idEntidad) "
+            + "where o.idobra = ?1 and p.idPersonal=?2 "
+    )
+    public PersonalDatosBancarios findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)

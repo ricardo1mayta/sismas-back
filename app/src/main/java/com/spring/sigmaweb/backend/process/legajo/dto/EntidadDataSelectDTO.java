@@ -17,7 +17,7 @@ public class EntidadDataSelectDTO implements Serializable {
     private String telefonoEnt;
     private String urlEnt;
     private String emailEnt;
-
+    private Integer tipoEnt;
     private String flgEduSupEnt;
     private String flgFinacieraEnt;
     private String flgPrevisionalEnt;
@@ -30,8 +30,7 @@ public class EntidadDataSelectDTO implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngEnt;
 
-    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt) {
-        super();
+    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, Integer tipoEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt) {
         this.idEntidad = idEntidad;
         this.idobra = idobra;
         this.rucEnt = rucEnt;
@@ -40,6 +39,7 @@ public class EntidadDataSelectDTO implements Serializable {
         this.telefonoEnt = telefonoEnt;
         this.urlEnt = urlEnt;
         this.emailEnt = emailEnt;
+        this.tipoEnt = tipoEnt;
         this.flgEduSupEnt = flgEduSupEnt;
         this.flgFinacieraEnt = flgFinacieraEnt;
         this.flgPrevisionalEnt = flgPrevisionalEnt;
@@ -48,6 +48,11 @@ public class EntidadDataSelectDTO implements Serializable {
         this.creaPorEnt = creaPorEnt;
         this.modiPorEnt = modiPorEnt;
         this.fechaIngEnt = fechaIngEnt;
+    }
+
+    public EntidadDataSelectDTO() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
     public Long getIdEntidad() {
@@ -176,6 +181,14 @@ public class EntidadDataSelectDTO implements Serializable {
 
     public void setFechaIngEnt(Date fechaIngEnt) {
         this.fechaIngEnt = fechaIngEnt;
+    }
+
+    public Integer getTipoEnt() {
+        return tipoEnt;
+    }
+
+    public void setTipoEnt(Integer tipoEnt) {
+        this.tipoEnt = tipoEnt;
     }
 
     private static final long serialVersionUID = 1L;

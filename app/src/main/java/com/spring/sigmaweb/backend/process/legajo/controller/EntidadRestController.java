@@ -98,6 +98,7 @@ public class EntidadRestController {
             entidadInsert.setTelefonoEnt(entidad.getTelefonoEnt());
             entidadInsert.setUrlEnt(entidad.getUrlEnt());
             entidadInsert.setEmailEnt(entidad.getEmailEnt());
+            entidadInsert.setTipoEnt(entidad.getTipoEnt());
             entidadInsert.setFlgEduSupEnt(flgEduSupEnt);
             entidadInsert.setFlgFinacieraEnt(flgFinacieraEnt);
             entidadInsert.setFlgPrevisionalEnt(flgPrevisionalEnt);
@@ -134,12 +135,12 @@ public class EntidadRestController {
         if (entidadDTO.getFlgPrevisionalEnt().equals("Si")){flgPrevisionalEnt=true;}
         if (entidadDTO.getFlgProveedorEnt().equals("Si")){flgProveedorEnt=true;}
         if (entidadDTO.getFlgSaludEnt().equals("Si")){flgSaludEnt=true;}
-
         entidadAct.setNombreEnt(entidadDTO.getNombreEnt());
         entidadAct.setNombreComerEnt(entidadDTO.getNombreComerEnt());
         entidadAct.setTelefonoEnt(entidadDTO.getTelefonoEnt());
         entidadAct.setUrlEnt(entidadDTO.getUrlEnt());
         entidadAct.setEmailEnt(entidadDTO.getEmailEnt());
+        entidadAct.setTipoEnt(entidadDTO.getTipoEnt());
         entidadAct.setFlgEduSupEnt(flgEduSupEnt);
         entidadAct.setFlgFinacieraEnt(flgFinacieraEnt);
         entidadAct.setFlgPrevisionalEnt(flgPrevisionalEnt);

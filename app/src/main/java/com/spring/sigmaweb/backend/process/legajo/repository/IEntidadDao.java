@@ -13,7 +13,7 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
     public Entidad findByIdEntidad(Long idEntidad);
 
     @Query("select e from Entidad e inner join Obra o on (e.obraEnt = o.idobra)" +
-            "where idEntidad=?1 and o.idobra = ?2")
+            "where e.idEntidad=?1 and o.idobra = ?2")
     public Entidad findByIdEntidadAndObraEnt(Long idEntidad, String idobra);
 
     @Query( "select new com.spring.sigmaweb.backend.process.legajo.dto.EntidadDataSelectDTO(e.idEntidad, "
@@ -24,6 +24,7 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
             + "e.telefonoEnt, "
             + "e.urlEnt, "
             + "e.emailEnt,"
+            + "e.tipoEnt,"
             + "(case e.flgEduSupEnt when true then 'Si' else 'No' end) as flgEduSupEnt,"
             +"(case e.flgFinacieraEnt when true then 'Si' else 'No' end) as flgFinacieraEnt,"
             +"(case e.flgPrevisionalEnt when true then 'Si' else 'No' end) as flgPrevisionalEnt,"
@@ -45,6 +46,7 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
             + "e.telefonoEnt, "
             + "e.urlEnt, "
             + "e.emailEnt,"
+            + "e.tipoEnt,"
             + "(case e.flgEduSupEnt when true then 'Si' else 'No' end) as flgEduSupEnt,"
             +"(case e.flgFinacieraEnt when true then 'Si' else 'No' end) as flgFinacieraEnt,"
             +"(case e.flgPrevisionalEnt when true then 'Si' else 'No' end) as flgPrevisionalEnt,"

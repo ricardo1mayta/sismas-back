@@ -18,16 +18,19 @@ public interface IPersonalContratoService {
 
     public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra);
 
+    public PersonalContrato save (PersonalContrato contrato);
     //************** JORNADA *********************
 
     public PersonalContratoJornada findByIdPerjorn(Long idPerjorn);
 
-    public PersonalContrato findByJornadaPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idperjorn);
+    public PersonalContratoJornada findByJornadaPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idperjorn);
 
-    public List<PersonalContrato> findByJornadaPersonalAndObraAndcontratoList(Long idpersona, String idobra, Long idpercont);
+    public List<PersonalContratoJornada> findByJornadaPersonalAndObraAndcontratoList(Long idpersona, String idobra, Long idpercont);
 
     public JornadaPersonalContratoDTO findIdJornadaPersonalAndObraAndContratoDTO(Long idpersona, String idobra, Long idpercont, Long idperjorn);
 
     public List<JornadaPersonalContratoDTO> findJornadasPersonalAndObraAndContratoDTOList(Long idpersona, String idobra, Long idpercont);
+
+    public PersonalContratoJornada save (PersonalContratoJornada jornada);
 
 }

@@ -60,7 +60,7 @@ public class PersonalContrato implements Serializable {
     @Column(nullable = false, name = "creapor_percont", length = 100)
     private String creaPorPercont;
 
-    @Column(nullable = true, name = "fechamodi_per")
+    @Column(nullable = true, name = "fechamodi_percont")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPercont;

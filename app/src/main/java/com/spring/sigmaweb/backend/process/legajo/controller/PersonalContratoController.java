@@ -37,27 +37,27 @@ public class PersonalContratoController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoidcontratoobrapersonal/{idpersona}/{idobra}/{idpercont}")
-    public PersonalContrato showContratoPorIdContratoAndObraAndIdpersonal(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraAndcontrato(idpersona, idobra, idpercont);
+    @GetMapping("/contratoidcontratoobrapersonal/{idpersonal}/{idobra}/{idpercont}")
+    public PersonalContrato showContratoPorIdContratoAndObraAndIdpersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
+        return personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, idobra, idpercont);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoobrapersonallist/{idpersona}/{idobra}")
-    public List<PersonalContrato> showContratoPorIdContratoAndObraAndIdpersonalList(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraList(idpersona, idobra);
+    @GetMapping("/contratoobrapersonallist/{idpersonal}/{idobra}")
+    public List<PersonalContrato> showContratoPorIdContratoAndObraAndIdpersonalList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
+        return personalcontratoservice.findByPersonalAndObraList(idpersonal, idobra);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoidcontratoobrapersonaldto/{idpersona}/{idobra}/{idpercont}")
-    public PersonalContratoObraDTO showContratoPorIdContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraAndcontratoDto(idpersona, idobra, idpercont);
+    @GetMapping("/contratoidcontratoobrapersonaldto/{idpersonal}/{idobra}/{idpercont}")
+    public PersonalContratoObraDTO showContratoPorIdContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
+        return personalcontratoservice.findByPersonalAndObraAndcontratoDto(idpersonal, idobra, idpercont);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoobrapersonaldtolist/{idpersona}/{idobra}")
-    public List<PersonalContratoObraDTO> showContratoPorObraAndIdpersonalDTOListO(@PathVariable Long idpersona, @PathVariable String idobra){
-        return personalcontratoservice.findByPersonalAndObraAndcontratoDtoList(idpersona, idobra);
+    @GetMapping("/contratoobrapersonaldtolist/{idpersonal}/{idobra}")
+    public List<PersonalContratoObraDTO> showContratoPorObraAndIdpersonalDTOList(@PathVariable Long idpersonal, @PathVariable String idobra){
+        return personalcontratoservice.findByPersonalAndObraAndcontratoDtoList(idpersonal, idobra);
     }
 
     @PostMapping("/contratosave")
@@ -137,27 +137,27 @@ public class PersonalContratoController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/jornadaporidjorncontratopersonalobra/{idpersona}/{idobra}/{idpercont}/{idperjorn}")
-    public PersonalContratoJornada showjornadaPorIdjornAndContratoAndObraAndIdpersonal(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idperjorn){
-        return personalcontratoservice.findByJornadaPersonalAndObraAndcontrato(idpersona, idobra, idpercont,idperjorn);
+    @GetMapping("/jornadaporidjorncontratopersonalobra/{idpersonal}/{idobra}/{idpercont}/{idperjorn}")
+    public PersonalContratoJornada showjornadaPorIdjornAndContratoAndObraAndIdpersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idperjorn){
+        return personalcontratoservice.findByJornadaPersonalAndObraAndcontrato(idpersonal, idobra, idpercont,idperjorn);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/jornadaporcontratopersonalobra/{idpersona}/{idobra}/{idpercont}")
-    public List<PersonalContratoJornada> showjornadaPorContratoAndObraAndIdpersonal(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByJornadaPersonalAndObraAndcontratoList(idpersona, idobra, idpercont);
+    @GetMapping("/jornadaporcontratopersonalobra/{idpersonal}/{idobra}/{idpercont}")
+    public List<PersonalContratoJornada> showjornadaPorContratoAndObraAndIdpersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
+        return personalcontratoservice.findByJornadaPersonalAndObraAndcontratoList(idpersonal, idobra, idpercont);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/jornadaporidjorncontratopersonalobradto/{idpersona}/{idobra}/{idpercont}/{idperjorn}")
-    public JornadaPersonalContratoDTO showjornadaPorIdjornAndContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idperjorn){
-        return personalcontratoservice.findIdJornadaPersonalAndObraAndContratoDTO(idpersona, idobra, idpercont,idperjorn);
+    @GetMapping("/jornadaporidjorncontratopersonalobradto/{idpersonal}/{idobra}/{idpercont}/{idperjorn}")
+    public JornadaPersonalContratoDTO showjornadaPorIdjornAndContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idperjorn){
+        return personalcontratoservice.findIdJornadaPersonalAndObraAndContratoDTO(idpersonal, idobra, idpercont,idperjorn);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/jornadaporcontratopersonalobradtolist/{idpersona}/{idobra}/{idpercont}")
-    public List<JornadaPersonalContratoDTO> showjornadaPorContratoAndObraAndIdpersonalDtoList(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findJornadasPersonalAndObraAndContratoDTOList(idpersona, idobra, idpercont);
+    @GetMapping("/jornadaporcontratopersonalobradtolist/{idpersonal}/{idobra}/{idpercont}")
+    public List<JornadaPersonalContratoDTO> showjornadaPorContratoAndObraAndIdpersonalDtoList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
+        return personalcontratoservice.findJornadasPersonalAndObraAndContratoDTOList(idpersonal, idobra, idpercont);
     }
 
     @PostMapping("/jornadacontratosave")

@@ -36,43 +36,10 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
 
-            "pcj.diaLunePerjorn, " +
-            "pcj.diaMartPerjorn, " +
-            "pcj.diaMierPerjorn, " +
-            "pcj.diaJuevPerjorn, " +
-            "pcj.diaVierPerjorn, " +
-            "pcj.diaSabaPerjorn, " +
-            "pcj.diaDomiPerjorn, " +
-
-            "pcj.diaLuneInihorPerjorn, " +
-            "pcj.diaLuneFinhorPerjorn, " +
-            "pcj.diaMartInihorPerjorn, " +
-            "pcj.diaMartFinhorPerjorn, " +
-            "pcj.diaMierInihorPerjorn, " +
-            "pcj.diaMierFinhorPerjorn, " +
-            "pcj.diaJuevInihorPerjorn, " +
-            "pcj.diaJuevFinhorPerjorn, " +
-            "pcj.diaVierInihorPerjorn, " +
-            "pcj.diaVierFinhorPerjorn, " +
-            "pcj.diaSabaInihorPerjorn, " +
-            "pcj.diaSabaFinhorPerjorn, " +
-            "pcj.diaDomiInihorPerjorn, " +
-            "pcj.diaDomiFinhorPerjorn, " +
-
-            "pcj.diaLuneInirefPerjorn, " +
-            "pcj.diaLuneFinrefPerjorn, " +
-            "pcj.diaMartInirefPerjorn, " +
-            "pcj.diaMartFinrefPerjorn, " +
-            "pcj.diaMierInirefPerjorn, " +
-            "pcj.diaMierFinrefPerjorn, " +
-            "pcj.diaJuevInirefPerjorn, " +
-            "pcj.diaJuevFinrefPerjorn, " +
-            "pcj.diaVierInirefPerjorn, " +
-            "pcj.diaVierFinrefPerjorn, " +
-            "pcj.diaSabaInirefPerjorn, " +
-            "pcj.diaSabaFinrefPerjorn, " +
-            "pcj.diaDomiInirefPerjorn, " +
-            "pcj.diaDomiFinrefPerjorn, " +
+            "pcj.idDiaPerJorn, " +
+            "pcj.diaInihorPerjorn, " +
+            "pcj.diaFinhorPerjorn, " +
+            "pcj.tipoDiaPerjorn, " +
 
             "pcj.fechaIngPerjorn," +
             "pcj.creaPorPerjorn," +
@@ -95,43 +62,10 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
 
-            "pcj.diaLunePerjorn, " +
-            "pcj.diaMartPerjorn, " +
-            "pcj.diaMierPerjorn, " +
-            "pcj.diaJuevPerjorn, " +
-            "pcj.diaVierPerjorn, " +
-            "pcj.diaSabaPerjorn, " +
-            "pcj.diaDomiPerjorn, " +
-
-            "pcj.diaLuneInihorPerjorn, " +
-            "pcj.diaLuneFinhorPerjorn, " +
-            "pcj.diaMartInihorPerjorn, " +
-            "pcj.diaMartFinhorPerjorn, " +
-            "pcj.diaMierInihorPerjorn, " +
-            "pcj.diaMierFinhorPerjorn, " +
-            "pcj.diaJuevInihorPerjorn, " +
-            "pcj.diaJuevFinhorPerjorn, " +
-            "pcj.diaVierInihorPerjorn, " +
-            "pcj.diaVierFinhorPerjorn, " +
-            "pcj.diaSabaInihorPerjorn, " +
-            "pcj.diaSabaFinhorPerjorn, " +
-            "pcj.diaDomiInihorPerjorn, " +
-            "pcj.diaDomiFinhorPerjorn, " +
-
-            "pcj.diaLuneInirefPerjorn, " +
-            "pcj.diaLuneFinrefPerjorn, " +
-            "pcj.diaMartInirefPerjorn, " +
-            "pcj.diaMartFinrefPerjorn, " +
-            "pcj.diaMierInirefPerjorn, " +
-            "pcj.diaMierFinrefPerjorn, " +
-            "pcj.diaJuevInirefPerjorn, " +
-            "pcj.diaJuevFinrefPerjorn, " +
-            "pcj.diaVierInirefPerjorn, " +
-            "pcj.diaVierFinrefPerjorn, " +
-            "pcj.diaSabaInirefPerjorn, " +
-            "pcj.diaSabaFinrefPerjorn, " +
-            "pcj.diaDomiInirefPerjorn, " +
-            "pcj.diaDomiFinrefPerjorn, " +
+            "pcj.idDiaPerJorn, " +
+            "pcj.diaInihorPerjorn, " +
+            "pcj.diaFinhorPerjorn, " +
+            "pcj.tipoDiaPerjorn, " +
 
             "pcj.fechaIngPerjorn," +
             "pcj.creaPorPerjorn," +

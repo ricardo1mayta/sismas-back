@@ -42,4 +42,11 @@ public class TablastablaRestController {
         return tablastablaservice.getTipoContrato(tipotab);
 
     }
+
+    @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tablascodigotab/{codigotab}")
+    public TablasTabla showPorcodigoTab(@PathVariable Integer codigotab) {
+        return tablastablaservice.findByCodigoTab(codigotab);
+
+    }
 }

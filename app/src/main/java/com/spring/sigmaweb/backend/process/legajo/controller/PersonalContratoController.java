@@ -104,7 +104,7 @@ public class PersonalContratoController {
         }
 
         response.put("mensaje", "El item ha sido creado con éxito!");
-        response.put("Entidad", contratoNew);
+        response.put("contrato", contratoNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
@@ -186,42 +186,11 @@ public class PersonalContratoController {
 
             jornadaInsert.setIdPersonalContPerjorn(persoContrato);
             jornadaInsert.setIdObraPerjorn(jornada.getIdObraPerjorn());
-            jornadaInsert.setDiaLunePerjorn(jornada.getDiaLunePerjorn());
-            jornadaInsert.setDiaMartPerjorn(jornada.getDiaMartPerjorn());
-            jornadaInsert.setDiaMierPerjorn(jornada.getDiaMierPerjorn());
-            jornadaInsert.setDiaJuevPerjorn(jornada.getDiaJuevPerjorn());
-            jornadaInsert.setDiaVierPerjorn(jornada.getDiaVierPerjorn());
-            jornadaInsert.setDiaSabaPerjorn(jornada.getDiaSabaPerjorn());
-            jornadaInsert.setDiaDomiPerjorn(jornada.getDiaDomiPerjorn());
-            jornadaInsert.setDiaLuneInihorPerjorn(jornada.getDiaLuneInihorPerjorn());
-            jornadaInsert.setDiaLuneFinhorPerjorn(jornada.getDiaLuneFinhorPerjorn());
 
-            jornadaInsert.setDiaMartInihorPerjorn(jornada.getDiaMartInihorPerjorn());
-            jornadaInsert.setDiaMartFinhorPerjorn(jornada.getDiaMartFinhorPerjorn());
-            jornadaInsert.setDiaMierInihorPerjorn(jornada.getDiaMierInihorPerjorn());
-            jornadaInsert.setDiaMierFinhorPerjorn(jornada.getDiaMierFinhorPerjorn());
-            jornadaInsert.setDiaJuevInihorPerjorn(jornada.getDiaJuevInihorPerjorn());
-            jornadaInsert.setDiaJuevFinhorPerjorn(jornada.getDiaJuevFinhorPerjorn());
-            jornadaInsert.setDiaVierInihorPerjorn(jornada.getDiaVierInihorPerjorn());
-            jornadaInsert.setDiaVierFinhorPerjorn(jornada.getDiaVierFinhorPerjorn());
-            jornadaInsert.setDiaSabaInihorPerjorn(jornada.getDiaSabaInihorPerjorn());
-            jornadaInsert.setDiaSabaFinhorPerjorn(jornada.getDiaSabaFinhorPerjorn());
-            jornadaInsert.setDiaDomiInihorPerjorn(jornada.getDiaDomiInihorPerjorn());
-            jornadaInsert.setDiaDomiFinhorPerjorn(jornada.getDiaDomiFinhorPerjorn());
-            jornadaInsert.setDiaLuneInirefPerjorn(jornada.getDiaLuneInirefPerjorn());
-            jornadaInsert.setDiaLuneFinrefPerjorn(jornada.getDiaLuneFinrefPerjorn());
-            jornadaInsert.setDiaMartInirefPerjorn(jornada.getDiaMartInirefPerjorn());
-            jornadaInsert.setDiaMartFinrefPerjorn(jornada.getDiaMartFinrefPerjorn());
-            jornadaInsert.setDiaMierInirefPerjorn(jornada.getDiaMierInirefPerjorn());
-            jornadaInsert.setDiaMierFinrefPerjorn(jornada.getDiaMierFinrefPerjorn());
-            jornadaInsert.setDiaJuevInirefPerjorn(jornada.getDiaJuevInirefPerjorn());
-            jornadaInsert.setDiaJuevFinrefPerjorn(jornada.getDiaJuevFinrefPerjorn());
-            jornadaInsert.setDiaVierInirefPerjorn(jornada.getDiaVierInirefPerjorn());
-            jornadaInsert.setDiaVierFinrefPerjorn(jornada.getDiaVierFinrefPerjorn());
-            jornadaInsert.setDiaSabaInirefPerjorn(jornada.getDiaSabaInirefPerjorn());
-            jornadaInsert.setDiaSabaFinrefPerjorn(jornada.getDiaSabaFinrefPerjorn());
-            jornadaInsert.setDiaDomiInirefPerjorn(jornada.getDiaDomiInirefPerjorn());
-            jornadaInsert.setDiaDomiFinrefPerjorn(jornada.getDiaDomiFinrefPerjorn());
+            jornadaInsert.setIdDiaPerJorn(jornada.getIdDiaPerJorn());
+            jornadaInsert.setDiaInihorPerjorn(jornada.getDiaInihorPerjorn());
+            jornadaInsert.setDiaFinhorPerjorn(jornada.getDiaFinhorPerjorn());
+            jornadaInsert.setTipoDiaPerjorn(jornada.getTipoDiaPerjorn());
 
             jornadaInsert.setCreaPorPerjorn(jornada.getCreaPorPerjorn());
             jornadaInsert.setFechaIngPerjorn(jornada.getFechaIngPerjorn());
@@ -245,43 +214,11 @@ public class PersonalContratoController {
         PersonalContratoJornada jornadaAct = personalcontratoservice.findByJornadaPersonalAndObraAndcontrato(idpersonal,obraname, idcontrato, idjornada);
 
         if(jornadaAct != null) {
-            
-            jornadaAct.setDiaLunePerjorn(jornadaDTO.getDiaLunePerjorn());
-            jornadaAct.setDiaMartPerjorn(jornadaDTO.getDiaMartPerjorn());
-            jornadaAct.setDiaMierPerjorn(jornadaDTO.getDiaMierPerjorn());
-            jornadaAct.setDiaJuevPerjorn(jornadaDTO.getDiaJuevPerjorn());
-            jornadaAct.setDiaVierPerjorn(jornadaDTO.getDiaVierPerjorn());
-            jornadaAct.setDiaSabaPerjorn(jornadaDTO.getDiaSabaPerjorn());
-            jornadaAct.setDiaDomiPerjorn(jornadaDTO.getDiaDomiPerjorn());
-            jornadaAct.setDiaLuneInihorPerjorn(jornadaDTO.getDiaLuneInihorPerjorn());
-            jornadaAct.setDiaLuneFinhorPerjorn(jornadaDTO.getDiaLuneFinhorPerjorn());
+            jornadaAct.setIdDiaPerJorn(jornadaDTO.getIdDiaPerJorn());
+            jornadaAct.setDiaInihorPerjorn(jornadaDTO.getDiaInihorPerjorn());
+            jornadaAct.setDiaFinhorPerjorn(jornadaDTO.getDiaFinhorPerjorn());
+            jornadaAct.setTipoDiaPerjorn(jornadaDTO.getTipoDiaPerjorn());
 
-            jornadaAct.setDiaMartInihorPerjorn(jornadaDTO.getDiaMartInihorPerjorn());
-            jornadaAct.setDiaMartFinhorPerjorn(jornadaDTO.getDiaMartFinhorPerjorn());
-            jornadaAct.setDiaMierInihorPerjorn(jornadaDTO.getDiaMierInihorPerjorn());
-            jornadaAct.setDiaMierFinhorPerjorn(jornadaDTO.getDiaMierFinhorPerjorn());
-            jornadaAct.setDiaJuevInihorPerjorn(jornadaDTO.getDiaJuevInihorPerjorn());
-            jornadaAct.setDiaJuevFinhorPerjorn(jornadaDTO.getDiaJuevFinhorPerjorn());
-            jornadaAct.setDiaVierInihorPerjorn(jornadaDTO.getDiaVierInihorPerjorn());
-            jornadaAct.setDiaVierFinhorPerjorn(jornadaDTO.getDiaVierFinhorPerjorn());
-            jornadaAct.setDiaSabaInihorPerjorn(jornadaDTO.getDiaSabaInihorPerjorn());
-            jornadaAct.setDiaSabaFinhorPerjorn(jornadaDTO.getDiaSabaFinhorPerjorn());
-            jornadaAct.setDiaDomiInihorPerjorn(jornadaDTO.getDiaDomiInihorPerjorn());
-            jornadaAct.setDiaDomiFinhorPerjorn(jornadaDTO.getDiaDomiFinhorPerjorn());
-            jornadaAct.setDiaLuneInirefPerjorn(jornadaDTO.getDiaLuneInirefPerjorn());
-            jornadaAct.setDiaLuneFinrefPerjorn(jornadaDTO.getDiaLuneFinrefPerjorn());
-            jornadaAct.setDiaMartInirefPerjorn(jornadaDTO.getDiaMartInirefPerjorn());
-            jornadaAct.setDiaMartFinrefPerjorn(jornadaDTO.getDiaMartFinrefPerjorn());
-            jornadaAct.setDiaMierInirefPerjorn(jornadaDTO.getDiaMierInirefPerjorn());
-            jornadaAct.setDiaMierFinrefPerjorn(jornadaDTO.getDiaMierFinrefPerjorn());
-            jornadaAct.setDiaJuevInirefPerjorn(jornadaDTO.getDiaJuevInirefPerjorn());
-            jornadaAct.setDiaJuevFinrefPerjorn(jornadaDTO.getDiaJuevFinrefPerjorn());
-            jornadaAct.setDiaVierInirefPerjorn(jornadaDTO.getDiaVierInirefPerjorn());
-            jornadaAct.setDiaVierFinrefPerjorn(jornadaDTO.getDiaVierFinrefPerjorn());
-            jornadaAct.setDiaSabaInirefPerjorn(jornadaDTO.getDiaSabaInirefPerjorn());
-            jornadaAct.setDiaSabaFinrefPerjorn(jornadaDTO.getDiaSabaFinrefPerjorn());
-            jornadaAct.setDiaDomiInirefPerjorn(jornadaDTO.getDiaDomiInirefPerjorn());
-            jornadaAct.setDiaDomiFinrefPerjorn(jornadaDTO.getDiaDomiFinrefPerjorn());
 
             jornadaAct.setCreaPorPerjorn(jornadaDTO.getCreaPorPerjorn());
             jornadaAct.setFechaIngPerjorn(jornadaDTO.getFechaIngPerjorn());

@@ -32,12 +32,12 @@ public class PersonalContrato implements Serializable {
     private String urlDocumentoPercont;
 
     @Column(nullable = false, name = "fechaini_percont")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIniPercont;
 
     @Column(nullable = true, name = "fechafin_percont")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinPercont;
 

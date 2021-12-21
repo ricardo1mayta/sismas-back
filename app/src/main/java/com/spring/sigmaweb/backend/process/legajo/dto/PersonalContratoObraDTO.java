@@ -19,11 +19,11 @@ public class PersonalContratoObraDTO implements Serializable {
     private String tipoContrato;
     private String urlDocumentoPercont;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIniPercont;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinPercont;
 

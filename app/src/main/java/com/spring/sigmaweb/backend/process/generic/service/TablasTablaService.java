@@ -1,12 +1,15 @@
 package com.spring.sigmaweb.backend.process.generic.service;
 
+import com.spring.sigmaweb.backend.process.core.dto.SidenavItemDTO;
+import com.spring.sigmaweb.backend.process.generic.dto.GroupContratos;
+import com.spring.sigmaweb.backend.process.generic.dto.TipoContratoDTO;
 import com.spring.sigmaweb.backend.process.generic.model.TablasTabla;
 import com.spring.sigmaweb.backend.process.generic.repository.ITablasTablaDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,9 +51,60 @@ public class TablasTablaService implements ITablasTablaService{
     }
 
     @Override
+    public List<GroupContratos> getTipoContrato(Integer tipotab) {
+
+        List<TipoContratoDTO> resultB = tablastablaDao.getTipoContrato(tipotab);
+        List<GroupContratos> result = new ArrayList<GroupContratos>();
+        GroupContratos item = null;
+        Integer old=0;
+
+        List<TablasTabla> newTipo = new ArrayList<TablasTabla>();
+
+
+        for (TipoContratoDTO row:resultB ) {
+
+            if (!old.equals(row.getCodigoTab()) ) {
+
+                if(old != 0) {
+                    item.setHijos(newTipo);
+
+                    result.add(item);
+                    newTipo = new ArrayList<TablasTabla>();
+                }
+
+                item = new GroupContratos(row.getCodigoTab(),row.getDescripTab(), null);
+                if(row.getTipos() == null){
+                    TablasTabla tablasequal= new TablasTabla();
+                    tablasequal.setCodigoTab(item.getCodigoTab());
+                    tablasequal.setDescripTab(item.getDescripTab());
+                    tablasequal.setDescrip2Tab(item.getDescripTab());
+                    newTipo.add(tablasequal);
+                } else {
+                    newTipo.add(row.getTipos());
+                }
+
+
+                old = row.getCodigoTab();
+
+            } else {
+                newTipo.add(row.getTipos());
+                old = row.getCodigoTab();
+            }
+        }
+        item.setHijos(newTipo);
+        result.add(item);
+
+        return result;
+        //return tablastablaDao.getTipoContrato(tipotab);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public TablasTabla findByCodigoTab(Integer codigoTab) {
         // TODO Auto-generated method stub
+
         return tablastablaDao.findByCodigoTab(codigoTab);
+
+
     }
 }

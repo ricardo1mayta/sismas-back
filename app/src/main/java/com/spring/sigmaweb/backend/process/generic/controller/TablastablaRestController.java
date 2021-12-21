@@ -1,5 +1,7 @@
 package com.spring.sigmaweb.backend.process.generic.controller;
 
+import com.spring.sigmaweb.backend.process.generic.dto.GroupContratos;
+import com.spring.sigmaweb.backend.process.generic.dto.TipoContratoDTO;
 import com.spring.sigmaweb.backend.process.generic.model.TablasTabla;
 import com.spring.sigmaweb.backend.process.generic.service.ITablasTablaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,13 @@ public class TablastablaRestController {
     @GetMapping("/tablastipolistnotin/{tipotab}/{listcodigos}")
     public List<TablasTabla> showListCodigoInNot(@PathVariable Integer tipotab,@PathVariable String listcodigos) {
         return tablastablaservice.findByCodigoListNot(tipotab, listcodigos);
+
+    }
+
+    @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tablastipocontrato/{tipotab}")
+    public List<GroupContratos> showtiposcontrato(@PathVariable Integer tipotab) {
+        return tablastablaservice.getTipoContrato(tipotab);
 
     }
 }

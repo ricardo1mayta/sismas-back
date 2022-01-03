@@ -20,7 +20,7 @@ public class PersonalContrato implements Serializable {
     @Column(name = "id_obra_percont", nullable = false, length = 6)
     private String idObraPercont;
 
-    @JsonIgnoreProperties(value = { "PersonalContrato", "personalDependiente", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "idPersonalPerconv", "PersonalContrato", "personalDependiente", "hibernateLazyInitializer", "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_personal_percont", foreignKey = @ForeignKey(name = "fk_contrato_personal"))
     private Personal idPersonalPercont;

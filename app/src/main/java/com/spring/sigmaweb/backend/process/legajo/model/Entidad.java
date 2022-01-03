@@ -125,6 +125,9 @@ public class Entidad implements Serializable {
     @Column(nullable = true, name = "modipor_ent", length = 30)
     private String modiPorEnt;
 
+    @Column(nullable = false, name = "estado_ent", columnDefinition = "boolean default true")
+    private Boolean estadoEnt;
+
     @PrePersist
     public void prePersist() {
         this.fechaIngEnt = new Date();
@@ -407,6 +410,14 @@ public class Entidad implements Serializable {
 
     public void setModiPorEnt(String modiPorEnt) {
         this.modiPorEnt = modiPorEnt;
+    }
+
+    public Boolean getEstadoEnt() {
+        return estadoEnt;
+    }
+
+    public void setEstadoEnt(Boolean estadoEnt) {
+        this.estadoEnt = estadoEnt;
     }
 
     private static final long serialVersionUID = 1L;

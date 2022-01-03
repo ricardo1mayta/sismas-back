@@ -24,13 +24,11 @@ public class JornadaPersonalContratoDTO implements Serializable {
     private String tipoDiaPerjorn;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPerjorn;
 
     private String creaPorPerjorn;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPerjorn;
 
     private String modiPorPerjorn;

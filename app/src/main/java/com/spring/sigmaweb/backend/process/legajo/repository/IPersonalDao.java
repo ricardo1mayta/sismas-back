@@ -200,7 +200,8 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "p.fechaAutorizaPer ) "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
-            + "where o.idobra=?1 "
+            + "where o.idobra=?1 " +
+            "order by ps.apePaternoPers, ps.apeMaternoPers, ps.nombrePers"
     )
     public List<PersonalDatosListDTO> findByIdPersonalAndObraList(String obraname);
 
@@ -221,7 +222,8 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "p.fechaAutorizaPer ) "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
-            + "where o.idobra=?1 and p.estadoPer = ?2"
+            + "where o.idobra=?1 and p.estadoPer = ?2 "+
+            "order by ps.apePaternoPers, ps.apeMaternoPers, ps.nombrePers"
     )
     public List<PersonalDatosListDTO> findByObraAndEstadoPerList(String obraname, Boolean estadoper);
 
@@ -242,7 +244,8 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "p.fechaAutorizaPer ) "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
-            + "where o.idobra=?1 and p.estadoPer = ( case ?2 when 1 then true when 0 then false else p.estadoPer end)"
+            + "where o.idobra=?1 and p.estadoPer = ( case ?2 when 1 then true when 0 then false else p.estadoPer end) "+
+            "order by ps.apePaternoPers, ps.apeMaternoPers, ps.nombrePers"
     )
     public List<PersonalDatosListDTO> findByObraAndEstadoPerTestList(String obraname, Integer estadoper);
 
@@ -329,7 +332,7 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
     )
     public PersonalDTO findByObraAndidPersonalAndCodigoPer(String obraname, Long idpersonal, String codper);
 
-    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosBancarios (p.idPersonal,"
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosBancariosDTO (p.idPersonal,"
             + "	o.idobra,"
             + "	ps.nombrePers,"
             + "	ps.apePaternoPers,"
@@ -358,7 +361,7 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + " left join Entidad ec on (p.idEntidadCtsPer = ec.idEntidad) "
             + "where o.idobra = ?1 and p.idPersonal=?2 "
     )
-    public PersonalDatosBancarios findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
+    public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
 
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
@@ -366,4 +369,4 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "where p.idPersonal = ?1")
     public Integer updateFechaConfirPersonal(Long idpersonal);
 
-}
+  }

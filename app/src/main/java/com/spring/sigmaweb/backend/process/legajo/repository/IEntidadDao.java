@@ -32,7 +32,8 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
             +"(case e.flgSaludEnt when true then 'Si' else 'No' end) as flgSaludEnt,"
             +"e.creaPorEnt, "
             +"e.modiPorEnt, "
-            +"e.fechaIngEnt) "
+            +"e.fechaIngEnt," +
+            "e.estadoEnt) "
             + "from Entidad e inner join Obra o on (e.obraEnt = o.idobra) "
             + "where o.idobra = ?1 "
     )
@@ -54,7 +55,8 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
             +"(case e.flgSaludEnt when true then 'Si' else 'No' end) as flgSaludEnt,"
             +"e.creaPorEnt, "
             + "e.modiPorEnt, "
-            +"e.fechaIngEnt) "
+            +"e.fechaIngEnt," +
+            "e.estadoEnt) "
             + "from Entidad e inner join Obra o on (e.obraEnt = o.idobra) "
             + "where e.idEntidad=?1 and o.idobra = ?2 "
     )
@@ -86,5 +88,19 @@ public interface IEntidadDao extends CrudRepository<Entidad, Long> {
             + "where e.tipoEnt=?1 and o.idobra = ?2 and e.flgPrevisionalEnt=true"
     )
     public List<EntidadListSelectDTO> findByTipoEntAndFlgPrevisionalEntAndObra(Integer tipoEnt, String idobra);
+
+    @Query( "select new com.spring.sigmaweb.backend.process.legajo.dto.EntidadListSelectDTO(e.idEntidad, "
+            + "o.idobra, "
+            + "e.rucEnt, "
+            + "e.nombreEnt, "
+            + "e.nombreComerEnt, "
+            + "e.telefonoEnt, "
+            + "e.urlEnt, "
+            + "e.emailEnt) "
+            + "from Entidad e inner join Obra o on (e.obraEnt = o.idobra) "
+            + "where o.idobra = ?1 and e.flgProveedorEnt=?2 and e.flgPrevisionalEnt=?3 and e.flgSaludEnt=?4 and e.flgEduSupEnt=?5 and e.flgFinacieraEnt=?6" +
+            " and e.estadoEnt = ?7"
+    )
+    public List<EntidadListSelectDTO> findByEntidadTipoFlgAndEstadoAndObra(String idobra, Boolean esproveedor, Boolean esprevisor, Boolean essalud, Boolean esedusup, Boolean esFinanciera, Boolean estado );
 
 }

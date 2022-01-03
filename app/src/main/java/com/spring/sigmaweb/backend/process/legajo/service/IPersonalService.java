@@ -36,4 +36,7 @@ public interface IPersonalService {
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist);
 
     public List<PersonalHistoricoDTO> buscarPorIdPersonalAndObraAndTipo(Long idpers, String idobra, String tipo);
+
+    //Financiero
+    public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
 }

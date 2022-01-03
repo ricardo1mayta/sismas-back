@@ -30,7 +30,9 @@ public class EntidadDataSelectDTO implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngEnt;
 
-    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, Integer tipoEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt) {
+    private Boolean estadoEnt;
+
+    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, Integer tipoEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt, Boolean estadoEnt) {
         this.idEntidad = idEntidad;
         this.idobra = idobra;
         this.rucEnt = rucEnt;
@@ -48,6 +50,7 @@ public class EntidadDataSelectDTO implements Serializable {
         this.creaPorEnt = creaPorEnt;
         this.modiPorEnt = modiPorEnt;
         this.fechaIngEnt = fechaIngEnt;
+        this.estadoEnt = estadoEnt;
     }
 
     public EntidadDataSelectDTO() {
@@ -189,6 +192,14 @@ public class EntidadDataSelectDTO implements Serializable {
 
     public void setTipoEnt(Integer tipoEnt) {
         this.tipoEnt = tipoEnt;
+    }
+
+    public Boolean getEstadoEnt() {
+        return estadoEnt;
+    }
+
+    public void setEstadoEnt(Boolean estadoEnt) {
+        this.estadoEnt = estadoEnt;
     }
 
     private static final long serialVersionUID = 1L;

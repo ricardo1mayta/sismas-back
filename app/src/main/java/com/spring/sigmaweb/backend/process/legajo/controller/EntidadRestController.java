@@ -59,6 +59,13 @@ public class EntidadRestController {
         return entidadservice.findByIdEntidadObra(idEntidad,idobra);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/entidadesporflgandobra/{idobra}/{esproveedor}/{esprevisor}/{essalud}/{esedusup}/{esFinanciera}/{estado}")
+    public List<EntidadListSelectDTO> showEntidadesPorFglyObra(@PathVariable String idobra, @PathVariable Boolean esproveedor, @PathVariable Boolean esprevisor, @PathVariable Boolean essalud, @PathVariable Boolean esedusup, @PathVariable Boolean esFinanciera, @PathVariable Boolean estado){
+        System.out.println(esproveedor);
+        return entidadservice.findByEntidadTipoFlgAndEstadoAndObra(idobra, esproveedor, esprevisor, essalud, esedusup, esFinanciera, estado);
+    }
+
     @PostMapping("/entidadsave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody EntidadDataSelectDTO entidad, BindingResult result) {
@@ -106,6 +113,7 @@ public class EntidadRestController {
             entidadInsert.setFlgSaludEnt(flgSaludEnt);
             entidadInsert.setCreaPorEnt(entidad.getCreaPorEnt());
             entidadInsert.setFechaIngEnt(entidad.getFechaIngEnt());
+            entidadInsert.setEstadoEnt(entidad.getEstadoEnt());
 
             entidadNew = entidadservice.save(entidadInsert);
 

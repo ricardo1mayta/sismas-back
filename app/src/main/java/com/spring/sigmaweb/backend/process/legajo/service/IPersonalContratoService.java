@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
@@ -30,6 +31,10 @@ public interface IPersonalContratoService {
     public JornadaPersonalContratoDTO findIdJornadaPersonalAndObraAndContratoDTO(Long idpersona, String idobra, Long idpercont, Long idperjorn);
 
     public List<JornadaPersonalContratoDTO> findJornadasPersonalAndObraAndContratoDTOList(Long idpersona, String idobra, Long idpercont);
+
+    public void deleteAll(List<PersonalContratoJornada> jornadas);
+
+    public void delete(PersonalContratoJornada jornada);
 
     public PersonalContratoJornada save (PersonalContratoJornada jornada);
 

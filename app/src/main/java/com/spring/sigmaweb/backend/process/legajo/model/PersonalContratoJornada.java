@@ -11,9 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "mo_personalcontratosjornada")
 public class PersonalContratoJornada implements Serializable {
-
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_perjorn", nullable = false, unique = true)
     private Long idPerjorn;
 

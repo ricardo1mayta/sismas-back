@@ -21,5 +21,5 @@ public interface IEntidadService {
 
     public Entidad save(Entidad entidad);
 
-
+    public List<EntidadListSelectDTO> findByEntidadTipoFlgAndEstadoAndObra(String idobra, Boolean esproveedor, Boolean esprevisor, Boolean essalud, Boolean esedusup, Boolean esFinanciera, Boolean estado );
 }

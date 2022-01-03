@@ -53,4 +53,9 @@ public class EntidadService implements IEntidadService{
     public Entidad save(Entidad entidad) {
         return entidadDao.save(entidad);
     }
+
+    @Override
+    public List<EntidadListSelectDTO> findByEntidadTipoFlgAndEstadoAndObra(String idobra, Boolean esproveedor, Boolean esprevisor, Boolean essalud, Boolean esedusup, Boolean esFinanciera, Boolean estado) {
+        return entidadDao.findByEntidadTipoFlgAndEstadoAndObra(idobra, esproveedor, esprevisor, essalud, esedusup, esFinanciera, estado);
+    }
 }

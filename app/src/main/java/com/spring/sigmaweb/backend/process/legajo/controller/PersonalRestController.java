@@ -104,6 +104,12 @@ public class PersonalRestController {
         return personalservice.findByCodigoPerAndIdObra(obraname, codigoPer);
     }
 
+    //datos financieros
+    @Secured({"ROLE_PERS","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/personalobrainfofinanciera/{obraname}/{idpersonal}")
+    public PersonalDatosBancariosDTO showpersonalInfoFinanciera( @PathVariable String obraname, @PathVariable Long idpersonal) {
+        return personalservice.findByObraAndidPersonalParaInfoBancario(obraname, idpersonal);
+    }
 
 
     @PutMapping("/personalupdatefechaConfir")
@@ -477,6 +483,22 @@ public class PersonalRestController {
         PersonalAct.setNombreCompPolizaPer(personalDTO.getNombreCompPolizaPer());
         PersonalAct.setBeneficiarioPolizaPer(personalDTO.getBeneficiarioPolizaPer());
         PersonalAct.setFechaModiPer(new Date());
+
+        return personalservice.save(PersonalAct);
+    }
+
+    @PutMapping("/personalfinancieroupdate/{idpersonal}/{obraname}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Personal updatepersonalInfoFinancieraDTO(@RequestBody PersonalDatosBancariosDTO personalDTO, @PathVariable Long idpersonal, @PathVariable String obraname) {
+        Personal PersonalAct = personalservice.findByIdPersonalAndObraname(idpersonal, obraname);
+
+        PersonalAct.setIdEntidadHaberesPer(personalDTO.getIdEntidadHaberesPer());
+        PersonalAct.setIdEntidadCtsPer(personalDTO.getIdEntidadCtsPer());
+        PersonalAct.setIdTipoMonedaCtsPer(personalDTO.getIdTipoMonedaCtsPer());
+        PersonalAct.setNroCtabacHaberesper(personalDTO.getNroCtabacHaberesper());
+        PersonalAct.setNroCtabacCtsper(personalDTO.getNroCtabacCtsper());
+        PersonalAct.setNroCtaintbacHaberesper(personalDTO.getNroCtaintbacHaberesper());
+        PersonalAct.setNroCtaintbacCtsper(personalDTO.getNroCtaintbacCtsper());
 
         return personalservice.save(PersonalAct);
     }

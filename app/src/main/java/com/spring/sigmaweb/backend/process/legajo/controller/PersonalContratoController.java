@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
@@ -162,11 +163,11 @@ public class PersonalContratoController {
 
     @PostMapping("/jornadacontratosave")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@RequestBody JornadaPersonalContratoDTO jornada, BindingResult result) {
+    public ResponseEntity<?> create(@RequestBody List<JornadaPersonalContratoDTO> jornada, BindingResult result) {
         PersonalContratoJornada jornadaNew = null;
         PersonalContratoJornada jornadaInsert = null;
 
-        PersonalContrato persoContrato = personalcontratoservice.findByPersonalAndObraAndcontrato(jornada.getIdPersonal(), jornada.getIdObraPerjorn(), jornada.getIdPerCont());
+        PersonalContrato persoContrato = personalcontratoservice.findByPersonalAndObraAndcontrato(jornada.get(0).getIdPersonal(), jornada.get(0).getIdObraPerjorn(), jornada.get(0).getIdPerCont());
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -181,21 +182,24 @@ public class PersonalContratoController {
         }
 
         try {
+            for (JornadaPersonalContratoDTO jorn : jornada) {
+                System.out.println(jorn.getIdPerjorn());
+                jornadaInsert = new PersonalContratoJornada();
+                jornadaInsert.setIdPerjorn(jorn.getIdPerjorn());
+                jornadaInsert.setIdPersonalContPerjorn(persoContrato);
+                jornadaInsert.setIdObraPerjorn(jorn.getIdObraPerjorn());
 
-            jornadaInsert = new PersonalContratoJornada();
+                jornadaInsert.setIdDiaPerJorn(jorn.getIdDiaPerJorn());
+                jornadaInsert.setDiaInihorPerjorn(jorn.getDiaInihorPerjorn());
+                jornadaInsert.setDiaFinhorPerjorn(jorn.getDiaFinhorPerjorn());
+                jornadaInsert.setTipoDiaPerjorn(jorn.getTipoDiaPerjorn());
 
-            jornadaInsert.setIdPersonalContPerjorn(persoContrato);
-            jornadaInsert.setIdObraPerjorn(jornada.getIdObraPerjorn());
+                jornadaInsert.setCreaPorPerjorn(jorn.getCreaPorPerjorn());
+                jornadaInsert.setFechaIngPerjorn(jorn.getFechaIngPerjorn());
 
-            jornadaInsert.setIdDiaPerJorn(jornada.getIdDiaPerJorn());
-            jornadaInsert.setDiaInihorPerjorn(jornada.getDiaInihorPerjorn());
-            jornadaInsert.setDiaFinhorPerjorn(jornada.getDiaFinhorPerjorn());
-            jornadaInsert.setTipoDiaPerjorn(jornada.getTipoDiaPerjorn());
+                jornadaNew = personalcontratoservice.save(jornadaInsert);
 
-            jornadaInsert.setCreaPorPerjorn(jornada.getCreaPorPerjorn());
-            jornadaInsert.setFechaIngPerjorn(jornada.getFechaIngPerjorn());
-
-            jornadaNew = personalcontratoservice.save(jornadaInsert);
+            }
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -224,6 +228,26 @@ public class PersonalContratoController {
             jornadaAct.setFechaIngPerjorn(jornadaDTO.getFechaIngPerjorn());
         }
         return personalcontratoservice.save(jornadaAct);
+    }
+
+    @Secured({"ROLE_ADMI"})
+    @DeleteMapping("/jornadadeleteall/{idpersonal}/{obraname}/{idcontrato}")
+    public ResponseEntity<?> deleteAll(@PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idcontrato){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            List<PersonalContratoJornada> jornadaDelete = personalcontratoservice.findByJornadaPersonalAndObraAndcontratoList(idpersonal, obraname, idcontrato);
+            System.out.println(jornadaDelete.size());
+            if(jornadaDelete.size()>0){
+                personalcontratoservice.deleteAll(jornadaDelete);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar jornada");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se eliminaron las jornadas del contrato");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 

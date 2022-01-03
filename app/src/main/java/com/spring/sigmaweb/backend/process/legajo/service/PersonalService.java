@@ -110,6 +110,10 @@ public class PersonalService implements IPersonalService{
         return personalHistoricoDao.buscarPorIdPersonalAndObraAndTipo(idpers, idobra, tipo);
     }
 
+    @Override
+    public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal) {
+        return personalDao.findByObraAndidPersonalParaInfoBancario(obraname, idpersonal);
+    }
 
 
 }

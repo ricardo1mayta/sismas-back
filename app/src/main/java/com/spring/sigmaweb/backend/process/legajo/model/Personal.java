@@ -211,7 +211,7 @@ public class Personal implements Serializable {
     private Long idEntidadCtsPer;
 
     @Column(nullable = true, name = "idtipomoneda_cts_per")
-    private Long idTipoMonedaCtsPer;
+    private Integer idTipoMonedaCtsPer;
 
     @Column(nullable = true, length = 100, name = "nroctabac_haberes_per")
     private String nroCtabacHaberesper;
@@ -650,11 +650,11 @@ public class Personal implements Serializable {
         this.idEntidadCtsPer = idEntidadCtsPer;
     }
 
-    public Long getIdTipoMonedaCtsPer() {
+    public Integer getIdTipoMonedaCtsPer() {
         return idTipoMonedaCtsPer;
     }
 
-    public void setIdTipoMonedaCtsPer(Long idTipoMonedaCtsPer) {
+    public void setIdTipoMonedaCtsPer(Integer idTipoMonedaCtsPer) {
         this.idTipoMonedaCtsPer = idTipoMonedaCtsPer;
     }
 

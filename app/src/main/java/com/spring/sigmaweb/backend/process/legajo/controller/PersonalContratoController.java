@@ -105,7 +105,7 @@ public class PersonalContratoController {
         }
 
         response.put("mensaje", "El item ha sido creado con éxito!");
-        response.put("contrato", contratoNew);
+        response.put("personalcargo", contratoNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
@@ -183,7 +183,7 @@ public class PersonalContratoController {
 
         try {
             for (JornadaPersonalContratoDTO jorn : jornada) {
-                System.out.println(jorn.getIdPerjorn());
+
                 jornadaInsert = new PersonalContratoJornada();
                 jornadaInsert.setIdPerjorn(jorn.getIdPerjorn());
                 jornadaInsert.setIdPersonalContPerjorn(persoContrato);

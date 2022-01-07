@@ -2,7 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.repository;
 
 
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
+
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

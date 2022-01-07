@@ -114,7 +114,7 @@ public class Entidad implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngEnt;
 
-    @Column(nullable = false, name = "creapor_ent", length = 30)
+    @Column(nullable = false, name = "creapor_ent", length = 100)
     private String creaPorEnt;
 
     @Column(nullable = true, name = "fechamodi_ent")
@@ -122,7 +122,7 @@ public class Entidad implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiEnt;
 
-    @Column(nullable = true, name = "modipor_ent", length = 30)
+    @Column(nullable = true, name = "modipor_ent", length = 100)
     private String modiPorEnt;
 
     @Column(nullable = false, name = "estado_ent", columnDefinition = "boolean default true")

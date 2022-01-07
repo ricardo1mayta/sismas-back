@@ -62,7 +62,7 @@ public class EntidadRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/entidadesporflgandobra/{idobra}/{esproveedor}/{esprevisor}/{essalud}/{esedusup}/{esFinanciera}/{estado}")
     public List<EntidadListSelectDTO> showEntidadesPorFglyObra(@PathVariable String idobra, @PathVariable Boolean esproveedor, @PathVariable Boolean esprevisor, @PathVariable Boolean essalud, @PathVariable Boolean esedusup, @PathVariable Boolean esFinanciera, @PathVariable Boolean estado){
-        System.out.println(esproveedor);
+
         return entidadservice.findByEntidadTipoFlgAndEstadoAndObra(idobra, esproveedor, esprevisor, essalud, esedusup, esFinanciera, estado);
     }
 

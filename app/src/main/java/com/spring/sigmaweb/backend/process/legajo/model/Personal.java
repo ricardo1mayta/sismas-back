@@ -233,6 +233,22 @@ public class Personal implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalHist", cascade = CascadeType.ALL)
     private List<PersonalHistorico> historico;
 
+    @JsonIgnoreProperties({ "idPersonalPercont", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPercont", cascade = CascadeType.ALL)
+    private List<PersonalContrato> personalContrato;
+
+    @JsonIgnoreProperties({ "idPersonalPerconv", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerconv", cascade = CascadeType.ALL)
+    private List<PersonalConvenio> personalConvenio;
+
+    @JsonIgnoreProperties({ "idPersonalFilePer", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalFilePer", cascade = CascadeType.ALL)
+    private List<DocumentEmployee> documentEmployee;
+
+    @JsonIgnoreProperties({ "idPersonalPercargo", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPercargo", cascade = CascadeType.ALL)
+    private List<PersonalCargo> personalCargo;
+
     @PrePersist
     public void prePersist() {
         this.personalDependiente = new ArrayList<>();

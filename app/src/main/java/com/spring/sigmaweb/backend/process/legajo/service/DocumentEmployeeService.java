@@ -97,6 +97,8 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
                 indexTipo = 3; break;
             case "CONVENIO" :
                 indexTipo = 4; break;
+            case "DESVINCDOC":
+                indexTipo = 31; break;
         }
 
         Double divide = Double.parseDouble(((idpersonal.toString() + idIPadre.toString()+"").length() / 3 )+"");
@@ -187,6 +189,12 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     @Transactional(readOnly = true)
     public PersonalDocDesvDTO findDesvinculacionAndIdObraAndId(Long perdesv, String idobra, Long idperentr) {
         return personaldocdesvDao.findDesvinculacionAndIdObraAndId(perdesv, idobra, idperentr);
+    }
+
+    @Override
+    @Transactional
+    public PersonalDocDesvinculacion saveDDoc(PersonalDocDesvinculacion perdocdesv) {
+        return personaldocdesvDao.save(perdocdesv);
     }
 
 

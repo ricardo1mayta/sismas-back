@@ -183,6 +183,61 @@ public class PersonalDEsvinculacionRestController {
         return documentoemployeeservice.findDesvinculacionAndIdObraAndId(perdesv, idobra, idperentr);
     }
 
+    @PostMapping("/personaldocdesvsave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createPersonalDocDesv(@RequestBody PersonalDocDesvDTO docDesvPersNew, BindingResult result) {
+        PersonalDocDesvinculacion docDesvPersonalNew = null;
+        PersonalDocDesvinculacion docDesvPersonalInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            docDesvPersonalInsert = new PersonalDocDesvinculacion();
+            docDesvPersonalInsert.setIdPerdesvPerentr (docDesvPersNew.getIdPerdesvPerentr());
+            docDesvPersonalInsert.setIdObraPerentr(docDesvPersNew.getIdObraPerentr());
+            docDesvPersonalInsert.setIdTipoDocDesvPerentr(docDesvPersNew.getIdTipoDocDesvPerentr());
+            docDesvPersonalInsert.setFlgEntregoPerentr(docDesvPersNew.getFlgEntregoPerentr());
+            docDesvPersonalInsert.setMontoPerentr(docDesvPersNew.getMontoPerentr());
+            docDesvPersonalInsert.setFechaEjecucionPerentr(docDesvPersNew.getFechaEjecucionPerentr());
+            docDesvPersonalInsert.setIdResponsablePerentr(docDesvPersNew.getIdResponsablePerentr());
+
+            docDesvPersonalNew = documentoemployeeservice.saveDDoc(docDesvPersonalInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personaldocdesvinculacion", docDesvPersonalNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+
+    @PutMapping("/personaldocdesvupdate/{idperdesv}/{obraname}/{idperentr}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonalDocDesvinculacion updatePersonalDocDesvDTO  (@RequestBody PersonalDocDesvDTO desvinculacionDTO, @PathVariable Long idperdesv, @PathVariable String obraname, @PathVariable Long idperentr) {
+        PersonalDocDesvinculacion personalDocDesvAct = documentoemployeeservice.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idperentr,idperdesv, obraname);
+        if(personalDocDesvAct != null) {
+
+            personalDocDesvAct.setFlgEntregoPerentr(desvinculacionDTO.getFlgEntregoPerentr());
+            personalDocDesvAct.setMontoPerentr(desvinculacionDTO.getMontoPerentr());
+            personalDocDesvAct.setFechaEjecucionPerentr(desvinculacionDTO.getFechaEjecucionPerentr());
+        }
+
+        return documentoemployeeservice.saveDDoc(personalDocDesvAct);
+
+    }
 
 
 

@@ -19,14 +19,14 @@ public class PersonalDocDesvDTO implements Serializable {
 
 
     private Boolean flgEntregoPerentr;
+    private Double montoPerentr;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaEjecucionPerentr;
 
     private String idResponsablePerentr;
 
-    public PersonalDocDesvDTO(Long idPerentr, Long idPerdesvPerentr, String idObraPerentr, Long idTipoDocDesvPerentr, String descripcionDocdesv, String tipoDocdesv, String descripcionGrupoDocdesv, Boolean flgInsertarMontoDocdesv, Boolean flgAdjuntarFileDocdesv, Boolean flgEntregoPerentr, Date fechaEjecucionPerentr, String idResponsablePerentr) {
-        super();
+    public PersonalDocDesvDTO(Long idPerentr, Long idPerdesvPerentr, String idObraPerentr, Long idTipoDocDesvPerentr, String descripcionDocdesv, String tipoDocdesv, String descripcionGrupoDocdesv, Boolean flgInsertarMontoDocdesv, Boolean flgAdjuntarFileDocdesv, Boolean flgEntregoPerentr, Double montoPerentr, Date fechaEjecucionPerentr, String idResponsablePerentr) {
         this.idPerentr = idPerentr;
         this.idPerdesvPerentr = idPerdesvPerentr;
         this.idObraPerentr = idObraPerentr;
@@ -37,6 +37,7 @@ public class PersonalDocDesvDTO implements Serializable {
         this.flgInsertarMontoDocdesv = flgInsertarMontoDocdesv;
         this.flgAdjuntarFileDocdesv = flgAdjuntarFileDocdesv;
         this.flgEntregoPerentr = flgEntregoPerentr;
+        this.montoPerentr = montoPerentr;
         this.fechaEjecucionPerentr = fechaEjecucionPerentr;
         this.idResponsablePerentr = idResponsablePerentr;
     }
@@ -140,6 +141,14 @@ public class PersonalDocDesvDTO implements Serializable {
 
     public void setIdResponsablePerentr(String idResponsablePerentr) {
         this.idResponsablePerentr = idResponsablePerentr;
+    }
+
+    public Double getMontoPerentr() {
+        return montoPerentr;
+    }
+
+    public void setMontoPerentr(Double montoPerentr) {
+        this.montoPerentr = montoPerentr;
     }
 
     private static final long serialVersionUID = 1L;

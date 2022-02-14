@@ -51,4 +51,6 @@ public interface IDocumentEmployeeService {
     public List<PersonalDocDesvDTO> findDesvinculacionAndIdObralist(Long perdesv, String idobra);
 
     public PersonalDocDesvDTO findDesvinculacionAndIdObraAndId(Long perdesv, String idobra, Long idperentr);
+
+    public PersonalDocDesvinculacion saveDDoc( PersonalDocDesvinculacion perdocdesv);
 }

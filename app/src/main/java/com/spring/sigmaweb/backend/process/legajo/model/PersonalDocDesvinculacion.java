@@ -26,6 +26,9 @@ public class PersonalDocDesvinculacion implements Serializable {
     @Column(nullable = false, name = "flg_entrego_perentr", columnDefinition = "boolean default false")
     private Boolean flgEntregoPerentr;
 
+    @Column(nullable = false,  name = "monto_perentr")
+    private Double montoPerentr;
+
     @Column(nullable = false, name = "fechaejecucion_perentr")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
@@ -88,6 +91,14 @@ public class PersonalDocDesvinculacion implements Serializable {
 
     public void setIdResponsablePerentr(String idResponsablePerentr) {
         this.idResponsablePerentr = idResponsablePerentr;
+    }
+
+    public Double getMontoPerentr() {
+        return montoPerentr;
+    }
+
+    public void setMontoPerentr(Double montoPerentr) {
+        this.montoPerentr = montoPerentr;
     }
 
     private static final long serialVersionUID = 1L;

@@ -25,6 +25,7 @@ public interface IPersonalDocDesvinculacionDao extends CrudRepository<PersonalDo
             "dv.flgAdjuntarFileDocdesv," +
 
             "pdd.flgEntregoPerentr, " +
+            "pdd.montoPerentr, " +
             "pdd.fechaEjecucionPerentr," +
             "pdd.idResponsablePerentr" +
             ") " +
@@ -46,6 +47,7 @@ public interface IPersonalDocDesvinculacionDao extends CrudRepository<PersonalDo
             "dv.flgAdjuntarFileDocdesv," +
 
             "pdd.flgEntregoPerentr, " +
+            "pdd.montoPerentr, " +
             "pdd.fechaEjecucionPerentr," +
             "pdd.idResponsablePerentr" +
             ") " +

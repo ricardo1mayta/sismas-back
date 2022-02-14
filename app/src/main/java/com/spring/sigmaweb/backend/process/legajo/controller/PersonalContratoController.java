@@ -1,13 +1,15 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
-import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
+import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,9 @@ public class PersonalContratoController {
     @Autowired
     private IPersonalService personalservice;
 
+    @Autowired
+    private IPersonalVidaLaboralService personalvidalaboralservice;
+
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/contratoidcontrato/{idPerCont}")
     public PersonalContrato showContratoPorIdContrato(@PathVariable Long idPerCont){
@@ -38,28 +43,35 @@ public class PersonalContratoController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoidcontratoobrapersonal/{idpersonal}/{idobra}/{idpercont}")
-    public PersonalContrato showContratoPorIdContratoAndObraAndIdpersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, idobra, idpercont);
+    @GetMapping("/contratoidcontratoobrapersonal/{idpersonal}/{idobra}/{idpercont}/{idpervila}")
+    public PersonalContrato showContratoPorIdContratoAndObraAndIdpersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idpervila){
+        return personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, idobra, idpercont, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoobrapersonallist/{idpersonal}/{idobra}")
-    public List<PersonalContrato> showContratoPorIdContratoAndObraAndIdpersonalList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraList(idpersonal, idobra);
+    @GetMapping("/contratoobrapersonallist/{idpersonal}/{idobra}/{idpervila}")
+    public List<PersonalContrato> showContratoPorIdContratoAndObraAndIdpersonalList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpervila){
+        return personalcontratoservice.findByPersonalAndObraList(idpersonal, idobra, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoidcontratoobrapersonaldto/{idpersonal}/{idobra}/{idpercont}")
-    public PersonalContratoObraDTO showContratoPorIdContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont){
-        return personalcontratoservice.findByPersonalAndObraAndcontratoDto(idpersonal, idobra, idpercont);
+    @GetMapping("/contratoidcontratoobrapersonaldto/{idpersonal}/{idobra}/{idpercont}/{idpervila}")
+    public PersonalContratoObraDTO showContratoPorIdContratoAndObraAndIdpersonalDTO(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpercont, @PathVariable Long idpervila){
+        return personalcontratoservice.findByPersonalAndObraAndcontratoDto(idpersonal, idobra, idpercont, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/contratoobrapersonaldtolist/{idpersonal}/{idobra}")
-    public List<PersonalContratoObraDTO> showContratoPorObraAndIdpersonalDTOList(@PathVariable Long idpersonal, @PathVariable String idobra){
-        return personalcontratoservice.findByPersonalAndObraAndcontratoDtoList(idpersonal, idobra);
+    @GetMapping("/contratoobrapersonaldtolist/{idpersonal}/{idobra}/{idpervila}")
+    public List<PersonalContratoObraDTO> showContratoPorObraAndIdpersonalDTOList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpervila){
+        return personalcontratoservice.findByPersonalAndObraAndcontratoDtoList(idpersonal, idobra, idpervila);
     }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/contratoactivopersonal/{idpersonal}/{idobra}/{idpervila}")
+    public List<PersonalContratoObraDTO> showContratoActivopersonalDTOList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpervila){
+        return personalcontratoservice.findContratoActivoPersonalObra(idpersonal, idobra, idpervila);
+    }
+
 
     @PostMapping("/contratosave")
     @ResponseStatus(HttpStatus.CREATED)
@@ -69,9 +81,9 @@ public class PersonalContratoController {
 
         Personal persoContrato = personalservice.findByIdPersonalAndObraname(contrato.getIdPersonal(), contrato.getIdObraPercont());
 
+        PersonalVidaLaboral vidaLaboral = personalvidalaboralservice.findByObraPersonalId(contrato.getIdObraPercont(), contrato.getIdPersonal(), contrato.getIdPervila());
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
-
             List<String> errors = result.getFieldErrors()
                     .stream()
                     .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
@@ -83,16 +95,58 @@ public class PersonalContratoController {
 
         try {
 
+            if(vidaLaboral == null) {
+                //CREA UNO NUEVO
+                vidaLaboral = new PersonalVidaLaboral();
+                vidaLaboral.setIdObraPervila(contrato.getIdObraPercont());
+                vidaLaboral.setIdPersonalPervila(persoContrato);
+                vidaLaboral.setFechaInicioPervila(contrato.getFechaIniPercont());
+                vidaLaboral.setEstadoPervila("ACTIVO");
+                vidaLaboral.setFechaIngPervila(contrato.getFechaIngPercont());
+                vidaLaboral.setCreaPorPervila(contrato.getCreaPorPercont());
+
+                vidaLaboral = personalvidalaboralservice.save(vidaLaboral);
+            } else if (vidaLaboral.getEstadoPervila().equals("FINALIZADO")) {
+                //busca vida laboral activa
+                PersonalVidaLabDTO vidaLaboralEnd = personalvidalaboralservice.ultimoPeriodoVidaLaboral(contrato.getIdObraPercont(), contrato.getIdPersonal());
+                if(vidaLaboralEnd.getEstadoPervila().equals("FINALIZADO")){
+                    //CREA UNO NUEVO
+                    vidaLaboral = new PersonalVidaLaboral();
+                    vidaLaboral.setIdObraPervila(contrato.getIdObraPercont());
+                    vidaLaboral.setIdPersonalPervila(persoContrato);
+                    vidaLaboral.setFechaInicioPervila(contrato.getFechaIniPercont());
+                    vidaLaboral.setEstadoPervila("ACTIVO");
+                    vidaLaboral.setFechaIngPervila(contrato.getFechaIngPercont());
+                    vidaLaboral.setCreaPorPervila(contrato.getCreaPorPercont());
+
+                    vidaLaboral = personalvidalaboralservice.save(vidaLaboral);
+                } else if (vidaLaboralEnd.getEstadoPervila().equals("ACTIVO")){
+                    vidaLaboral = personalvidalaboralservice.findByObraPersonalId(vidaLaboralEnd.getIdObraPervila(), vidaLaboralEnd.getIdPersonalPervila(), vidaLaboralEnd.getIdPervila());
+                }
+
+            } else if(persoContrato.getEstadoPer() == false){
+                //NO DEBERIA DEJAR GUARDAR PORQUE ESTA FINALIZADO
+                response.put("mensaje", "Error Vida Laboral finalizada.");
+                response.put("error", "no es vida laboral actual");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
             contratoInsert = new PersonalContrato();
 
             contratoInsert.setIdObraPercont(contrato.getIdObraPercont());
             contratoInsert.setIdPersonalPercont(persoContrato);
+            contratoInsert.setIdPervilaPercont(vidaLaboral);
             contratoInsert.setIdTipoPercont(contrato.getIdTipoPercont());
-            contratoInsert.setUrlDocumentoPercont(contrato.getUrlDocumentoPercont());
             contratoInsert.setFechaIniPercont(contrato.getFechaIniPercont());
             contratoInsert.setFechaFinPercont(contrato.getFechaFinPercont());
             contratoInsert.setObservacionesPercont(contrato.getObservacionesPercont());
             contratoInsert.setEstadoPercont(contrato.getEstadoPercont());
+            contratoInsert.setJornadaSemanalPercont(contrato.getJornadaSemanalPercont());
+            contratoInsert.setRemuneracionPercont(contrato.getRemuneracionPercont());
+
+            contratoInsert.setBonificacionPercont(contrato.getBonificacionPercont());
+            contratoInsert.setFecIniPruebaPercont(contrato.getFecIniPruebaPercont());
+            contratoInsert.setFecFinPruebaPercont(contrato.getFecFinPruebaPercont());
             contratoInsert.setFechaIngPercont(contrato.getFechaIngPercont());
             contratoInsert.setCreaPorPercont(contrato.getCreaPorPercont());
 
@@ -105,23 +159,27 @@ public class PersonalContratoController {
         }
 
         response.put("mensaje", "El item ha sido creado con éxito!");
-        response.put("personalcargo", contratoNew);
+        response.put("personalcontrato", contratoNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/contratoupdate/{idcontrato}/{idpersonal}/{obraname}")
+    @PutMapping("/contratoupdate/{idcontrato}/{idpersonal}/{obraname}/{idpervila}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PersonalContrato updateContratoDTO  (@RequestBody PersonalContratoObraDTO contratoDTO, @PathVariable Long idcontrato, @PathVariable Long idpersonal, @PathVariable String obraname) {
-        PersonalContrato contratoAct = personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, obraname, idcontrato);
+    public PersonalContrato updateContratoDTO  (@RequestBody PersonalContratoObraDTO contratoDTO, @PathVariable Long idcontrato, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
+        PersonalContrato contratoAct = personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, obraname, idcontrato, idpervila);
 
         if(contratoAct != null) {
 
             contratoAct.setIdTipoPercont(contratoDTO.getIdTipoPercont());
-            contratoAct.setUrlDocumentoPercont(contratoDTO.getUrlDocumentoPercont());
             contratoAct.setFechaIniPercont(contratoDTO.getFechaIniPercont());
             contratoAct.setFechaFinPercont(contratoDTO.getFechaFinPercont());
             contratoAct.setObservacionesPercont(contratoDTO.getObservacionesPercont());
             contratoAct.setEstadoPercont(contratoDTO.getEstadoPercont());
+            contratoAct.setJornadaSemanalPercont(contratoDTO.getJornadaSemanalPercont());
+            contratoAct.setRemuneracionPercont(contratoDTO.getRemuneracionPercont());
+            contratoAct.setBonificacionPercont(contratoDTO.getBonificacionPercont());
+            contratoAct.setFecIniPruebaPercont(contratoDTO.getFecIniPruebaPercont());
+            contratoAct.setFecFinPruebaPercont(contratoDTO.getFecFinPruebaPercont());
             contratoAct.setFechaModiPercont(contratoDTO.getFechaModiPercont());
             contratoAct.setModiPorPercont(contratoDTO.getModiPorPercont());
         }
@@ -167,7 +225,7 @@ public class PersonalContratoController {
         PersonalContratoJornada jornadaNew = null;
         PersonalContratoJornada jornadaInsert = null;
 
-        PersonalContrato persoContrato = personalcontratoservice.findByPersonalAndObraAndcontrato(jornada.get(0).getIdPersonal(), jornada.get(0).getIdObraPerjorn(), jornada.get(0).getIdPerCont());
+        PersonalContrato persoContrato = personalcontratoservice.findByPersonalAndObraAndcontrato(jornada.get(0).getIdPersonal(), jornada.get(0).getIdObraPerjorn(), jornada.get(0).getIdPerCont(),jornada.get(0).getIdPersonal());
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -236,7 +294,7 @@ public class PersonalContratoController {
         Map<String, Object> response = new HashMap<>();
         try {
             List<PersonalContratoJornada> jornadaDelete = personalcontratoservice.findByJornadaPersonalAndObraAndcontratoList(idpersonal, obraname, idcontrato);
-            System.out.println(jornadaDelete.size());
+
             if(jornadaDelete.size()>0){
                 personalcontratoservice.deleteAll(jornadaDelete);
             }

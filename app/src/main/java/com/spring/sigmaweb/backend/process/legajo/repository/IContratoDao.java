@@ -12,32 +12,42 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
 
     @Query("select pc " +
             "from PersonalContrato pc inner join Personal p on (pc.idPersonalPercont = p.idPersonal and pc.idObraPercont = p.obraPer) " +
+            "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercont = pvl.idPervila and pc.idObraPercont = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 "
+            "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 and pvl.idPervila = ?4"
     )
-    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont);
+    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idpervila);
 
     @Query("select pc " +
             "from PersonalContrato pc inner join Personal p on (pc.idPersonalPercont = p.idPersonal and pc.idObraPercont = p.obraPer) " +
+            "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercont = pvl.idPervila and pc.idObraPercont = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "where p.idPersonal=?1 and o.idobra = ?2 "
+            "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila = ?3"
     )
-    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra);
+    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila);
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO(pc.idPerCont, " +
             "o.idobra as idObraPercont," +
             "p.idPersonal, " +
+            "pvl.idPervila, " +
+            "pvl.fechaInicioPervila, " +
+            "pvl.fechaFinPervila, " +
+            "pvl.estadoPervila, " +
             "psn.apePaternoPers, " +
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
             "pc.idTipoPercont," +
             "ttc.descripTab as tipoContrato, " +
-            "pc.urlDocumentoPercont, " +
             "pc.fechaIniPercont," +
             "pc.fechaFinPercont, " +
             "pc.observacionesPercont, " +
             "pc.estadoPercont, " +
             "pc.fechaTerminoPercont, " +
+            "pc.jornadaSemanalPercont, " +
+            "pc.remuneracionPercont, " +
+            "pc.bonificacionPercont, " +
+            "pc.fecIniPruebaPercont," +
+            "pc.fecFinPruebaPercont," +
             "pc.fechaIngPercont," +
             "pc.creaPorPercont," +
             "pc.fechaModiPercont," +
@@ -45,26 +55,35 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             ") "+
             "from PersonalContrato pc inner join Personal p on (pc.idPersonalPercont = p.idPersonal and pc.idObraPercont = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercont = pvl.idPervila and pc.idObraPercont = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla ttc on (pc.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab)" +
-            "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont = ?3 "
+            "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont =?3 and pvl.idPervila = ?4 "
     )
-    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont);
+    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont, Long idpervila);
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO(pc.idPerCont, " +
             "o.idobra as idObraPercont," +
             "p.idPersonal, " +
+            "pvl.idPervila, " +
+            "pvl.fechaInicioPervila, " +
+            "pvl.fechaFinPervila, " +
+            "pvl.estadoPervila, " +
             "psn.apePaternoPers, " +
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
             "pc.idTipoPercont," +
             "ttc.descripTab as tipoContrato, " +
-            "pc.urlDocumentoPercont, " +
             "pc.fechaIniPercont," +
             "pc.fechaFinPercont, " +
             "pc.observacionesPercont, " +
             "pc.estadoPercont, " +
             "pc.fechaTerminoPercont, " +
+            "pc.jornadaSemanalPercont, " +
+            "pc.remuneracionPercont, " +
+            "pc.bonificacionPercont, " +
+            "pc.fecIniPruebaPercont," +
+            "pc.fecFinPruebaPercont," +
             "pc.fechaIngPercont," +
             "pc.creaPorPercont," +
             "pc.fechaModiPercont," +
@@ -72,11 +91,49 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             ") "+
             "from PersonalContrato pc inner join Personal p on (pc.idPersonalPercont = p.idPersonal and pc.idObraPercont = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercont = pvl.idPervila and pc.idObraPercont = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla ttc on (pc.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab)" +
-            "where p.idPersonal=?1 and o.idobra = ?2 "
-
+            "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila = ?3 " +
+            "order by pc.fechaIniPercont desc "
     )
-    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra);
+    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra, Long idpervila);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO(pc.idPerCont, " +
+            "o.idobra as idObraPercont," +
+            "p.idPersonal, " +
+            "pvl.idPervila, " +
+            "pvl.fechaInicioPervila, " +
+            "pvl.fechaFinPervila, " +
+            "pvl.estadoPervila, " +
+            "psn.apePaternoPers, " +
+            "psn.apeMaternoPers, " +
+            "psn.nombrePers, " +
+            "pc.idTipoPercont," +
+            "ttc.descripTab as tipoContrato, " +
+            "pc.fechaIniPercont," +
+            "pc.fechaFinPercont, " +
+            "pc.observacionesPercont, " +
+            "pc.estadoPercont, " +
+            "pc.fechaTerminoPercont, " +
+            "pc.jornadaSemanalPercont, " +
+            "pc.remuneracionPercont, " +
+            "pc.bonificacionPercont, " +
+            "pc.fecIniPruebaPercont," +
+            "pc.fecFinPruebaPercont," +
+            "pc.fechaIngPercont," +
+            "pc.creaPorPercont," +
+            "pc.fechaModiPercont," +
+            "pc.modiPorPercont" +
+            ") "+
+            "from PersonalContrato pc inner join Personal p on (pc.idPersonalPercont = p.idPersonal and pc.idObraPercont = p.obraPer) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercont = pvl.idPervila and pc.idObraPercont = pvl.idObraPervila) " +
+            "inner join Obra o on (p.obraPer = o.idobra) " +
+            "left join TablasTabla ttc on (pc.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab)" +
+            "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila = ?3 and pc.estadoPercont = 'ACTIVO'  " +
+            "ORDER BY pc.fechaIniPercont, pc.fechaFinPercont"
+    )
+    public List<PersonalContratoObraDTO> findContratoActivoPersonalObra(Long idpersona, String idobra, Long idpervila);
 
 }

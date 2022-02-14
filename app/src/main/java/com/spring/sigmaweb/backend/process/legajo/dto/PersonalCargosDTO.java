@@ -9,6 +9,15 @@ public class PersonalCargosDTO implements Serializable {
     private Long idPercargo;
     private String idObraPercargo;
     private Long idPersonal;
+    private Long idPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaInicioPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaFinPervila;
+
+    private String estadoPervila;
     private String apePaternoPers;
     private String apeMaternoPers;
     private String nombrePers;
@@ -24,15 +33,18 @@ public class PersonalCargosDTO implements Serializable {
 
     private Integer idPuestoPercargo;
     private String puestoPercargo;
+    //private String idCargoEspecialPercargo;
 
-    private Boolean flgCargoPrincipalPercargo;
-    private Boolean flgCargoDirectivoPercargo;
-    private Boolean flgCargoConfianzaPercargo;
+    private Boolean flgCargoDirePercargo;
+    private Boolean flgCargoConfiPercargo;
+    private Boolean flgCargoNofilcalPercargo;
+    private Boolean flgCargoNoAplicaPercargo;
 
     private String observacionesPercargo;
     private Boolean estadoPercargo;
     private Double bonifCargoPercargo;
     private Double bonifCargoEstPercargo;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaIniPercargo;
 
@@ -49,10 +61,14 @@ public class PersonalCargosDTO implements Serializable {
 
     private String modiPorPercargo;
 
-    public PersonalCargosDTO(Long idPercargo, String idObraPercargo, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercont, String areaPercont, Integer idTipoNivelPlanillaPercargo, String tipoNivelPlanillaPercargo, Integer idPuestoPercargo, String puestoPercargo, Boolean flgCargoPrincipalPercargo, Boolean flgCargoDirectivoPercargo, Boolean flgCargoConfianzaPercargo, String observacionesPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Double bonifCargoEstPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Date fechaIngPercargo, String creaPorPercargo, Date fechaModiPercargo, String modiPorPercargo) {
+    public PersonalCargosDTO(Long idPercargo, String idObraPercargo, Long idPersonal, Long idPervila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercont, String areaPercont, Integer idTipoNivelPlanillaPercargo, String tipoNivelPlanillaPercargo, Integer idPuestoPercargo, String puestoPercargo, Boolean flgCargoDirePercargo, Boolean flgCargoConfiPercargo, Boolean flgCargoNofilcalPercargo, Boolean flgCargoNoAplicaPercargo, String observacionesPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Double bonifCargoEstPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Date fechaIngPercargo, String creaPorPercargo, Date fechaModiPercargo, String modiPorPercargo) {
         this.idPercargo = idPercargo;
         this.idObraPercargo = idObraPercargo;
         this.idPersonal = idPersonal;
+        this.idPervila = idPervila;
+        this.fechaInicioPervila = fechaInicioPervila;
+        this.fechaFinPervila = fechaFinPervila;
+        this.estadoPervila = estadoPervila;
         this.apePaternoPers = apePaternoPers;
         this.apeMaternoPers = apeMaternoPers;
         this.nombrePers = nombrePers;
@@ -64,9 +80,10 @@ public class PersonalCargosDTO implements Serializable {
         this.tipoNivelPlanillaPercargo = tipoNivelPlanillaPercargo;
         this.idPuestoPercargo = idPuestoPercargo;
         this.puestoPercargo = puestoPercargo;
-        this.flgCargoPrincipalPercargo = flgCargoPrincipalPercargo;
-        this.flgCargoDirectivoPercargo = flgCargoDirectivoPercargo;
-        this.flgCargoConfianzaPercargo = flgCargoConfianzaPercargo;
+        this.flgCargoDirePercargo = flgCargoDirePercargo;
+        this.flgCargoConfiPercargo = flgCargoConfiPercargo;
+        this.flgCargoNofilcalPercargo = flgCargoNofilcalPercargo;
+        this.flgCargoNoAplicaPercargo = flgCargoNoAplicaPercargo;
         this.observacionesPercargo = observacionesPercargo;
         this.estadoPercargo = estadoPercargo;
         this.bonifCargoPercargo = bonifCargoPercargo;
@@ -106,6 +123,38 @@ public class PersonalCargosDTO implements Serializable {
 
     public void setIdPersonal(Long idPersonal) {
         this.idPersonal = idPersonal;
+    }
+
+    public Long getIdPervila() {
+        return idPervila;
+    }
+
+    public void setIdPervila(Long idPervila) {
+        this.idPervila = idPervila;
+    }
+
+    public Date getFechaInicioPervila() {
+        return fechaInicioPervila;
+    }
+
+    public void setFechaInicioPervila(Date fechaInicioPervila) {
+        this.fechaInicioPervila = fechaInicioPervila;
+    }
+
+    public Date getFechaFinPervila() {
+        return fechaFinPervila;
+    }
+
+    public void setFechaFinPervila(Date fechaFinPervila) {
+        this.fechaFinPervila = fechaFinPervila;
+    }
+
+    public String getEstadoPervila() {
+        return estadoPervila;
+    }
+
+    public void setEstadoPervila(String estadoPervila) {
+        this.estadoPervila = estadoPervila;
     }
 
     public String getApePaternoPers() {
@@ -196,28 +245,36 @@ public class PersonalCargosDTO implements Serializable {
         this.puestoPercargo = puestoPercargo;
     }
 
-    public Boolean getFlgCargoPrincipalPercargo() {
-        return flgCargoPrincipalPercargo;
+    public Boolean getFlgCargoDirePercargo() {
+        return flgCargoDirePercargo;
     }
 
-    public void setFlgCargoPrincipalPercargo(Boolean flgCargoPrincipalPercargo) {
-        this.flgCargoPrincipalPercargo = flgCargoPrincipalPercargo;
+    public void setFlgCargoDirePercargo(Boolean flgCargoDirePercargo) {
+        this.flgCargoDirePercargo = flgCargoDirePercargo;
     }
 
-    public Boolean getFlgCargoDirectivoPercargo() {
-        return flgCargoDirectivoPercargo;
+    public Boolean getFlgCargoConfiPercargo() {
+        return flgCargoConfiPercargo;
     }
 
-    public void setFlgCargoDirectivoPercargo(Boolean flgCargoDirectivoPercargo) {
-        this.flgCargoDirectivoPercargo = flgCargoDirectivoPercargo;
+    public void setFlgCargoConfiPercargo(Boolean flgCargoConfiPercargo) {
+        this.flgCargoConfiPercargo = flgCargoConfiPercargo;
     }
 
-    public Boolean getFlgCargoConfianzaPercargo() {
-        return flgCargoConfianzaPercargo;
+    public Boolean getFlgCargoNofilcalPercargo() {
+        return flgCargoNofilcalPercargo;
     }
 
-    public void setFlgCargoConfianzaPercargo(Boolean flgCargoConfianzaPercargo) {
-        this.flgCargoConfianzaPercargo = flgCargoConfianzaPercargo;
+    public void setFlgCargoNofilcalPercargo(Boolean flgCargoNofilcalPercargo) {
+        this.flgCargoNofilcalPercargo = flgCargoNofilcalPercargo;
+    }
+
+    public Boolean getFlgCargoNoAplicaPercargo() {
+        return flgCargoNoAplicaPercargo;
+    }
+
+    public void setFlgCargoNoAplicaPercargo(Boolean flgCargoNoAplicaPercargo) {
+        this.flgCargoNoAplicaPercargo = flgCargoNoAplicaPercargo;
     }
 
     public String getObservacionesPercargo() {

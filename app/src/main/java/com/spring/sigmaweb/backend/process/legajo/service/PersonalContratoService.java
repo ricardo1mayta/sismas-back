@@ -30,29 +30,36 @@ public class PersonalContratoService implements IPersonalContratoService{
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont) {
-        return contratoDao.findByPersonalAndObraAndcontrato(idpersona, idobra, idpercont);
+    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idpervila) {
+        return contratoDao.findByPersonalAndObraAndcontrato(idpersona, idobra, idpercont, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra) {
-        return contratoDao.findByPersonalAndObraList(idpersona, idobra);
+    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila) {
+        return contratoDao.findByPersonalAndObraList(idpersona, idobra, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont) {
-        return contratoDao.findByPersonalAndObraAndcontratoDto(idpersona, idobra, idpercont);
+    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont, Long idpervila) {
+        return contratoDao.findByPersonalAndObraAndcontratoDto(idpersona, idobra, idpercont, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra) {
-        return contratoDao.findByPersonalAndObraAndcontratoDtoList(idpersona, idobra);
+    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra, Long idpervila) {
+        return contratoDao.findByPersonalAndObraAndcontratoDtoList(idpersona, idobra, idpervila);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PersonalContratoObraDTO> findContratoActivoPersonalObra(Long idpersona, String idobra, Long idpervila) {
+        return contratoDao.findContratoActivoPersonalObra(idpersona, idobra, idpervila);
+    }
+
+    @Override
+    @Transactional
     public PersonalContrato save(PersonalContrato contrato) {
         return contratoDao.save(contrato);
     }
@@ -91,16 +98,19 @@ public class PersonalContratoService implements IPersonalContratoService{
     }
 
     @Override
+    @Transactional
     public void deleteAll(List<PersonalContratoJornada> jornadas) {
         jornadacontratoDao.deleteAll(jornadas);
     }
 
     @Override
+    @Transactional
     public void delete(PersonalContratoJornada jornada) {
         jornadacontratoDao.delete(jornada);
     }
 
     @Override
+    @Transactional
     public PersonalContratoJornada save(PersonalContratoJornada jornada) {
         return jornadacontratoDao.save(jornada);
     }

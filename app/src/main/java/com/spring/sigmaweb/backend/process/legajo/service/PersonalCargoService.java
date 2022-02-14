@@ -28,29 +28,30 @@ public class PersonalCargoService implements IPersonalCargoService{
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalCargo findByPersonalAndObraAndIdCargo(Long idpersona, String idobra, Long idpercargo) {
-        return personalcargoDao.findByPersonalAndObraAndIdCargo(idpersona, idobra, idpercargo);
+    public PersonalCargo findByPersonalAndObraAndIdCargo(Long idpersona, String idobra, Long idpercargo, Long idpervila) {
+        return personalcargoDao.findByPersonalAndObraAndIdCargo(idpersona, idobra, idpercargo, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalCargo> findByPersonalAndObraList(Long idpersona, String idobra) {
-        return personalcargoDao.findByPersonalAndObraList(idpersona, idobra);
+    public List<PersonalCargo> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila) {
+        return personalcargoDao.findByPersonalAndObraList(idpersona, idobra, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalCargosDTO findPersonalAndObraAndCargoDto(Long idpersona, String idobra, Long idpercargo) {
-        return personalcargoDao.findPersonalAndObraAndCargoDto(idpersona, idobra, idpercargo);
+    public PersonalCargosDTO findPersonalAndObraAndCargoDto(Long idpersona, String idobra, Long idpercargo, Long idpervila) {
+        return personalcargoDao.findPersonalAndObraAndCargoDto(idpersona, idobra, idpercargo, idpervila);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalCargosDTO> findPersonalAndObraListDto(Long idpersona, String idobra) {
-        return personalcargoDao.findPersonalAndObraListDto(idpersona, idobra);
+    public List<PersonalCargosDTO> findPersonalAndObraListDto(Long idpersona, String idobra, Long idpervila) {
+        return personalcargoDao.findPersonalAndObraListDto(idpersona, idobra, idpervila);
     }
 
     @Override
+    @Transactional
     public PersonalCargo save(PersonalCargo cargo) {
         return personalcargoDao.save(cargo);
     }

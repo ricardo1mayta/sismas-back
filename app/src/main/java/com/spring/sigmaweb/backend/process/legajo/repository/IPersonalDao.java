@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -368,5 +369,16 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
     @Query("update Personal p set p.fechaAutorizaPer = now() "
             + "where p.idPersonal = ?1")
     public Integer updateFechaConfirPersonal(Long idpersonal);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("update Personal p set estadoPer = true,  " +
+            "fechaBajaPer = null, " +
+            "fechaActivoPer = ?3 " +
+            "where p.idPersonal = ?1 and p.obraPer.idobra = ?2"
+    )
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, Date fechaactivo);
+
+
 
   }

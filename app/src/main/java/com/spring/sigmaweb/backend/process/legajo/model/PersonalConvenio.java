@@ -23,16 +23,21 @@ public class PersonalConvenio implements Serializable {
     @JoinColumn(name = "id_personal_perconv", foreignKey = @ForeignKey(name = "fk_convenio_personal"))
     private Personal idPersonalPerconv;
 
+    @JsonIgnoreProperties(value = {"idPervilaPercargo", "idPervilaPerconv","idPervilaPercont","idPervilaPerdesv", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "id_pervila_perconv", foreignKey = @ForeignKey(name = "fk_convenio_vidalaboral"))
+    private PersonalVidaLaboral idPervilaPerconv;
+
     @Column(nullable = true, name = "id_tipo_perconv")
     private Integer idTipoPerconv;
 
     @Column(nullable = false, name = "fechaini_perconv")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIniPerconv;
 
     @Column(nullable = true, name = "fechafin_perconv")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinPerconv;
 
@@ -170,6 +175,14 @@ public class PersonalConvenio implements Serializable {
 
     public void setModiPorPerconv(String modiPorPerconv) {
         this.modiPorPerconv = modiPorPerconv;
+    }
+
+    public PersonalVidaLaboral getIdPervilaPerconv() {
+        return idPervilaPerconv;
+    }
+
+    public void setIdPervilaPerconv(PersonalVidaLaboral idPervilaPerconv) {
+        this.idPervilaPerconv = idPervilaPerconv;
     }
 
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IPersonalService {
@@ -39,4 +40,7 @@ public interface IPersonalService {
 
     //Financiero
     public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
+
+    //activar estudiante
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo);
 }

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 @Service
 public class PersonalService implements IPersonalService{
@@ -99,20 +102,38 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
+    @Transactional
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist) {
         personalHistoricoDao.saveAll(persoHist);
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PersonalHistoricoDTO> buscarPorIdPersonalAndObraAndTipo(Long idpers, String idobra, String tipo) {
         //
         return personalHistoricoDao.buscarPorIdPersonalAndObraAndTipo(idpers, idobra, tipo);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal) {
         return personalDao.findByObraAndidPersonalParaInfoBancario(obraname, idpersonal);
+    }
+
+    @Override
+    @Transactional
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo) {
+        System.out.println(fechaactivo);
+        Date fecha = new Date();
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            fecha = formatter.parse(fechaactivo);
+
+        } catch (ParseException e){
+
+        }
+        return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha);
     }
 
 

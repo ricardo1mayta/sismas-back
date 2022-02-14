@@ -12,25 +12,43 @@ public class PersonalContratoObraDTO implements Serializable {
     private Long idPerCont;
     private String idObraPercont;
     private Long idPersonal;
+
+    private Long idPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaInicioPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaFinPervila;
+
+    private String estadoPervila;
     private String apePaternoPers;
     private String apeMaternoPers;
     private String nombrePers;
     private Integer idTipoPercont;
     private String tipoContrato;
-    private String urlDocumentoPercont;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaIniPercont;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaFinPercont;
 
     private String observacionesPercont;
     private String estadoPercont;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaTerminoPercont;
+
+    private Double jornadaSemanalPercont;
+    private Double remuneracionPercont;
+    private Double bonificacionPercont;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fecIniPruebaPercont;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fecFinPruebaPercont;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaIngPercont;
@@ -42,21 +60,29 @@ public class PersonalContratoObraDTO implements Serializable {
 
     private String modiPorPercont;
 
-    public PersonalContratoObraDTO(Long idPerCont, String idObraPercont, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoPercont, String tipoContrato, String urlDocumentoPercont, Date fechaIniPercont, Date fechaFinPercont, String observacionesPercont, String estadoPercont, Date fechaTerminoPercont, Date fechaIngPercont, String creaPorPercont, Date fechaModiPercont, String modiPorPercont) {
+    public PersonalContratoObraDTO(Long idPerCont, String idObraPercont, Long idPersonal, Long idPervila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoPercont, String tipoContrato, Date fechaIniPercont, Date fechaFinPercont, String observacionesPercont, String estadoPercont, Date fechaTerminoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Double bonificacionPercont, Date fecIniPruebaPercont, Date fecFinPruebaPercont, Date fechaIngPercont, String creaPorPercont, Date fechaModiPercont, String modiPorPercont) {
         this.idPerCont = idPerCont;
         this.idObraPercont = idObraPercont;
         this.idPersonal = idPersonal;
+        this.idPervila = idPervila;
+        this.fechaInicioPervila = fechaInicioPervila;
+        this.fechaFinPervila = fechaFinPervila;
+        this.estadoPervila = estadoPervila;
         this.apePaternoPers = apePaternoPers;
         this.apeMaternoPers = apeMaternoPers;
         this.nombrePers = nombrePers;
         this.idTipoPercont = idTipoPercont;
         this.tipoContrato = tipoContrato;
-        this.urlDocumentoPercont = urlDocumentoPercont;
         this.fechaIniPercont = fechaIniPercont;
         this.fechaFinPercont = fechaFinPercont;
         this.observacionesPercont = observacionesPercont;
         this.estadoPercont = estadoPercont;
         this.fechaTerminoPercont = fechaTerminoPercont;
+        this.jornadaSemanalPercont = jornadaSemanalPercont;
+        this.remuneracionPercont = remuneracionPercont;
+        this.bonificacionPercont = bonificacionPercont;
+        this.fecIniPruebaPercont = fecIniPruebaPercont;
+        this.fecFinPruebaPercont = fecFinPruebaPercont;
         this.fechaIngPercont = fechaIngPercont;
         this.creaPorPercont = creaPorPercont;
         this.fechaModiPercont = fechaModiPercont;
@@ -132,14 +158,6 @@ public class PersonalContratoObraDTO implements Serializable {
         this.tipoContrato = tipoContrato;
     }
 
-    public String getUrlDocumentoPercont() {
-        return urlDocumentoPercont;
-    }
-
-    public void setUrlDocumentoPercont(String urlDocumentoPercont) {
-        this.urlDocumentoPercont = urlDocumentoPercont;
-    }
-
     public Date getFechaIniPercont() {
         return fechaIniPercont;
     }
@@ -210,6 +228,78 @@ public class PersonalContratoObraDTO implements Serializable {
 
     public void setFechaTerminoPercont(Date fechaTerminoPercont) {
         this.fechaTerminoPercont = fechaTerminoPercont;
+    }
+
+    public Double getJornadaSemanalPercont() {
+        return jornadaSemanalPercont;
+    }
+
+    public void setJornadaSemanalPercont(Double jornadaSemanalPercont) {
+        this.jornadaSemanalPercont = jornadaSemanalPercont;
+    }
+
+    public Date getFecIniPruebaPercont() {
+        return fecIniPruebaPercont;
+    }
+
+    public void setFecIniPruebaPercont(Date fecIniPruebaPercont) {
+        this.fecIniPruebaPercont = fecIniPruebaPercont;
+    }
+
+    public Date getFecFinPruebaPercont() {
+        return fecFinPruebaPercont;
+    }
+
+    public void setFecFinPruebaPercont(Date fecFinPruebaPercont) {
+        this.fecFinPruebaPercont = fecFinPruebaPercont;
+    }
+
+    public Long getIdPervila() {
+        return idPervila;
+    }
+
+    public void setIdPervila(Long idPervila) {
+        this.idPervila = idPervila;
+    }
+
+    public Date getFechaInicioPervila() {
+        return fechaInicioPervila;
+    }
+
+    public void setFechaInicioPervila(Date fechaInicioPervila) {
+        this.fechaInicioPervila = fechaInicioPervila;
+    }
+
+    public Date getFechaFinPervila() {
+        return fechaFinPervila;
+    }
+
+    public void setFechaFinPervila(Date fechaFinPervila) {
+        this.fechaFinPervila = fechaFinPervila;
+    }
+
+    public String getEstadoPervila() {
+        return estadoPervila;
+    }
+
+    public void setEstadoPervila(String estadoPervila) {
+        this.estadoPervila = estadoPervila;
+    }
+
+    public Double getRemuneracionPercont() {
+        return remuneracionPercont;
+    }
+
+    public void setRemuneracionPercont(Double remuneracionPercont) {
+        this.remuneracionPercont = remuneracionPercont;
+    }
+
+    public Double getBonificacionPercont() {
+        return bonificacionPercont;
+    }
+
+    public void setBonificacionPercont(Double bonificacionPercont) {
+        this.bonificacionPercont = bonificacionPercont;
     }
 
     private static final long serialVersionUID = 1L;

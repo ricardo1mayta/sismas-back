@@ -4,8 +4,10 @@ import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
+import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,10 @@ public class PersonalCargoRestController {
     @Autowired
     private IPersonalService personalservice;
 
+    @Autowired
+    private IPersonalVidaLaboralService personalvidalaboralservice;
+
+
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalcargoporid/{idPercargo}")
     public PersonalCargo showPersonalCargoPorId(@PathVariable Long idPercargo){
@@ -36,27 +42,27 @@ public class PersonalCargoRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalcargoporpersonalobraid/{idpersona}/{idobra}/{idpercargo}")
-    public PersonalCargo showPersonalCargoPorPersonalObraId(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercargo){
-        return personalCargoService.findByPersonalAndObraAndIdCargo(idpersona, idobra, idpercargo);
+    @GetMapping("/personalcargoporpersonalobraid/{idpersona}/{idobra}/{idpercargo}/{idpervila}")
+    public PersonalCargo showPersonalCargoPorPersonalObraId(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercargo, @PathVariable Long idpervila){
+        return personalCargoService.findByPersonalAndObraAndIdCargo(idpersona, idobra, idpercargo, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalcargoporpersonalobra/{idpersona}/{idobra}")
-    public List<PersonalCargo> showPersonalCargoPorPersonalObra(@PathVariable Long idpersona, @PathVariable String idobra){
-        return personalCargoService.findByPersonalAndObraList(idpersona, idobra);
+    @GetMapping("/personalcargoporpersonalobra/{idpersona}/{idobra}/{idpervila}")
+    public List<PersonalCargo> showPersonalCargoPorPersonalObra(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpervila){
+        return personalCargoService.findByPersonalAndObraList(idpersona, idobra, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalcargoporpersonalobraIddto/{idpersona}/{idobra}/{idpercargo}")
-    public PersonalCargosDTO showPersonalCargoPorPersonalObraIdDto(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercargo){
-        return personalCargoService.findPersonalAndObraAndCargoDto(idpersona, idobra, idpercargo);
+    @GetMapping("/personalcargoporpersonalobraIddto/{idpersona}/{idobra}/{idpercargo/{idpervila}")
+    public PersonalCargosDTO showPersonalCargoPorPersonalObraIdDto(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpercargo, @PathVariable Long idpervila){
+        return personalCargoService.findPersonalAndObraAndCargoDto(idpersona, idobra, idpercargo, idpervila);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalcargoporpersonalobraListdto/{idpersona}/{idobra}")
-    public List<PersonalCargosDTO> showPersonalCargoPorPersonalObraIdDto(@PathVariable Long idpersona, @PathVariable String idobra){
-        return personalCargoService.findPersonalAndObraListDto(idpersona, idobra);
+    @GetMapping("/personalcargoporpersonalobraListdto/{idpersona}/{idobra}/{idpervila}")
+    public List<PersonalCargosDTO> showPersonalCargoPorPersonalObraIdDto(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpervila){
+        return personalCargoService.findPersonalAndObraListDto(idpersona, idobra, idpervila);
     }
 
     //cargos
@@ -72,6 +78,7 @@ public class PersonalCargoRestController {
         return personalCargoService.findAll();
     }
 
+
     //CRUD
     @PostMapping("/personalcargosave")
     @ResponseStatus(HttpStatus.CREATED)
@@ -80,6 +87,7 @@ public class PersonalCargoRestController {
         PersonalCargo cargoInsert = null;
 
         Personal persoCargo = personalservice.findByIdPersonalAndObraname(cargo.getIdPersonal(), cargo.getIdObraPercargo());
+        PersonalVidaLaboral vidaLaboral = personalvidalaboralservice.findByObraPersonalId(cargo.getIdObraPercargo(), cargo.getIdPersonal(), cargo.getIdPervila());
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
 
@@ -96,15 +104,16 @@ public class PersonalCargoRestController {
             cargoInsert = new PersonalCargo();
 
             cargoInsert.setIdObraPercargo(cargo.getIdObraPercargo());
+            cargoInsert.setIdPervilaPercargo(vidaLaboral);
             cargoInsert.setIdPersonalPercargo(persoCargo);
             cargoInsert.setIdCargoPercargo(cargo.getIdCargoPercargo());
             cargoInsert.setIdAreaPercont(cargo.getIdAreaPercont());
             cargoInsert.setIdTipoNivelPlanillaPercargo(cargo.getIdTipoNivelPlanillaPercargo());
             cargoInsert.setIdPuestoPercargo(cargo.getIdPuestoPercargo());
-
-            cargoInsert.setFlgCargoPrincipalPercargo(cargo.getFlgCargoPrincipalPercargo());
-            cargoInsert.setFlgCargoDirectivoPercargo(cargo.getFlgCargoDirectivoPercargo());
-            cargoInsert.setFlgCargoConfianzaPercargo(cargo.getFlgCargoConfianzaPercargo());
+            cargoInsert.setFlgCargoConfiPercargo(cargo.getFlgCargoConfiPercargo());
+            cargoInsert.setFlgCargoDirePercargo(cargo.getFlgCargoDirePercargo());
+            cargoInsert.setFlgCargoNofilcalPercargo(cargo.getFlgCargoNofilcalPercargo());
+            cargoInsert.setFlgCargoNoAplicaPercargo(cargo.getFlgCargoNoAplicaPercargo());
 
             cargoInsert.setObservacionesPercargo(cargo.getObservacionesPercargo());
             cargoInsert.setFechaIniPercargo(cargo.getFechaIniPercargo());
@@ -129,14 +138,11 @@ public class PersonalCargoRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/percargoupdate/{idpercargo}/{idpersonal}/{obraname}")
+    @PutMapping("/percargoupdate/{idpercargo}/{idpersonal}/{obraname}/{idpervila}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PersonalCargo updatePersonalCargoDTO  (@RequestBody PersonalCargosDTO personalCargo, @PathVariable Long idpercargo, @PathVariable Long idpersonal, @PathVariable String obraname) {
-        System.out.println(idpersonal);
-        System.out.println(obraname);
-        System.out.println(idpercargo);
+    public PersonalCargo updatePersonalCargoDTO  (@RequestBody PersonalCargosDTO personalCargo, @PathVariable Long idpercargo, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
 
-        PersonalCargo percargoAct = personalCargoService.findByPersonalAndObraAndIdCargo(idpersonal, obraname, idpercargo);
+        PersonalCargo percargoAct = personalCargoService.findByPersonalAndObraAndIdCargo(idpersonal, obraname, idpercargo, idpervila);
         
         if(percargoAct !=null) {
 
@@ -144,10 +150,10 @@ public class PersonalCargoRestController {
             percargoAct.setIdAreaPercont(personalCargo.getIdAreaPercont());
             percargoAct.setIdTipoNivelPlanillaPercargo(personalCargo.getIdTipoNivelPlanillaPercargo());
             percargoAct.setIdPuestoPercargo(personalCargo.getIdPuestoPercargo());
-
-            percargoAct.setFlgCargoPrincipalPercargo(personalCargo.getFlgCargoPrincipalPercargo());
-            percargoAct.setFlgCargoDirectivoPercargo(personalCargo.getFlgCargoDirectivoPercargo());
-            percargoAct.setFlgCargoConfianzaPercargo(personalCargo.getFlgCargoConfianzaPercargo());
+            percargoAct.setFlgCargoConfiPercargo(personalCargo.getFlgCargoConfiPercargo());
+            percargoAct.setFlgCargoDirePercargo(personalCargo.getFlgCargoDirePercargo());
+            percargoAct.setFlgCargoNofilcalPercargo(personalCargo.getFlgCargoNofilcalPercargo());
+            percargoAct.setFlgCargoNoAplicaPercargo(personalCargo.getFlgCargoNoAplicaPercargo());
 
             percargoAct.setObservacionesPercargo(personalCargo.getObservacionesPercargo());
             percargoAct.setFechaIniPercargo(personalCargo.getFechaIniPercargo());
@@ -161,8 +167,5 @@ public class PersonalCargoRestController {
         }
         return personalCargoService.save(percargoAct);
     }
-            
-
-
 
 }

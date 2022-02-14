@@ -50,6 +50,7 @@ public class EntidadService implements IEntidadService{
     }
 
     @Override
+    @Transactional
     public Entidad save(Entidad entidad) {
         return entidadDao.save(entidad);
     }

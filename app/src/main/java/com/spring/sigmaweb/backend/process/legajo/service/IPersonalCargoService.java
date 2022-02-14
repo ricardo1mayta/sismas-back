@@ -10,13 +10,13 @@ public interface IPersonalCargoService {
 
     public PersonalCargo findByIdPercargo(Long idPercargo);
 
-    public PersonalCargo findByPersonalAndObraAndIdCargo(Long idpersona, String idobra, Long idpercargo);
+    public PersonalCargo findByPersonalAndObraAndIdCargo(Long idpersona, String idobra, Long idpercargo, Long idpervila);
 
-    public List<PersonalCargo> findByPersonalAndObraList(Long idpersona, String idobra);
+    public List<PersonalCargo> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila);
 
-    public PersonalCargosDTO findPersonalAndObraAndCargoDto(Long idpersona, String idobra, Long idpercargo);
+    public PersonalCargosDTO findPersonalAndObraAndCargoDto(Long idpersona, String idobra, Long idpercargo, Long idpervila);
 
-    public List<PersonalCargosDTO> findPersonalAndObraListDto(Long idpersona, String idobra);
+    public List<PersonalCargosDTO> findPersonalAndObraListDto(Long idpersona, String idobra, Long idpervila);
 
     public PersonalCargo save(PersonalCargo cargo);
 

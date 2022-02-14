@@ -12,8 +12,8 @@ import com.spring.sigmaweb.backend.process.generic.service.IObraService;
 import com.spring.sigmaweb.backend.process.generic.service.IPersonaService;
 import com.spring.sigmaweb.backend.process.generic.service.ITablasTablaService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
+import com.spring.sigmaweb.backend.process.legajo.model.*;
+import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -43,6 +43,10 @@ public class PersonalRestController {
 
     @Autowired
     private IPersonaService personaService;
+
+    @Autowired
+    private IDocumentEmployeeService documentemployeeservice;
+
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalobralist/{obraname}")
@@ -111,6 +115,18 @@ public class PersonalRestController {
         return personalservice.findByObraAndidPersonalParaInfoBancario(obraname, idpersonal);
     }
 
+    //document
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/listdocuemplidpersonalobratipo/{idpersona}/{idobra}/{idtipo}/{idpadre}")
+    public List<DocumentEmployeeDTO> showCargoPorId(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable String idtipo,@PathVariable Long idpadre){
+        return documentemployeeservice.findByDocumentPersonalAndObraAndTipoList(idpersona,idobra, idtipo, idpadre);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/countporobratipoyopcion/{idObraFilePer}/{tipoFilePer}/{opcionFilePer}")
+    public Long countObraTipoOpcion(@PathVariable String idObraFilePer, @PathVariable String tipoFilePer, @PathVariable Long opcionFilePer){
+        return documentemployeeservice.countByIdObraFilePerAndtipoFilePerAndOpcionFilePer(idObraFilePer,tipoFilePer, opcionFilePer);
+    }
 
     @PutMapping("/personalupdatefechaConfir")
     public Integer updatepersonalFechaConfir(@RequestBody PersonalDatosListDTO personalUpd) {
@@ -122,6 +138,24 @@ public class PersonalRestController {
         } else {
             if(perFind.getFechaAutorizaPer() == null) {
                 resp = personalservice.updateFechaConfirPersonal(personalUpd.getIdPersonal());
+            } else {
+                resp = -1;
+            }
+        }
+        return resp;
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @PutMapping("personalupdateactivo/{fechaactivo}")
+    public Integer updatePersonalActivo(@RequestBody PersonalContratoObraDTO contratoUpd, @PathVariable String fechaactivo){
+        Personal perFind = personalservice.findByIdPersonalAndObraname(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont());
+        Integer resp = 0;
+
+        if(perFind == null) {
+            resp = 0;
+        } else {
+            if(perFind.getEstadoPer() == false) {
+                resp = personalservice.updateColaboradorActivo(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont(), fechaactivo);
             } else {
                 resp = -1;
             }
@@ -509,4 +543,167 @@ public class PersonalRestController {
     public List<PersonalHistoricoDTO> showpersonalInfoMedicosDTO(@PathVariable Long idpers, @PathVariable String idobra, @PathVariable String idtipo) {
         return personalservice.buscarPorIdPersonalAndObraAndTipo(idpers, idobra, idtipo);
     }
+
+    //documewntos de personal save/update/delete
+
+    @PostMapping("/documentosave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createdocumentoPersonal(@RequestBody DocumentEmployeeDTO documentoDTO, BindingResult result) {
+        DocumentEmployee documentoNew = null;
+        DocumentEmployee documentoInsert = null;
+        Personal persoDocumento = personalservice.findByIdPersonalAndObraname(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer());
+        Map<String, Object> response = new HashMap<>();
+        Long idFile = documentemployeeservice.generateIdFile(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer(), documentoDTO.getTipoFilePer(), documentoDTO.getIdItemPadreFileper(), documentoDTO.getOpcionFilePer() );
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            documentoInsert = new DocumentEmployee();
+            documentoInsert.setIdFilePer(idFile);
+            documentoInsert.setIdObraFilePer(documentoDTO.getIdObraFilePer());
+            documentoInsert.setIdPersonalFilePer(persoDocumento);
+            documentoInsert.setTitleFilePer(documentoDTO.getTitleFilePer());
+            documentoInsert.setFileNameFilePer(documentoDTO.getFileNameFilePer());
+            documentoInsert.setUrlFilePer(documentoDTO.getUrlFilePer());
+
+            documentoInsert.setTipoFilePer(documentoDTO.getTipoFilePer());
+            documentoInsert.setOpcionFilePer(documentoDTO.getOpcionFilePer());
+            documentoInsert.setIdItemPadreFileper(documentoDTO.getIdItemPadreFileper());
+
+            documentoInsert.setDescripcionFilePer(documentoDTO.getDescripcionFilePer());
+            documentoInsert.setTypeFilePer(documentoDTO.getTypeFilePer());
+            documentoInsert.setSizeFilePer(documentoDTO.getSizeFilePer());
+
+            documentoInsert.setUploadDateFilePer(documentoDTO.getUploadDateFilePer());
+            documentoInsert.setCreaPorFilePer(documentoDTO.getCreaPorFilePer());
+
+            documentoNew = documentemployeeservice.save(documentoInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("document", documentoNew);
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/documentopersonaldelete/{idpersonal}/{idobra}/{tipodocumento}/{idopcion}/{idIPadre}/{iddocu}")
+    public ResponseEntity<?> delete(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento, @PathVariable Long idopcion, @PathVariable Long idIPadre, @PathVariable Long iddocu){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            DocumentEmployee documentDelete = documentemployeeservice.findByDocumentPersonalAndObraAndTipoAndId(idpersonal, idobra, tipodocumento, idopcion, idIPadre, iddocu);
+            documentemployeeservice.delete(documentDelete);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el Documento de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el archivo con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoid/{idTipoFile}/{idObraTipoFile}")
+    public TipoDocumento showTipoDocId(@PathVariable Long idTipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByIdTipoFileAndIdObraTipoFile(idTipoFile, idObraTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentotipo/{tipoFile}/{idObraTipoFile}")
+    public List<TipoDocumento> showTipoDocTipo(@PathVariable String tipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByTipoFileAndIdObraTipoFile(tipoFile, idObraTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidestado/{tipoFile}/{estadoTipoFile}/{idObraTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstado(@PathVariable String tipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+
+    @PostMapping("/tipodocumentosave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createTipoDocumento(@RequestBody TipoDocumento documento, BindingResult result) {
+        TipoDocumento documentoNew = null;
+        TipoDocumento documentoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            documentoInsert = new TipoDocumento();
+            documentoInsert.setDescripTipoFile(documento.getDescripTipoFile());
+            documentoInsert.setCodigoTipoFile(documento.getCodigoTipoFile());
+            documentoInsert.setIdObraTipoFile(documento.getIdObraTipoFile());
+            documentoInsert.setTipoFile(documento.getTipoFile());
+            documentoInsert.setEstadoTipoFile(documento.getEstadoTipoFile());
+            documentoInsert.setFechaIngTipoFile(new Date());
+
+            documentoNew = documentemployeeservice.save(documentoInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("TipoDocumento", documentoNew);
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+
+    @PutMapping("/tipodocumentoupdate/{idtipofile}/{obraname}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TipoDocumento updatepersonalInfoFinancieraDTO(@RequestBody String descripcion, @PathVariable Long idtipofile, @PathVariable String obraname) {
+        TipoDocumento tipoDocumentoAct = documentemployeeservice.findByIdTipoFileAndIdObraTipoFile(idtipofile,obraname);
+
+        tipoDocumentoAct.setDescripTipoFile(descripcion);
+
+        return documentemployeeservice.save(tipoDocumentoAct);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/tipodocumentodelete/{obraname}/{idtipofile}")
+    public ResponseEntity<?> deleteTipoDocumento( @PathVariable String obraname,@PathVariable Long idtipofile){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            TipoDocumento tipoDocumentoDelete = documentemployeeservice.findByIdTipoFileAndIdObraTipoFile(idtipofile,obraname);
+            documentemployeeservice.delete(tipoDocumentoDelete);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el tipo de Documento de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el tipo de documento con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
 }

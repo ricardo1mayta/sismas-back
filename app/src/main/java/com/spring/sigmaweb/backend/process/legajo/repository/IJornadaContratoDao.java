@@ -18,7 +18,7 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
                 "inner join Obra o on (p.obraPer = o.idobra) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 and pcj.idPerjorn =?4 "
     )
-    public PersonalContratoJornada findByJornadaPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idperjorn);
+    public PersonalContratoJornada findByJornadaPersonalAndObraAndcontrato(Long idpersonal, String idobra, Long idpercont, Long idperjorn);
 
     @Query("select pcj " +
             "from PersonalContratoJornada pcj inner join PersonalContrato pc on (pcj.idPersonalContPerjorn = pc.idPerCont and pcj.idObraPerjorn = pc.idObraPercont) " +
@@ -26,7 +26,7 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3  "
     )
-    public List<PersonalContratoJornada> findByJornadaPersonalAndObraAndcontratoList(Long idpersona, String idobra, Long idpercont);
+    public List<PersonalContratoJornada> findByJornadaPersonalAndObraAndcontratoList(Long idpersonal, String idobra, Long idpercont);
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO(pc.idPerCont, " +
             "pcj.idPerjorn, " +
@@ -51,7 +51,7 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "inner join Persona psn on (p.idPersona = psn.idPersona) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 and pcj.idPerjorn =?4 ")
-    public JornadaPersonalContratoDTO findIdJornadaPersonalAndObraAndContratoDTO(Long idpersona, String idobra, Long idpercont, Long idperjorn);
+    public JornadaPersonalContratoDTO findIdJornadaPersonalAndObraAndContratoDTO(Long idpersonal, String idobra, Long idpercont, Long idperjorn);
 
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO(pc.idPerCont, " +
@@ -77,7 +77,7 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "inner join Persona psn on (p.idPersona = psn.idPersona) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 ")
-    public List<JornadaPersonalContratoDTO> findJornadasPersonalAndObraAndContratoDTOList(Long idpersona, String idobra, Long idpercont);
+    public List<JornadaPersonalContratoDTO> findJornadasPersonalAndObraAndContratoDTOList(Long idpersonal, String idobra, Long idpercont);
 
 
 

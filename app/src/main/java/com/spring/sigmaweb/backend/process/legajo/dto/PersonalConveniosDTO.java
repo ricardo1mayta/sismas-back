@@ -9,6 +9,15 @@ public class PersonalConveniosDTO implements Serializable {
     private Long idPerConv;
     private String idObraPerconv;
     private Long idPersonal;
+    private Long idPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaInicioPervila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaFinPervila;
+
+    private String estadoPervila;
     private String apePaternoPers;
     private String apeMaternoPers;
     private String nombrePers;
@@ -36,10 +45,14 @@ public class PersonalConveniosDTO implements Serializable {
 
     private String modiPorPerconv;
 
-    public PersonalConveniosDTO(Long idPerConv, String idObraPerconv, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoPerconv, String tipoConvenio, String observacionesPerconv, String estadoPerconv, Date fechaIniPerconv, Date fechaFinPerconv, Date fechaTerminoPerconv, Date fechaIngPerconv, String creaPorPerconv, Date fechaModiPerconv, String modiPorPerconv) {
+    public PersonalConveniosDTO(Long idPerConv, String idObraPerconv, Long idPersonal, Long idPervila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoPerconv, String tipoConvenio, String observacionesPerconv, String estadoPerconv, Date fechaIniPerconv, Date fechaFinPerconv, Date fechaTerminoPerconv, Date fechaIngPerconv, String creaPorPerconv, Date fechaModiPerconv, String modiPorPerconv) {
         this.idPerConv = idPerConv;
         this.idObraPerconv = idObraPerconv;
         this.idPersonal = idPersonal;
+        this.idPervila = idPervila;
+        this.fechaInicioPervila = fechaInicioPervila;
+        this.fechaFinPervila = fechaFinPervila;
+        this.estadoPervila = estadoPervila;
         this.apePaternoPers = apePaternoPers;
         this.apeMaternoPers = apeMaternoPers;
         this.nombrePers = nombrePers;
@@ -54,6 +67,11 @@ public class PersonalConveniosDTO implements Serializable {
         this.creaPorPerconv = creaPorPerconv;
         this.fechaModiPerconv = fechaModiPerconv;
         this.modiPorPerconv = modiPorPerconv;
+    }
+
+    public PersonalConveniosDTO() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
     public Long getIdPerConv() {
@@ -190,6 +208,38 @@ public class PersonalConveniosDTO implements Serializable {
 
     public void setModiPorPerconv(String modiPorPerconv) {
         this.modiPorPerconv = modiPorPerconv;
+    }
+
+    public Long getIdPervila() {
+        return idPervila;
+    }
+
+    public void setIdPervila(Long idPervila) {
+        this.idPervila = idPervila;
+    }
+
+    public Date getFechaInicioPervila() {
+        return fechaInicioPervila;
+    }
+
+    public void setFechaInicioPervila(Date fechaInicioPervila) {
+        this.fechaInicioPervila = fechaInicioPervila;
+    }
+
+    public Date getFechaFinPervila() {
+        return fechaFinPervila;
+    }
+
+    public void setFechaFinPervila(Date fechaFinPervila) {
+        this.fechaFinPervila = fechaFinPervila;
+    }
+
+    public String getEstadoPervila() {
+        return estadoPervila;
+    }
+
+    public void setEstadoPervila(String estadoPervila) {
+        this.estadoPervila = estadoPervila;
     }
 
     private static final long serialVersionUID = 1L;

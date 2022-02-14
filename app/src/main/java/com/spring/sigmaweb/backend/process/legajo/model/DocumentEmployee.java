@@ -25,10 +25,25 @@ public class DocumentEmployee implements Serializable  {
     @Column(name = "title_fileper", nullable = false, length = 500)
     private String titleFilePer;
 
+    @Column(name = "filename_fileper", nullable = false, length = 500)
+    private String fileNameFilePer;
+
+    @Column(name = "url_fileper", nullable = false, length = 500)
+    private String urlFilePer;
+
+    @Column(name = "tipo_fileper", nullable = true, length = 50)
+    private String tipoFilePer;
+
+    @Column(name = "opcion_fileper", nullable = true, length = 50)
+    private Long opcionFilePer;
+
+    @Column(name = "id_itempadre_fileper", nullable = false)
+    private Long idItemPadreFileper;
+
     @Column(name = "description_fileper", nullable = false, length = 500)
     private String descripcionFilePer;
 
-    @Column(name = "type_fileper", nullable = false, length = 10)
+    @Column(name = "typefile_fileper", nullable = false, length = 50)
     private String typeFilePer;
 
     @Column(name = "size_fileper", nullable = false)
@@ -118,4 +133,46 @@ public class DocumentEmployee implements Serializable  {
     public void setCreaPorFilePer(String creaPorFilePer) {
         this.creaPorFilePer = creaPorFilePer;
     }
+
+    public String getTipoFilePer() {
+        return tipoFilePer;
+    }
+
+    public void setTipoFilePer(String tipoFilePer) {
+        this.tipoFilePer = tipoFilePer;
+    }
+
+    public Long getOpcionFilePer() {
+        return opcionFilePer;
+    }
+
+    public void setOpcionFilePer(Long opcionFilePer) {
+        this.opcionFilePer = opcionFilePer;
+    }
+
+    public Long getIdItemPadreFileper() {
+        return idItemPadreFileper;
+    }
+
+    public void setIdItemPadreFileper(Long idItemPadreFileper) {
+        this.idItemPadreFileper = idItemPadreFileper;
+    }
+
+    public String getUrlFilePer() {
+        return urlFilePer;
+    }
+
+    public void setUrlFilePer(String urlFilePer) {
+        this.urlFilePer = urlFilePer;
+    }
+
+    public String getFileNameFilePer() {
+        return fileNameFilePer;
+    }
+
+    public void setFileNameFilePer(String fileNameFilePer) {
+        this.fileNameFilePer = fileNameFilePer;
+    }
+
+    private static final long serialVersionUID = 1L;
 }

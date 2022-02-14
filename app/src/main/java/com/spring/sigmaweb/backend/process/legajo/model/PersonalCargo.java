@@ -27,6 +27,11 @@ public class PersonalCargo implements Serializable {
     @Column(nullable = false, name = "id_cargo_percargo")
     private Long idCargoPercargo;
 
+    @JsonIgnoreProperties(value = {"idPervilaPercargo", "idPervilaPerconv","idPervilaPercont","idPervilaPerdesv", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "id_pervila_percargo", foreignKey = @ForeignKey(name = "fk_cargo_x_vidalaboral"))
+    private PersonalVidaLaboral idPervilaPercargo;
+
     @Column(nullable = false, name = "id_area_percargo")
     private Integer idAreaPercont;
 
@@ -35,36 +40,42 @@ public class PersonalCargo implements Serializable {
 
     @Column(nullable = false, name = "id_puesto_percargo")
     private Integer idPuestoPercargo;
+/*
+    @Column(name = "id_cargoespecial_percargo", nullable = true, length = 3)
+    private String idCargoEspecialPercargo;*/
 
-    @Column(nullable = false, name = "flgcargoprincipal_percargo", columnDefinition = "boolean default false")
-    private Boolean flgCargoPrincipalPercargo;
+    @Column(nullable = false, name = "flgcargodirec_percargo", columnDefinition = "boolean default false")
+    private Boolean flgCargoDirePercargo;
 
-    @Column(nullable = false, name = "flgcargodirectivo_percargo", columnDefinition = "boolean default false")
-    private Boolean flgCargoDirectivoPercargo;
+    @Column(nullable = false, name = "flgcargoconfi_percargo", columnDefinition = "boolean default false")
+    private Boolean flgCargoConfiPercargo;
 
-    @Column(nullable = false, name = "flgcargoconfianza_percargo", columnDefinition = "boolean default false")
-    private Boolean flgCargoConfianzaPercargo;
+    @Column(nullable = false, name = "flgcargonofiscal_percargo", columnDefinition = "boolean default false")
+    private Boolean flgCargoNofilcalPercargo;
+
+    @Column(nullable = false, name = "flgcargonoaplica_percargo", columnDefinition = "boolean default false")
+    private Boolean flgCargoNoAplicaPercargo;
 
     @Column(name = "observaciones_percargo", nullable = true, length = 500)
     private String observacionesPercargo;
 
     @Column(nullable = true, name = "fechaini_percargo")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIniPercargo;
 
     @Column(nullable = true, name = "fechafin_percargo")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinPercargo;
 
     @Column(nullable = false, name = "estado_percargo", columnDefinition = "boolean default true")
     private Boolean estadoPercargo;
 
-    @Column(nullable = true, name = "bonificacion_cargo_percargo", columnDefinition = "boolean default 0.00")
+    @Column(nullable = true, name = "bonificacion_cargo_percargo")
     private Double bonifCargoPercargo;
 
-    @Column(nullable = true, name = "bonificacion_cargoest_percargo", columnDefinition = "boolean default 0.00")
+    @Column(nullable = true, name = "bonificacion_cargoest_percargo")
     private Double bonifCargoEstPercargo;
 
     @Column(nullable = false, name = "fechaing_percargo")
@@ -144,28 +155,36 @@ public class PersonalCargo implements Serializable {
         this.idPuestoPercargo = idPuestoPercargo;
     }
 
-    public Boolean getFlgCargoPrincipalPercargo() {
-        return flgCargoPrincipalPercargo;
+    public Boolean getFlgCargoDirePercargo() {
+        return flgCargoDirePercargo;
     }
 
-    public void setFlgCargoPrincipalPercargo(Boolean flgCargoPrincipalPercargo) {
-        this.flgCargoPrincipalPercargo = flgCargoPrincipalPercargo;
+    public void setFlgCargoDirePercargo(Boolean flgCargoDirePercargo) {
+        this.flgCargoDirePercargo = flgCargoDirePercargo;
     }
 
-    public Boolean getFlgCargoDirectivoPercargo() {
-        return flgCargoDirectivoPercargo;
+    public Boolean getFlgCargoConfiPercargo() {
+        return flgCargoConfiPercargo;
     }
 
-    public void setFlgCargoDirectivoPercargo(Boolean flgCargoDirectivoPercargo) {
-        this.flgCargoDirectivoPercargo = flgCargoDirectivoPercargo;
+    public void setFlgCargoConfiPercargo(Boolean flgCargoConfiPercargo) {
+        this.flgCargoConfiPercargo = flgCargoConfiPercargo;
     }
 
-    public Boolean getFlgCargoConfianzaPercargo() {
-        return flgCargoConfianzaPercargo;
+    public Boolean getFlgCargoNofilcalPercargo() {
+        return flgCargoNofilcalPercargo;
     }
 
-    public void setFlgCargoConfianzaPercargo(Boolean flgCargoConfianzaPercargo) {
-        this.flgCargoConfianzaPercargo = flgCargoConfianzaPercargo;
+    public void setFlgCargoNofilcalPercargo(Boolean flgCargoNofilcalPercargo) {
+        this.flgCargoNofilcalPercargo = flgCargoNofilcalPercargo;
+    }
+
+    public Boolean getFlgCargoNoAplicaPercargo() {
+        return flgCargoNoAplicaPercargo;
+    }
+
+    public void setFlgCargoNoAplicaPercargo(Boolean flgCargoNoAplicaPercargo) {
+        this.flgCargoNoAplicaPercargo = flgCargoNoAplicaPercargo;
     }
 
     public String getObservacionesPercargo() {
@@ -246,6 +265,14 @@ public class PersonalCargo implements Serializable {
 
     public void setModiPorPercargo(String modiPorPercargo) {
         this.modiPorPercargo = modiPorPercargo;
+    }
+
+    public PersonalVidaLaboral getIdPervilaPercargo() {
+        return idPervilaPercargo;
+    }
+
+    public void setIdPervilaPercargo(PersonalVidaLaboral idPervilaPercargo) {
+        this.idPervilaPercargo = idPervilaPercargo;
     }
 
     private static final long serialVersionUID = 1L;

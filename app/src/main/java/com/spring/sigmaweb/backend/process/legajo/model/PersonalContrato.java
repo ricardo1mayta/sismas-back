@@ -19,24 +19,26 @@ public class PersonalContrato implements Serializable {
     @Column(name = "id_obra_percont", nullable = false, length = 6)
     private String idObraPercont;
 
-    @JsonIgnoreProperties(value = { "idPersonalPerconv", "PersonalContrato", "personalDependiente", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"idPersonalPercont","hibernateLazyInitializer", "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_personal_percont", foreignKey = @ForeignKey(name = "fk_contrato_personal"))
     private Personal idPersonalPercont;
 
+    @JsonIgnoreProperties(value = {"idPervilaPercargo", "idPervilaPerconv","idPervilaPercont","idPervilaPerdesv", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "id_pervila_percont", foreignKey = @ForeignKey(name = "fk_contrato_vidalaboral"))
+    private PersonalVidaLaboral idPervilaPercont;
+
     @Column(nullable = true, name = "id_tipo_percont")
     private Integer idTipoPercont;
 
-    @Column(nullable = true, length = 500, name = "url_documento_percont")
-    private String urlDocumentoPercont;
-
     @Column(nullable = false, name = "fechaini_percont")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIniPercont;
 
     @Column(nullable = true, name = "fechafin_percont")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinPercont;
 
@@ -50,6 +52,25 @@ public class PersonalContrato implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaTerminoPercont;
+
+    @Column(nullable = false, name = "jornadasemanal_percont")
+    private Double jornadaSemanalPercont;
+
+    @Column(nullable = true, name = "remuneración_percont")
+    private Double remuneracionPercont;
+
+    @Column(nullable = true, name = "bonificacion_percont")
+    private Double bonificacionPercont;
+
+    @Column(nullable = true, name = "feciniprueba_percont")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecIniPruebaPercont;
+
+    @Column(nullable = true, name = "fecfinprueba_percont")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecFinPruebaPercont;
 
     @Column(nullable = false, name = "fechaing_percont")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -107,14 +128,6 @@ public class PersonalContrato implements Serializable {
 
     public void setIdTipoPercont(Integer idTipoPercont) {
         this.idTipoPercont = idTipoPercont;
-    }
-
-    public String getUrlDocumentoPercont() {
-        return urlDocumentoPercont;
-    }
-
-    public void setUrlDocumentoPercont(String urlDocumentoPercont) {
-        this.urlDocumentoPercont = urlDocumentoPercont;
     }
 
     public Date getFechaIniPercont() {
@@ -187,6 +200,54 @@ public class PersonalContrato implements Serializable {
 
     public void setFechaTerminoPercont(Date fechaTerminoPercont) {
         this.fechaTerminoPercont = fechaTerminoPercont;
+    }
+
+    public Double getJornadaSemanalPercont() {
+        return jornadaSemanalPercont;
+    }
+
+    public void setJornadaSemanalPercont(Double jornadaSemanalPercont) {
+        this.jornadaSemanalPercont = jornadaSemanalPercont;
+    }
+
+    public Date getFecIniPruebaPercont() {
+        return fecIniPruebaPercont;
+    }
+
+    public void setFecIniPruebaPercont(Date fecIniPruebaPercont) {
+        this.fecIniPruebaPercont = fecIniPruebaPercont;
+    }
+
+    public Date getFecFinPruebaPercont() {
+        return fecFinPruebaPercont;
+    }
+
+    public void setFecFinPruebaPercont(Date fecFinPruebaPercont) {
+        this.fecFinPruebaPercont = fecFinPruebaPercont;
+    }
+
+    public PersonalVidaLaboral getIdPervilaPercont() {
+        return idPervilaPercont;
+    }
+
+    public void setIdPervilaPercont(PersonalVidaLaboral idPervilaPercont) {
+        this.idPervilaPercont = idPervilaPercont;
+    }
+
+    public Double getRemuneracionPercont() {
+        return remuneracionPercont;
+    }
+
+    public void setRemuneracionPercont(Double remuneracionPercont) {
+        this.remuneracionPercont = remuneracionPercont;
+    }
+
+    public Double getBonificacionPercont() {
+        return bonificacionPercont;
+    }
+
+    public void setBonificacionPercont(Double bonificacionPercont) {
+        this.bonificacionPercont = bonificacionPercont;
     }
 
     private static final long serialVersionUID = 1L;

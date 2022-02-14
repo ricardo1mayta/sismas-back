@@ -11,15 +11,16 @@ import java.util.List;
 public interface IPersonalContratoService {
     public PersonalContrato findByIdPerCont(Long idPerCont);
 
-    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont);
+    public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idpervila);
 
-    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra);
+    public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila);
 
-    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont);
-
-    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra);
+    public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont, Long idpervila);
+    public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra, Long idpervila);
+    public List<PersonalContratoObraDTO> findContratoActivoPersonalObra(Long idpersona, String idobra, Long idpervila);
 
     public PersonalContrato save (PersonalContrato contrato);
+
     //************** JORNADA *********************
 
     public PersonalContratoJornada findByIdPerjorn(Long idPerjorn);

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class PersonalDocDesvDTO implements Serializable {
-    private Long idPerentr;
+    private String idPerentr;
     private Long idPerdesvPerentr;
     private String idObraPerentr;
     private Long idTipoDocDesvPerentr;
@@ -25,8 +25,9 @@ public class PersonalDocDesvDTO implements Serializable {
     private Date fechaEjecucionPerentr;
 
     private String idResponsablePerentr;
+    private String idfileUploadPerentr;
 
-    public PersonalDocDesvDTO(Long idPerentr, Long idPerdesvPerentr, String idObraPerentr, Long idTipoDocDesvPerentr, String descripcionDocdesv, String tipoDocdesv, String descripcionGrupoDocdesv, Boolean flgInsertarMontoDocdesv, Boolean flgAdjuntarFileDocdesv, Boolean flgEntregoPerentr, Double montoPerentr, Date fechaEjecucionPerentr, String idResponsablePerentr) {
+    public PersonalDocDesvDTO(String idPerentr, Long idPerdesvPerentr, String idObraPerentr, Long idTipoDocDesvPerentr, String descripcionDocdesv, String tipoDocdesv, String descripcionGrupoDocdesv, Boolean flgInsertarMontoDocdesv, Boolean flgAdjuntarFileDocdesv, Boolean flgEntregoPerentr, Double montoPerentr, Date fechaEjecucionPerentr, String idResponsablePerentr, String idfileUploadPerentr) {
         this.idPerentr = idPerentr;
         this.idPerdesvPerentr = idPerdesvPerentr;
         this.idObraPerentr = idObraPerentr;
@@ -40,6 +41,7 @@ public class PersonalDocDesvDTO implements Serializable {
         this.montoPerentr = montoPerentr;
         this.fechaEjecucionPerentr = fechaEjecucionPerentr;
         this.idResponsablePerentr = idResponsablePerentr;
+        this.idfileUploadPerentr = idfileUploadPerentr;
     }
 
     public PersonalDocDesvDTO() {
@@ -47,11 +49,11 @@ public class PersonalDocDesvDTO implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public Long getIdPerentr() {
+    public String getIdPerentr() {
         return idPerentr;
     }
 
-    public void setIdPerentr(Long idPerentr) {
+    public void setIdPerentr(String idPerentr) {
         this.idPerentr = idPerentr;
     }
 
@@ -149,6 +151,14 @@ public class PersonalDocDesvDTO implements Serializable {
 
     public void setMontoPerentr(Double montoPerentr) {
         this.montoPerentr = montoPerentr;
+    }
+
+    public String getIdfileUploadPerentr() {
+        return idfileUploadPerentr;
+    }
+
+    public void setIdfileUploadPerentr(String idfileUploadPerentr) {
+        this.idfileUploadPerentr = idfileUploadPerentr;
     }
 
     private static final long serialVersionUID = 1L;

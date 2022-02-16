@@ -124,6 +124,12 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
 
     @Override
     @Transactional(readOnly = true)
+    public DocumentEmployeeDTO findByDocumentPersonalAndObraAndOpcionAndTipoDto(Long idpersonal, String idobra, String tipodocumento, Long idopcion, Long idIPadre) {
+        return documentemployeeDao.findByDocumentPersonalAndObraAndOpcionAndTipoDto(idpersonal, idobra, tipodocumento, idopcion, idIPadre);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public TipoDocumento findByIdTipoFileAndIdObraTipoFile(Long idTipoFile, String idObraTipoFile) {
         return tipoDocumentoDao.findByIdTipoFileAndIdObraTipoFile(idTipoFile, idObraTipoFile);
     }
@@ -167,7 +173,7 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalDocDesvinculacion findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(Long idPerentr, Long idPerdesvPerentr, String idObraPerentr) {
+    public PersonalDocDesvinculacion findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(String idPerentr, Long idPerdesvPerentr, String idObraPerentr) {
         return personaldocdesvDao.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idPerentr, idPerdesvPerentr, idObraPerentr);
     }
 
@@ -180,14 +186,13 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     @Override
     @Transactional(readOnly = true)
     public List<PersonalDocDesvDTO> findDesvinculacionAndIdObralist(Long perdesv, String idobra) {
-        System.out.println(perdesv);
-        System.out.println(idobra);
+
         return personaldocdesvDao.findDesvinculacionAndIdObralist(perdesv,idobra);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PersonalDocDesvDTO findDesvinculacionAndIdObraAndId(Long perdesv, String idobra, Long idperentr) {
+    public PersonalDocDesvDTO findDesvinculacionAndIdObraAndId(Long perdesv, String idobra, String idperentr) {
         return personaldocdesvDao.findDesvinculacionAndIdObraAndId(perdesv, idobra, idperentr);
     }
 

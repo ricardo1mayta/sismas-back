@@ -10,9 +10,9 @@ import java.util.Date;
 @Table(name = "mo_personal_docdesv")
 public class PersonalDocDesvinculacion implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id_perentr", nullable = false)
-    private Long idPerentr;
+    private String idPerentr;
 
     @Column(name = "id_perdesv_perentr", nullable = false)
     private Long idPerdesvPerentr;
@@ -26,22 +26,26 @@ public class PersonalDocDesvinculacion implements Serializable {
     @Column(nullable = false, name = "flg_entrego_perentr", columnDefinition = "boolean default false")
     private Boolean flgEntregoPerentr;
 
-    @Column(nullable = false,  name = "monto_perentr")
+    @Column(nullable = true,  name = "monto_perentr")
     private Double montoPerentr;
 
-    @Column(nullable = false, name = "fechaejecucion_perentr")
+    @Column(nullable = true, name = "fechaejecucion_perentr")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEjecucionPerentr;
 
-    @Column(nullable = false, length = 100, name = "id_responsable_perentr")
+    @Column(nullable = true, length = 100, name = "id_responsable_perentr")
     private String idResponsablePerentr;
 
-    public Long getIdPerentr() {
+    @Column(nullable = true, length = 100, name = "idfile_upload_perentr")
+    private String idfileUploadPerentr;
+
+
+    public String getIdPerentr() {
         return idPerentr;
     }
 
-    public void setIdPerentr(Long idPerentr) {
+    public void setIdPerentr(String idPerentr) {
         this.idPerentr = idPerentr;
     }
 
@@ -99,6 +103,14 @@ public class PersonalDocDesvinculacion implements Serializable {
 
     public void setMontoPerentr(Double montoPerentr) {
         this.montoPerentr = montoPerentr;
+    }
+
+    public String getIdfileUploadPerentr() {
+        return idfileUploadPerentr;
+    }
+
+    public void setIdfileUploadPerentr(String idfileUploadPerentr) {
+        this.idfileUploadPerentr = idfileUploadPerentr;
     }
 
     private static final long serialVersionUID = 1L;

@@ -123,6 +123,13 @@ public class PersonalRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/persdocdescviculacionitem/{idpersonal}/{idobra}/{tipodocumento}/{idopcion}/{idIPadre}")
+    public DocumentEmployeeDTO showdocumentoDesvinculaPersonal(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento,
+                                                                     @PathVariable Long idopcion, @PathVariable Long idIPadre){
+        return documentemployeeservice.findByDocumentPersonalAndObraAndOpcionAndTipoDto(idpersonal, idobra, tipodocumento, idopcion, idIPadre);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/countporobratipoyopcion/{idObraFilePer}/{tipoFilePer}/{opcionFilePer}")
     public Long countObraTipoOpcion(@PathVariable String idObraFilePer, @PathVariable String tipoFilePer, @PathVariable Long opcionFilePer){
         return documentemployeeservice.countByIdObraFilePerAndtipoFilePerAndOpcionFilePer(idObraFilePer,tipoFilePer, opcionFilePer);

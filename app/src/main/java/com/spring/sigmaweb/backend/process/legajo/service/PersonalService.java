@@ -124,7 +124,7 @@ public class PersonalService implements IPersonalService{
     @Override
     @Transactional
     public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo) {
-        System.out.println(fechaactivo);
+
         Date fecha = new Date();
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

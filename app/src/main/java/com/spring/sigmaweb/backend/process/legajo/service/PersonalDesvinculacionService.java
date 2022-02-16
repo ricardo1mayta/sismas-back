@@ -2,8 +2,10 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.generic.model.Obra;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDesvinculacionDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalDesvinculacion;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDesvinculacionDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDocDesvinculacionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,9 @@ import java.util.List;
 public class PersonalDesvinculacionService implements IPersonalDesvinculacionService {
     @Autowired
     private IPersonalDesvinculacionDao personalDesvinculacionDao;
+
+    @Autowired
+    private IPersonalDocDesvinculacionDao docdesvinculacionDao;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -81,5 +86,32 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
         query.setParameter("p_dateTermino", datetermino);
 
         query.execute();
+    }
+
+    @Override
+    @Transactional
+    public String insertNativePersoDocDesv(PersonalDocDesvDTO perdocDesv) {
+        String id = perdocDesv.getIdObraPerentr() + "-" + perdocDesv.getIdPerdesvPerentr().toString() + "-" + perdocDesv.getIdTipoDocDesvPerentr().toString() ;
+
+
+
+        docdesvinculacionDao.insertNativePersoDocDesv(id,
+                                                    perdocDesv.getIdPerdesvPerentr(),
+                                                    perdocDesv.getIdObraPerentr(),
+                                                    perdocDesv.getIdTipoDocDesvPerentr(),
+                                                    perdocDesv.getIdResponsablePerentr());
+        return id;
+    }
+
+    @Override
+    @Transactional
+    public Integer updatePerdocDesvincula(String idperentr, String obraname, Long idperdesv, Boolean flgEnt, Double monto, Date fecha, String idfile) {
+        return docdesvinculacionDao.updatePerdocDesvincula(idperentr, obraname, idperdesv, flgEnt, monto, fecha, idfile);
+    }
+
+    @Override
+    @Transactional
+    public Integer deletePersonalDocDesv(String idperentr, String obraname, Long idperdesv) {
+        return docdesvinculacionDao.deletePersonalDocDesv(idperentr, obraname, idperdesv);
     }
 }

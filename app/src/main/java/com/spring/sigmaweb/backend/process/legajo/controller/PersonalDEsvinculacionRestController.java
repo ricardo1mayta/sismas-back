@@ -1,10 +1,8 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDesvinculacionDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
-import com.spring.sigmaweb.backend.process.legajo.repository.IDocumentoDesvinculacionDao;
 import com.spring.sigmaweb.backend.process.legajo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -167,7 +165,7 @@ public class PersonalDEsvinculacionRestController {
     //--------------
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/checklistpersonaldociddesvobra/{idPerentr}/{idPerentr}/{idObraPerentr}")
-    public PersonalDocDesvinculacion showPersonalDcoDesvPorIdDesvinculacionObra(@PathVariable Long idPerentr, @PathVariable Long idPerdesvPerentr, @PathVariable String idObraPerentr){
+    public PersonalDocDesvinculacion showPersonalDcoDesvPorIdDesvinculacionObra(@PathVariable String idPerentr, @PathVariable Long idPerdesvPerentr, @PathVariable String idObraPerentr){
         return documentoemployeeservice.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idPerentr, idPerdesvPerentr, idObraPerentr);
     }
 
@@ -179,14 +177,32 @@ public class PersonalDEsvinculacionRestController {
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/checklistpersonaldociddesvobradto/{perdesv}/{idobra}/{idperentr}")
-    public PersonalDocDesvDTO findDesvinculacionAndIdObralist(@PathVariable Long perdesv, @PathVariable String idobra, @PathVariable Long idperentr){
+    public PersonalDocDesvDTO findDesvinculacionAndIdObralist(@PathVariable Long perdesv, @PathVariable String idobra, @PathVariable String idperentr){
         return documentoemployeeservice.findDesvinculacionAndIdObraAndId(perdesv, idobra, idperentr);
     }
 
     @PostMapping("/personaldocdesvsave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createPersonalDocDesv(@RequestBody PersonalDocDesvDTO docDesvPersNew, BindingResult result) {
-        PersonalDocDesvinculacion docDesvPersonalNew = null;
+        Map<String, Object> response = new HashMap<>();
+        PersonalDocDesvDTO personalDocDesvAct=null;
+        String newIId="";
+
+        try {
+            newIId = desvinculacionService.insertNativePersoDocDesv(docDesvPersNew);
+            personalDocDesvAct = documentoemployeeservice.findDesvinculacionAndIdObraAndId( docDesvPersNew.getIdPerdesvPerentr(), docDesvPersNew.getIdObraPerentr(),newIId);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personaldocdesvinculacion", personalDocDesvAct);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
+        /*PersonalDocDesvinculacion docDesvPersonalNew = null;
         PersonalDocDesvinculacion docDesvPersonalInsert = null;
 
         Map<String, Object> response = new HashMap<>();
@@ -221,13 +237,25 @@ public class PersonalDEsvinculacionRestController {
         response.put("mensaje", "El item ha sido creado con éxito!");
         response.put("personaldocdesvinculacion", docDesvPersonalNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
+         */
     }
 
 
     @PutMapping("/personaldocdesvupdate/{idperdesv}/{obraname}/{idperentr}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PersonalDocDesvinculacion updatePersonalDocDesvDTO  (@RequestBody PersonalDocDesvDTO desvinculacionDTO, @PathVariable Long idperdesv, @PathVariable String obraname, @PathVariable Long idperentr) {
-        PersonalDocDesvinculacion personalDocDesvAct = documentoemployeeservice.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idperentr,idperdesv, obraname);
+    public PersonalDocDesvDTO updatePersonalDocDesvDTO  (@RequestBody PersonalDocDesvDTO desvinculacionDTO, @PathVariable Long idperdesv, @PathVariable String obraname, @PathVariable String idperentr) {
+        Integer res= -1;
+        res=desvinculacionService.updatePerdocDesvincula(idperentr, obraname,idperdesv,
+                desvinculacionDTO.getFlgEntregoPerentr(),
+                desvinculacionDTO.getMontoPerentr(),
+                desvinculacionDTO.getFechaEjecucionPerentr(),
+                desvinculacionDTO.getIdfileUploadPerentr()
+        );
+
+        return documentoemployeeservice.findDesvinculacionAndIdObraAndId(idperdesv, obraname,idperentr);
+
+        /*PersonalDocDesvinculacion personalDocDesvAct = documentoemployeeservice.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idperentr,idperdesv, obraname);
         if(personalDocDesvAct != null) {
 
             personalDocDesvAct.setFlgEntregoPerentr(desvinculacionDTO.getFlgEntregoPerentr());
@@ -235,8 +263,29 @@ public class PersonalDEsvinculacionRestController {
             personalDocDesvAct.setFechaEjecucionPerentr(desvinculacionDTO.getFechaEjecucionPerentr());
         }
 
-        return documentoemployeeservice.saveDDoc(personalDocDesvAct);
+        return documentoemployeeservice.saveDDoc(personalDocDesvAct);*/
+    }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/perdocdesviculadelete/{idperentr}/{obraname}/{idperdesv}")
+    public ResponseEntity<?> deleteDocDesvin(@PathVariable String idperentr, @PathVariable String obraname, @PathVariable Long idperdesv){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            PersonalDocDesvDTO personalDocDes = documentoemployeeservice.findDesvinculacionAndIdObraAndId(idperdesv, obraname,idperentr);
+
+            desvinculacionService.deletePersonalDocDesv(idperentr, obraname, idperdesv);
+
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el item de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se eliminaron los familiares con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 

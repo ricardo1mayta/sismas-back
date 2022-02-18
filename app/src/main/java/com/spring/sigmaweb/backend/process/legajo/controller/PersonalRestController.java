@@ -546,9 +546,19 @@ public class PersonalRestController {
 
         PersonalVidaLabDTO vidaladhist = vidalabservice.ultimoPeriodoVidaLaboral(obraname, idpersonal);
 
-        if (!PersonalAct.getIdEntidadHaberesPer().equals(personalDTO.getIdEntidadHaberesPer()) ||
-                !PersonalAct.getNroCtabacHaberesper().equals(personalDTO.getNroCtabacHaberesper()) ||
-                !PersonalAct.getNroCtaintbacHaberesper().equals(personalDTO.getNroCtaintbacHaberesper()) ) {
+        //desnulea
+        Long entHabold = PersonalAct.getIdEntidadHaberesPer() == null ? Long.parseLong("-1") : PersonalAct.getIdEntidadHaberesPer();
+        Long entHabnew = personalDTO.getIdEntidadHaberesPer() == null ? Long.parseLong("-1") : personalDTO.getIdEntidadHaberesPer();
+        String ctaBancohabold = PersonalAct.getNroCtabacHaberesper() == null ? " " : PersonalAct.getNroCtabacHaberesper();
+        String ctaBancohabnew = personalDTO.getNroCtabacHaberesper() == null ? " " : personalDTO.getNroCtabacHaberesper();
+        String ctaInterhabold = PersonalAct.getNroCtaintbacHaberesper() == null ? " " : PersonalAct.getNroCtaintbacHaberesper();
+        String ctaInterhabnew = personalDTO.getNroCtaintbacHaberesper() == null ? " " : personalDTO.getNroCtaintbacHaberesper();
+
+
+        if (!entHabold.equals(entHabnew) ||
+                !ctaBancohabold.equals(ctaBancohabnew) ||
+                !ctaInterhabold.equals(ctaInterhabnew) ) {
+
             itemHist.setFechaCambioHistdb(new Date());
             itemHist.setIdObraHistdb(obraname);
             itemHist.setIdPersonalHistdb(idpersonal);
@@ -567,11 +577,21 @@ public class PersonalRestController {
             historico.add(itemHist);
         }
 
-        if (!PersonalAct.getIdEntidadCtsPer().equals(personalDTO.getIdEntidadCtsPer()) ||
-                !PersonalAct.getNroCtabacCtsper().equals(personalDTO.getNroCtabacCtsper()) ||
-                !PersonalAct.getNroCtaintbacCtsper().equals(personalDTO.getNroCtaintbacCtsper()) ||
-                !PersonalAct.getIdTipoMonedaCtsPer().equals(personalDTO.getIdTipoDocPer()) ) {
+        Long entCtsold = PersonalAct.getIdEntidadCtsPer() == null ? Long.parseLong("-1") : PersonalAct.getIdEntidadCtsPer();
+        Long entCtsnew = personalDTO.getIdEntidadCtsPer() == null ? Long.parseLong("-1") : personalDTO.getIdEntidadCtsPer();
+        String ctaBancoCtsold = PersonalAct.getNroCtabacCtsper() == null ? " " : PersonalAct.getNroCtabacCtsper();
+        String ctaBancoCtsnew = personalDTO.getNroCtabacCtsper() == null ? " " : personalDTO.getNroCtabacCtsper();
+        String ctaInterCtsold = PersonalAct.getNroCtaintbacCtsper() == null ? " " : PersonalAct.getNroCtaintbacCtsper();
+        String ctaInterCtsnew = personalDTO.getNroCtaintbacCtsper() == null ? " " : personalDTO.getNroCtaintbacCtsper();
+        Integer monedaCtsold = PersonalAct.getIdTipoMonedaCtsPer() == null ? Integer.parseInt("-1") : PersonalAct.getIdTipoMonedaCtsPer();
+        Integer monedaCtsnew = personalDTO.getIdTipoMonedaCtsPer() == null ? Integer.parseInt("-1") : personalDTO.getIdTipoMonedaCtsPer();
 
+
+        if (!entCtsold.equals(entCtsnew) ||
+                !ctaBancoCtsold.equals(ctaBancoCtsnew) ||
+                !ctaInterCtsold.equals(ctaInterCtsnew) ||
+                !monedaCtsold.equals(monedaCtsnew) ) {
+            itemHist = new PersonalHistorcoBancario();
             itemHist.setFechaCambioHistdb(new Date());
             itemHist.setIdObraHistdb(obraname);
             itemHist.setIdPersonalHistdb(idpersonal);
@@ -588,6 +608,8 @@ public class PersonalRestController {
             itemHist.setCtaInterCtsOldHistdb(PersonalAct.getNroCtaintbacCtsper());
             itemHist.setCtaInterCtsNewHistdb(personalDTO.getNroCtaintbacCtsper());
 
+            itemHist.setTipoMonedaCtsOldHistdb(dataoldDTO.getTipoMonedaCtsPer());
+            itemHist.setTipoMonedaCtsNewHistdb(personalDTO.getTipoMonedaCtsPer());
             historico.add(itemHist);
         }
 
@@ -606,7 +628,9 @@ public class PersonalRestController {
         PersonalAct.setFlgPermitirCambioHaberesPer(personalDTO.getFlgPermitirCambioHaberesPer());
 
         if (historico.size() > 0) {
+            System.out.println(historico.size());
             for (PersonalHistorcoBancario h : historico) {
+                System.out.println(h.getCtaBancoCtsNewHistdb());
                 personalservice.saveHistBancario(h);
             }
         }

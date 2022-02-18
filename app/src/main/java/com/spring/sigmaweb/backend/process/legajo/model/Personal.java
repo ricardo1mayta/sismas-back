@@ -225,16 +225,16 @@ public class Personal implements Serializable {
     @Column(nullable = true, length = 100, name = "nroctaintbac_cts_per")
     private String nroCtaintbacCtsper;
 
-    @Column(nullable = false, length = 1, name = "flg_requiere_aperturacta_cts_per")
+    @Column(nullable = true, length = 1, name = "flg_requiere_aperturacta_cts_per")
     private String flgRequiereAperturaCtaCtsper;
 
-    @Column(nullable = false, length = 1, name = "flg_requiere_aperturacta_haberes_per")
+    @Column(nullable = true, length = 1, name = "flg_requiere_aperturacta_haberes_per")
     private String flgRequiereAperturaCtaHaberesper;
 
-    @Column(nullable = false, name = "flg_permitircambio_cts_per", columnDefinition = "boolean default false")
+    @Column(nullable = true, name = "flg_permitircambio_cts_per", columnDefinition = "boolean default false")
     private Boolean flgPermitirCambioCtsPer;
 
-    @Column(nullable = false, name = "flg_permitircambio_haberes_per", columnDefinition = "boolean default false")
+    @Column(nullable = true, name = "flg_permitircambio_haberes_per", columnDefinition = "boolean default false")
     private Boolean flgPermitirCambioHaberesPer;
 
     @JsonIgnoreProperties({ "personalDep", "hibernateLazyInitializer", "handler" })

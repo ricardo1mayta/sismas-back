@@ -17,6 +17,8 @@ public interface IPersonalDocDesvinculacionDao extends CrudRepository<PersonalDo
 
     public List<PersonalDocDesvinculacion> findByIdPerdesvPerentrAndIdObraPerentr(Long idPerdesvPerentr, String idObraPerentr);
 
+    public Long countByIdObraPerentrAndIdTipoDocDesvPerentr(String idObraPerentr, Long idTipoDocDesvPerentr);
+
     @Query("Select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO(pdd.idPerentr," +
             "pdd.idPerdesvPerentr, " +
             "o.idobra as idObraPerentr, " +

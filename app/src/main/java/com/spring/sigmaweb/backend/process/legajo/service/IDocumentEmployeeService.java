@@ -47,6 +47,8 @@ public interface IDocumentEmployeeService {
     public DocumentoDesvinculacion findByIdDocdesvAndIdObraDocdesvAndTipoDocdesv (Long idDocdesv, String idObraDocdesv, String tipoDocdesv);
 
     public List<DocumentoDesvinculacion> findByIdObraDocdesvAndTipoDocdesv (String idObraDocdesv, String tipoDocdesv);
+
+    public DocumentoDesvinculacion saveDocDesv(DocumentoDesvinculacion docdesv);
     //-----
     public PersonalDocDesvinculacion findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr (String idPerentr, Long idPerdesvPerentr, String idObraPerentr);
 

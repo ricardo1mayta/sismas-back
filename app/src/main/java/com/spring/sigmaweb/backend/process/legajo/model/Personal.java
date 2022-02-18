@@ -225,6 +225,18 @@ public class Personal implements Serializable {
     @Column(nullable = true, length = 100, name = "nroctaintbac_cts_per")
     private String nroCtaintbacCtsper;
 
+    @Column(nullable = false, length = 1, name = "flg_requiere_aperturacta_cts_per")
+    private String flgRequiereAperturaCtaCtsper;
+
+    @Column(nullable = false, length = 1, name = "flg_requiere_aperturacta_haberes_per")
+    private String flgRequiereAperturaCtaHaberesper;
+
+    @Column(nullable = false, name = "flg_permitircambio_cts_per", columnDefinition = "boolean default false")
+    private Boolean flgPermitirCambioCtsPer;
+
+    @Column(nullable = false, name = "flg_permitircambio_haberes_per", columnDefinition = "boolean default false")
+    private Boolean flgPermitirCambioHaberesPer;
+
     @JsonIgnoreProperties({ "personalDep", "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalDep", cascade = CascadeType.ALL)
     private List<PersonalDependiente> personalDependiente;
@@ -708,6 +720,38 @@ public class Personal implements Serializable {
 
     public void setNroCtaintbacCtsper(String nroCtaintbacCtsper) {
         this.nroCtaintbacCtsper = nroCtaintbacCtsper;
+    }
+
+    public String getFlgRequiereAperturaCtaCtsper() {
+        return flgRequiereAperturaCtaCtsper;
+    }
+
+    public void setFlgRequiereAperturaCtaCtsper(String flgRequiereAperturaCtaCtsper) {
+        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
+    }
+
+    public String getFlgRequiereAperturaCtaHaberesper() {
+        return flgRequiereAperturaCtaHaberesper;
+    }
+
+    public void setFlgRequiereAperturaCtaHaberesper(String flgRequiereAperturaCtaHaberesper) {
+        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+    }
+
+    public Boolean getFlgPermitirCambioCtsPer() {
+        return flgPermitirCambioCtsPer;
+    }
+
+    public void setFlgPermitirCambioCtsPer(Boolean flgPermitirCambioCtsPer) {
+        this.flgPermitirCambioCtsPer = flgPermitirCambioCtsPer;
+    }
+
+    public Boolean getFlgPermitirCambioHaberesPer() {
+        return flgPermitirCambioHaberesPer;
+    }
+
+    public void setFlgPermitirCambioHaberesPer(Boolean flgPermitirCambioHaberesPer) {
+        this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
     }
 
     private static final long serialVersionUID = 1L;

@@ -3,7 +3,9 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 import com.spring.sigmaweb.backend.process.generic.model.Persona;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorcoBancario;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoBancarioDao;
 
 import java.util.Date;
 import java.util.List;
@@ -43,4 +45,15 @@ public interface IPersonalService {
 
     //activar estudiante
     public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo);
+
+    //Historio Info Bancaria
+
+    public List<PersonalHistorcoBancario> findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdb (String idObraHistdb, long idPersonalHistdb, Long idPervilaHistdb);
+
+    public PersonalHistorcoBancario findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndIdHistdb (String idObraHistdb, long idPersonalHistdb, Long idPervilaHistdb, Long idHistdb);
+
+    public List<PersonalHistorcoBancario> findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndTipoHistdb (String idObraHistdb, long idPersonalHistdb,
+                                                                                                                Long idPervilaHistdb, String tipoHistdb);
+
+    public PersonalHistorcoBancario saveHistBancario(PersonalHistorcoBancario historico);
 }

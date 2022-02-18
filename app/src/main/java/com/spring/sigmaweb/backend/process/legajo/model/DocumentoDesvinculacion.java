@@ -1,15 +1,13 @@
 package com.spring.sigmaweb.backend.process.legajo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "mo_documentos_desv")
 public class DocumentoDesvinculacion implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_docdesv",  nullable = false, unique = true)
     private Long idDocdesv;
 

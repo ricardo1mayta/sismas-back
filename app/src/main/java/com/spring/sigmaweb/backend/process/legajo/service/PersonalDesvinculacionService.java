@@ -70,6 +70,12 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Long countByIdObraPerentrAndIdTipoDocDesvPerentr(String idObraPerentr, Long idTipoDocDesvPerentr) {
+        return docdesvinculacionDao.countByIdObraPerentrAndIdTipoDocDesvPerentr(idObraPerentr, idTipoDocDesvPerentr);
+    }
+
+    @Override
     public void update_spu_desvinculacion(Long id_personal, String obra, Long idpervila, String usermodi, Date datetermino) {
 
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_desvinculacion_personal");

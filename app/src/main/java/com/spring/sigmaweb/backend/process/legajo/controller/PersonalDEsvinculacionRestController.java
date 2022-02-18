@@ -162,6 +162,62 @@ public class PersonalDEsvinculacionRestController {
 
         return documentoemployeeservice.findByIdObraDocdesvAndTipoDocdesv(idObraDocdesv, tipoDocdesv);
     }
+
+    @PostMapping("/docdesvinculasave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createDocDesv(@RequestBody DocumentoDesvinculacion docuDesvi, BindingResult result) {
+        DocumentoDesvinculacion docDesvNew = null;
+        DocumentoDesvinculacion docDesvInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            docDesvInsert = new DocumentoDesvinculacion();
+            docDesvInsert.setIdObraDocdesv(docuDesvi.getIdObraDocdesv());
+            docDesvInsert.setDescripcionDocdesv(docuDesvi.getDescripcionDocdesv());
+            docDesvInsert.setTipoDocdesv(docuDesvi.getTipoDocdesv());
+            docDesvInsert.setDescripcionGrupoDocdesv(docuDesvi.getDescripcionGrupoDocdesv());
+            docDesvInsert.setFlgInsertarMontoDocdesv(docuDesvi.getFlgInsertarMontoDocdesv());
+            docDesvInsert.setFlgAdjuntarFileDocdesv(docuDesvi.getFlgAdjuntarFileDocdesv());
+
+            docDesvNew = documentoemployeeservice.saveDocDesv(docDesvInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("Documentodesvinculacion", docDesvNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/docdesvinculaupdate/{iddocdesv}/{obraname}/{tipo}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public DocumentoDesvinculacion updateDocDesvincula  (@RequestBody DocumentoDesvinculacion docuDesvi, @PathVariable Long iddocdesv, @PathVariable String obraname, @PathVariable String tipo) {
+        DocumentoDesvinculacion docDesvAct = documentoemployeeservice.findByIdDocdesvAndIdObraDocdesvAndTipoDocdesv(iddocdesv,obraname, tipo);
+
+        if(docDesvAct != null) {
+            docDesvAct.setDescripcionDocdesv(docuDesvi.getDescripcionDocdesv());
+            docDesvAct.setTipoDocdesv(docuDesvi.getTipoDocdesv());
+            docDesvAct.setDescripcionGrupoDocdesv(docuDesvi.getDescripcionGrupoDocdesv());
+            docDesvAct.setFlgInsertarMontoDocdesv(docuDesvi.getFlgInsertarMontoDocdesv());
+            docDesvAct.setFlgAdjuntarFileDocdesv(docuDesvi.getFlgAdjuntarFileDocdesv());
+        }
+        return documentoemployeeservice.saveDocDesv(docDesvAct);
+    }
+
+
     //--------------
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/checklistpersonaldociddesvobra/{idPerentr}/{idPerentr}/{idObraPerentr}")
@@ -173,6 +229,12 @@ public class PersonalDEsvinculacionRestController {
     @GetMapping("/checklistpersonaldocdesvobradtolist/{perdesv}/{idobra}")
     public List<PersonalDocDesvDTO> showPersonalDocPorDesvinculacionObralist(@PathVariable Long perdesv, @PathVariable String idobra){
         return documentoemployeeservice.findDesvinculacionAndIdObralist(perdesv, idobra);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/countdocdesvobratipo/{idObra}/{tipo}")
+    public long showPersonalDcoDesvPorIdDesvinculacionObra(@PathVariable String idObra, @PathVariable Long tipo){
+        return desvinculacionService.countByIdObraPerentrAndIdTipoDocDesvPerentr(idObra, tipo);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})

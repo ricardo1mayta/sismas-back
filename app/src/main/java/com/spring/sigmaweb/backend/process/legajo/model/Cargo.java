@@ -12,7 +12,7 @@ public class Cargo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cargo", nullable = false)
+    @Column(name = "id_cargo", nullable = false, unique = true)
     private Long idCargo;
 
     @Column(nullable = false, length = 100, name = "nombre_car", unique = true)

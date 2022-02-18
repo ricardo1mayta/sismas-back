@@ -172,6 +172,11 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     }
 
     @Override
+    public DocumentoDesvinculacion saveDocDesv(DocumentoDesvinculacion docdesv) {
+        return documentodesvinculacionDao.save(docdesv);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PersonalDocDesvinculacion findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(String idPerentr, Long idPerdesvPerentr, String idObraPerentr) {
         return personaldocdesvDao.findByIdPerentrAndIdPerdesvPerentrAndIdObraPerentr(idPerentr, idPerdesvPerentr, idObraPerentr);

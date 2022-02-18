@@ -26,10 +26,12 @@ public class PersonalDatosBancariosDTO implements Serializable {
     private String nroCtabacCtsper;
     private String nroCtaintbacCtsper;
 
-    public PersonalDatosBancariosDTO(Long idpersonal, String idobra, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer,
-                                  Integer idTipoDocPer, String descDocuPer, String nroDocPers, Long idEntidadHaberesPer, String entidadHaberesPer, Long idEntidadCtsPer, String entidadCtsPer,
-                                  Integer idTipoMonedaCtsPer, String tipoMonedaCtsPer, String nroCtabacHaberesper, String nroCtaintbacHaberesper, String nroCtabacCtsper,
-                                  String nroCtaintbacCtsper) {
+    private String flgRequiereAperturaCtaCtsper;
+    private String flgRequiereAperturaCtaHaberesper;
+    private Boolean flgPermitirCambioCtsPer;
+    private Boolean flgPermitirCambioHaberesPer;
+
+    public PersonalDatosBancariosDTO(Long idpersonal, String idobra, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Integer idTipoDocPer, String descDocuPer, String nroDocPers, Long idEntidadHaberesPer, String entidadHaberesPer, Long idEntidadCtsPer, String entidadCtsPer, Integer idTipoMonedaCtsPer, String tipoMonedaCtsPer, String nroCtabacHaberesper, String nroCtaintbacHaberesper, String nroCtabacCtsper, String nroCtaintbacCtsper, String flgRequiereAperturaCtaCtsper, String flgRequiereAperturaCtaHaberesper, Boolean flgPermitirCambioCtsPer, Boolean flgPermitirCambioHaberesPer) {
         this.idpersonal = idpersonal;
         this.idobra = idobra;
         this.nombrePers = nombrePers;
@@ -49,7 +51,12 @@ public class PersonalDatosBancariosDTO implements Serializable {
         this.nroCtaintbacHaberesper = nroCtaintbacHaberesper;
         this.nroCtabacCtsper = nroCtabacCtsper;
         this.nroCtaintbacCtsper = nroCtaintbacCtsper;
+        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
+        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+        this.flgPermitirCambioCtsPer = flgPermitirCambioCtsPer;
+        this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
     }
+
     public PersonalDatosBancariosDTO() {
         super();
         // TODO Auto-generated constructor stub
@@ -205,6 +212,38 @@ public class PersonalDatosBancariosDTO implements Serializable {
 
     public void setNroCtaintbacCtsper(String nroCtaintbacCtsper) {
         this.nroCtaintbacCtsper = nroCtaintbacCtsper;
+    }
+
+    public String getFlgRequiereAperturaCtaCtsper() {
+        return flgRequiereAperturaCtaCtsper;
+    }
+
+    public void setFlgRequiereAperturaCtaCtsper(String flgRequiereAperturaCtaCtsper) {
+        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
+    }
+
+    public String getFlgRequiereAperturaCtaHaberesper() {
+        return flgRequiereAperturaCtaHaberesper;
+    }
+
+    public void setFlgRequiereAperturaCtaHaberesper(String flgRequiereAperturaCtaHaberesper) {
+        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+    }
+
+    public Boolean getFlgPermitirCambioCtsPer() {
+        return flgPermitirCambioCtsPer;
+    }
+
+    public void setFlgPermitirCambioCtsPer(Boolean flgPermitirCambioCtsPer) {
+        this.flgPermitirCambioCtsPer = flgPermitirCambioCtsPer;
+    }
+
+    public Boolean getFlgPermitirCambioHaberesPer() {
+        return flgPermitirCambioHaberesPer;
+    }
+
+    public void setFlgPermitirCambioHaberesPer(Boolean flgPermitirCambioHaberesPer) {
+        this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
     }
 
     private static final long serialVersionUID = 1L;

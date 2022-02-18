@@ -3,9 +3,11 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 import com.spring.sigmaweb.backend.process.generic.model.Persona;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorcoBancario;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDataHistoricoDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoBancarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,9 @@ public class PersonalService implements IPersonalService{
 
     @Autowired
     private IPersonalDataHistoricoDao personalHistoricoDao;
+
+    @Autowired
+    private IPersonalHistoricoBancarioDao personalHistoricobancDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -134,6 +139,29 @@ public class PersonalService implements IPersonalService{
 
         }
         return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalHistorcoBancario> findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdb(String idObraHistdb, long idPersonalHistdb, Long idPervilaHistdb) {
+        return personalHistoricobancDao.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PersonalHistorcoBancario findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndIdHistdb(String idObraHistdb, long idPersonalHistdb, Long idPervilaHistdb, Long idHistdb) {
+        return personalHistoricobancDao.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndIdHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb, idHistdb);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalHistorcoBancario> findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndTipoHistdb(String idObraHistdb, long idPersonalHistdb, Long idPervilaHistdb, String tipoHistdb) {
+        return personalHistoricobancDao.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndTipoHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb, tipoHistdb);
+    }
+
+    @Override
+    public PersonalHistorcoBancario saveHistBancario(PersonalHistorcoBancario historico) {
+        return personalHistoricobancDao.save(historico);
     }
 
 

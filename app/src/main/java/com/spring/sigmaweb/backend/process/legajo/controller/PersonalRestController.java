@@ -14,7 +14,9 @@ import com.spring.sigmaweb.backend.process.generic.service.ITablasTablaService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeService;
+import com.spring.sigmaweb.backend.process.legajo.service.IEntidadService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
+import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -47,6 +49,11 @@ public class PersonalRestController {
     @Autowired
     private IDocumentEmployeeService documentemployeeservice;
 
+    @Autowired
+    private IPersonalVidaLaboralService vidalabservice;
+
+    @Autowired
+    private IEntidadService entidadservice;
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalobralist/{obraname}")
@@ -532,6 +539,57 @@ public class PersonalRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Personal updatepersonalInfoFinancieraDTO(@RequestBody PersonalDatosBancariosDTO personalDTO, @PathVariable Long idpersonal, @PathVariable String obraname) {
         Personal PersonalAct = personalservice.findByIdPersonalAndObraname(idpersonal, obraname);
+        List<PersonalHistorcoBancario> historico = new ArrayList<PersonalHistorcoBancario>();
+        PersonalHistorcoBancario itemHist = new PersonalHistorcoBancario();
+        PersonalDatosBancariosDTO dataoldDTO = personalservice.findByObraAndidPersonalParaInfoBancario(obraname, idpersonal);
+        //verifica en historico
+
+        PersonalVidaLabDTO vidaladhist = vidalabservice.ultimoPeriodoVidaLaboral(obraname, idpersonal);
+
+        if (!PersonalAct.getIdEntidadHaberesPer().equals(personalDTO.getIdEntidadHaberesPer()) ||
+                !PersonalAct.getNroCtabacHaberesper().equals(personalDTO.getNroCtabacHaberesper()) ||
+                !PersonalAct.getNroCtaintbacHaberesper().equals(personalDTO.getNroCtaintbacHaberesper()) ) {
+            itemHist.setFechaCambioHistdb(new Date());
+            itemHist.setIdObraHistdb(obraname);
+            itemHist.setIdPersonalHistdb(idpersonal);
+            itemHist.setIdPervilaHistdb(vidaladhist.getIdPervila());
+            itemHist.setTipoHistdb("HAB");
+
+
+            itemHist.setEntidadHabOldHistdb(dataoldDTO.getEntidadHaberesPer() );
+            itemHist.setEntidadHabNewHistdb(personalDTO.getEntidadHaberesPer() );
+            itemHist.setCtaBancoHabOldHistdb(PersonalAct.getNroCtabacHaberesper());
+            itemHist.setCtaBancoHabNewHistdb(personalDTO.getNroCtabacHaberesper());
+
+            itemHist.setCtaInterHabOldHistdb(PersonalAct.getNroCtabacHaberesper());
+            itemHist.setCtaInterHabNewHistdb(personalDTO.getNroCtabacHaberesper());
+
+            historico.add(itemHist);
+        }
+
+        if (!PersonalAct.getIdEntidadCtsPer().equals(personalDTO.getIdEntidadCtsPer()) ||
+                !PersonalAct.getNroCtabacCtsper().equals(personalDTO.getNroCtabacCtsper()) ||
+                !PersonalAct.getNroCtaintbacCtsper().equals(personalDTO.getNroCtaintbacCtsper()) ||
+                !PersonalAct.getIdTipoMonedaCtsPer().equals(personalDTO.getIdTipoDocPer()) ) {
+
+            itemHist.setFechaCambioHistdb(new Date());
+            itemHist.setIdObraHistdb(obraname);
+            itemHist.setIdPersonalHistdb(idpersonal);
+            itemHist.setIdPervilaHistdb(vidaladhist.getIdPervila());
+            itemHist.setTipoHistdb("CTS");
+
+
+            itemHist.setEntidadCtsOldHistdb(dataoldDTO.getEntidadCtsPer() );
+            itemHist.setEntidadCtsNewHistdb(personalDTO.getEntidadCtsPer() );
+
+            itemHist.setCtaBancoCtsOldHistdb(PersonalAct.getNroCtabacCtsper());
+            itemHist.setCtaBancoCtsNewHistdb(personalDTO.getNroCtabacCtsper());
+
+            itemHist.setCtaInterCtsOldHistdb(PersonalAct.getNroCtaintbacCtsper());
+            itemHist.setCtaInterCtsNewHistdb(personalDTO.getNroCtaintbacCtsper());
+
+            historico.add(itemHist);
+        }
 
         PersonalAct.setIdEntidadHaberesPer(personalDTO.getIdEntidadHaberesPer());
         PersonalAct.setIdEntidadCtsPer(personalDTO.getIdEntidadCtsPer());
@@ -540,6 +598,18 @@ public class PersonalRestController {
         PersonalAct.setNroCtabacCtsper(personalDTO.getNroCtabacCtsper());
         PersonalAct.setNroCtaintbacHaberesper(personalDTO.getNroCtaintbacHaberesper());
         PersonalAct.setNroCtaintbacCtsper(personalDTO.getNroCtaintbacCtsper());
+
+        PersonalAct.setFlgRequiereAperturaCtaCtsper(personalDTO.getFlgRequiereAperturaCtaCtsper());
+        PersonalAct.setFlgRequiereAperturaCtaHaberesper(personalDTO.getFlgRequiereAperturaCtaHaberesper());
+
+        PersonalAct.setFlgPermitirCambioCtsPer(personalDTO.getFlgPermitirCambioCtsPer());
+        PersonalAct.setFlgPermitirCambioHaberesPer(personalDTO.getFlgPermitirCambioHaberesPer());
+
+        if (historico.size() > 0) {
+            for (PersonalHistorcoBancario h : historico) {
+                personalservice.saveHistBancario(h);
+            }
+        }
 
         return personalservice.save(PersonalAct);
     }
@@ -712,5 +782,81 @@ public class PersonalRestController {
 
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
+
+    //historico info bancaria
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicoinfobancariaobrapersonalvidala/{idObraHistdb}/{idPersonalHistdb}/{idPervilaHistdb}")
+    public List<PersonalHistorcoBancario> showHistoricoInfoBancarioPorObraPersonalVidaLab(@PathVariable String idObraHistdb, @PathVariable long idPersonalHistdb, @PathVariable Long idPervilaHistdb) {
+        return personalservice.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicoinfobancariaobrapersonalvidalaid/{tipoFile}/{estadoTipoFile}/{idObraTipoFile}/{idHistdb}")
+    public PersonalHistorcoBancario showHistoricoInfoBancarioPorObraPersonalVidaLabId(@PathVariable String idObraHistdb, @PathVariable long idPersonalHistdb, @PathVariable Long idPervilaHistdb, @PathVariable Long idHistdb) {
+        return personalservice.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndIdHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb,idHistdb);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicoinfobancariaobrapersonalvidalatipo/{idObraHistdb}/{idPersonalHistdb}/{idPervilaHistdb}/{tipoHistdb}")
+    public List<PersonalHistorcoBancario> showHistoricoInfoBancarioPorObraPersonalVidaLabTipo(@PathVariable String idObraHistdb, @PathVariable long idPersonalHistdb, @PathVariable Long idPervilaHistdb, @PathVariable String tipoHistdb) {
+        return personalservice.findByIdObraHistdbAndIdPersonalHistdbAndIdPervilaHistdbAndTipoHistdb(idObraHistdb, idPersonalHistdb, idPervilaHistdb, tipoHistdb);
+    }
+
+
+    @PostMapping("/historicoinfobancariasave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createHistoricoInfoBancaria(@RequestBody PersonalHistorcoBancario historico, BindingResult result) {
+        PersonalHistorcoBancario HistoricoNew = null;
+        PersonalHistorcoBancario historicoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            historicoInsert = new PersonalHistorcoBancario();
+            historicoInsert.setIdObraHistdb(historico.getIdObraHistdb());
+            historicoInsert.setIdPersonalHistdb(historico.getIdPersonalHistdb());
+            historicoInsert.setIdPervilaHistdb(historico.getIdPervilaHistdb());
+            historicoInsert.setFechaCambioHistdb(historico.getFechaCambioHistdb());
+            historicoInsert.setTipoHistdb(historico.getTipoHistdb());
+
+            historicoInsert.setEntidadHabOldHistdb(historico.getEntidadHabOldHistdb());
+            historicoInsert.setEntidadHabNewHistdb(historico.getEntidadHabNewHistdb());
+            historicoInsert.setCtaBancoHabOldHistdb(historico.getCtaBancoHabOldHistdb());
+            historicoInsert.setCtaBancoHabNewHistdb(historico.getCtaBancoHabNewHistdb());
+            historicoInsert.setCtaInterHabOldHistdb(historico.getCtaInterHabOldHistdb());
+            historicoInsert.setCtaInterHabNewHistdb(historico.getCtaInterHabNewHistdb());
+
+            historicoInsert.setEntidadCtsOldHistdb(historico.getEntidadCtsOldHistdb());
+            historicoInsert.setEntidadCtsNewHistdb(historico.getEntidadCtsNewHistdb());
+            historicoInsert.setCtaBancoCtsOldHistdb(historico.getCtaBancoCtsOldHistdb());
+            historicoInsert.setCtaBancoCtsNewHistdb(historico.getCtaBancoCtsNewHistdb());
+            historicoInsert.setCtaInterCtsOldHistdb(historico.getCtaInterCtsOldHistdb());
+            historicoInsert.setCtaInterCtsNewHistdb(historico.getCtaInterCtsNewHistdb());
+            historicoInsert.setTipoMonedaCtsOldHistdb(historico.getTipoMonedaCtsOldHistdb());
+            historicoInsert.setTipoMonedaCtsNewHistdb(historico.getTipoMonedaCtsNewHistdb());
+
+            HistoricoNew = personalservice.saveHistBancario(historicoInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personalhistorcobancario", HistoricoNew);
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
 
 }

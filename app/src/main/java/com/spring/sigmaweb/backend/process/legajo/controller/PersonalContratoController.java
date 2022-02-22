@@ -1,12 +1,7 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
-import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
+import com.spring.sigmaweb.backend.process.legajo.dto.*;
+import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
@@ -18,6 +13,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -308,5 +304,111 @@ public class PersonalContratoController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
+
+    //Historico vida laboral
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicovidalabobrapersonavidalabcontratoid/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{idHistvila}")
+    public PersonalHistoricoVinculoLaboral showHistoricoId(@PathVariable String idObra, @PathVariable Long idPersonal,
+                                                                 @PathVariable Long idPervila, @PathVariable Long idPercont,
+                                                                 @PathVariable Long idHistvila){
+        return personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila, idPercont, idHistvila);
+    }
+
+    //Historico vida laboral
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicovidalabobrapersonavidalabcontratotipolist/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{tipo}")
+    public List<PersonalHistoricoVinculoLaboral> showHistoricotipoList(@PathVariable String idObra, @PathVariable Long idPersonal,
+                                                           @PathVariable Long idPervila, @PathVariable Long idPercont,
+                                                           @PathVariable String tipo){
+        return personalcontratoservice.findByObraAndPersonalAndVidaLabAndContratoAndtipoList(idObra, idPersonal, idPervila, idPercont, tipo);
+    }
+
+    //Historico vida laboral
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicovidalabobrapersonavidalabcontratoidDto/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{tipo}")
+    public List<HistoricoVilaLabotalDTO> showHistoricoId(@PathVariable String idObra, @PathVariable Long idPersonal,
+                                                         @PathVariable Long idPervila, @PathVariable Long idPercont,
+                                                         @PathVariable String tipo){
+        return personalcontratoservice.findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(idObra, idPersonal, idPervila, idPercont, tipo);
+    }
+
+    @PostMapping("/historicovidalabsave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createHistoricoVidaLab(@RequestBody HistoricoVilaLabotalDTO historico, BindingResult result) {
+        PersonalHistoricoVinculoLaboral HistoricoNew = null;
+        PersonalHistoricoVinculoLaboral historicoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            historicoInsert = new PersonalHistoricoVinculoLaboral();
+            historicoInsert.setIdObraHistvila(historico.getIdObraHistvila());
+            historicoInsert.setIdPersonalHistvila(historico.getIdPersonalHistvila());
+            historicoInsert.setIdPercontHistvila(historico.getIdPercontHistvila());
+            historicoInsert.setIdPervilaHistvila(historico.getIdPervilaHistvila());
+
+            historicoInsert.setTipoHistvila(historico.getTipoHistvila());
+            historicoInsert.setFechaCambioHistvila(historico.getFechaCambioHistvila());
+            historicoInsert.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
+            historicoInsert.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
+            historicoInsert.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
+
+            historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
+            historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
+            historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+
+            historicoInsert.setFechaIngHistvila(historico.getFechaIngHistvila());
+            historicoInsert.setCreaPorHistvila(historico.getCreaPorHistvila());
+            historicoInsert.setEstadoHistvila(historico.getEstadoHistvila());
+
+            HistoricoNew = personalcontratoservice.saveHistVidaLab(historicoInsert);
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personalhistoricovinculolaboral", HistoricoNew);
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+
+    @PutMapping("/historicovidalabupdate/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{idHistvila}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonalHistoricoVinculoLaboral updateHistoricoVidaLabUpdate(@RequestBody HistoricoVilaLabotalDTO historico, @PathVariable String idObra, @PathVariable Long idPersonal,
+                                                 @PathVariable Long idPervila, @PathVariable Long idPercont,
+                                                 @PathVariable Long idHistvila) {
+        PersonalHistoricoVinculoLaboral historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,
+                                                                                                                                                                            idPercont, idHistvila);
+        if(historicoAct != null) {
+            historicoAct.setTipoHistvila(historico.getTipoHistvila());
+            historicoAct.setFechaCambioHistvila(historico.getFechaCambioHistvila());
+
+            historicoAct.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
+            historicoAct.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
+            historicoAct.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
+            historicoAct.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
+            historicoAct.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
+            historicoAct.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+
+            historicoAct.setFechaModiHistvila(historico.getFechaModiHistvila());
+            historicoAct.setModiPorHistvila(historico.getModiPorHistvila());
+            historicoAct.setEstadoHistvila(historico.getEstadoHistvila());
+        }
+
+        return personalcontratoservice.saveHistVidaLab(historicoAct);
+    }
 
 }

@@ -1,12 +1,15 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
+import com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.repository.IContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IJornadaContratoDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,9 @@ public class PersonalContratoService implements IPersonalContratoService{
 
     @Autowired
     private IJornadaContratoDao jornadacontratoDao;
+
+    @Autowired
+    private IPersonalHistoricoVinculoLaboralDao historicovinculolaboralDao;
 
 
     @Override
@@ -113,5 +119,31 @@ public class PersonalContratoService implements IPersonalContratoService{
     @Transactional
     public PersonalContratoJornada save(PersonalContratoJornada jornada) {
         return jornadacontratoDao.save(jornada);
+    }
+
+    //historico contrato
+
+    @Override
+    @Transactional(readOnly = true)
+    public PersonalHistoricoVinculoLaboral findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, Long idHistvila) {
+        return historicovinculolaboralDao.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, idHistvila);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalHistoricoVinculoLaboral> findByObraAndPersonalAndVidaLabAndContratoAndtipoList(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila) {
+        return historicovinculolaboralDao.findByObraAndPersonalAndVidaLabAndContratoAndtipoList(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipoHistvila);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<HistoricoVilaLabotalDTO> findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila) {
+        return historicovinculolaboralDao.findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipoHistvila);
+    }
+
+    @Override
+    @Transactional
+    public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico) {
+        return historicovinculolaboralDao.save(historico);
     }
 }

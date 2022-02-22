@@ -628,9 +628,7 @@ public class PersonalRestController {
         PersonalAct.setFlgPermitirCambioHaberesPer(personalDTO.getFlgPermitirCambioHaberesPer());
 
         if (historico.size() > 0) {
-            System.out.println(historico.size());
             for (PersonalHistorcoBancario h : historico) {
-                System.out.println(h.getCtaBancoCtsNewHistdb());
                 personalservice.saveHistBancario(h);
             }
         }

@@ -1,10 +1,12 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
+import com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 
 import java.util.List;
 
@@ -38,5 +40,20 @@ public interface IPersonalContratoService {
     public void delete(PersonalContratoJornada jornada);
 
     public PersonalContratoJornada save (PersonalContratoJornada jornada);
+    //historico contrato
+
+    public PersonalHistoricoVinculoLaboral findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(
+            String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, Long idHistvila
+    );
+
+    public List<PersonalHistoricoVinculoLaboral> findByObraAndPersonalAndVidaLabAndContratoAndtipoList(
+            String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
+    );
+
+    public List<HistoricoVilaLabotalDTO> findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(
+            String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
+    );
+
+    public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico);
 
 }

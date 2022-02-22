@@ -32,7 +32,6 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "psn.apePaternoPers," +
             "psn.apeMaternoPers," +
             "psn.nombrePers," +
-            "psn.idTipoDocPers," +
             "psn.nroDocPers," +
 
             "pc.idPerCont as idPercontHistvila," +
@@ -46,7 +45,9 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "pvl.fechaFinPervila," +
             "pvl.estadoPervila," +
 
+            "hvl.motivoHistvila," +
             "hvl.tipoHistvila," +
+
             "hvl.fechaCambioHistvila," +
             "hvl.jornadaSemaOldHistvila," +
             "hvl.bonificacionOldHistvila," +

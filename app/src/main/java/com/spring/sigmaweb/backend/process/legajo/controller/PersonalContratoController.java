@@ -13,10 +13,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.print.attribute.standard.MediaSizeName;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"*"})
@@ -68,6 +66,13 @@ public class PersonalContratoController {
         return personalcontratoservice.findContratoActivoPersonalObra(idpersonal, idobra, idpervila);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/contratoanteriorpersonalvidalaboral/{idpersonal}/{idobra}/{idpervila}/{idpercont}")
+    public PersonalContratoObraDTO showContratoActivopersonalDTOList(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idpervila, @PathVariable Long idpercont){
+        PersonalContratoObraDTO data = personalcontratoservice.findByPersonalAndObraAndcontratoDto(idpersonal, idobra, idpercont, idpervila);
+
+        return personalcontratoservice.findAnteriorContratoPersonalVidaLaboralObra(idpersonal, idobra, idpervila, idpercont, data.getFechaIniPercont());
+    }
 
     @PostMapping("/contratosave")
     @ResponseStatus(HttpStatus.CREATED)
@@ -147,6 +152,25 @@ public class PersonalContratoController {
             contratoInsert.setCreaPorPercont(contrato.getCreaPorPercont());
 
             contratoNew = personalcontratoservice.save(contratoInsert);
+
+            //finalizar contratos anteriores, si hay
+            List<PersonalContrato> contratosOld = personalcontratoservice.findByActivosPersonalAndObraList(contrato.getIdPersonal(), contrato.getIdObraPercont(), contrato.getIdPervila());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(contrato.getFechaIniPercont());
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            Date dataOld = calendar.getTime();
+            for (PersonalContrato c : contratosOld) {
+                System.out.println(c.getIdPerCont() + " - " + contratoNew.getIdPerCont());
+                if(c.getIdPerCont() != contratoNew.getIdPerCont()){
+                    c.setEstadoPercont("FINALIZADO");
+                    c.setFechaTerminoPercont(dataOld );
+                    if(c.getIdTipoPercont() == 15410){ /*plazo indeterminado*/
+                        c.setFechaFinPercont(dataOld);
+                    }
+                    personalcontratoservice.save(c);
+                }
+            }
+
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -314,7 +338,6 @@ public class PersonalContratoController {
         return personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila, idPercont, idHistvila);
     }
 
-    //Historico vida laboral
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/historicovidalabobrapersonavidalabcontratotipolist/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{tipo}")
     public List<PersonalHistoricoVinculoLaboral> showHistoricotipoList(@PathVariable String idObra, @PathVariable Long idPersonal,
@@ -323,7 +346,6 @@ public class PersonalContratoController {
         return personalcontratoservice.findByObraAndPersonalAndVidaLabAndContratoAndtipoList(idObra, idPersonal, idPervila, idPercont, tipo);
     }
 
-    //Historico vida laboral
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/historicovidalabobrapersonavidalabcontratoidDto/{idObra}/{idPersonal}/{idPervila}/{idPercont}/{tipo}")
     public List<HistoricoVilaLabotalDTO> showHistoricoId(@PathVariable String idObra, @PathVariable Long idPersonal,
@@ -356,17 +378,24 @@ public class PersonalContratoController {
             historicoInsert.setIdPercontHistvila(historico.getIdPercontHistvila());
             historicoInsert.setIdPervilaHistvila(historico.getIdPervilaHistvila());
 
+            historicoInsert.setMotivoHistvila(historico.getMotivoHistvila());
             historicoInsert.setTipoHistvila(historico.getTipoHistvila());
             historicoInsert.setFechaCambioHistvila(historico.getFechaCambioHistvila());
             historicoInsert.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
             historicoInsert.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
             historicoInsert.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
 
-            historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
-            historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
-            historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+            if(historico.getTipoHistvila().equals("REMU")) {
+                historicoInsert.setJornadaSemaNewHistvila(null);
+                historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+            } else if(historico.getTipoHistvila().equals("JORN")) {
+                historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
+                historicoInsert.setRemuneracionNewHistvila(null);
+            }
 
-            historicoInsert.setFechaIngHistvila(historico.getFechaIngHistvila());
+            historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
+
+            historicoInsert.setFechaIngHistvila(new Date());
             historicoInsert.setCreaPorHistvila(historico.getCreaPorHistvila());
             historicoInsert.setEstadoHistvila(historico.getEstadoHistvila());
 
@@ -393,17 +422,22 @@ public class PersonalContratoController {
         PersonalHistoricoVinculoLaboral historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,
                                                                                                                                                                             idPercont, idHistvila);
         if(historicoAct != null) {
+            historicoAct.setMotivoHistvila(historico.getMotivoHistvila());
             historicoAct.setTipoHistvila(historico.getTipoHistvila());
             historicoAct.setFechaCambioHistvila(historico.getFechaCambioHistvila());
 
             historicoAct.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
             historicoAct.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
             historicoAct.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
-            historicoAct.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
-            historicoAct.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
-            historicoAct.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
 
-            historicoAct.setFechaModiHistvila(historico.getFechaModiHistvila());
+            if(historico.getTipoHistvila().equals("REMU")) {
+                historicoAct.setJornadaSemaNewHistvila(historico.getRemuneracionNewHistvila());
+                historicoAct.setRemuneracionNewHistvila(null);
+            } else if(historico.getTipoHistvila().equals("JORN")) {
+                historicoAct.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
+                historicoAct.setRemuneracionNewHistvila(null);
+            }
+            historicoAct.setFechaModiHistvila(new Date());
             historicoAct.setModiPorHistvila(historico.getModiPorHistvila());
             historicoAct.setEstadoHistvila(historico.getEstadoHistvila());
         }

@@ -24,7 +24,13 @@ public class PersonalDatosListDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaAutorizaPer;
 
-    public PersonalDatosListDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, String fotoPer, String codigoPer, String nroDocPers, String emailcorp, String emailpers, Byte sexoPers, Boolean estadoPer, Date fechaAutorizaPer) {
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaModiPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaIngPer;
+
+    public PersonalDatosListDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, String fotoPer, String codigoPer, String nroDocPers, String emailcorp, String emailpers, Byte sexoPers, Boolean estadoPer, Date fechaAutorizaPer, Date fechaModiPer, Date fechaIngPer) {
         this.idPersonal = idPersonal;
         this.idobra = idobra;
         this.idPerSigma = idPerSigma;
@@ -40,6 +46,8 @@ public class PersonalDatosListDTO implements Serializable {
         this.sexoPers = sexoPers;
         this.estadoPer = estadoPer;
         this.fechaAutorizaPer = fechaAutorizaPer;
+        this.fechaModiPer = fechaModiPer;
+        this.fechaIngPer = fechaIngPer;
     }
 
     public PersonalDatosListDTO() {
@@ -165,6 +173,22 @@ public class PersonalDatosListDTO implements Serializable {
 
     public void setFechaAutorizaPer(Date fechaAutorizaPer) {
         this.fechaAutorizaPer = fechaAutorizaPer;
+    }
+
+    public Date getFechaModiPer() {
+        return fechaModiPer;
+    }
+
+    public void setFechaModiPer(Date fechaModiPer) {
+        this.fechaModiPer = fechaModiPer;
+    }
+
+    public Date getFechaIngPer() {
+        return fechaIngPer;
+    }
+
+    public void setFechaIngPer(Date fechaIngPer) {
+        this.fechaIngPer = fechaIngPer;
     }
 
     /**

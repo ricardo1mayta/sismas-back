@@ -8,6 +8,7 @@ import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IPersonalContratoService {
@@ -15,11 +16,15 @@ public interface IPersonalContratoService {
 
     public PersonalContrato findByPersonalAndObraAndcontrato(Long idpersona, String idobra, Long idpercont, Long idpervila);
 
+    public List<PersonalContrato> findByActivosPersonalAndObraList(Long idpersona, String idobra, Long idpervila);
+
     public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila);
 
     public PersonalContratoObraDTO findByPersonalAndObraAndcontratoDto(Long idpersona, String idobra, Long idpercont, Long idpervila);
     public List<PersonalContratoObraDTO> findByPersonalAndObraAndcontratoDtoList(Long idpersona, String idobra, Long idpervila);
     public List<PersonalContratoObraDTO> findContratoActivoPersonalObra(Long idpersona, String idobra, Long idpervila);
+
+    public PersonalContratoObraDTO findAnteriorContratoPersonalVidaLaboralObra(Long idpersona, String idobra, Long idpervila, Long idpercont, Date fechaini);
 
     public PersonalContrato save (PersonalContrato contrato);
 

@@ -198,7 +198,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers, "
             + "p.estadoPer,"
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer, " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 " +
@@ -220,7 +223,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers,"
             + "p.estadoPer, "
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer, "+
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 and p.estadoPer = ?2 "+
@@ -242,7 +248,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers,"
             + "p.estadoPer, "
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer, " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 and p.estadoPer = ( case ?2 when 1 then true when 0 then false else p.estadoPer end) "+
@@ -264,7 +273,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers, "
             + "p.estadoPer,"
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer, " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 and ps.nroDocPers=?2 "
@@ -285,7 +297,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers, "
             + "p.estadoPer,"
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer , " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 and p.codigoPer = ?2"
@@ -307,7 +322,10 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ps.emailPers as emailpers, "
             + "ps.sexoPers,"
             + "p.estadoPer,"
-            + "p.fechaAutorizaPer ) "
+            + "p.fechaAutorizaPer , " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
             + "from Personal p inner join Obra o on (p.obraPer = o.idobra) "
             + "inner join Persona ps on (p.idPersona = ps.idPersona) "
             + "where o.idobra=?1 and p.idPersonal = ?2"

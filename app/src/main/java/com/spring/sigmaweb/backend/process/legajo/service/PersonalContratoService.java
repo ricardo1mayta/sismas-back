@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
 import com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
@@ -11,9 +12,12 @@ import com.spring.sigmaweb.backend.process.legajo.repository.IContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IJornadaContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,6 +45,11 @@ public class PersonalContratoService implements IPersonalContratoService{
     }
 
     @Override
+    public List<PersonalContrato> findByActivosPersonalAndObraList(Long idpersona, String idobra, Long idpervila) {
+        return contratoDao.findByActivosPersonalAndObraList(idpersona, idobra, idpervila);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<PersonalContrato> findByPersonalAndObraList(Long idpersona, String idobra, Long idpervila) {
         return contratoDao.findByPersonalAndObraList(idpersona, idobra, idpervila);
@@ -62,6 +71,19 @@ public class PersonalContratoService implements IPersonalContratoService{
     @Transactional(readOnly = true)
     public List<PersonalContratoObraDTO> findContratoActivoPersonalObra(Long idpersona, String idobra, Long idpervila) {
         return contratoDao.findContratoActivoPersonalObra(idpersona, idobra, idpervila);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PersonalContratoObraDTO findAnteriorContratoPersonalVidaLaboralObra(Long idpersona, String idobra, Long idpervila, Long idpercont, Date fechaini) {
+        PersonalContratoObraDTO vidaLabRtn = new PersonalContratoObraDTO();
+        List<PersonalContratoObraDTO> data = contratoDao.findAnteriorContratoPersonalVidaLaboralObra(idpersona, idobra, idpervila, idpercont, fechaini);
+        if(data.size() > 0){
+            vidaLabRtn = data.get(0);
+            return vidaLabRtn;
+        }
+
+        return null;
     }
 
     @Override

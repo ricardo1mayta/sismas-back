@@ -59,6 +59,13 @@ public class PersonalVidaLaboralRestController {
         return personalvidalabService.findByObraPersonalListDTO(idobra, idpersonal);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/vidalaboralobrapersonaliddto/{idobra}/{idpersonal}/{idpervila}")
+    public PersonalVidaLabDTO showVidaLaboralObraPersonalIdDTO(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idpervila){
+        return personalvidalabService.findByObraPersonalIdDTO(idobra, idpersonal, idpervila);
+    }
+
+
     //CRUD
     @PostMapping("/vidalaboralsave")
     @ResponseStatus(HttpStatus.CREATED)

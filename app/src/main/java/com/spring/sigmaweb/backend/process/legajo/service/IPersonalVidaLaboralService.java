@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.ItemListVidaLaboralDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
@@ -20,5 +21,7 @@ public interface IPersonalVidaLaboralService {
     public List<PersonalVidaLabDTO> findByObraPersonalListDTO(String idobra, Long idpersonal);
 
     public PersonalVidaLaboral save(PersonalVidaLaboral vidalaboral);
+
+    public List<ItemListVidaLaboralDTO> findItemsVidaLaboral(String idobra, Long idpersonal, Long idpervila, String estado);
 
 }

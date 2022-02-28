@@ -38,7 +38,8 @@ public interface IUsuarioDao extends CrudRepository<Usuario,Long> {
             + "from Usuario u inner join Obra o on (u.obraUs = o.idobra) "
             + "left join Personal p on (u.idcodTipoUser=p.idPersonal and p.obraPer = o.idobra and u.tipoUser='COLAB') "
             + "left join Persona ps on (p.idPersona = ps.idPersona) "
-            + "where o.idobra=?1 and u.tipoUser= (case ?2 when '_' then u.tipoUser else ?2 end) and u.Activo=(case ?3 when 3 then u.Activo when 1 then true else false end)")
+            + "where o.idobra=?1 and u.tipoUser= (case ?2 when '_' then u.tipoUser else ?2 end) " +
+            " and u.Activo=(case ?3 when 3 then u.Activo else ?3 end)")
     public List<usuarioDTO> findByObraAndTipoUser(String obraname, String tipoUser, Integer activo);
 
 

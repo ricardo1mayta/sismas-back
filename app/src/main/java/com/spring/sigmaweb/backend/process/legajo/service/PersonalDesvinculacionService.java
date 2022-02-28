@@ -76,7 +76,7 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
     }
 
     @Override
-    public void update_spu_desvinculacion(Long id_personal, String obra, Long idpervila, String usermodi, Date datetermino) {
+    public void update_spu_desvinculacion(Long id_personal, String obra, Long idpervila, String usermodi, Date datetermino, Integer habilita) {
 
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_desvinculacion_personal");
         query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
@@ -84,12 +84,14 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
         query.registerStoredProcedureParameter("p_idpervila", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_user", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_dateTermino", Date.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_habilita", Integer.class, ParameterMode.IN);
 
         query.setParameter("p_idpersonal", id_personal);
         query.setParameter("p_obra", obra);
         query.setParameter("p_idpervila", idpervila);
         query.setParameter("p_user", usermodi);
         query.setParameter("p_dateTermino", datetermino);
+        query.setParameter("p_habilita", habilita);
 
         query.execute();
     }

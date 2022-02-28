@@ -64,9 +64,9 @@ public class PersonalDEsvinculacionRestController {
         return desvinculacionService.findByPersonalDesvinculacionListDTO(idpersonal, idobra);
     }
 
-    @PostMapping("/desvinculacionsave")
+    @PostMapping("/desvinculacionsave/{habilita}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@RequestBody PersonalDesvinculacionDTO desvinculacion, BindingResult result) {
+    public ResponseEntity<?> create(@RequestBody PersonalDesvinculacionDTO desvinculacion, @PathVariable Integer habilita, BindingResult result) {
         PersonalDesvinculacion desvinculacionNew = null;
         PersonalDesvinculacion desvinculacionInsert = null;
         Personal persoDesvinculacion = personalservice.findByIdPersonalAndObraname(desvinculacion.getIdPersonal(), desvinculacion.getIdObraPerdesv());
@@ -111,9 +111,9 @@ public class PersonalDEsvinculacionRestController {
                                                             desvinculacionNew.getIdObraPerdesv(),
                                                             desvinculacionNew.getIdPervilaPerdesv().getIdPervila(),
                                                             desvinculacionNew.getCreaPorPerdesv(),
-                                                            desvinculacion.getFechaCesePerdesv()
-                                                            );
-            
+                                                            desvinculacion.getFechaCesePerdesv(),
+                                                            habilita);
+
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");

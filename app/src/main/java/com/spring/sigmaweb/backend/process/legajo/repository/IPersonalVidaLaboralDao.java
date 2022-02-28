@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.repository;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.ItemListVidaLaboralDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
 import org.springframework.data.jpa.repository.Query;
@@ -68,4 +69,5 @@ public interface IPersonalVidaLaboralDao extends CrudRepository<PersonalVidaLabo
             "order by vl.fechaInicioPervila desc, vl.idPervila desc"
     )
     public List<PersonalVidaLabDTO> findByObraPersonalListDTO(String idobra, Long idpersonal);
+
 }

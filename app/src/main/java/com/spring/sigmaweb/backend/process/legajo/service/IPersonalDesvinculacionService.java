@@ -26,7 +26,7 @@ public interface IPersonalDesvinculacionService {
     //procedimiento
     public Long countByIdObraPerentrAndIdTipoDocDesvPerentr(String idObraPerentr, Long idTipoDocDesvPerentr);
 
-    public void update_spu_desvinculacion (Long id_personal, String obra, Long idpervila, String usermodi, Date datetermino );
+    public void update_spu_desvinculacion (Long id_personal, String obra, Long idpervila, String usermodi, Date datetermino, Integer habilita );
 
     public String insertNativePersoDocDesv (PersonalDocDesvDTO perdocDesv);
 

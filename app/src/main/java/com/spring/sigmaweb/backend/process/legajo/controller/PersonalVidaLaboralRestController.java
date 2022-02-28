@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.ItemListVidaLaboralDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
@@ -64,6 +65,14 @@ public class PersonalVidaLaboralRestController {
     public PersonalVidaLabDTO showVidaLaboralObraPersonalIdDTO(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idpervila){
         return personalvidalabService.findByObraPersonalIdDTO(idobra, idpersonal, idpervila);
     }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/vidalaboralitemslist/{idobra}/{idpersonal}/{idpervila}/{estado}")
+    public List<ItemListVidaLaboralDTO> showVidaLaboralItemsList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idpervila, @PathVariable String estado){
+        return personalvidalabService.findItemsVidaLaboral(idobra, idpersonal, idpervila, estado);
+    }
+
+
 
 
     //CRUD

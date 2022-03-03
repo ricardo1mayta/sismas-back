@@ -25,9 +25,9 @@ public class ParametrosReportesController {
 
     @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reporteslist/{idmodulo}/{tiporepo}/{estadorepo}")
-    public List<Reporte> showReporteporModuloTipoEstado(@PathVariable String idmodulo,@PathVariable String tiporepo,@PathVariable String estadorepo){
+    public List<Reporte> showReporteporModuloTipoEstado(@PathVariable String idmodulo,@PathVariable String tiporepo,@PathVariable Integer estadorepo){
         Boolean estado = false;
-        if(estadorepo.equals("true")){estado = true;}
+        if(estadorepo == 1){estado = true;}
         return parametrosReporteService.findByIdModuloTipoRepoEstadoRepo(idmodulo, tiporepo, estado);
     }
 

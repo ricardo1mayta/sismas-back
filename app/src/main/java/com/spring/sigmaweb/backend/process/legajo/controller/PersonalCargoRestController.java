@@ -16,6 +16,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +123,7 @@ public class PersonalCargoRestController {
             cargoInsert.setEstadoPercargo(cargo.getEstadoPercargo());
             cargoInsert.setBonifCargoPercargo(cargo.getBonifCargoPercargo());
             cargoInsert.setBonifCargoEstPercargo(cargo.getBonifCargoEstPercargo());
-            cargoInsert.setFechaIngPercargo(cargo.getFechaIngPercargo());
+            cargoInsert.setFechaIngPercargo(new Date());
             cargoInsert.setCreaPorPercargo(cargo.getCreaPorPercargo());
 
             cargoNew = personalCargoService.save(cargoInsert);
@@ -162,7 +163,7 @@ public class PersonalCargoRestController {
             percargoAct.setEstadoPercargo(personalCargo.getEstadoPercargo());
             percargoAct.setBonifCargoPercargo(personalCargo.getBonifCargoPercargo());
             percargoAct.setBonifCargoEstPercargo(personalCargo.getBonifCargoEstPercargo());
-            percargoAct.setFechaModiPercargo(personalCargo.getFechaModiPercargo());
+            percargoAct.setFechaModiPercargo(new Date());
             percargoAct.setModiPorPercargo(personalCargo.getModiPorPercargo());
         }
         return personalCargoService.save(percargoAct);

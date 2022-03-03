@@ -17,6 +17,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,7 @@ public class PersonalConvenioRestController {
             convenioInsert.setEstadoPerconv(convenio.getEstadoPerconv());
             convenioInsert.setFechaTerminoPerconv(convenio.getFechaTerminoPerconv());
 
-            convenioInsert.setFechaIngPerconv(convenio.getFechaIngPerconv());
+            convenioInsert.setFechaIngPerconv(new Date());
             convenioInsert.setCreaPorPerconv(convenio.getCreaPorPerconv());
 
             convenioNew = personalConvenioService.save(convenioInsert);
@@ -150,7 +151,7 @@ public class PersonalConvenioRestController {
             convenioAct.setFechaTerminoPerconv(convenioDTO.getFechaTerminoPerconv());
 
             convenioAct.setModiPorPerconv(convenioDTO.getModiPorPerconv());
-            convenioAct.setFechaModiPerconv(convenioDTO.getFechaModiPerconv());
+            convenioAct.setFechaModiPerconv(new Date());
         }
         return personalConvenioService.save(convenioAct);
     }

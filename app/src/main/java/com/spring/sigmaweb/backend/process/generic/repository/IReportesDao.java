@@ -15,7 +15,7 @@ public interface IReportesDao extends CrudRepository<Reporte, Long> {
     @Query("select r " +
             "from Reporte r " +
             "Where r.idModuloRepo = ?1 " +
-            "and r.tipoRepo = ( case ?2 when '' then r.tipoRepo else ?2 end) " +
+            "and r.tipoRepo = ( case ?2 when '_' then r.tipoRepo else ?2 end) " +
             "and r.estadoRepo = ( case ?3 when 1 then true when 0 then false else r.estadoRepo end)"
     )
     public List<Reporte> findByIdModuloTipoRepoEstadoRepo(String idmodulo, String tiporepo, Boolean estadorepo);

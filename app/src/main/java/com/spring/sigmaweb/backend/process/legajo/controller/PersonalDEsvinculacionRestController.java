@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ public class PersonalDEsvinculacionRestController {
             desvinculacionInsert.setCompeGraciaPerdesv(desvinculacion.getCompeGraciaPerdesv());
             desvinculacionInsert.setLiquidacionPerdesv(desvinculacion.getLiquidacionPerdesv());
 
-            desvinculacionInsert.setFechaIngPerdesv(desvinculacion.getFechaIngPerdesv());
+            desvinculacionInsert.setFechaIngPerdesv(new Date());
             desvinculacionInsert.setCreaPorPerdesv(desvinculacion.getCreaPorPerdesv());
 
             desvinculacionNew = desvinculacionService.save(desvinculacionInsert);
@@ -141,7 +142,7 @@ public class PersonalDEsvinculacionRestController {
             desvinculacionAct.setCompeGraciaPerdesv(desvinculacionDTO.getCompeGraciaPerdesv());
             desvinculacionAct.setLiquidacionPerdesv(desvinculacionDTO.getLiquidacionPerdesv());
 
-            desvinculacionAct.setFechaModiPerdesv(desvinculacionDTO.getFechaModiPerdesv());
+            desvinculacionAct.setFechaModiPerdesv(new Date());
             desvinculacionAct.setModiPorPerdesv(desvinculacionDTO.getModiPorPerdesv());
         }
 

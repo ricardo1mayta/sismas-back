@@ -214,22 +214,42 @@ public class Personal implements Serializable {
     private Integer idTipoMonedaCtsPer;
 
     @Column(nullable = true, length = 100, name = "nroctabac_haberes_per")
-    private String nroCtabacHaberesper;
+    private String nroCtabacHaberesPer;
 
     @Column(nullable = true, length = 100, name = "nroctaintbac_haberes_per")
-    private String nroCtaintbacHaberesper;
+    private String nroCtaintbacHaberesPer;
 
     @Column(nullable = true, length = 100, name = "nroctabac_cts_per")
-    private String nroCtabacCtsper;
+    private String nroCtabacCtsPer;
 
     @Column(nullable = true, length = 100, name = "nroctaintbac_cts_per")
-    private String nroCtaintbacCtsper;
+    private String nroCtaintbacCtsPer;
 
     @Column(nullable = true, length = 1, name = "flg_requiere_aperturacta_cts_per")
-    private String flgRequiereAperturaCtaCtsper;
+    private String flgRequiereAperturaCtaCtsPer;
 
     @Column(nullable = true, length = 1, name = "flg_requiere_aperturacta_haberes_per")
-    private String flgRequiereAperturaCtaHaberesper;
+    private String flgRequiereAperturaCtaHaberesPer;
+
+    @Column(nullable = true, name = "fecha_sol_aperturacta_cts_per")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaSolAperturaCtaCtsPer;
+
+    @Column(nullable = true, name = "fecha_sol_aperturacta_haberes_per")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaSolAperturaCtaHaberesPer;
+
+    @Column(nullable = true, name = "fecha_res_aperturacta_cts_per")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaResAperturaCtaCtsPer;
+
+    @Column(nullable = true, name = "fecha_res_aperturacta_haberes_per")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaResAperturaCtaHaberesPer;
 
     @Column(nullable = true, name = "flg_permitircambio_cts_per", columnDefinition = "boolean default false")
     private Boolean flgPermitirCambioCtsPer;
@@ -690,52 +710,84 @@ public class Personal implements Serializable {
         this.idTipoMonedaCtsPer = idTipoMonedaCtsPer;
     }
 
-    public String getNroCtabacHaberesper() {
-        return nroCtabacHaberesper;
+    public String getNroCtabacHaberesPer() {
+        return nroCtabacHaberesPer;
     }
 
-    public void setNroCtabacHaberesper(String nroCtabacHaberesper) {
-        this.nroCtabacHaberesper = nroCtabacHaberesper;
+    public void setNroCtabacHaberesPer(String nroCtabacHaberesPer) {
+        this.nroCtabacHaberesPer = nroCtabacHaberesPer;
     }
 
-    public String getNroCtaintbacHaberesper() {
-        return nroCtaintbacHaberesper;
+    public String getNroCtaintbacHaberesPer() {
+        return nroCtaintbacHaberesPer;
     }
 
-    public void setNroCtaintbacHaberesper(String nroCtaintbacHaberesper) {
-        this.nroCtaintbacHaberesper = nroCtaintbacHaberesper;
+    public void setNroCtaintbacHaberesPer(String nroCtaintbacHaberesPer) {
+        this.nroCtaintbacHaberesPer = nroCtaintbacHaberesPer;
     }
 
-    public String getNroCtabacCtsper() {
-        return nroCtabacCtsper;
+    public String getNroCtabacCtsPer() {
+        return nroCtabacCtsPer;
     }
 
-    public void setNroCtabacCtsper(String nroCtabacCtsper) {
-        this.nroCtabacCtsper = nroCtabacCtsper;
+    public void setNroCtabacCtsPer(String nroCtabacCtsPer) {
+        this.nroCtabacCtsPer = nroCtabacCtsPer;
     }
 
-    public String getNroCtaintbacCtsper() {
-        return nroCtaintbacCtsper;
+    public String getNroCtaintbacCtsPer() {
+        return nroCtaintbacCtsPer;
     }
 
-    public void setNroCtaintbacCtsper(String nroCtaintbacCtsper) {
-        this.nroCtaintbacCtsper = nroCtaintbacCtsper;
+    public void setNroCtaintbacCtsPer(String nroCtaintbacCtsPer) {
+        this.nroCtaintbacCtsPer = nroCtaintbacCtsPer;
     }
 
-    public String getFlgRequiereAperturaCtaCtsper() {
-        return flgRequiereAperturaCtaCtsper;
+    public String getFlgRequiereAperturaCtaCtsPer() {
+        return flgRequiereAperturaCtaCtsPer;
     }
 
-    public void setFlgRequiereAperturaCtaCtsper(String flgRequiereAperturaCtaCtsper) {
-        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
+    public void setFlgRequiereAperturaCtaCtsPer(String flgRequiereAperturaCtaCtsPer) {
+        this.flgRequiereAperturaCtaCtsPer = flgRequiereAperturaCtaCtsPer;
     }
 
-    public String getFlgRequiereAperturaCtaHaberesper() {
-        return flgRequiereAperturaCtaHaberesper;
+    public String getFlgRequiereAperturaCtaHaberesPer() {
+        return flgRequiereAperturaCtaHaberesPer;
     }
 
-    public void setFlgRequiereAperturaCtaHaberesper(String flgRequiereAperturaCtaHaberesper) {
-        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+    public void setFlgRequiereAperturaCtaHaberesPer(String flgRequiereAperturaCtaHaberesPer) {
+        this.flgRequiereAperturaCtaHaberesPer = flgRequiereAperturaCtaHaberesPer;
+    }
+
+    public Date getFechaSolAperturaCtaCtsPer() {
+        return fechaSolAperturaCtaCtsPer;
+    }
+
+    public void setFechaSolAperturaCtaCtsPer(Date fechaSolAperturaCtaCtsPer) {
+        this.fechaSolAperturaCtaCtsPer = fechaSolAperturaCtaCtsPer;
+    }
+
+    public Date getFechaSolAperturaCtaHaberesPer() {
+        return fechaSolAperturaCtaHaberesPer;
+    }
+
+    public void setFechaSolAperturaCtaHaberesPer(Date fechaSolAperturaCtaHaberesPer) {
+        this.fechaSolAperturaCtaHaberesPer = fechaSolAperturaCtaHaberesPer;
+    }
+
+    public Date getFechaResAperturaCtaCtsPer() {
+        return fechaResAperturaCtaCtsPer;
+    }
+
+    public void setFechaResAperturaCtaCtsPer(Date fechaResAperturaCtaCtsPer) {
+        this.fechaResAperturaCtaCtsPer = fechaResAperturaCtaCtsPer;
+    }
+
+    public Date getFechaResAperturaCtaHaberesPer() {
+        return fechaResAperturaCtaHaberesPer;
+    }
+
+    public void setFechaResAperturaCtaHaberesPer(Date fechaResAperturaCtaHaberesPer) {
+        this.fechaResAperturaCtaHaberesPer = fechaResAperturaCtaHaberesPer;
     }
 
     public Boolean getFlgPermitirCambioCtsPer() {

@@ -1,6 +1,9 @@
 package com.spring.sigmaweb.backend.process.legajo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class PersonalDatosBancariosDTO implements Serializable {
     private Long idpersonal;
@@ -20,18 +23,32 @@ public class PersonalDatosBancariosDTO implements Serializable {
     private Integer idTipoMonedaCtsPer;
     private String tipoMonedaCtsPer;
 
-    private String nroCtabacHaberesper;
-    private String nroCtaintbacHaberesper;
+    private String nroCtabacHaberesPer;
+    private String nroCtaintbacHaberesPer;
 
-    private String nroCtabacCtsper;
-    private String nroCtaintbacCtsper;
+    private String nroCtabacCtsPer;
+    private String nroCtaintbacCtsPer;
 
-    private String flgRequiereAperturaCtaCtsper;
-    private String flgRequiereAperturaCtaHaberesper;
+    private String flgRequiereAperturaCtaCtsPer;
+    private String flgRequiereAperturaCtaHaberesPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaSolAperturaCtaCtsPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaSolAperturaCtaHaberesPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaResAperturaCtaCtsPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaResAperturaCtaHaberesPer;
+
     private Boolean flgPermitirCambioCtsPer;
     private Boolean flgPermitirCambioHaberesPer;
 
-    public PersonalDatosBancariosDTO(Long idpersonal, String idobra, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Integer idTipoDocPer, String descDocuPer, String nroDocPers, Long idEntidadHaberesPer, String entidadHaberesPer, Long idEntidadCtsPer, String entidadCtsPer, Integer idTipoMonedaCtsPer, String tipoMonedaCtsPer, String nroCtabacHaberesper, String nroCtaintbacHaberesper, String nroCtabacCtsper, String nroCtaintbacCtsper, String flgRequiereAperturaCtaCtsper, String flgRequiereAperturaCtaHaberesper, Boolean flgPermitirCambioCtsPer, Boolean flgPermitirCambioHaberesPer) {
+    public PersonalDatosBancariosDTO(Long idpersonal, String idobra, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Integer idTipoDocPer, String descDocuPer, String nroDocPers, Long idEntidadHaberesPer, String entidadHaberesPer, Long idEntidadCtsPer, String entidadCtsPer, Integer idTipoMonedaCtsPer, String tipoMonedaCtsPer, String nroCtabacHaberesPer, String nroCtaintbacHaberesPer, String nroCtabacCtsPer, String nroCtaintbacCtsPer, String flgRequiereAperturaCtaCtsPer, String flgRequiereAperturaCtaHaberesPer, Date fechaSolAperturaCtaCtsPer, Date fechaSolAperturaCtaHaberesPer,
+                                     Date fechaResAperturaCtaCtsPer, Date fechaResAperturaCtaHaberesPer, Boolean flgPermitirCambioCtsPer, Boolean flgPermitirCambioHaberesPer) {
         this.idpersonal = idpersonal;
         this.idobra = idobra;
         this.nombrePers = nombrePers;
@@ -47,12 +64,16 @@ public class PersonalDatosBancariosDTO implements Serializable {
         this.entidadCtsPer = entidadCtsPer;
         this.idTipoMonedaCtsPer = idTipoMonedaCtsPer;
         this.tipoMonedaCtsPer = tipoMonedaCtsPer;
-        this.nroCtabacHaberesper = nroCtabacHaberesper;
-        this.nroCtaintbacHaberesper = nroCtaintbacHaberesper;
-        this.nroCtabacCtsper = nroCtabacCtsper;
-        this.nroCtaintbacCtsper = nroCtaintbacCtsper;
-        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
-        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+        this.nroCtabacHaberesPer = nroCtabacHaberesPer;
+        this.nroCtaintbacHaberesPer = nroCtaintbacHaberesPer;
+        this.nroCtabacCtsPer = nroCtabacCtsPer;
+        this.nroCtaintbacCtsPer = nroCtaintbacCtsPer;
+        this.flgRequiereAperturaCtaCtsPer = flgRequiereAperturaCtaCtsPer;
+        this.flgRequiereAperturaCtaHaberesPer = flgRequiereAperturaCtaHaberesPer;
+        this.fechaSolAperturaCtaCtsPer = fechaSolAperturaCtaCtsPer;
+        this.fechaSolAperturaCtaHaberesPer = fechaSolAperturaCtaHaberesPer;
+        this.fechaResAperturaCtaCtsPer = fechaResAperturaCtaCtsPer;
+        this.fechaResAperturaCtaHaberesPer = fechaResAperturaCtaHaberesPer;
         this.flgPermitirCambioCtsPer = flgPermitirCambioCtsPer;
         this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
     }
@@ -182,52 +203,84 @@ public class PersonalDatosBancariosDTO implements Serializable {
         this.tipoMonedaCtsPer = tipoMonedaCtsPer;
     }
 
-    public String getNroCtabacHaberesper() {
-        return nroCtabacHaberesper;
+    public String getNroCtabacHaberesPer() {
+        return nroCtabacHaberesPer;
     }
 
-    public void setNroCtabacHaberesper(String nroCtabacHaberesper) {
-        this.nroCtabacHaberesper = nroCtabacHaberesper;
+    public void setNroCtabacHaberesPer(String nroCtabacHaberesPer) {
+        this.nroCtabacHaberesPer = nroCtabacHaberesPer;
     }
 
-    public String getNroCtaintbacHaberesper() {
-        return nroCtaintbacHaberesper;
+    public String getNroCtaintbacHaberesPer() {
+        return nroCtaintbacHaberesPer;
     }
 
-    public void setNroCtaintbacHaberesper(String nroCtaintbacHaberesper) {
-        this.nroCtaintbacHaberesper = nroCtaintbacHaberesper;
+    public void setNroCtaintbacHaberesPer(String nroCtaintbacHaberesPer) {
+        this.nroCtaintbacHaberesPer = nroCtaintbacHaberesPer;
     }
 
-    public String getNroCtabacCtsper() {
-        return nroCtabacCtsper;
+    public String getNroCtabacCtsPer() {
+        return nroCtabacCtsPer;
     }
 
-    public void setNroCtabacCtsper(String nroCtabacCtsper) {
-        this.nroCtabacCtsper = nroCtabacCtsper;
+    public void setNroCtabacCtsPer(String nroCtabacCtsPer) {
+        this.nroCtabacCtsPer = nroCtabacCtsPer;
     }
 
-    public String getNroCtaintbacCtsper() {
-        return nroCtaintbacCtsper;
+    public String getNroCtaintbacCtsPer() {
+        return nroCtaintbacCtsPer;
     }
 
-    public void setNroCtaintbacCtsper(String nroCtaintbacCtsper) {
-        this.nroCtaintbacCtsper = nroCtaintbacCtsper;
+    public void setNroCtaintbacCtsPer(String nroCtaintbacCtsPer) {
+        this.nroCtaintbacCtsPer = nroCtaintbacCtsPer;
     }
 
-    public String getFlgRequiereAperturaCtaCtsper() {
-        return flgRequiereAperturaCtaCtsper;
+    public String getFlgRequiereAperturaCtaCtsPer() {
+        return flgRequiereAperturaCtaCtsPer;
     }
 
-    public void setFlgRequiereAperturaCtaCtsper(String flgRequiereAperturaCtaCtsper) {
-        this.flgRequiereAperturaCtaCtsper = flgRequiereAperturaCtaCtsper;
+    public void setFlgRequiereAperturaCtaCtsPer(String flgRequiereAperturaCtaCtsPer) {
+        this.flgRequiereAperturaCtaCtsPer = flgRequiereAperturaCtaCtsPer;
     }
 
-    public String getFlgRequiereAperturaCtaHaberesper() {
-        return flgRequiereAperturaCtaHaberesper;
+    public String getFlgRequiereAperturaCtaHaberesPer() {
+        return flgRequiereAperturaCtaHaberesPer;
     }
 
-    public void setFlgRequiereAperturaCtaHaberesper(String flgRequiereAperturaCtaHaberesper) {
-        this.flgRequiereAperturaCtaHaberesper = flgRequiereAperturaCtaHaberesper;
+    public void setFlgRequiereAperturaCtaHaberesPer(String flgRequiereAperturaCtaHaberesPer) {
+        this.flgRequiereAperturaCtaHaberesPer = flgRequiereAperturaCtaHaberesPer;
+    }
+
+    public Date getFechaSolAperturaCtaCtsPer() {
+        return fechaSolAperturaCtaCtsPer;
+    }
+
+    public void setFechaSolAperturaCtaCtsPer(Date fechaSolAperturaCtaCtsPer) {
+        this.fechaSolAperturaCtaCtsPer = fechaSolAperturaCtaCtsPer;
+    }
+
+    public Date getFechaSolAperturaCtaHaberesPer() {
+        return fechaSolAperturaCtaHaberesPer;
+    }
+
+    public void setFechaSolAperturaCtaHaberesPer(Date fechaSolAperturaCtaHaberesPer) {
+        this.fechaSolAperturaCtaHaberesPer = fechaSolAperturaCtaHaberesPer;
+    }
+
+    public Date getFechaResAperturaCtaCtsPer() {
+        return fechaResAperturaCtaCtsPer;
+    }
+
+    public void setFechaResAperturaCtaCtsPer(Date fechaResAperturaCtaCtsPer) {
+        this.fechaResAperturaCtaCtsPer = fechaResAperturaCtaCtsPer;
+    }
+
+    public Date getFechaResAperturaCtaHaberesPer() {
+        return fechaResAperturaCtaHaberesPer;
+    }
+
+    public void setFechaResAperturaCtaHaberesPer(Date fechaResAperturaCtaHaberesPer) {
+        this.fechaResAperturaCtaHaberesPer = fechaResAperturaCtaHaberesPer;
     }
 
     public Boolean getFlgPermitirCambioCtsPer() {

@@ -367,12 +367,16 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "ec.nombreEnt as entidadCtsPer, "
             + "tmo.codigoTab as idTipoMonedaCtsPer, "
             + "tmo.descripTab as TipoMonedaCtsPer, "
-            + "p.nroCtabacHaberesper,"
-            + "p.nroCtaintbacHaberesper,"
-            + "p.nroCtabacCtsper, "
-            + "p.nroCtaintbacCtsper,"
-            + "p.flgRequiereAperturaCtaCtsper, "
-            + "p.flgRequiereAperturaCtaHaberesper, "
+            + "p.nroCtabacHaberesPer,"
+            + "p.nroCtaintbacHaberesPer,"
+            + "p.nroCtabacCtsPer, "
+            + "p.nroCtaintbacCtsPer,"
+            + "p.flgRequiereAperturaCtaCtsPer, "
+            + "p.flgRequiereAperturaCtaHaberesPer, " +
+            "p.fechaSolAperturaCtaCtsPer," +
+            "p.fechaSolAperturaCtaHaberesPer," +
+            "p.fechaResAperturaCtaCtsPer," +
+            "p.fechaResAperturaCtaHaberesPer,"
             + "p.flgPermitirCambioCtsPer, "
             + "p.flgPermitirCambioHaberesPer "
             + ")"

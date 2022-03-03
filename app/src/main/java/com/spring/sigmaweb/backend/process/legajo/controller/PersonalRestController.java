@@ -549,10 +549,10 @@ public class PersonalRestController {
         //desnulea
         Long entHabold = PersonalAct.getIdEntidadHaberesPer() == null ? Long.parseLong("-1") : PersonalAct.getIdEntidadHaberesPer();
         Long entHabnew = personalDTO.getIdEntidadHaberesPer() == null ? Long.parseLong("-1") : personalDTO.getIdEntidadHaberesPer();
-        String ctaBancohabold = PersonalAct.getNroCtabacHaberesper() == null ? " " : PersonalAct.getNroCtabacHaberesper();
-        String ctaBancohabnew = personalDTO.getNroCtabacHaberesper() == null ? " " : personalDTO.getNroCtabacHaberesper();
-        String ctaInterhabold = PersonalAct.getNroCtaintbacHaberesper() == null ? " " : PersonalAct.getNroCtaintbacHaberesper();
-        String ctaInterhabnew = personalDTO.getNroCtaintbacHaberesper() == null ? " " : personalDTO.getNroCtaintbacHaberesper();
+        String ctaBancohabold = PersonalAct.getNroCtabacHaberesPer() == null ? " " : PersonalAct.getNroCtabacHaberesPer();
+        String ctaBancohabnew = personalDTO.getNroCtabacHaberesPer() == null ? " " : personalDTO.getNroCtabacHaberesPer();
+        String ctaInterhabold = PersonalAct.getNroCtaintbacHaberesPer() == null ? " " : PersonalAct.getNroCtaintbacHaberesPer();
+        String ctaInterhabnew = personalDTO.getNroCtaintbacHaberesPer() == null ? " " : personalDTO.getNroCtaintbacHaberesPer();
 
 
         if (!entHabold.equals(entHabnew) ||
@@ -568,21 +568,22 @@ public class PersonalRestController {
 
             itemHist.setEntidadHabOldHistdb(dataoldDTO.getEntidadHaberesPer() );
             itemHist.setEntidadHabNewHistdb(personalDTO.getEntidadHaberesPer() );
-            itemHist.setCtaBancoHabOldHistdb(PersonalAct.getNroCtabacHaberesper());
-            itemHist.setCtaBancoHabNewHistdb(personalDTO.getNroCtabacHaberesper());
+            itemHist.setCtaBancoHabOldHistdb(PersonalAct.getNroCtabacHaberesPer());
+            itemHist.setCtaBancoHabNewHistdb(personalDTO.getNroCtabacHaberesPer());
 
-            itemHist.setCtaInterHabOldHistdb(PersonalAct.getNroCtabacHaberesper());
-            itemHist.setCtaInterHabNewHistdb(personalDTO.getNroCtabacHaberesper());
+            itemHist.setCtaInterHabOldHistdb(PersonalAct.getNroCtaintbacCtsPer());
+            itemHist.setCtaInterHabNewHistdb(personalDTO.getNroCtaintbacHaberesPer());
+
 
             historico.add(itemHist);
         }
 
         Long entCtsold = PersonalAct.getIdEntidadCtsPer() == null ? Long.parseLong("-1") : PersonalAct.getIdEntidadCtsPer();
         Long entCtsnew = personalDTO.getIdEntidadCtsPer() == null ? Long.parseLong("-1") : personalDTO.getIdEntidadCtsPer();
-        String ctaBancoCtsold = PersonalAct.getNroCtabacCtsper() == null ? " " : PersonalAct.getNroCtabacCtsper();
-        String ctaBancoCtsnew = personalDTO.getNroCtabacCtsper() == null ? " " : personalDTO.getNroCtabacCtsper();
-        String ctaInterCtsold = PersonalAct.getNroCtaintbacCtsper() == null ? " " : PersonalAct.getNroCtaintbacCtsper();
-        String ctaInterCtsnew = personalDTO.getNroCtaintbacCtsper() == null ? " " : personalDTO.getNroCtaintbacCtsper();
+        String ctaBancoCtsold = PersonalAct.getNroCtabacCtsPer() == null ? " " : PersonalAct.getNroCtabacCtsPer();
+        String ctaBancoCtsnew = personalDTO.getNroCtabacCtsPer() == null ? " " : personalDTO.getNroCtabacCtsPer();
+        String ctaInterCtsold = PersonalAct.getNroCtaintbacCtsPer() == null ? " " : PersonalAct.getNroCtaintbacCtsPer();
+        String ctaInterCtsnew = personalDTO.getNroCtaintbacCtsPer() == null ? " " : personalDTO.getNroCtaintbacCtsPer();
         Integer monedaCtsold = PersonalAct.getIdTipoMonedaCtsPer() == null ? Integer.parseInt("-1") : PersonalAct.getIdTipoMonedaCtsPer();
         Integer monedaCtsnew = personalDTO.getIdTipoMonedaCtsPer() == null ? Integer.parseInt("-1") : personalDTO.getIdTipoMonedaCtsPer();
 
@@ -602,11 +603,11 @@ public class PersonalRestController {
             itemHist.setEntidadCtsOldHistdb(dataoldDTO.getEntidadCtsPer() );
             itemHist.setEntidadCtsNewHistdb(personalDTO.getEntidadCtsPer() );
 
-            itemHist.setCtaBancoCtsOldHistdb(PersonalAct.getNroCtabacCtsper());
-            itemHist.setCtaBancoCtsNewHistdb(personalDTO.getNroCtabacCtsper());
+            itemHist.setCtaBancoCtsOldHistdb(PersonalAct.getNroCtabacCtsPer());
+            itemHist.setCtaBancoCtsNewHistdb(personalDTO.getNroCtabacCtsPer());
 
-            itemHist.setCtaInterCtsOldHistdb(PersonalAct.getNroCtaintbacCtsper());
-            itemHist.setCtaInterCtsNewHistdb(personalDTO.getNroCtaintbacCtsper());
+            itemHist.setCtaInterCtsOldHistdb(PersonalAct.getNroCtaintbacCtsPer());
+            itemHist.setCtaInterCtsNewHistdb(personalDTO.getNroCtaintbacCtsPer());
 
             itemHist.setTipoMonedaCtsOldHistdb(dataoldDTO.getTipoMonedaCtsPer());
             itemHist.setTipoMonedaCtsNewHistdb(personalDTO.getTipoMonedaCtsPer());
@@ -616,13 +617,30 @@ public class PersonalRestController {
         PersonalAct.setIdEntidadHaberesPer(personalDTO.getIdEntidadHaberesPer());
         PersonalAct.setIdEntidadCtsPer(personalDTO.getIdEntidadCtsPer());
         PersonalAct.setIdTipoMonedaCtsPer(personalDTO.getIdTipoMonedaCtsPer());
-        PersonalAct.setNroCtabacHaberesper(personalDTO.getNroCtabacHaberesper());
-        PersonalAct.setNroCtabacCtsper(personalDTO.getNroCtabacCtsper());
-        PersonalAct.setNroCtaintbacHaberesper(personalDTO.getNroCtaintbacHaberesper());
-        PersonalAct.setNroCtaintbacCtsper(personalDTO.getNroCtaintbacCtsper());
+        PersonalAct.setNroCtabacHaberesPer(personalDTO.getNroCtabacHaberesPer());
+        PersonalAct.setNroCtabacCtsPer(personalDTO.getNroCtabacCtsPer());
+        PersonalAct.setNroCtaintbacHaberesPer(personalDTO.getNroCtaintbacHaberesPer());
+        PersonalAct.setNroCtaintbacCtsPer(personalDTO.getNroCtaintbacCtsPer());
 
-        PersonalAct.setFlgRequiereAperturaCtaCtsper(personalDTO.getFlgRequiereAperturaCtaCtsper());
-        PersonalAct.setFlgRequiereAperturaCtaHaberesper(personalDTO.getFlgRequiereAperturaCtaHaberesper());
+        PersonalAct.setFlgRequiereAperturaCtaCtsPer(personalDTO.getFlgRequiereAperturaCtaCtsPer());
+        PersonalAct.setFlgRequiereAperturaCtaHaberesPer(personalDTO.getFlgRequiereAperturaCtaHaberesPer());
+
+        if(personalDTO.getFlgRequiereAperturaCtaCtsPer() != null){
+            if(personalDTO.getFlgRequiereAperturaCtaCtsPer().equals("R")){
+                PersonalAct.setFechaResAperturaCtaCtsPer(new Date());
+            } else if(personalDTO.getFlgRequiereAperturaCtaCtsPer().equals("S")){
+                PersonalAct.setFechaSolAperturaCtaCtsPer(new Date());
+            }
+        }
+
+        if(personalDTO.getFlgRequiereAperturaCtaHaberesPer() != null){
+            if(personalDTO.getFlgRequiereAperturaCtaHaberesPer().equals("R")){
+                PersonalAct.setFechaResAperturaCtaHaberesPer(new Date());
+            } else if(personalDTO.getFlgRequiereAperturaCtaHaberesPer().equals("S")){
+                PersonalAct.setFechaSolAperturaCtaHaberesPer(new Date());
+            }
+        }
+
 
         PersonalAct.setFlgPermitirCambioCtsPer(personalDTO.getFlgPermitirCambioCtsPer());
         PersonalAct.setFlgPermitirCambioHaberesPer(personalDTO.getFlgPermitirCambioHaberesPer());

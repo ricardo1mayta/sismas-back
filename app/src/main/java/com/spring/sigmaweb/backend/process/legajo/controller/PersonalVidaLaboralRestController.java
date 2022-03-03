@@ -14,6 +14,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +105,7 @@ public class PersonalVidaLaboralRestController {
             vidalabInsert.setFechaFinPervila(vidaLab.getFechaFinPervila());
             vidalabInsert.setEstadoPervila(vidaLab.getEstadoPervila());
             vidalabInsert.setCreaPorPervila(vidaLab.getCreaPorPervila());
-            vidalabInsert.setFechaIngPervila(vidaLab.getFechaIngPervila());
+            vidalabInsert.setFechaIngPervila(new Date());
 
             vidalabNew  = personalvidalabService.save(vidalabInsert);
         } catch (DataAccessException e){
@@ -128,7 +129,7 @@ public class PersonalVidaLaboralRestController {
             vidalabAct.setFechaFinPervila(vidalabDTO.getFechaFinPervila());
             vidalabAct.setEstadoPervila(vidalabDTO.getEstadoPervila());
             vidalabAct.setModiPorPervila(vidalabDTO.getModiPorPervila());
-            vidalabAct.setFechaModiPervila(vidalabDTO.getFechaModiPervila());
+            vidalabAct.setFechaModiPervila(new Date());
         }
         return personalvidalabService.save(vidalabAct);
     }

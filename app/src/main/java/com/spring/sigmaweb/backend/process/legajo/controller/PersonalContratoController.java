@@ -148,7 +148,7 @@ public class PersonalContratoController {
             contratoInsert.setBonificacionPercont(contrato.getBonificacionPercont());
             contratoInsert.setFecIniPruebaPercont(contrato.getFecIniPruebaPercont());
             contratoInsert.setFecFinPruebaPercont(contrato.getFecFinPruebaPercont());
-            contratoInsert.setFechaIngPercont(contrato.getFechaIngPercont());
+            contratoInsert.setFechaIngPercont(new Date());
             contratoInsert.setCreaPorPercont(contrato.getCreaPorPercont());
 
             contratoNew = personalcontratoservice.save(contratoInsert);
@@ -200,7 +200,7 @@ public class PersonalContratoController {
             contratoAct.setBonificacionPercont(contratoDTO.getBonificacionPercont());
             contratoAct.setFecIniPruebaPercont(contratoDTO.getFecIniPruebaPercont());
             contratoAct.setFecFinPruebaPercont(contratoDTO.getFecFinPruebaPercont());
-            contratoAct.setFechaModiPercont(contratoDTO.getFechaModiPercont());
+            contratoAct.setFechaModiPercont(new Date());
             contratoAct.setModiPorPercont(contratoDTO.getModiPorPercont());
         }
         return personalcontratoservice.save(contratoAct);

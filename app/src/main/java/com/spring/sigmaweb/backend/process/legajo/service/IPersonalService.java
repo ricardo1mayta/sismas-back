@@ -35,6 +35,8 @@ public interface IPersonalService {
 
     public List<PersonalDatosListDTO> findByCodigoPerAndIdObra(String obraname, String codigoPer);
 
+    public List<dataPlanillaDTO> listDataPlanilla(String obraname);
+
     //Historico
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist);
 

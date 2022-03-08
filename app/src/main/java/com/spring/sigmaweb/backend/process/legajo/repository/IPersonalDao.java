@@ -390,6 +390,36 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
     )
     public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
 
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.dataPlanillaDTO (" +
+            "p.idPersonal, " +
+            "o.idobra, " +
+            "p.idPerSigma, " +
+            "ps.nombrePers," +
+            "ps.apePaternoPers," +
+            "ps.apeMaternoPers," +
+            "p.codigoPer, " +
+            "ps.sexoPers," +
+            "p.estadoPer," +
+            "pcont.idTipoPercont as idtipoContrato," +
+            "ttc.descripTab as tipoContrato, " +
+
+            "vl.fechaInicioPervila as fec_ingreso_pl," +
+            "p.numeroEssaludPer," +
+            "p.numeroPensionPer," +
+            "p.idEntidadPensPer as idAfp," +
+            "ep.nombreEnt as afp_pl" +
+            ") " +
+            "from Personal p inner join Obra o on (p.obraPer = o.idobra) " +
+            "inner join Persona ps on (p.idPersona = ps.idPersona) " +
+            "left join PersonalVidaLaboral vl on (p.idPersonal=vl.idPersonalPervila and o.idobra = vl.idObraPervila and vl.estadoPervila='ACTIVO') " +
+            "left join PersonalContrato pcont on (p.idPersonal = pcont.idPersonalPercont and o.idobra = pcont.idObraPercont and pcont.estadoPercont = 'ACTIVO')" +
+            "left join TablasTabla ttc on (pcont.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab) " +
+            "left join Entidad ep on (p.idEntidadPensPer = ep.idEntidad) " +
+            "where o.idobra = ?1"
+    )
+    public List<dataPlanillaDTO> listDataPlanilla(String obraname);
+
+
     @Transactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("update Personal p set p.fechaAutorizaPer = now() "

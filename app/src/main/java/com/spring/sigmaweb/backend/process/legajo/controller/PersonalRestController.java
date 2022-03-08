@@ -115,6 +115,12 @@ public class PersonalRestController {
         return personalservice.findByCodigoPerAndIdObra(obraname, codigoPer);
     }
 
+    @Secured({"ROLE_PERS","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/dataplanillaweb/{obraname}")
+    public List<dataPlanillaDTO> showListDataPlanillaDTO( @PathVariable String obraname) {
+        return personalservice.listDataPlanilla(obraname);
+    }
+
     //datos financieros
     @Secured({"ROLE_PERS","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalobrainfofinanciera/{obraname}/{idpersonal}")

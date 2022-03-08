@@ -157,6 +157,8 @@ public class PersonalDependientesRestController {
         response.put("mensaje", "El item ha sido creado con éxito!");
         response.put("personalDependiente", personalDepNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
+
     }
 
     @PutMapping("/personaldepupdate/{idpersonaldep}/{idpersonal}/{obraname}")

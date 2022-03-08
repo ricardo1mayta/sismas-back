@@ -107,6 +107,12 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<dataPlanillaDTO> listDataPlanilla(String obraname) {
+        return personalDao.listDataPlanilla(obraname);
+    }
+
+    @Override
     @Transactional
     public PersonalHistorico saveAll(List<PersonalHistorico> persoHist) {
         personalHistoricoDao.saveAll(persoHist);

@@ -904,5 +904,38 @@ public class PersonalRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
+    @PostMapping("/updatedataplanillasave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> updateDataPlanilla(@RequestBody dataupdatePlanilla data, BindingResult result) {
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(),data.getP_codigo(),
+                    data.getP_usuario(), data.getP_sexo(), data.getP_fecha_ingreso(), data.getP_num_ipss(),
+                    data.getP_num_cuspp(), data.getP_afp());
+
+
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personaldesvinculacion", data);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
 
 }

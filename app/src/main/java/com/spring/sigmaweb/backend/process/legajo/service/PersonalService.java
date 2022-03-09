@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +31,9 @@ public class PersonalService implements IPersonalService{
 
     @Autowired
     private IPersonalHistoricoBancarioDao personalHistoricobancDao;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     @Transactional(readOnly = true)
@@ -168,6 +175,33 @@ public class PersonalService implements IPersonalService{
     @Override
     public PersonalHistorcoBancario saveHistBancario(PersonalHistorcoBancario historico) {
         return personalHistoricobancDao.save(historico);
+    }
+
+    @Override
+    public void updatePlanilla(Long idper, String obra, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_update_planilla");
+        query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_codigo", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_usuario", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_sexo", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_fecha_ingreso", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_num_ipss", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_num_cuspp", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_afp", String.class, ParameterMode.IN);
+
+        query.setParameter("p_idpersonal", idper);
+        query.setParameter("p_obra", obra);
+        query.setParameter("p_codigo", codigo);
+        query.setParameter("p_usuario", usuario);
+        query.setParameter("p_sexo", sexo);
+        query.setParameter("p_fecha_ingreso", fechain);
+        query.setParameter("p_num_ipss", ipss);
+        query.setParameter("p_num_cuspp", cuspp);
+        query.setParameter("p_afp", afp);
+
+        query.execute();
+
     }
 
 

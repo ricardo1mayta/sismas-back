@@ -58,4 +58,10 @@ public interface IPersonalService {
                                                                                                                 Long idPervilaHistdb, String tipoHistdb);
 
     public PersonalHistorcoBancario saveHistBancario(PersonalHistorcoBancario historico);
+
+    public void updatePlanilla(Long idper,
+                               String obra,
+                               String codigo,
+                               String usuario, String sexo, String fechain, String ipss, String cuspp, String afp);
+
 }

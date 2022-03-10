@@ -461,7 +461,7 @@ public class PersonalRestController {
         PersonalAct.getIdPersona().setNacionalidadPers(personalDTO.getNacionalidadPers());
         PersonalAct.getIdPersona().setIdDistNacPers(personalDTO.getIdDistNacPers());
         PersonalAct.getIdPersona().setObservaNacPers(personalDTO.getObservaNacPers());
-
+        PersonalAct.setCodigoPer(personalDTO.getCodigoPer());
 
         if (!PersonalAct.getIdPersona().getTipoViaDomiPers().equals(personalDTO.getTipoViaDomiPers()) ||
                 !PersonalAct.getIdPersona().getDomicilioPers().trim().equals(personalDTO.getDomicilioPers().trim()) ||

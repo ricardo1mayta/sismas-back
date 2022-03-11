@@ -577,7 +577,7 @@ public class PersonalRestController {
             itemHist.setCtaBancoHabOldHistdb(PersonalAct.getNroCtabacHaberesPer());
             itemHist.setCtaBancoHabNewHistdb(personalDTO.getNroCtabacHaberesPer());
 
-            itemHist.setCtaInterHabOldHistdb(PersonalAct.getNroCtaintbacCtsPer());
+            itemHist.setCtaInterHabOldHistdb(PersonalAct.getNroCtaintbacHaberesPer());
             itemHist.setCtaInterHabNewHistdb(personalDTO.getNroCtaintbacHaberesPer());
 
 

@@ -281,6 +281,10 @@ public class Personal implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPercargo", cascade = CascadeType.ALL)
     private List<PersonalCargo> personalCargo;
 
+    @JsonIgnoreProperties({ "idPersonalPerpuest", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerpuest", cascade = CascadeType.ALL)
+    private List<PersonalPuesto> personalPuesto;
+
     @JsonIgnoreProperties({ "idPersonalPerdesv", "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerdesv", cascade = CascadeType.ALL)
     private List<PersonalDesvinculacion> personalDesvinculacion;

@@ -385,6 +385,7 @@ public class PersonalContratoController {
             historicoInsert.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
             historicoInsert.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
 
+
             if(historico.getTipoHistvila().equals("REMU")) {
                 historicoInsert.setJornadaSemaNewHistvila(null);
                 historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
@@ -419,8 +420,8 @@ public class PersonalContratoController {
     public PersonalHistoricoVinculoLaboral updateHistoricoVidaLabUpdate(@RequestBody HistoricoVilaLabotalDTO historico, @PathVariable String idObra, @PathVariable Long idPersonal,
                                                  @PathVariable Long idPervila, @PathVariable Long idPercont,
                                                  @PathVariable Long idHistvila) {
-        PersonalHistoricoVinculoLaboral historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,
-                                                                                                                                                                            idPercont, idHistvila);
+        PersonalHistoricoVinculoLaboral historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,idPercont, idHistvila);
+
         if(historicoAct != null) {
             historicoAct.setMotivoHistvila(historico.getMotivoHistvila());
             historicoAct.setTipoHistvila(historico.getTipoHistvila());
@@ -431,18 +432,23 @@ public class PersonalContratoController {
             historicoAct.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
 
             if(historico.getTipoHistvila().equals("REMU")) {
-                historicoAct.setJornadaSemaNewHistvila(historico.getRemuneracionNewHistvila());
-                historicoAct.setRemuneracionNewHistvila(null);
+                historicoAct.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+                historicoAct.setJornadaSemaNewHistvila(null);
             } else if(historico.getTipoHistvila().equals("JORN")) {
                 historicoAct.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
                 historicoAct.setRemuneracionNewHistvila(null);
             }
+
             historicoAct.setFechaModiHistvila(new Date());
             historicoAct.setModiPorHistvila(historico.getModiPorHistvila());
             historicoAct.setEstadoHistvila(historico.getEstadoHistvila());
+
+            return personalcontratoservice.saveHistVidaLab(historicoAct);
+        } else {
+            return null;
         }
 
-        return personalcontratoservice.saveHistVidaLab(historicoAct);
+
     }
 
 }

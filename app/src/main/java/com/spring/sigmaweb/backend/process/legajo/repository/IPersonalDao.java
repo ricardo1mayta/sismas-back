@@ -400,14 +400,17 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             "p.codigoPer, " +
             "ps.sexoPers," +
             "p.estadoPer," +
+            "pcont.idPerCont, "+
             "pcont.idTipoPercont as idtipoContrato," +
             "ttc.descripTab as tipoContrato, " +
 
+            "vl.idPervila, "+
             "vl.fechaInicioPervila as fec_ingreso_pl," +
             "p.numeroEssaludPer," +
             "p.numeroPensionPer," +
             "p.idEntidadPensPer as idAfp," +
-            "ep.nombreEnt as afp_pl" +
+            "ep.nombreEnt as afp_pl," +
+            "pcont.remuneracionPercont as basico" +
             ") " +
             "from Personal p inner join Obra o on (p.obraPer = o.idobra) " +
             "inner join Persona ps on (p.idPersona = ps.idPersona) " +

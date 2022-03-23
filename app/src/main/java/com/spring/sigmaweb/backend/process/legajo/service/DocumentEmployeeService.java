@@ -147,6 +147,12 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile) {
+        return tipoDocumentoDao.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+    @Override
     @Transactional
     public TipoDocumento save(TipoDocumento tipodocumento) {
         return tipoDocumentoDao.save(tipodocumento);

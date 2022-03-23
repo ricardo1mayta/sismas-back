@@ -15,17 +15,20 @@ public class dataPlanillaDTO implements Serializable {
     private Byte sexoPers;
     private Boolean estadoPer;
 
+    private Long idPerCont;
     private Integer idtipoContrato;
     private String tipoContrato;
 
+    private Long idPervila;
     private Date fec_ingreso_pl;
     private String numeroEssaludPer;// nro_ipss_pl,
     private String numeroPensionPer; //cuispp_pl,
 
     private Long idAfp;
     private String afp_pl;
+    private Double basico;
 
-    public dataPlanillaDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Byte sexoPers, Boolean estadoPer, Integer idtipoContrato, String tipoContrato, Date fec_ingreso_pl, String numeroEssaludPer, String numeroPensionPer, Long idAfp, String afp_pl) {
+    public dataPlanillaDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Byte sexoPers, Boolean estadoPer, Long idPerCont, Integer idtipoContrato, String tipoContrato, Long idPervila, Date fec_ingreso_pl, String numeroEssaludPer, String numeroPensionPer, Long idAfp, String afp_pl, Double basico) {
         this.idPersonal = idPersonal;
         this.idobra = idobra;
         this.idPerSigma = idPerSigma;
@@ -35,14 +38,16 @@ public class dataPlanillaDTO implements Serializable {
         this.codigoPer = codigoPer;
         this.sexoPers = sexoPers;
         this.estadoPer = estadoPer;
+        this.idPerCont = idPerCont;
         this.idtipoContrato = idtipoContrato;
         this.tipoContrato = tipoContrato;
-
+        this.idPervila = idPervila;
         this.fec_ingreso_pl = fec_ingreso_pl;
         this.numeroEssaludPer = numeroEssaludPer;
         this.numeroPensionPer = numeroPensionPer;
         this.idAfp = idAfp;
         this.afp_pl = afp_pl;
+        this.basico = basico;
     }
 
     public Long getIdPersonal() {
@@ -171,6 +176,30 @@ public class dataPlanillaDTO implements Serializable {
 
     public void setAfp_pl(String afp_pl) {
         this.afp_pl = afp_pl;
+    }
+
+    public Double getBasico() {
+        return basico;
+    }
+
+    public void setBasico(Double basico) {
+        this.basico = basico;
+    }
+
+    public Long getIdPervila() {
+        return idPervila;
+    }
+
+    public void setIdPervila(Long idPervila) {
+        this.idPervila = idPervila;
+    }
+
+    public Long getIdPerCont() {
+        return idPerCont;
+    }
+
+    public void setIdPerCont(Long idPerCont) {
+        this.idPerCont = idPerCont;
     }
 
     private static final long serialVersionUID = 1L;

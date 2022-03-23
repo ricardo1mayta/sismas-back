@@ -39,6 +39,8 @@ public interface IDocumentEmployeeService {
 
     public List<TipoDocumento> findByTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, Boolean estadoTipoFile, String idObraTipoFile);
 
+    public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile);
+
     public TipoDocumento save (TipoDocumento tipodocumento);
 
     public void delete(TipoDocumento tipodocumento);

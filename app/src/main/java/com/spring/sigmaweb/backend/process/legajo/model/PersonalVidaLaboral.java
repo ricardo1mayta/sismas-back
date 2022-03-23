@@ -69,6 +69,10 @@ public class PersonalVidaLaboral implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPervilaPercargo", cascade = CascadeType.ALL)
     private List<PersonalCargo> personalCargos;
 
+    @JsonIgnoreProperties({ "idPervilaPerpuest", "hibernateLazyInitializer", "handler" })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPervilaPerpuest", cascade = CascadeType.ALL)
+    private List<PersonalPuesto> personalPuesto;
+
     @PrePersist
     public void prePersist() {
         this.fechaIngPervila = new Date();

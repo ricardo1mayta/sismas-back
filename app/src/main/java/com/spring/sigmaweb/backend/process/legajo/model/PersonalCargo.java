@@ -40,9 +40,6 @@ public class PersonalCargo implements Serializable {
 
     @Column(nullable = false, name = "id_puesto_percargo")
     private Integer idPuestoPercargo;
-/*
-    @Column(name = "id_cargoespecial_percargo", nullable = true, length = 3)
-    private String idCargoEspecialPercargo;*/
 
     @Column(nullable = false, name = "flgcargodirec_percargo", columnDefinition = "boolean default false")
     private Boolean flgCargoDirePercargo;

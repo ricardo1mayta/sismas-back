@@ -27,7 +27,7 @@ public class PersonalHistoricoVinculoLaboral implements Serializable {
     private Long idPervilaHistvila;
 
     @Column(name = "motivo_histvila", nullable = false)
-    private String motivoHistvila;
+    private Integer motivoHistvila;
 
     @Column(name = "tipo_histvila", nullable = false, length = 10)
     private String tipoHistvila;
@@ -219,11 +219,11 @@ public class PersonalHistoricoVinculoLaboral implements Serializable {
         this.estadoHistvila = estadoHistvila;
     }
 
-    public String getMotivoHistvila() {
+    public Integer getMotivoHistvila() {
         return motivoHistvila;
     }
 
-    public void setMotivoHistvila(String motivoHistvila) {
+    public void setMotivoHistvila(Integer motivoHistvila) {
         this.motivoHistvila = motivoHistvila;
     }
 

@@ -551,6 +551,13 @@ public class PersonalRestController {
         //verifica en historico
 
         PersonalVidaLabDTO vidaladhist = vidalabservice.ultimoPeriodoVidaLaboral(obraname, idpersonal);
+        if(vidaladhist == null) {
+            return null;
+        }
+
+        if(vidaladhist.getEstadoPervila().equals("FINALIZADO")) {
+            return null;
+        }
 
         //desnulea
         Long entHabold = PersonalAct.getIdEntidadHaberesPer() == null ? Long.parseLong("-1") : PersonalAct.getIdEntidadHaberesPer();
@@ -756,6 +763,12 @@ public class PersonalRestController {
     @GetMapping("/tipodocumentoidestado/{tipoFile}/{estadoTipoFile}/{idObraTipoFile}")
     public List<TipoDocumento> showTipoDocTipoEstado(@PathVariable String tipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
         return documentemployeeservice.findByTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidcodigoestado/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstadoAndcodigo(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
     }
 
 

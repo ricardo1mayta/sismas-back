@@ -29,7 +29,9 @@ public class HistoricoVilaLabotalDTO implements Serializable {
     private Date fechaFinPervila;
     private String estadoPervila;
 
-    private String motivoHistvila;
+
+    private Integer motivoHistvila;
+    private String textMotivoHistvila;
     private String tipoHistvila;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -54,7 +56,7 @@ public class HistoricoVilaLabotalDTO implements Serializable {
 
     private Boolean estadoHistvila;
 
-    public HistoricoVilaLabotalDTO(Long idHistvila, String idObraHistvila, Long idPersonalHistvila, String codigoPer, Boolean estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, String nroDocPers, Long idPercontHistvila, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String tipoPercont, Long idPervilaHistvila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String motivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaOldHistvila, Double bonificacionOldHistvila, Double remuneracionOldHistvila, Double jornadaSemaNewHistvila, Double bonificacionNewHistvila, Double remuneracionNewHistvila, Date fechaIngHistvila, Date fechaModiHistvila, String creaPorHistvila, String modiPorHistvila, Boolean estadoHistvila) {
+    public HistoricoVilaLabotalDTO(Long idHistvila, String idObraHistvila, Long idPersonalHistvila, String codigoPer, Boolean estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, String nroDocPers, Long idPercontHistvila, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String tipoPercont, Long idPervilaHistvila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, Integer motivoHistvila, String textMotivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaOldHistvila, Double bonificacionOldHistvila, Double remuneracionOldHistvila, Double jornadaSemaNewHistvila, Double bonificacionNewHistvila, Double remuneracionNewHistvila, Date fechaIngHistvila, Date fechaModiHistvila, String creaPorHistvila, String modiPorHistvila, Boolean estadoHistvila) {
         this.idHistvila = idHistvila;
         this.idObraHistvila = idObraHistvila;
         this.idPersonalHistvila = idPersonalHistvila;
@@ -63,7 +65,6 @@ public class HistoricoVilaLabotalDTO implements Serializable {
         this.apePaternoPers = apePaternoPers;
         this.apeMaternoPers = apeMaternoPers;
         this.nombrePers = nombrePers;
-
         this.nroDocPers = nroDocPers;
         this.idPercontHistvila = idPercontHistvila;
         this.fechaIniPercont = fechaIniPercont;
@@ -75,6 +76,7 @@ public class HistoricoVilaLabotalDTO implements Serializable {
         this.fechaFinPervila = fechaFinPervila;
         this.estadoPervila = estadoPervila;
         this.motivoHistvila = motivoHistvila;
+        this.textMotivoHistvila = textMotivoHistvila;
         this.tipoHistvila = tipoHistvila;
         this.fechaCambioHistvila = fechaCambioHistvila;
         this.jornadaSemaOldHistvila = jornadaSemaOldHistvila;
@@ -343,12 +345,20 @@ public class HistoricoVilaLabotalDTO implements Serializable {
         this.estadoHistvila = estadoHistvila;
     }
 
-    public String getMotivoHistvila() {
+    public Integer getMotivoHistvila() {
         return motivoHistvila;
     }
 
-    public void setMotivoHistvila(String motivoHistvila) {
+    public void setMotivoHistvila(Integer motivoHistvila) {
         this.motivoHistvila = motivoHistvila;
+    }
+
+    public String getTextMotivoHistvila() {
+        return textMotivoHistvila;
+    }
+
+    public void setTextMotivoHistvila(String textMotivoHistvila) {
+        this.textMotivoHistvila = textMotivoHistvila;
     }
 
     private static final long serialVersionUID = 1L;

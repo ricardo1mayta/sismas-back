@@ -19,7 +19,8 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "from PersonalHistoricoVinculoLaboral hvl " +
             "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2 and hvl.idPervilaHistvila = ?3 " +
             "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) " +
-            "and hvl.tipoHistvila = (case ?5 when '_' then hvl.tipoHistvila else ?5 end)")
+            "and hvl.tipoHistvila = (case ?5 when '_' then hvl.tipoHistvila else ?5 end) " +
+            "order by hvl.fechaCambioHistvila Desc")
     public List<PersonalHistoricoVinculoLaboral> findByObraAndPersonalAndVidaLabAndContratoAndtipoList(
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
     );
@@ -46,6 +47,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "pvl.estadoPervila," +
 
             "hvl.motivoHistvila," +
+            "tmo.descripTab as textMotivoHistvila, " +
             "hvl.tipoHistvila," +
 
             "hvl.fechaCambioHistvila," +
@@ -69,9 +71,11 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "inner join Obra o on (hvl.idObraHistvila = o.idobra) " +
             "inner join PersonalContrato pc on (hvl.idPercontHistvila = pc.idPerCont and hvl.idObraHistvila = pc.idObraPercont) " +
             "left join TablasTabla ttc on (pc.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab) " +
+            "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
             "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2 and hvl.idPervilaHistvila = ?3 " +
             "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) " +
-            "and hvl.tipoHistvila = (case ?5 when '_' then hvl.tipoHistvila else ?5 end)"
+            "and hvl.tipoHistvila = (case ?5 when '_' then hvl.tipoHistvila else ?5 end) " +
+            "order by hvl.fechaCambioHistvila desc"
     )
     public List<HistoricoVilaLabotalDTO> findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
@@ -99,6 +103,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "pvl.estadoPervila," +
 
             "hvl.motivoHistvila," +
+            "tmo.descripTab as textMotivoHistvila, " +
             "hvl.tipoHistvila," +
 
             "hvl.fechaCambioHistvila," +
@@ -122,6 +127,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "inner join Obra o on (hvl.idObraHistvila = o.idobra) " +
             "inner join PersonalContrato pc on (hvl.idPercontHistvila = pc.idPerCont and hvl.idObraHistvila = pc.idObraPercont) " +
             "left join TablasTabla ttc on (pc.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab) " +
+            "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
             "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2 and hvl.idPervilaHistvila = ?3 " +
             "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) " +
             "and hvl.idHistvila = ?5"

@@ -1,13 +1,16 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.core.model.Rol;
 import com.spring.sigmaweb.backend.process.generic.model.Persona;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorcoBancario;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistorico;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDataHistoricoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoBancarioDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,10 @@ public class PersonalService implements IPersonalService{
 
     @Autowired
     private IPersonalHistoricoBancarioDao personalHistoricobancDao;
+
+    @Autowired
+    private IPersonalHistoricoVinculoLaboralDao historicovinculolabDAo;
+
 
     @PersistenceContext
     EntityManager entityManager;
@@ -116,7 +123,19 @@ public class PersonalService implements IPersonalService{
     @Override
     @Transactional(readOnly = true)
     public List<dataPlanillaDTO> listDataPlanilla(String obraname) {
-        return personalDao.listDataPlanilla(obraname);
+        List<dataPlanillaDTO> data = personalDao.listDataPlanilla(obraname);
+        //actualiza el basico actual
+        List<PersonalHistoricoVinculoLaboral> hist = null;
+        Long idcont = Long.parseLong("-1");
+        for (dataPlanillaDTO item : data) {
+            hist =  historicovinculolabDAo.findByObraAndPersonalAndVidaLabAndContratoAndtipoList (obraname, item.getIdPersonal(), item.getIdPervila(),idcont,"REMU");
+            if (hist != null) {
+                if(hist.size()>0){
+                    item.setBasico(hist.get(0).getRemuneracionNewHistvila());
+                }
+            }
+        }
+        return data;
     }
 
     @Override

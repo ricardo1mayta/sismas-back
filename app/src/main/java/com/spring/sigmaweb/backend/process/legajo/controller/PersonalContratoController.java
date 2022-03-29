@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.core.service.IUsuarioService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
@@ -29,6 +30,9 @@ public class PersonalContratoController {
 
     @Autowired
     private IPersonalVidaLaboralService personalvidalaboralservice;
+
+    @Autowired
+    private IUsuarioService usuarioservice;
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/contratoidcontrato/{idPerCont}")
@@ -160,7 +164,7 @@ public class PersonalContratoController {
             calendar.add(Calendar.DAY_OF_YEAR, -1);
             Date dataOld = calendar.getTime();
             for (PersonalContrato c : contratosOld) {
-                System.out.println(c.getIdPerCont() + " - " + contratoNew.getIdPerCont());
+
                 if(c.getIdPerCont() != contratoNew.getIdPerCont()){
                     c.setEstadoPercont("FINALIZADO");
                     c.setFechaTerminoPercont(dataOld );
@@ -171,6 +175,9 @@ public class PersonalContratoController {
                 }
             }
 
+            //Habilita el usuario relaciona al colaborador del contrato.
+            usuarioservice.modificaEstadoUser(contrato.getIdObraPercont(), contrato.getIdPersonal(),"COLAB", true);
+            
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");

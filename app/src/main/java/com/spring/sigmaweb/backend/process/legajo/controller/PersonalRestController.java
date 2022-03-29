@@ -170,12 +170,25 @@ public class PersonalRestController {
     public Integer updatePersonalActivo(@RequestBody PersonalContratoObraDTO contratoUpd, @PathVariable String fechaactivo){
         Personal perFind = personalservice.findByIdPersonalAndObraname(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont());
         Integer resp = 0;
-
+        Boolean clearCod =false;
         if(perFind == null) {
             resp = 0;
         } else {
-            if(perFind.getEstadoPer() == false) {
-                resp = personalservice.updateColaboradorActivo(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont(), fechaactivo);
+            if(perFind.getEstadoPer() != false) {
+                // cuando habilite un colaborador reingresante debe verificar que el codigo no sea duplicado
+                List<PersonalDatosListDTO> personal = personalservice.findByCodigoPerAndIdObra(perFind.getObraPer().getIdobra(), perFind.getCodigoPer());
+                if (personal != null){
+                    if(personal.size() == 1 ){
+                        if(personal.get(0).getIdPersonal() != perFind.getIdPersonal() ){
+                            //actualiza
+                            clearCod=true;
+                        }
+                    } else {
+                        //actualizar
+                        clearCod = true;
+                    }
+                }
+                resp = personalservice.updateColaboradorActivo(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont(), fechaactivo, clearCod);
             } else {
                 resp = -1;
             }

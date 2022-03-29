@@ -32,7 +32,9 @@ public interface IRolSideNavItemDao extends CrudRepository<RolSideNavItem, Long>
             + "s.badge, "
             + "s.badgeColor, "
             + "s.type, "
-            + "s.customClass) "
+            + "s.customClass," +
+            "rs.flgLecturaRolItem," +
+            "rs.flgEscrituraRolItem) "
             + "from SideNavItem s inner join RolSideNavItem rs on (s.idItem = rs.idItem) "
             + "inner join Obra o on (rs.obraRolItem = o.idobra) "
             + "inner join Modulo m on (s.moduloItem = m.idModulo) "
@@ -68,7 +70,9 @@ public interface IRolSideNavItemDao extends CrudRepository<RolSideNavItem, Long>
             + "s.badge, "
             + "s.badgeColor, "
             + "s.type, "
-            + "s.customClass) "
+            + "s.customClass," +
+            " false as flgLecturaRolItem," +
+            " false as flgEscrituraRolItem) "
             + "from SideNavItem s inner join Modulo m on (s.moduloItem = m.idModulo) "
             + "left join SideNavItem s2 on (s.idPadreItem = s2.idItem) "
             + "left join SideNavItem s3 on (s2.idPadreItem = s3.idItem) "

@@ -42,7 +42,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 
         String usernameD = username.trim().substring(0, username.trim().indexOf("*"));
         String codInternoD = username.trim().substring(username.trim().indexOf("*") + 1,username.trim().length());
-        //System.out.println(usernameD +"-" + codInternoD);
+
         Usuario usuario = usuarioDao.findByUsernameActivo(usernameD) ;//usuarioDao.findByUsernameAndObra(usernameD.trim(),obraD.trim());
         PersonalDTO personal = null;
         username=usernameD;
@@ -72,7 +72,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
                 .peek(authority -> logger.info("Role: " + authority.getAuthority()))
                 .collect(Collectors.toList());
 
-        return new User(usuario.getUsername()/* + "*" + usuario.getObraUs().getIdobra() */, usuario.getPassword(), usuario.getActivo(), true, true, true, authorities);
+        return new User(usuario.getUsername(), usuario.getPassword(), usuario.getActivo(), true, true, true, authorities);
     }
 
 
@@ -276,6 +276,15 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
             users.setNomComplUser( this.nomCompleto(users.getApePaternoUser(), users.getApeMaternoUser(), users.getNombresUser()));
         }
         return users;
+    }
+
+    @Override
+    public void modificaEstadoUser(String idobra, Long codiuser, String tipouser, Boolean estado) {
+        Usuario user = usuarioDao.findByObraAndCoduserAndTipouser(idobra, codiuser, tipouser);
+        if(user != null){
+            user.setActivo(estado);
+            usuarioDao.save(user);
+        }
     }
 
 }

@@ -18,6 +18,9 @@ public class SidenavItemDTO implements Serializable{
     private String customClass;
     private Long idPadre;
     private Long idItem;
+    private Boolean flgLecturaRolItem;
+    private Boolean flgEscrituraRolItem;
+
     /*
     public SidenavItemDTO(String name, String icon, String routeOrFunction, SidenavItemDTO parent,
             List<SidenavItemDTO> subItems, Long position, Boolean pathMatchExact, String badge, String badgeColor,
@@ -140,5 +143,21 @@ public class SidenavItemDTO implements Serializable{
 
     public void setIdItem(Long idItem) {
         this.idItem = idItem;
+    }
+
+    public Boolean getFlgLecturaRolItem() {
+        return flgLecturaRolItem;
+    }
+
+    public void setFlgLecturaRolItem(Boolean flgLecturaRolItem) {
+        this.flgLecturaRolItem = flgLecturaRolItem;
+    }
+
+    public Boolean getFlgEscrituraRolItem() {
+        return flgEscrituraRolItem;
+    }
+
+    public void setFlgEscrituraRolItem(Boolean flgEscrituraRolItem) {
+        this.flgEscrituraRolItem = flgEscrituraRolItem;
     }
 }

@@ -62,6 +62,8 @@ public class RolSideNavItemService implements IRolSideNavItemService{
             menuItem.setCustomClass(row.getCustomClass());
             menuItem.setIdPadre(row.getIdPadreItem());
             menuItem.setIdItem(row.getIdItem());
+            menuItem.setFlgLecturaRolItem(row.getFlgLecturaRolItem());
+            menuItem.setFlgEscrituraRolItem(row.getFlgEscrituraRolItem());
             menuItem.setSubItems(null);
 
             if (row.getIdPadreItem() == null) {

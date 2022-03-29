@@ -160,7 +160,7 @@ public class PersonalService implements IPersonalService{
 
     @Override
     @Transactional
-    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo) {
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo, Boolean clearcodigo) {
 
         Date fecha = new Date();
         try {
@@ -170,7 +170,7 @@ public class PersonalService implements IPersonalService{
         } catch (ParseException e){
 
         }
-        return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha);
+        return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha, clearcodigo);
     }
 
     @Override

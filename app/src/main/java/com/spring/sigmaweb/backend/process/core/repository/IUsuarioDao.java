@@ -20,6 +20,11 @@ public interface IUsuarioDao extends CrudRepository<Usuario,Long> {
 
     @Query("select u "
             + "from Usuario u inner join Obra o on u.obraUs = o.idobra "
+            + "where o.idobra=?1 and u.idcodTipoUser=?2 and u.tipoUser=?3")
+    public Usuario findByObraAndCoduserAndTipouser(String obra, Long coduser, String tipouser);
+
+    @Query("select u "
+            + "from Usuario u inner join Obra o on u.obraUs = o.idobra "
             + "where u.username=?1 and o.idobra=?2")
     public Usuario findByUsernameAndObra(String username, String obra);
 

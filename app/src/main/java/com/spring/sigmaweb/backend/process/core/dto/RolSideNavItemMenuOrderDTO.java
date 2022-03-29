@@ -18,10 +18,11 @@ public class RolSideNavItemMenuOrderDTO implements Serializable {
     private String badgeColor;
     private String type;
     private String customClass;
+    private Boolean flgLecturaRolItem;
+    private Boolean flgEscrituraRolItem;
 
-    public RolSideNavItemMenuOrderDTO(String ordenMenu, Integer nivelMenu, Long idItem, Long position, String idModulo,
-                                      String name, Long idPadreItem, String icon, String routeOrFunction, Boolean pathMatchExact, String badge,
-                                      String badgeColor, String type, String customClass) {
+
+    public RolSideNavItemMenuOrderDTO(String ordenMenu, Integer nivelMenu, Long idItem, Long position, String idModulo, String name, Long idPadreItem, String icon, String routeOrFunction, Boolean pathMatchExact, String badge, String badgeColor, String type, String customClass, Boolean flgLecturaRolItem, Boolean flgEscrituraRolItem) {
         super();
         this.ordenMenu = ordenMenu;
         this.nivelMenu = nivelMenu;
@@ -37,6 +38,8 @@ public class RolSideNavItemMenuOrderDTO implements Serializable {
         this.badgeColor = badgeColor;
         this.type = type;
         this.customClass = customClass;
+        this.flgLecturaRolItem = flgLecturaRolItem;
+        this.flgEscrituraRolItem = flgEscrituraRolItem;
     }
 
     public String getOrdenMenu() {
@@ -149,6 +152,22 @@ public class RolSideNavItemMenuOrderDTO implements Serializable {
 
     public void setCustomClass(String customClass) {
         this.customClass = customClass;
+    }
+
+    public Boolean getFlgLecturaRolItem() {
+        return flgLecturaRolItem;
+    }
+
+    public void setFlgLecturaRolItem(Boolean flgLecturaRolItem) {
+        this.flgLecturaRolItem = flgLecturaRolItem;
+    }
+
+    public Boolean getFlgEscrituraRolItem() {
+        return flgEscrituraRolItem;
+    }
+
+    public void setFlgEscrituraRolItem(Boolean flgEscrituraRolItem) {
+        this.flgEscrituraRolItem = flgEscrituraRolItem;
     }
 
     private static final long serialVersionUID = 1L;

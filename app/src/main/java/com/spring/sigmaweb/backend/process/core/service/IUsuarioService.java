@@ -28,4 +28,6 @@ public interface IUsuarioService {
     public List<Rol> usuariosRolesPorUsuario(Long iduser, String idobra);
 
     public usuarioDTO findByUsernameAndObraDTO (String username, String idobra);
+
+    public void modificaEstadoUser (String idobra, Long codiuser, String tipouser, Boolean estado);
 }

@@ -433,10 +433,11 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("update Personal p set estadoPer = true,  " +
             "fechaBajaPer = null, " +
-            "fechaActivoPer = ?3 " +
+            "fechaActivoPer = ?3," +
+            "codigoPer = (case ?4 when true then '' else codigoPer end ) " +
             "where p.idPersonal = ?1 and p.obraPer.idobra = ?2"
     )
-    public Integer updateColaboradorActivo(Long idpersonal, String obraname, Date fechaactivo);
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, Date fechaactivo, Boolean clearCodi);
 
 
 

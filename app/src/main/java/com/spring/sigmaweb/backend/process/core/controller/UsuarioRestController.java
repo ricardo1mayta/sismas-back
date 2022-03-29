@@ -305,7 +305,7 @@ public class UsuarioRestController {
             userAct.setIdcodTipoUser(usuUpdate.getIdcodTipoUser());
             userAct.setTipoUser(usuUpdate.getTipoUser());
             if (!usuUpdate.getPassword().trim().equals("")) {
-                //System.out.println(usuUpdate.getPassword().trim());
+
                 newPassWord = passwordEncoder.encode(usuUpdate.getPassword().trim());
                 userAct.setPassword(newPassWord);
             }

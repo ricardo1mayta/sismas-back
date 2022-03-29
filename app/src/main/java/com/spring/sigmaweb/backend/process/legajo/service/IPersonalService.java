@@ -46,7 +46,7 @@ public interface IPersonalService {
     public PersonalDatosBancariosDTO findByObraAndidPersonalParaInfoBancario(String obraname, Long idpersonal);
 
     //activar estudiante
-    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo);
+    public Integer updateColaboradorActivo(Long idpersonal, String obraname, String fechaactivo, Boolean clearcodigo);
 
     //Historio Info Bancaria
 

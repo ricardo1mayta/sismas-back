@@ -177,10 +177,14 @@ public class PersonalRestController {
             if(perFind.getEstadoPer() != false) {
                 // cuando habilite un colaborador reingresante debe verificar que el codigo no sea duplicado
                 List<PersonalDatosListDTO> personal = personalservice.findByCodigoPerAndIdObra(perFind.getObraPer().getIdobra(), perFind.getCodigoPer());
+
                 if (personal != null){
+
                     if(personal.size() == 1 ){
-                        if(personal.get(0).getIdPersonal() != perFind.getIdPersonal() ){
+
+                        if( !personal.get(0).getIdPersonal().equals(perFind.getIdPersonal()) ){
                             //actualiza
+
                             clearCod=true;
                         }
                     } else {
@@ -188,6 +192,7 @@ public class PersonalRestController {
                         clearCod = true;
                     }
                 }
+
                 resp = personalservice.updateColaboradorActivo(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont(), fechaactivo, clearCod);
             } else {
                 resp = -1;

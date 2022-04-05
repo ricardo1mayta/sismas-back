@@ -97,8 +97,13 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
                 indexTipo = 3; break;
             case "CONVENIO" :
                 indexTipo = 4; break;
+            case "FAMILIARES":
+                indexTipo = 5; break;
+            case "PERSONALES" :
+                indexTipo = 6; break;
             case "DESVINCDOC":
                 indexTipo = 31; break;
+
         }
 
         Double divide = Double.parseDouble(((idpersonal.toString() + idIPadre.toString()+"").length() / 3 )+"");

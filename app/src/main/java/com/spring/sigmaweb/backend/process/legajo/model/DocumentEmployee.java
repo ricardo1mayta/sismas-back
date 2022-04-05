@@ -49,6 +49,7 @@ public class DocumentEmployee implements Serializable  {
     @Column(name = "size_fileper", nullable = false)
     private Long sizeFilePer;
 
+
     @Column(nullable = false, name = "upload_date_fileper")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)

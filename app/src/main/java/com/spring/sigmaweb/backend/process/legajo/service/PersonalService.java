@@ -168,8 +168,12 @@ public class PersonalService implements IPersonalService{
             fecha = formatter.parse(fechaactivo);
 
         } catch (ParseException e){
-
+            System.out.println(idpersonal);
+            System.out.println(obraname);
+            System.out.println(fechaactivo);
+            System.out.println(clearcodigo);
         }
+        System.out.println(fecha);
         return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha, clearcodigo);
     }
 

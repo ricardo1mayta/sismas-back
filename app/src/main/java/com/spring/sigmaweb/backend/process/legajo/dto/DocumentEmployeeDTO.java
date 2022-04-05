@@ -44,6 +44,7 @@ public class DocumentEmployeeDTO implements Serializable {
         this.descripcionFilePer = descripcionFilePer;
         this.typeFilePer = typeFilePer;
         this.sizeFilePer = sizeFilePer;
+
         this.uploadDateFilePer = uploadDateFilePer;
         this.creaPorFilePer = creaPorFilePer;
     }
@@ -189,6 +190,7 @@ public class DocumentEmployeeDTO implements Serializable {
     public void setFileNameFilePer(String fileNameFilePer) {
         this.fileNameFilePer = fileNameFilePer;
     }
+
 
     private static final long serialVersionUID = 1L;
 }

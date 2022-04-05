@@ -1,10 +1,7 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
-import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
+import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
@@ -79,6 +76,18 @@ public class PersonalCargoRestController {
         return personalCargoService.findAll();
     }
 
+    //Cargos TR
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargotrporid/{idcargoTr}")
+    public CargoTReg showCargoTrPorId(@PathVariable Long idcargoTr){
+        return personalCargoService.findByIdCargoTr(idcargoTr);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargotrall")
+    public List<CargoTReg> showCargoTrAll(){
+        return personalCargoService.findAllCargoTr();
+    }
 
     //CRUD
     @PostMapping("/personalcargosave")

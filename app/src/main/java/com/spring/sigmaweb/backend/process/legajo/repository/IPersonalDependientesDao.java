@@ -29,7 +29,8 @@ public interface IPersonalDependientesDao extends CrudRepository<PersonalDependi
             + "o.idobra, "
             + "parent.codigoTab as idparentPerDep, "
             + "parent.descripTab as descparentPerDep, "
-            + "pd.flgvive, "
+            + "pd.flgvive, " +
+            "pd.flgDiscapacidadPerdep,"
             + "pd.nombrePerDep, "
             + "pd.apPaternoPerDep, "
             + "pd.apMaternoPerDep, "
@@ -70,7 +71,8 @@ public interface IPersonalDependientesDao extends CrudRepository<PersonalDependi
             + "o.idobra, "
             + "parent.codigoTab as idparentPerDep, "
             + "parent.descripTab as descparentPerDep, "
-            + "pd.flgvive, "
+            + "pd.flgvive, " +
+            "pd.flgDiscapacidadPerdep, "
             + "pd.nombrePerDep, "
             + "pd.apPaternoPerDep, "
             + "pd.apMaternoPerDep, "

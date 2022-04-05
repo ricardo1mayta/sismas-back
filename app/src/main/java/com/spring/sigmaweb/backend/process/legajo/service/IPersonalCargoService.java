@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
+import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
 
 import java.util.List;
@@ -24,4 +25,9 @@ public interface IPersonalCargoService {
     public Cargo findByIdCargo(Long idcargo);
 
     public List<Cargo> findAll();
+
+    //Cargo TR
+    public CargoTReg findByIdCargoTr(Long idCargoTr);
+
+    public List<CargoTReg> findAllCargoTr();
 }

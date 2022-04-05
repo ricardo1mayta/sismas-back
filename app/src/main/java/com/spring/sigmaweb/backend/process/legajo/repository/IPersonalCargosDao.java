@@ -44,7 +44,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "tplanilla.codigoTab as idTipoNivelPlanillaPercargo, " +
             "tplanilla.descripTab as TipoNivelPlanillaPercargo, " +
             "pc.idPuestoPercargo, " +
-            "pus.nombreCar as PuestoPercargo, " +
+            "pus.descripCargoTr as PuestoPercargo, " +
             "pc.flgCargoDirePercargo, " +
             "pc.flgCargoConfiPercargo, " +
             "pc.flgCargoNofilcalPercargo, " +
@@ -63,7 +63,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "from PersonalCargo pc inner join Personal p on (pc.idPersonalPercargo = p.idPersonal and pc.idObraPercargo = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and p.obraPer=psn.obraPers) " +
             "inner join Cargo car on (pc.idCargoPercargo = car.idCargo) " +
-            "inner join Cargo pus on (pc.idPuestoPercargo = pus.idCargo) " +
+            "inner join CargoTReg pus on (pc.idPuestoPercargo = pus.idCargoTr) " +
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +
@@ -89,7 +89,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "tplanilla.codigoTab as idTipoNivelPlanillaPercargo, " +
             "tplanilla.descripTab as TipoNivelPlanillaPercargo, " +
             "pc.idPuestoPercargo, " +
-            "pus.nombreCar as PuestoPercargo, " +
+            "pus.descripCargoTr as PuestoPercargo, " +
             "pc.flgCargoDirePercargo, " +
             "pc.flgCargoConfiPercargo, " +
             "pc.flgCargoNofilcalPercargo, " +
@@ -108,7 +108,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "from PersonalCargo pc inner join Personal p on (pc.idPersonalPercargo = p.idPersonal and pc.idObraPercargo = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and p.obraPer=psn.obraPers) " +
             "inner join Cargo car on (pc.idCargoPercargo = car.idCargo) " +
-            "inner join Cargo pus on (pc.idPuestoPercargo = pus.idCargo) " +
+            "inner join CargoTReg pus on (pc.idPuestoPercargo = pus.idCargoTr) " +
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +

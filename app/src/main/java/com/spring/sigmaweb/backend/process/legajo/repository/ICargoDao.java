@@ -9,4 +9,6 @@ public interface ICargoDao extends CrudRepository<Cargo, Long> {
     public Cargo findByIdCargo(Long idcargo);
 
     public List<Cargo> findAll();
+
+
 }

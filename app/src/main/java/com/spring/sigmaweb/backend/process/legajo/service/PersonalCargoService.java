@@ -2,8 +2,10 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
+import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
 import com.spring.sigmaweb.backend.process.legajo.repository.ICargoDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.ICargoTRegDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalCargosDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class PersonalCargoService implements IPersonalCargoService{
 
     @Autowired
     private ICargoDao cargoDao;
+
+    @Autowired
+    private ICargoTRegDao cargoTrDao;
 
     @Autowired
     private IPersonalCargosDao personalcargoDao;
@@ -68,5 +73,18 @@ public class PersonalCargoService implements IPersonalCargoService{
     @Transactional(readOnly = true)
     public List<Cargo> findAll() {
         return cargoDao.findAll();
+    }
+
+    //CARGO TR
+    @Override
+    @Transactional(readOnly = true)
+    public CargoTReg findByIdCargoTr(Long idCargoTr) {
+        return cargoTrDao.findByIdCargoTr(idCargoTr);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CargoTReg> findAllCargoTr() {
+        return cargoTrDao.findAll();
     }
 }

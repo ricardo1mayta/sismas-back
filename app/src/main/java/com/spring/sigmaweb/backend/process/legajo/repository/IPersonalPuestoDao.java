@@ -71,7 +71,7 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "inner join PersonalVidaLaboral pvl on (pp.idPervilaPerpuest = pvl.idPervila and pp.idObraPerpuest = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla tarea on (pp.idAreaPerpuest = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +
-            "left join TablasTabla tplanilla on (pp.idTipoNivelPlanillaPerpuest = tplanilla.codigoTab and 302=tplanilla.tipoTab) " +
+            "left join TablasTabla tplanilla on (pp.idTipoNivelPlanillaPerpuest = tplanilla.codigoTab and ((case ?2 when 'SECTOR' then 303 else 302 end)=tplanilla.tipoTab)) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila=?3"
     )
     public List<PersonalPuestoDTO> findByObraPersonalVidaLab(Long idpersona, String idobra, Long idpervila);
@@ -120,7 +120,7 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "inner join PersonalVidaLaboral pvl on (pp.idPervilaPerpuest = pvl.idPervila and pp.idObraPerpuest = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "left join TablasTabla tarea on (pp.idAreaPerpuest = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +
-            "left join TablasTabla tplanilla on (pp.idTipoNivelPlanillaPerpuest = tplanilla.codigoTab and 302=tplanilla.tipoTab) " +
+            "left join TablasTabla tplanilla on (pp.idTipoNivelPlanillaPerpuest = tplanilla.codigoTab and ((case ?2 when 'SECTOR' then 303 else 302 end))=tplanilla.tipoTab) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila=?3 and pp.idPerpuest = ?4"
     )
     public PersonalPuestoDTO findByObraPersonalVidaLabId(Long idpersona, String idobra, Long idpervila, Long idperpuest);

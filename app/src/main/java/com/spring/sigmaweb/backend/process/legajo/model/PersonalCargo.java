@@ -35,10 +35,10 @@ public class PersonalCargo implements Serializable {
     @Column(nullable = false, name = "id_area_percargo")
     private Integer idAreaPercont;
 
-    @Column(nullable = false, name = "id_tiponivelplanilla_percargo")
+    @Column(nullable = true, name = "id_tiponivelplanilla_percargo")
     private Integer idTipoNivelPlanillaPercargo;
 
-    @Column(nullable = false, name = "id_puesto_percargo")
+    @Column(nullable = true, name = "id_puesto_percargo")
     private Integer idPuestoPercargo;
 
     @Column(nullable = false, name = "flgcargodirec_percargo", columnDefinition = "boolean default false")

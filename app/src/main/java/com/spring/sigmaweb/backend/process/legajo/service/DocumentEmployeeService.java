@@ -39,7 +39,18 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     @Override
     @Transactional
     public DocumentEmployee save(DocumentEmployee documento) {
+
         return documentemployeeDao.save(documento);
+    }
+
+    @Override
+    @Transactional
+    public void insertNativeDocumentoUpload(DocumentEmployee documento) {
+
+        documentemployeeDao.insertNativeDocumentoUpload(documento.getIdFilePer(), documento.getIdObraFilePer(),documento.getIdPersonalFilePer().getIdPersonal(),
+                documento.getTitleFilePer(), documento.getFileNameFilePer(), documento.getUrlFilePer(), documento.getTipoFilePer(), documento.getOpcionFilePer(),
+                documento.getIdItemPadreFileper(), documento.getDescripcionFilePer(), documento.getTypeFilePer(), documento.getSizeFilePer(), documento.getUploadDateFilePer(),
+                documento.getCreaPorFilePer());
     }
 
     @Override
@@ -50,22 +61,22 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentEmployee findByDocumentPersonalAndObraAndTipoAndId(Long idpersonal, String idobra, String tipodocumento, Long idopcion, Long idIPadre, Long iddocu) {
+    public DocumentEmployee findByDocumentPersonalAndObraAndTipoAndId(Long idpersonal, String idobra, String tipodocumento, Long idopcion, Long idIPadre, String iddocu) {
         return documentemployeeDao.findByDocumentPersonalAndObraAndTipoAndId(idpersonal, idobra, tipodocumento, idopcion, idIPadre, iddocu);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentEmployeeDTO findByDocumentPersonalAndObraAndTipoAndIdDto(Long idpersonal, String idobra, String tipodocumento, Long idopcion, Long idIPadre, Long iddocu) {
+    public DocumentEmployeeDTO findByDocumentPersonalAndObraAndTipoAndIdDto(Long idpersonal, String idobra, String tipodocumento, Long idopcion, Long idIPadre, String iddocu) {
         return documentemployeeDao.findByDocumentPersonalAndObraAndTipoAndIdDto(idpersonal, idobra, tipodocumento, idopcion, idIPadre, iddocu);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Long generateIdFile(Long idpersonal, String idobra, String tipodocumento, Long idIPadre, Long opcion) {
+    public String generateIdFile(Long idpersonal, String idobra, String tipodocumento, Long idIPadre, Long opcion) {
         Integer indexObra= null;
         Integer indexTipo= null;
-        Long rtn = null;
+        String rtn = "";
         String txt="";
         String txtopcion="";
         switch (idobra) {
@@ -117,7 +128,7 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
         txt = (idpersonal.toString() + idIPadre.toString()+"") + txt;
         txtopcion= ("000" + opcion );
 
-        rtn  = Long.parseLong ( txt + (indexObra.toString() + indexTipo.toString() + "000").substring(0,3) + txtopcion.substring(txtopcion.length() - 3));
+        rtn  = txt + (indexObra.toString() + indexTipo.toString() + "000").substring(0,3) + txtopcion.substring(txtopcion.length() - 3);
 
         return rtn ;
     }
@@ -155,6 +166,18 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     @Transactional(readOnly = true)
     public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile) {
         return tipoDocumentoDao.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TipoDocumento> findByTipoCodigoEstadoObras(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile) {
+        return tipoDocumentoDao.findByTipoCodigoEstadoObras(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFileAndNumRepeatTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile, Integer numRepeatTipoFile) {
+        return tipoDocumentoDao.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFileAndNumRepeatTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile, numRepeatTipoFile);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.spring.sigmaweb.backend.process.legajo.model.TipoDocumento;
 import org.springframework.data.repository.query.Param;
 
 
+import java.util.Date;
 import java.util.List;
 
 public interface IDocumentEmployeeService {
@@ -17,15 +18,17 @@ public interface IDocumentEmployeeService {
 
     public DocumentEmployee save(DocumentEmployee documento);
 
+    public void insertNativeDocumentoUpload(DocumentEmployee documento);
+
     public void delete(DocumentEmployee documento);
 
     public DocumentEmployee findByDocumentPersonalAndObraAndTipoAndId(Long idpersonal, String idobra, String tipodocumento,
-                                                                         Long idopcion, Long idIPadre, Long iddocu);
+                                                                         Long idopcion, Long idIPadre, String iddocu);
 
     public DocumentEmployeeDTO findByDocumentPersonalAndObraAndTipoAndIdDto(Long idpersonal, String idobra, String tipodocumento,
-                                                                            Long idopcion, Long idIPadre, Long iddocu);
+                                                                            Long idopcion, Long idIPadre, String iddocu);
 
-    public Long generateIdFile (Long idpersonal, String idobra, String tipodocumento, Long idIPadre, Long opcion);
+    public String generateIdFile (Long idpersonal, String idobra, String tipodocumento, Long idIPadre, Long opcion);
 
     public Long countByIdObraFilePerAndtipoFilePerAndOpcionFilePer(String idObraFilePer, String tipoFilePer, Long opcionFilePer);
 
@@ -40,6 +43,10 @@ public interface IDocumentEmployeeService {
     public List<TipoDocumento> findByTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, Boolean estadoTipoFile, String idObraTipoFile);
 
     public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile);
+
+    public List<TipoDocumento> findByTipoCodigoEstadoObras(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile);
+
+    public List<TipoDocumento> findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFileAndNumRepeatTipoFile(String tipoFile, String codigoTipoFile, Boolean estadoTipoFile, String idObraTipoFile, Integer numRepeatTipoFile);
 
     public TipoDocumento save (TipoDocumento tipodocumento);
 

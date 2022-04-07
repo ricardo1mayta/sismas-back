@@ -702,7 +702,7 @@ public class PersonalRestController {
         DocumentEmployee documentoInsert = null;
         Personal persoDocumento = personalservice.findByIdPersonalAndObraname(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer());
         Map<String, Object> response = new HashMap<>();
-        Long idFile = documentemployeeservice.generateIdFile(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer(), documentoDTO.getTipoFilePer(), documentoDTO.getIdItemPadreFileper(), documentoDTO.getOpcionFilePer() );
+        String idFile = documentemployeeservice.generateIdFile(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer(), documentoDTO.getTipoFilePer(), documentoDTO.getIdItemPadreFileper(), documentoDTO.getOpcionFilePer() );
         if(result.hasErrors()) {
 
             List<String> errors = result.getFieldErrors()
@@ -733,7 +733,10 @@ public class PersonalRestController {
             documentoInsert.setUploadDateFilePer(documentoDTO.getUploadDateFilePer());
             documentoInsert.setCreaPorFilePer(documentoDTO.getCreaPorFilePer());
 
-            documentoNew = documentemployeeservice.save(documentoInsert);
+            documentemployeeservice.insertNativeDocumentoUpload(documentoInsert);//documentemployeeservice.save(documentoInsert);
+
+            documentoNew = documentemployeeservice.findByDocumentPersonalAndObraAndTipoAndId(documentoInsert.getIdPersonalFilePer().getIdPersonal(), documentoInsert.getIdObraFilePer(), documentoInsert.getTipoFilePer(), documentoInsert.getOpcionFilePer(),
+                    documentoInsert.getIdItemPadreFileper(), documentoInsert.getIdFilePer());
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -749,7 +752,7 @@ public class PersonalRestController {
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @DeleteMapping("/documentopersonaldelete/{idpersonal}/{idobra}/{tipodocumento}/{idopcion}/{idIPadre}/{iddocu}")
-    public ResponseEntity<?> delete(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento, @PathVariable Long idopcion, @PathVariable Long idIPadre, @PathVariable Long iddocu){
+    public ResponseEntity<?> delete(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento, @PathVariable Long idopcion, @PathVariable Long idIPadre, @PathVariable String iddocu){
 
         Map<String, Object> response = new HashMap<>();
 
@@ -788,6 +791,18 @@ public class PersonalRestController {
     @GetMapping("/tipodocumentoidcodigoestado/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}")
     public List<TipoDocumento> showTipoDocTipoEstadoAndcodigo(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
         return documentemployeeservice.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidcodigoestadorepeat/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}/{numRepeatTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstadoAndcodigoAndRepedir(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile, @PathVariable Integer numRepeatTipoFile) {
+        return documentemployeeservice.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFileAndNumRepeatTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile, numRepeatTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidcodigoestadoall/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstadoAndcodigoPublicos(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByTipoCodigoEstadoObras(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
     }
 
 

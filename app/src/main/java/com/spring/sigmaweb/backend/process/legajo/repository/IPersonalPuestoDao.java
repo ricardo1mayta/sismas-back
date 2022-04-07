@@ -39,7 +39,7 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
 
-            "pp.idPuestoPerpuest as idPuestoTPerpuest, " +
+            "pp.idPuestoTPerpuest as idPuestoTPerpuest, " +
             "pus.descripCargoTr as puestoTPerpuest, " +
             "tarea.codigoTab as idAreaPerpuest, " +
             "tarea.descripTab as AreaPerpuest, " +
@@ -88,7 +88,7 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "psn.apeMaternoPers, " +
             "psn.nombrePers, " +
 
-            "pp.idPuestoPerpuest as idPuestoTPerpuest, " +
+            "pp.idPuestoTPerpuest as idPuestoTPerpuest, " +
             "pus.descripCargoTr as puestoTPerpuest, " +
             "tarea.codigoTab as idAreaPerpuest, " +
             "tarea.descripTab as AreaPerpuest, " +

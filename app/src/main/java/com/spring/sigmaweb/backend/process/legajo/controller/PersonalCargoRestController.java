@@ -76,6 +76,63 @@ public class PersonalCargoRestController {
         return personalCargoService.findAll();
     }
 
+
+    @PostMapping("/cargosave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createCargo(@RequestBody Cargo cargo, BindingResult result) {
+        Cargo cargoNew = null;
+        Cargo cargoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            cargoInsert = new Cargo();
+
+            cargoInsert.setNombreCar(cargo.getNombreCar());
+            cargoInsert.setAbreviadoCar(cargo.getAbreviadoCar());
+            cargoInsert.setEstadoCar(cargo.getEstadoCar());
+            cargoInsert.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoInsert.setFechaIngCar(new Date());
+            cargoInsert.setCreaPorCar(cargo.getCreaPorCar());
+
+            cargoNew = personalCargoService.savecargo(cargoInsert);
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personalpuesto", cargoNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/puestoupdate")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cargo updatePuestos (@RequestBody Cargo cargo) {
+
+        Cargo cargoAct = personalCargoService.findByIdCargo(cargo.getIdCargo());
+
+        if(cargoAct !=null) {
+            cargoAct.setNombreCar(cargo.getNombreCar());
+            cargoAct.setAbreviadoCar(cargo.getAbreviadoCar());
+            cargoAct.setEstadoCar(cargo.getEstadoCar());
+            cargoAct.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoAct.setFechaModiCar(new Date());
+            cargoAct.setModiPorCar(cargo.getModiPorCar());
+        }
+        return personalCargoService.savecargo(cargoAct);
+    }
+
     //Cargos TR
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/cargotrporid/{idcargoTr}")

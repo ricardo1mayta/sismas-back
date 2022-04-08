@@ -75,6 +75,12 @@ public class PersonalCargoService implements IPersonalCargoService{
         return cargoDao.findAll();
     }
 
+    @Override
+    @Transactional
+    public Cargo savecargo(Cargo cargo) {
+        return cargoDao.save( cargo);
+    }
+
     //CARGO TR
     @Override
     @Transactional(readOnly = true)
@@ -87,4 +93,6 @@ public class PersonalCargoService implements IPersonalCargoService{
     public List<CargoTReg> findAllCargoTr() {
         return cargoTrDao.findAll();
     }
+
+
 }

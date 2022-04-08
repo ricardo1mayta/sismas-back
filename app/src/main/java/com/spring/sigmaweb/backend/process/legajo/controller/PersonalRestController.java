@@ -830,6 +830,7 @@ public class PersonalRestController {
             documentoInsert.setIdObraTipoFile(documento.getIdObraTipoFile());
             documentoInsert.setTipoFile(documento.getTipoFile());
             documentoInsert.setEstadoTipoFile(documento.getEstadoTipoFile());
+            documentoInsert.setNumRepeatTipoFile(documento.getNumRepeatTipoFile());
             documentoInsert.setFechaIngTipoFile(new Date());
 
             documentoNew = documentemployeeservice.save(documentoInsert);

@@ -24,6 +24,9 @@ public class Cargo implements Serializable {
     @Column(nullable = false, name = "estado_car", columnDefinition = "boolean default true")
     private Boolean estadoCar;
 
+    @Column(nullable = true, name = "id_tipo_go_car")
+    private Integer idTipoGoCar;
+
     @Column(nullable = false, name = "fechaing_car")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -107,6 +110,14 @@ public class Cargo implements Serializable {
 
     public void setModiPorCar(String modiPorCar) {
         this.modiPorCar = modiPorCar;
+    }
+
+    public Integer getIdTipoGoCar() {
+        return idTipoGoCar;
+    }
+
+    public void setIdTipoGoCar(Integer idTipoGoCar) {
+        this.idTipoGoCar = idTipoGoCar;
     }
 
     private static final long serialVersionUID = 1L;

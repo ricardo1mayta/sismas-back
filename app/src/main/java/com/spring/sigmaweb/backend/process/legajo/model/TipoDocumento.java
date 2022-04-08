@@ -26,7 +26,7 @@ public class TipoDocumento implements Serializable {
     @Column(nullable = false, length = 50, name = "tipofile")
     private String tipoFile;
 
-    @Column(nullable = false, length = 50, name = "num_repeat_tipofile")
+    @Column(nullable = true, length = 50, name = "num_repeat_tipofile")
     private Integer numRepeatTipoFile;
 
     @Column(nullable = false, name = "estado_tipofile", columnDefinition = "boolean default true")

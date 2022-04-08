@@ -26,6 +26,8 @@ public interface IPersonalCargoService {
 
     public List<Cargo> findAll();
 
+    public Cargo savecargo(Cargo cargo);
+
     //Cargo TR
     public CargoTReg findByIdCargoTr(Long idCargoTr);
 

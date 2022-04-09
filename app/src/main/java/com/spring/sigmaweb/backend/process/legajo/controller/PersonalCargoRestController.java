@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
@@ -76,6 +77,12 @@ public class PersonalCargoRestController {
         return personalCargoService.findAll();
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargoestadodto/{estado}")
+    public List<CargosDto> showCargoPorEstado(@PathVariable Integer estado){
+        Boolean est = estado == 1;
+        return personalCargoService.findCargosDto(est);
+    }
 
     @PostMapping("/cargosave")
     @ResponseStatus(HttpStatus.CREATED)

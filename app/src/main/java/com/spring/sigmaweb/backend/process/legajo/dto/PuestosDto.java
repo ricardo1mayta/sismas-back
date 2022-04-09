@@ -1,57 +1,47 @@
-package com.spring.sigmaweb.backend.process.legajo.model;
+package com.spring.sigmaweb.backend.process.legajo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "mo_puestos")
-public class Puestos implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_puesto", nullable = false, unique = true)
+public class PuestosDto {
     private Long idPuesto;
-
-    @Column(nullable = false, length = 100, name = "nombre_pues")
     private String nombrePues;
-
-    @Column(nullable = false, length = 10, name = "abreviado_pues")
     private String abreviadoPues;
-
-    @Column(nullable = false, length = 100, name = "codigo_pues")
     private String codigoPues;
-
-    @Column(nullable = false, length = 6, name = "id_obra_pues")
     private String idObraPues;
-
-    @Column(nullable = false, name = "estado_pues", columnDefinition = "boolean default true")
     private Boolean estadoPues;
-
-    @Column(nullable = true, name = "id_tipo_go_pues")
     private Integer idTipoGoPues;
+    private String tipoGoPues;
 
-    @Column(nullable = false, name = "fechaing_pues")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPues;
 
-    @Column(nullable = false, name = "creapor_pues", length = 30)
     private String creaPorPues;
 
-    @Column(nullable = true, name = "fechamodi_pues")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiPues;
 
-    @Column(nullable = true, name = "modipor_pues", length = 30)
     private String modiPorPues;
 
-    @PrePersist
-    public void prePersist() {
-        this.fechaIngPues = new Date();
+    public PuestosDto() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    public PuestosDto(Long idPuesto, String nombrePues, String abreviadoPues, String codigoPues, String idObraPues, Boolean estadoPues, Integer idTipoGoPues, String tipoGoPues, Date fechaIngPues, String creaPorPues, Date fechaModiPues, String modiPorPues) {
+        this.idPuesto = idPuesto;
+        this.nombrePues = nombrePues;
+        this.abreviadoPues = abreviadoPues;
+        this.codigoPues = codigoPues;
+        this.idObraPues = idObraPues;
+        this.estadoPues = estadoPues;
+        this.idTipoGoPues = idTipoGoPues;
+        this.tipoGoPues = tipoGoPues;
+        this.fechaIngPues = fechaIngPues;
+        this.creaPorPues = creaPorPues;
+        this.fechaModiPues = fechaModiPues;
+        this.modiPorPues = modiPorPues;
     }
 
     public Long getIdPuesto() {
@@ -108,6 +98,14 @@ public class Puestos implements Serializable {
 
     public void setIdTipoGoPues(Integer idTipoGoPues) {
         this.idTipoGoPues = idTipoGoPues;
+    }
+
+    public String getTipoGoPues() {
+        return tipoGoPues;
+    }
+
+    public void setTipoGoPues(String tipoGoPues) {
+        this.tipoGoPues = tipoGoPues;
     }
 
     public Date getFechaIngPues() {

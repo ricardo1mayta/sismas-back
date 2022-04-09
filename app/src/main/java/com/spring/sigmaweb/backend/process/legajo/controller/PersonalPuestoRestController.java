@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalPuestoDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.PuestosDto;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalPuestoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
@@ -163,20 +164,20 @@ public class PersonalPuestoRestController {
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/puestoobraestadolist/{idObraPues}/{estadoPues}")
-    public List<Puestos> showPuestoPorObraEstadoList(@PathVariable String idObraPues, @PathVariable Integer estadoPues){
+    public List<PuestosDto> showPuestoPorObraEstadoList(@PathVariable String idObraPues, @PathVariable Integer estadoPues){
         Boolean estado = estadoPues == 1;
         return puestosservice.findByIdObraPuesAndEstadoPues(idObraPues, estado);
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/puestoobralist/{idObraPues}")
-    public List<Puestos> showPuestoPorObraList(@PathVariable String idObraPues){
+    public List<PuestosDto> showPuestoPorObraList(@PathVariable String idObraPues){
         return puestosservice.findByIdObraPues(idObraPues );
     }
 
     @PostMapping("/puestosave")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createPuestos(@RequestBody Puestos puesto, BindingResult result) {
+    public ResponseEntity<?> createPuestos(@RequestBody PuestosDto puesto, BindingResult result) {
         Puestos puestoNew = null;
         Puestos puestoInsert = null;
 
@@ -218,7 +219,7 @@ public class PersonalPuestoRestController {
 
     @PutMapping("/puestoupdate")
     @ResponseStatus(HttpStatus.CREATED)
-    public Puestos updatePuestos (@RequestBody Puestos puesto) {
+    public Puestos updatePuestos (@RequestBody PuestosDto puesto) {
 
         Puestos puestoAct =puestosservice.findByIdPuestoAndIdObraPues(puesto.getIdPuesto(), puesto.getIdObraPues());
 

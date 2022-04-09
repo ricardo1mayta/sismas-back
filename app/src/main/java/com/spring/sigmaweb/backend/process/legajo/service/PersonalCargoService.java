@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
 import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
@@ -73,6 +74,12 @@ public class PersonalCargoService implements IPersonalCargoService{
     @Transactional(readOnly = true)
     public List<Cargo> findAll() {
         return cargoDao.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CargosDto> findCargosDto(Boolean estado) {
+        return cargoDao.findCargosDto(estado);
     }
 
     @Override

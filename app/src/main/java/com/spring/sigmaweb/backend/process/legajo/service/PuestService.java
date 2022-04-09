@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.PuestosDto;
 import com.spring.sigmaweb.backend.process.legajo.model.Puestos;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPuestoDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class PuestService implements IPuestoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Puestos> findByIdObraPuesAndEstadoPues(String idObraPues, Boolean estadoPues) {
+    public List<PuestosDto> findByIdObraPuesAndEstadoPues(String idObraPues, Boolean estadoPues) {
         return puestoDao.findByIdObraPuesAndEstadoPues(idObraPues, estadoPues);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Puestos> findByIdObraPues(String idObraPues) {
+    public List<PuestosDto> findByIdObraPues(String idObraPues) {
         return puestoDao.findByIdObraPues(idObraPues);
     }
 

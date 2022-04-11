@@ -86,7 +86,7 @@ public class PersonalCargoRestController {
 
     @PostMapping("/cargosave")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createCargo(@RequestBody Cargo cargo, BindingResult result) {
+    public ResponseEntity<?> createCargo(@RequestBody CargosDto cargo, BindingResult result) {
         Cargo cargoNew = null;
         Cargo cargoInsert = null;
 
@@ -123,9 +123,9 @@ public class PersonalCargoRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/puestoupdate")
+    @PutMapping("/cargoupdate")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cargo updatePuestos (@RequestBody Cargo cargo) {
+    public Cargo updatePuestos (@RequestBody CargosDto cargo) {
 
         Cargo cargoAct = personalCargoService.findByIdCargo(cargo.getIdCargo());
 

@@ -111,6 +111,7 @@ public class EntidadRestController {
             entidadInsert.setFlgPrevisionalEnt(flgPrevisionalEnt);
             entidadInsert.setFlgProveedorEnt(flgProveedorEnt);
             entidadInsert.setFlgSaludEnt(flgSaludEnt);
+            entidadInsert.setCodigoDocExternoEnt(entidad.getCodigoDocExternoEnt());
             entidadInsert.setCreaPorEnt(entidad.getCreaPorEnt());
             entidadInsert.setFechaIngEnt(entidad.getFechaIngEnt());
             entidadInsert.setEstadoEnt(entidad.getEstadoEnt());
@@ -154,6 +155,7 @@ public class EntidadRestController {
         entidadAct.setFlgPrevisionalEnt(flgPrevisionalEnt);
         entidadAct.setFlgProveedorEnt(flgProveedorEnt);
         entidadAct.setFlgSaludEnt(flgSaludEnt);
+        entidadAct.setCodigoDocExternoEnt((entidadDTO.getCodigoDocExternoEnt()));
         entidadAct.setModiPorEnt(entidadDTO.getModiPorEnt());
         entidadAct.setFechaModiEnt(new Date());
 

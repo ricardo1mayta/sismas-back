@@ -198,10 +198,13 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
-    public void updatePlanilla(Long idper, String obra, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp) {
+    public void updatePlanilla(Long idper, String obra, Long idpervila, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp, String ocupacion,
+                               String contrato, Double basico, Double p_bonicargo, Double p_jornadas) {
+
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_update_planilla");
         query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idpervila", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_codigo", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_usuario", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_sexo", String.class, ParameterMode.IN);
@@ -209,9 +212,15 @@ public class PersonalService implements IPersonalService{
         query.registerStoredProcedureParameter("p_num_ipss", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_num_cuspp", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_afp", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_ocupacion", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_contrato", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_basico", Double.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_bonicargo", Double.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_jornadas", Double.class, ParameterMode.IN);
 
         query.setParameter("p_idpersonal", idper);
         query.setParameter("p_obra", obra);
+        query.setParameter("p_idpervila", idpervila);
         query.setParameter("p_codigo", codigo);
         query.setParameter("p_usuario", usuario);
         query.setParameter("p_sexo", sexo);
@@ -219,6 +228,12 @@ public class PersonalService implements IPersonalService{
         query.setParameter("p_num_ipss", ipss);
         query.setParameter("p_num_cuspp", cuspp);
         query.setParameter("p_afp", afp);
+        query.setParameter("p_ocupacion", ocupacion);
+
+        query.setParameter("p_contrato", ocupacion);
+        query.setParameter("p_basico", ocupacion);
+        query.setParameter("p_bonicargo", ocupacion);
+        query.setParameter("p_jornadas", ocupacion);
 
         query.execute();
 

@@ -140,6 +140,25 @@ public class PersonalCargoRestController {
         return personalCargoService.savecargo(cargoAct);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/cargodelete/{idcargo}")
+    public ResponseEntity<?> delete(@PathVariable Long idcargo ){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Cargo cargo = personalCargoService.findByIdCargo(idcargo);
+            personalCargoService.delete(cargo);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
     //Cargos TR
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/cargotrporid/{idcargoTr}")

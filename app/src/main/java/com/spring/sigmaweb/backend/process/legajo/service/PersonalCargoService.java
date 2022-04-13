@@ -88,6 +88,12 @@ public class PersonalCargoService implements IPersonalCargoService{
         return cargoDao.save( cargo);
     }
 
+    @Override
+    @Transactional
+    public void delete(Cargo cargo) {
+        cargoDao.delete(cargo);
+    }
+
     //CARGO TR
     @Override
     @Transactional(readOnly = true)

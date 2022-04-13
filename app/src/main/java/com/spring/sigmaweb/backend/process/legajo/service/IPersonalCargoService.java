@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
 import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
+import com.spring.sigmaweb.backend.process.legajo.model.DocumentEmployee;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public interface IPersonalCargoService {
     public List<CargosDto> findCargosDto(Boolean estado);
 
     public Cargo savecargo(Cargo cargo);
+
+    public void delete(Cargo cargo);
 
     //Cargo TR
     public CargoTReg findByIdCargoTr(Long idCargoTr);

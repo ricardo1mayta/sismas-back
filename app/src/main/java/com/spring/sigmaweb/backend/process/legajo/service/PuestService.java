@@ -43,4 +43,9 @@ public class PuestService implements IPuestoService{
     public Puestos save(Puestos puesto) {
         return puestoDao.save(puesto);
     }
+
+    @Override
+    public void delete(Puestos puesto) {
+        puestoDao.delete(puesto);
+    }
 }

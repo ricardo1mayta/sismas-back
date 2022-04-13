@@ -42,7 +42,7 @@ public class RolRestController {
         return rolService.findAll();
     }
 
-    @Secured("ROLE_ADMI")
+    @Secured({"ROLE_ADMI", "ROLE_COLA", "ROLE_SYST"})
     @GetMapping("/rolesallobra/{idobra}")
     public List<Rol> findRolesObra(@PathVariable String idobra) {
         return rolService.findByIdobraRol(idobra);

@@ -63,10 +63,10 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "from PersonalCargo pc inner join Personal p on (pc.idPersonalPercargo = p.idPersonal and pc.idObraPercargo = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and p.obraPer=psn.obraPers) " +
             "inner join Cargo car on (pc.idCargoPercargo = car.idCargo) " +
-            //"inner join CargoTReg pus on (pc.idPuestoPercargo = pus.idCargoTr) " +
+
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +
+            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
             //"left join TablasTabla tplanilla on (pc.idTipoNivelPlanillaPercargo = tplanilla.codigoTab and (case ?2 when 'SECTOR' then 303 else 302 end)=tplanilla.tipoTab) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPercargo= ?3 and pvl.idPervila=?4"
     )
@@ -111,7 +111,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
            // "inner join CargoTReg pus on (pc.idPuestoPercargo = pus.idCargoTr) " +
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and (case ?2 when 'SECTOR' then 306 else 305 end) = tarea.tipoTab) " +
+            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
            // "left join TablasTabla tplanilla on (pc.idTipoNivelPlanillaPercargo = tplanilla.codigoTab and (case ?2 when 'SECTOR' then 303 else 302 end)=tplanilla.tipoTab) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila=?3"
     )

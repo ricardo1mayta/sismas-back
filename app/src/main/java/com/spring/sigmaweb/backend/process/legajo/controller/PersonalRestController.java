@@ -22,6 +22,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -955,6 +956,9 @@ public class PersonalRestController {
     @PostMapping("/updatedataplanillasave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> updateDataPlanilla(@RequestBody dataupdatePlanilla data, BindingResult result) {
+        Double basico = 0.00;
+        Double bonificacion = 0.00;
+        Double jornada = 0.00;
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -969,9 +973,16 @@ public class PersonalRestController {
         }
 
         try {
-            this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(),data.getP_codigo(),
+
+            if(data.getP_contrato() != ""){
+                basico = data.getP_basico().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_basico()) : 0.00;
+                bonificacion = data.getP_bonicargo().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_bonicargo()) : 0.00;
+                jornada = data.getP_jornadas().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_jornadas()) : 0.00;
+            }
+            this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(), data.getP_idpervila(),data.getP_codigo(),
                     data.getP_usuario(), data.getP_sexo(), data.getP_fecha_ingreso(), data.getP_num_ipss(),
-                    data.getP_num_cuspp(), data.getP_afp());
+                    data.getP_num_cuspp(), data.getP_afp(), data.getP_ocupacion(),
+                    data.getP_contrato(), basico, bonificacion, jornada);
 
 
         } catch(DataAccessException e) {

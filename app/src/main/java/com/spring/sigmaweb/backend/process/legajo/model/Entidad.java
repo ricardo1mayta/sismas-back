@@ -109,6 +109,9 @@ public class Entidad implements Serializable {
     @Column(nullable = false, name = "flg_financiera_ent", columnDefinition = "boolean default false")
     private Boolean flgFinacieraEnt;
 
+    @Column(nullable = false, name = "codigo_doc_externo_ent", length = 50)
+    private String codigoDocExternoEnt;
+
     @Column(nullable = false, name = "fechaing_ent")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -378,6 +381,14 @@ public class Entidad implements Serializable {
 
     public void setFlgFinacieraEnt(Boolean flgFinacieraEnt) {
         this.flgFinacieraEnt = flgFinacieraEnt;
+    }
+
+    public String getCodigoDocExternoEnt() {
+        return codigoDocExternoEnt;
+    }
+
+    public void setCodigoDocExternoEnt(String codigoDocExternoEnt) {
+        this.codigoDocExternoEnt = codigoDocExternoEnt;
     }
 
     public Date getFechaIngEnt() {

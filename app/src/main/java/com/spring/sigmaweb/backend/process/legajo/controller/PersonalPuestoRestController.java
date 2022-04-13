@@ -236,6 +236,24 @@ public class PersonalPuestoRestController {
         return puestosservice.save(puestoAct);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/puestodelete/{idPuesto}/{idObra}")
+    public ResponseEntity<?> delete(@PathVariable Long idPuesto, @PathVariable String idObra ){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Puestos puesto = puestosservice.findByIdPuestoAndIdObraPues(idPuesto, idObra);
+            puestosservice.delete(puesto);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
 
 
 

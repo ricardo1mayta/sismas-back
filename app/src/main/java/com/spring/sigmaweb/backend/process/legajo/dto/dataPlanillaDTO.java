@@ -21,6 +21,11 @@ public class dataPlanillaDTO implements Serializable {
 
     private Long idPervila;
     private Date fec_ingreso_pl;
+
+    private Long idPerpuest;
+    private Long idPuestoPerpuest;
+    private String codigoPues;
+
     private String numeroEssaludPer;// nro_ipss_pl,
     private String numeroPensionPer; //cuispp_pl,
 
@@ -28,7 +33,7 @@ public class dataPlanillaDTO implements Serializable {
     private String afp_pl;
     private Double basico;
 
-    public dataPlanillaDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Byte sexoPers, Boolean estadoPer, Long idPerCont, Integer idtipoContrato, String tipoContrato, Long idPervila, Date fec_ingreso_pl, String numeroEssaludPer, String numeroPensionPer, Long idAfp, String afp_pl, Double basico) {
+    public dataPlanillaDTO(Long idPersonal, String idobra, Long idPerSigma, String nombrePers, String apePaternoPers, String apeMaternoPers, String codigoPer, Byte sexoPers, Boolean estadoPer, Long idPerCont, Integer idtipoContrato, String tipoContrato, Long idPervila, Date fec_ingreso_pl, Long idPerpuest, Long idPuestoPerpuest, String codigoPues, String numeroEssaludPer, String numeroPensionPer, Long idAfp, String afp_pl, Double basico) {
         this.idPersonal = idPersonal;
         this.idobra = idobra;
         this.idPerSigma = idPerSigma;
@@ -43,6 +48,9 @@ public class dataPlanillaDTO implements Serializable {
         this.tipoContrato = tipoContrato;
         this.idPervila = idPervila;
         this.fec_ingreso_pl = fec_ingreso_pl;
+        this.idPerpuest = idPerpuest;
+        this.idPuestoPerpuest = idPuestoPerpuest;
+        this.codigoPues = codigoPues;
         this.numeroEssaludPer = numeroEssaludPer;
         this.numeroPensionPer = numeroPensionPer;
         this.idAfp = idAfp;
@@ -200,6 +208,30 @@ public class dataPlanillaDTO implements Serializable {
 
     public void setIdPerCont(Long idPerCont) {
         this.idPerCont = idPerCont;
+    }
+
+    public Long getIdPerpuest() {
+        return idPerpuest;
+    }
+
+    public void setIdPerpuest(Long idPerpuest) {
+        this.idPerpuest = idPerpuest;
+    }
+
+    public Long getIdPuestoPerpuest() {
+        return idPuestoPerpuest;
+    }
+
+    public void setIdPuestoPerpuest(Long idPuestoPerpuest) {
+        this.idPuestoPerpuest = idPuestoPerpuest;
+    }
+
+    public String getCodigoPues() {
+        return codigoPues;
+    }
+
+    public void setCodigoPues(String codigoPues) {
+        this.codigoPues = codigoPues;
     }
 
     private static final long serialVersionUID = 1L;

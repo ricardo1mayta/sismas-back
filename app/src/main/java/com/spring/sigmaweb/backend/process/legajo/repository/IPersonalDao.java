@@ -402,7 +402,7 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             "p.estadoPer," +
             "pcont.idPerCont, "+
             "pcont.idTipoPercont as idtipoContrato," +
-            "ttc.descripTab as tipoContrato, " +
+            "ttc.descrip2Tab as tipoContrato, " +
 
             "vl.idPervila, "+
             "vl.fechaInicioPervila as fec_ingreso_pl," +

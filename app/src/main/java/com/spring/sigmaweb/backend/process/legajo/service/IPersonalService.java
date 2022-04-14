@@ -71,8 +71,8 @@ public interface IPersonalService {
                                String afp,
                                String ocupacion,
                                String contrato,
-                               Double basico,
-                               Double p_bonicargo,
-                               Double p_jornadas);
+                               String basico,
+                               String p_bonicargo,
+                               String p_jornadas);
 
 }

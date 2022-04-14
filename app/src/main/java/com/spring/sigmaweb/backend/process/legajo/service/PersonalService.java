@@ -199,7 +199,17 @@ public class PersonalService implements IPersonalService{
 
     @Override
     public void updatePlanilla(Long idper, String obra, Long idpervila, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp, String ocupacion,
-                               String contrato, Double basico, Double p_bonicargo, Double p_jornadas) {
+                               String contrato, String basico, String bonicargo, String jornadas) {
+
+        Double bas = 0.0;
+        Double boni = 0.0;
+        Double jorn = 0.0;
+
+        if(contrato != ""){
+            bas = validaDouble(basico) == true ?Double.parseDouble( basico) : 0.0;
+            boni = validaDouble(bonicargo) == true ?Double.parseDouble( bonicargo) : 0.0;
+            jorn = validaDouble(jornadas) == true ?Double.parseDouble( jornadas) : 0.0;
+        }
 
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_update_planilla");
         query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
@@ -230,14 +240,26 @@ public class PersonalService implements IPersonalService{
         query.setParameter("p_afp", afp);
         query.setParameter("p_ocupacion", ocupacion);
 
-        query.setParameter("p_contrato", ocupacion);
-        query.setParameter("p_basico", ocupacion);
-        query.setParameter("p_bonicargo", ocupacion);
-        query.setParameter("p_jornadas", ocupacion);
+        query.setParameter("p_contrato", contrato);
+        query.setParameter("p_basico", bas);
+        query.setParameter("p_bonicargo", boni);
+        query.setParameter("p_jornadas", jorn);
 
         query.execute();
 
     }
 
+    private Boolean validaDouble(String dato){
+
+        Double value =0.0;
+        try {
+            value = Double.parseDouble(dato);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
 }
+

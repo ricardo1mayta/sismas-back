@@ -974,15 +974,10 @@ public class PersonalRestController {
 
         try {
 
-            if(data.getP_contrato() != ""){
-                basico = data.getP_basico().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_basico()) : 0.00;
-                bonificacion = data.getP_bonicargo().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_bonicargo()) : 0.00;
-                jornada = data.getP_jornadas().chars().allMatch(Character ::isDigit) ? Double.parseDouble(data.getP_jornadas()) : 0.00;
-            }
             this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(), data.getP_idpervila(),data.getP_codigo(),
                     data.getP_usuario(), data.getP_sexo(), data.getP_fecha_ingreso(), data.getP_num_ipss(),
                     data.getP_num_cuspp(), data.getP_afp(), data.getP_ocupacion(),
-                    data.getP_contrato(), basico, bonificacion, jornada);
+                    data.getP_contrato(), data.getP_basico(), data.getP_bonicargo(), data.getP_jornadas());
 
 
         } catch(DataAccessException e) {

@@ -38,7 +38,7 @@ public class RolSideNavItemService implements IRolSideNavItemService{
         return rolsidenavitemDao.findByMenuPorRolAndObra(listaInt, idobra);
     }
 
-    public List<SidenavItemDTO> ordenarMenuPadreHijos(List<RolSideNavItemMenuOrderDTO> lista ){
+    public List<SidenavItemDTO> ordenarMenuPadreHijos(List<RolSideNavItemMenuOrderDTO> lista, String idObra ){
         List<SidenavItemDTO> menuReturn = new ArrayList<SidenavItemDTO>();
         List<SidenavItemDTO> menuNivel1 = new ArrayList<SidenavItemDTO>();
         List<SidenavItemDTO> menuNivel2 = new ArrayList<SidenavItemDTO>();
@@ -50,6 +50,9 @@ public class RolSideNavItemService implements IRolSideNavItemService{
 
         for (RolSideNavItemMenuOrderDTO row : lista) {
             //System.out.println(row.getName());
+            if(row.getIdModulo().equals("STO") && !idObra.equals("SECTOR") ){
+                continue;
+            }
             menuItem = new SidenavItemDTO();
             menuItem.setName(row.getName());
             menuItem.setIcon(row.getIcon());
@@ -138,7 +141,7 @@ public class RolSideNavItemService implements IRolSideNavItemService{
     public List<SidenavItemDTO> listesquemaMenu(String idroles, String idobra) {
 
         List<RolSideNavItemMenuOrderDTO> listmenu = this.findByMenuPorRolAndObra(idroles, idobra);
-        return this.ordenarMenuPadreHijos(listmenu);
+        return this.ordenarMenuPadreHijos(listmenu, idobra);
 
     }
 
@@ -146,16 +149,16 @@ public class RolSideNavItemService implements IRolSideNavItemService{
     @Transactional(readOnly = true)
     public List<SidenavItemDTO> listesquemaMenuAll() {
 
-        List<RolSideNavItemMenuOrderDTO> listmenu = this.rolsidenavitemDao.findByMenuGeneral();
-        return this.ordenarMenuPadreHijos(listmenu);
+        List<RolSideNavItemMenuOrderDTO> listmenu = this.rolsidenavitemDao.findByMenuGeneral("");
+        return this.ordenarMenuPadreHijos(listmenu,"");
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral() {
+    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral(String idObra) {
         // TODO Auto-generated method stub
-        return rolsidenavitemDao.findByMenuGeneral();
+        return rolsidenavitemDao.findByMenuGeneral(idObra);
     }
 
     @Override

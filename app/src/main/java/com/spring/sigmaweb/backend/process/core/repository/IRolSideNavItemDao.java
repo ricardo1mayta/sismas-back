@@ -78,10 +78,11 @@ public interface IRolSideNavItemDao extends CrudRepository<RolSideNavItem, Long>
             + "left join SideNavItem s3 on (s2.idPadreItem = s3.idItem) "
             + "left join SideNavItem s4 on (s3.idPadreItem = s4.idItem) "
             + "left join SideNavItem s5 on (s4.idPadreItem = s5.idItem) "
-            + "WHERE coalesce(s.position, 0) <> 0"
+            + "WHERE coalesce(s.position, 0) <> 0 " +
+            "and (case when m.idModulo ='STO' and ?1 != 'SECTOR' then false else true end ) = true "
             + "order by 1"
     )
-    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral();
+    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral(String idObra);
     //
     @Query("select new com.spring.sigmaweb.backend.process.core.dto.RolSideNavItemActivosDTO ( rs.idRolItem, "
             + "o.idobra, "

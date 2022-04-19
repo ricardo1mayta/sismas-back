@@ -62,9 +62,9 @@ public class RolSideNavItemRestController {
         return rolsidenavitemservice.listesquemaMenuAll();
     }
 
-    @GetMapping("/menuorderall")
-    public List<RolSideNavItemMenuOrderDTO> showMenuOrdenadoDTO() {
-        return rolsidenavitemservice.findByMenuGeneral();
+    @GetMapping("/menuorderall/{idobra}")
+    public List<RolSideNavItemMenuOrderDTO> showMenuOrdenadoDTO(@PathVariable String idobra) {
+        return rolsidenavitemservice.findByMenuGeneral(idobra);
     }
 
     @GetMapping("/menuorderrolactivodos/{idroles}/{idobra}")

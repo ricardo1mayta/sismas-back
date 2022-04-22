@@ -402,20 +402,27 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             "p.estadoPer," +
             "pcont.idPerCont, "+
             "pcont.idTipoPercont as idtipoContrato," +
-            "ttc.descripTab as tipoContrato, " +
+            "ttc.descrip2Tab as tipoContrato, " +
 
             "vl.idPervila, "+
             "vl.fechaInicioPervila as fec_ingreso_pl," +
+
+            "ppues.idPerpuest, " +
+            "ppues.idPuestoPerpuest," +
+            "pt.codigoPues," +
+
             "p.numeroEssaludPer," +
             "p.numeroPensionPer," +
             "p.idEntidadPensPer as idAfp," +
-            "ep.nombreEnt as afp_pl," +
+            "(case COALESCE(ep.codigoDocExternoEnt, '') when 'ONP' THEN '' WHEN '' THEN 'N.A.' ELSE ep.codigoDocExternoEnt END) as afp_pl," +
             "pcont.remuneracionPercont as basico" +
             ") " +
             "from Personal p inner join Obra o on (p.obraPer = o.idobra) " +
             "inner join Persona ps on (p.idPersona = ps.idPersona) " +
             "left join PersonalVidaLaboral vl on (p.idPersonal=vl.idPersonalPervila and o.idobra = vl.idObraPervila and vl.estadoPervila='ACTIVO') " +
-            "left join PersonalContrato pcont on (p.idPersonal = pcont.idPersonalPercont and o.idobra = pcont.idObraPercont and pcont.estadoPercont = 'ACTIVO')" +
+            "left join PersonalContrato pcont on (p.idPersonal = pcont.idPersonalPercont and o.idobra = pcont.idObraPercont and pcont.estadoPercont = 'ACTIVO') " +
+            "left join PersonalPuesto ppues on (p.idPersonal = ppues.idPersonalPerpuest and o.idobra = ppues.idObraPerpuest and vl.idPervila = ppues.idPervilaPerpuest) " +
+            "left join Puestos pt on (ppues.idPuestoPerpuest = pt.idPuesto and pt.estadoPues = true and o.idobra = pt.idObraPues) " +
             "left join TablasTabla ttc on (pcont.idTipoPercont = ttc.codigoTab and 154 = ttc.tipoTab) " +
             "left join Entidad ep on (p.idEntidadPensPer = ep.idEntidad) " +
             "where o.idobra = ?1"

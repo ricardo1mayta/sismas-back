@@ -25,7 +25,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/matricula/{idalum}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/matriculafamilia/{idfami}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
-                .antMatchers(HttpMethod.GET, "/sigmaweb/roles/**").hasAnyRole("ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/usuarios").hasRole("ADMI").anyRequest().authenticated().and().cors();
     }
 

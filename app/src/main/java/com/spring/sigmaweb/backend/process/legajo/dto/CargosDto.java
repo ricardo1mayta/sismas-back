@@ -1,51 +1,44 @@
-package com.spring.sigmaweb.backend.process.legajo.model;
+package com.spring.sigmaweb.backend.process.legajo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "mo_cargos")
-public class Cargo implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cargo", nullable = false, unique = true)
+public class CargosDto implements Serializable {
     private Long idCargo;
-
-    @Column(nullable = false, length = 100, name = "nombre_car", unique = true)
     private String nombreCar;
-
-    @Column(nullable = false, length = 10, name = "abreviado_car", unique = true)
     private String abreviadoCar;
-
-    @Column(nullable = false, name = "estado_car", columnDefinition = "boolean default true")
     private Boolean estadoCar;
-
-    @Column(nullable = true, name = "id_tipo_go_car")
     private Integer idTipoGoCar;
+    private String tipoGoCar;
 
-    @Column(nullable = false, name = "fechaing_car")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngCar;
 
-    @Column(nullable = false, name = "creapor_car", length = 30)
     private String creaPorCar;
 
-    @Column(nullable = true, name = "fechamodi_car")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModiCar;
 
-    @Column(nullable = true, name = "modipor_car", length = 30)
     private String modiPorCar;
 
-    @PrePersist
-    public void prePersist() {
-        this.fechaIngCar = new Date();
+    public CargosDto() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    public CargosDto(Long idCargo, String nombreCar, String abreviadoCar, Boolean estadoCar, Integer idTipoGoCar, String tipoGoCar, Date fechaIngCar, String creaPorCar, Date fechaModiCar, String modiPorCar) {
+        this.idCargo = idCargo;
+        this.nombreCar = nombreCar;
+        this.abreviadoCar = abreviadoCar;
+        this.estadoCar = estadoCar;
+        this.idTipoGoCar = idTipoGoCar;
+        this.tipoGoCar = tipoGoCar;
+        this.fechaIngCar = fechaIngCar;
+        this.creaPorCar = creaPorCar;
+        this.fechaModiCar = fechaModiCar;
+        this.modiPorCar = modiPorCar;
     }
 
     public Long getIdCargo() {
@@ -80,6 +73,22 @@ public class Cargo implements Serializable {
         this.estadoCar = estadoCar;
     }
 
+    public Integer getIdTipoGoCar() {
+        return idTipoGoCar;
+    }
+
+    public void setIdTipoGoCar(Integer idTipoGoCar) {
+        this.idTipoGoCar = idTipoGoCar;
+    }
+
+    public String getTipoGoCar() {
+        return tipoGoCar;
+    }
+
+    public void setTipoGoCar(String tipoGoCar) {
+        this.tipoGoCar = tipoGoCar;
+    }
+
     public Date getFechaIngCar() {
         return fechaIngCar;
     }
@@ -111,14 +120,4 @@ public class Cargo implements Serializable {
     public void setModiPorCar(String modiPorCar) {
         this.modiPorCar = modiPorCar;
     }
-
-    public Integer getIdTipoGoCar() {
-        return idTipoGoCar;
-    }
-
-    public void setIdTipoGoCar(Integer idTipoGoCar) {
-        this.idTipoGoCar = idTipoGoCar;
-    }
-
-    private static final long serialVersionUID = 1L;
 }

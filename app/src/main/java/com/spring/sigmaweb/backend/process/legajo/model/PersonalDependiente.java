@@ -44,6 +44,9 @@ public class PersonalDependiente  implements Serializable{
     @Column(name = "flg_vive_perdep", nullable = false, columnDefinition = "boolean default true")
     private Boolean flgvive;
 
+    @Column(name = "flg_discapacidad_perdep", nullable = false, columnDefinition = "boolean default false")
+    private Boolean flgDiscapacidadPerdep;
+
     @Column(name = "nombre_perdep", nullable = false, length = 33)
     private String nombrePerDep;
 
@@ -272,6 +275,14 @@ public class PersonalDependiente  implements Serializable{
 
     public String getModiPorPerDep() {
         return modiPorPerDep;
+    }
+
+    public Boolean getFlgDiscapacidadPerdep() {
+        return flgDiscapacidadPerdep;
+    }
+
+    public void setFlgDiscapacidadPerdep(Boolean flgDiscapacidadPerdep) {
+        this.flgDiscapacidadPerdep = flgDiscapacidadPerdep;
     }
 
     public void setModiPorPerDep(String modiPorPerDep) {

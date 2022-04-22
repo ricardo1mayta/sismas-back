@@ -23,6 +23,7 @@ public class EntidadDataSelectDTO implements Serializable {
     private String flgPrevisionalEnt;
     private String flgProveedorEnt;
     private String flgSaludEnt;
+    private String codigoDocExternoEnt;
     private String creaPorEnt;
     private String modiPorEnt;
 
@@ -32,7 +33,7 @@ public class EntidadDataSelectDTO implements Serializable {
 
     private Boolean estadoEnt;
 
-    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, Integer tipoEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt, Boolean estadoEnt) {
+    public EntidadDataSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, Integer tipoEnt, String flgEduSupEnt, String flgFinacieraEnt, String flgPrevisionalEnt, String flgProveedorEnt, String flgSaludEnt, String codigoDocExternoEnt, String creaPorEnt, String modiPorEnt, Date fechaIngEnt, Boolean estadoEnt) {
         this.idEntidad = idEntidad;
         this.idobra = idobra;
         this.rucEnt = rucEnt;
@@ -47,6 +48,7 @@ public class EntidadDataSelectDTO implements Serializable {
         this.flgPrevisionalEnt = flgPrevisionalEnt;
         this.flgProveedorEnt = flgProveedorEnt;
         this.flgSaludEnt = flgSaludEnt;
+        this.codigoDocExternoEnt = codigoDocExternoEnt;
         this.creaPorEnt = creaPorEnt;
         this.modiPorEnt = modiPorEnt;
         this.fechaIngEnt = fechaIngEnt;
@@ -160,6 +162,14 @@ public class EntidadDataSelectDTO implements Serializable {
 
     public void setFlgSaludEnt(String flgSaludEnt) {
         this.flgSaludEnt = flgSaludEnt;
+    }
+
+    public String getCodigoDocExternoEnt() {
+        return codigoDocExternoEnt;
+    }
+
+    public void setCodigoDocExternoEnt(String codigoDocExternoEnt) {
+        this.codigoDocExternoEnt = codigoDocExternoEnt;
     }
 
     public String getCreaPorEnt() {

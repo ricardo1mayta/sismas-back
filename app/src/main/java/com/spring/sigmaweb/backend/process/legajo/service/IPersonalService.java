@@ -61,7 +61,18 @@ public interface IPersonalService {
 
     public void updatePlanilla(Long idper,
                                String obra,
+                               Long idpervila,
                                String codigo,
-                               String usuario, String sexo, String fechain, String ipss, String cuspp, String afp);
+                               String usuario,
+                               String sexo,
+                               String fechain,
+                               String ipss,
+                               String cuspp,
+                               String afp,
+                               String ocupacion,
+                               String contrato,
+                               String basico,
+                               String p_bonicargo,
+                               String p_jornadas);
 
 }

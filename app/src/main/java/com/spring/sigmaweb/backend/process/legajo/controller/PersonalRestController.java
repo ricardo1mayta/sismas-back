@@ -22,6 +22,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -171,20 +172,20 @@ public class PersonalRestController {
         Personal perFind = personalservice.findByIdPersonalAndObraname(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont());
         Integer resp = 0;
         Boolean clearCod =false;
+
+
+
         if(perFind == null) {
             resp = 0;
         } else {
-            if(perFind.getEstadoPer() != false) {
+            if(perFind.getEstadoPer() == false) {
                 // cuando habilite un colaborador reingresante debe verificar que el codigo no sea duplicado
                 List<PersonalDatosListDTO> personal = personalservice.findByCodigoPerAndIdObra(perFind.getObraPer().getIdobra(), perFind.getCodigoPer());
 
                 if (personal != null){
-
                     if(personal.size() == 1 ){
-
                         if( !personal.get(0).getIdPersonal().equals(perFind.getIdPersonal()) ){
                             //actualiza
-
                             clearCod=true;
                         }
                     } else {
@@ -195,6 +196,7 @@ public class PersonalRestController {
 
                 resp = personalservice.updateColaboradorActivo(contratoUpd.getIdPersonal(), contratoUpd.getIdObraPercont(), fechaactivo, clearCod);
             } else {
+
                 resp = -1;
             }
         }
@@ -701,7 +703,7 @@ public class PersonalRestController {
         DocumentEmployee documentoInsert = null;
         Personal persoDocumento = personalservice.findByIdPersonalAndObraname(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer());
         Map<String, Object> response = new HashMap<>();
-        Long idFile = documentemployeeservice.generateIdFile(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer(), documentoDTO.getTipoFilePer(), documentoDTO.getIdItemPadreFileper(), documentoDTO.getOpcionFilePer() );
+        String idFile = documentemployeeservice.generateIdFile(documentoDTO.getIdPersonal(), documentoDTO.getIdObraFilePer(), documentoDTO.getTipoFilePer(), documentoDTO.getIdItemPadreFileper(), documentoDTO.getOpcionFilePer() );
         if(result.hasErrors()) {
 
             List<String> errors = result.getFieldErrors()
@@ -732,7 +734,10 @@ public class PersonalRestController {
             documentoInsert.setUploadDateFilePer(documentoDTO.getUploadDateFilePer());
             documentoInsert.setCreaPorFilePer(documentoDTO.getCreaPorFilePer());
 
-            documentoNew = documentemployeeservice.save(documentoInsert);
+            documentemployeeservice.insertNativeDocumentoUpload(documentoInsert);//documentemployeeservice.save(documentoInsert);
+
+            documentoNew = documentemployeeservice.findByDocumentPersonalAndObraAndTipoAndId(documentoInsert.getIdPersonalFilePer().getIdPersonal(), documentoInsert.getIdObraFilePer(), documentoInsert.getTipoFilePer(), documentoInsert.getOpcionFilePer(),
+                    documentoInsert.getIdItemPadreFileper(), documentoInsert.getIdFilePer());
 
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -748,7 +753,7 @@ public class PersonalRestController {
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @DeleteMapping("/documentopersonaldelete/{idpersonal}/{idobra}/{tipodocumento}/{idopcion}/{idIPadre}/{iddocu}")
-    public ResponseEntity<?> delete(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento, @PathVariable Long idopcion, @PathVariable Long idIPadre, @PathVariable Long iddocu){
+    public ResponseEntity<?> delete(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable String tipodocumento, @PathVariable Long idopcion, @PathVariable Long idIPadre, @PathVariable String iddocu){
 
         Map<String, Object> response = new HashMap<>();
 
@@ -789,6 +794,18 @@ public class PersonalRestController {
         return documentemployeeservice.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidcodigoestadorepeat/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}/{numRepeatTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstadoAndcodigoAndRepedir(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile, @PathVariable Integer numRepeatTipoFile) {
+        return documentemployeeservice.findByTipoFileAndCodigoTipoFileAndEstadoTipoFileAndIdObraTipoFileAndNumRepeatTipoFile(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile, numRepeatTipoFile);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tipodocumentoidcodigoestadoall/{tipoFile}/{codigoTipoFile}/{estadoTipoFile}/{idObraTipoFile}")
+    public List<TipoDocumento> showTipoDocTipoEstadoAndcodigoPublicos(@PathVariable String tipoFile, @PathVariable String codigoTipoFile, @PathVariable Boolean estadoTipoFile, @PathVariable String idObraTipoFile) {
+        return documentemployeeservice.findByTipoCodigoEstadoObras(tipoFile, codigoTipoFile, estadoTipoFile, idObraTipoFile);
+    }
+
 
     @PostMapping("/tipodocumentosave")
     @ResponseStatus(HttpStatus.CREATED)
@@ -814,6 +831,7 @@ public class PersonalRestController {
             documentoInsert.setIdObraTipoFile(documento.getIdObraTipoFile());
             documentoInsert.setTipoFile(documento.getTipoFile());
             documentoInsert.setEstadoTipoFile(documento.getEstadoTipoFile());
+            documentoInsert.setNumRepeatTipoFile(documento.getNumRepeatTipoFile());
             documentoInsert.setFechaIngTipoFile(new Date());
 
             documentoNew = documentemployeeservice.save(documentoInsert);
@@ -938,6 +956,9 @@ public class PersonalRestController {
     @PostMapping("/updatedataplanillasave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> updateDataPlanilla(@RequestBody dataupdatePlanilla data, BindingResult result) {
+        Double basico = 0.00;
+        Double bonificacion = 0.00;
+        Double jornada = 0.00;
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -952,9 +973,11 @@ public class PersonalRestController {
         }
 
         try {
-            this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(),data.getP_codigo(),
+
+            this.personalservice.updatePlanilla(data.getP_idpersonal(),data.getP_obra(), data.getP_idpervila(),data.getP_codigo(),
                     data.getP_usuario(), data.getP_sexo(), data.getP_fecha_ingreso(), data.getP_num_ipss(),
-                    data.getP_num_cuspp(), data.getP_afp());
+                    data.getP_num_cuspp(), data.getP_afp(), data.getP_ocupacion(),
+                    data.getP_contrato(), data.getP_basico(), data.getP_bonicargo(), data.getP_jornadas());
 
 
         } catch(DataAccessException e) {

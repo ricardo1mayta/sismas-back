@@ -170,6 +170,7 @@ public class PersonalService implements IPersonalService{
         } catch (ParseException e){
 
         }
+
         return personalDao.updateColaboradorActivo(idpersonal, obraname, fecha, clearcodigo);
     }
 
@@ -197,10 +198,23 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
-    public void updatePlanilla(Long idper, String obra, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp) {
+    public void updatePlanilla(Long idper, String obra, Long idpervila, String codigo, String usuario, String sexo, String fechain, String ipss, String cuspp, String afp, String ocupacion,
+                               String contrato, String basico, String bonicargo, String jornadas) {
+
+        Double bas = 0.0;
+        Double boni = 0.0;
+        Double jorn = 0.0;
+
+        if(contrato != ""){
+            bas = validaDouble(basico) == true ?Double.parseDouble( basico) : 0.0;
+            boni = validaDouble(bonicargo) == true ?Double.parseDouble( bonicargo) : 0.0;
+            jorn = validaDouble(jornadas) == true ?Double.parseDouble( jornadas) : 0.0;
+        }
+
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_update_planilla");
         query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idpervila", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_codigo", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_usuario", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_sexo", String.class, ParameterMode.IN);
@@ -208,9 +222,15 @@ public class PersonalService implements IPersonalService{
         query.registerStoredProcedureParameter("p_num_ipss", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_num_cuspp", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_afp", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_ocupacion", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_contrato", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_basico", Double.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_bonicargo", Double.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_jornadas", Double.class, ParameterMode.IN);
 
         query.setParameter("p_idpersonal", idper);
         query.setParameter("p_obra", obra);
+        query.setParameter("p_idpervila", idpervila);
         query.setParameter("p_codigo", codigo);
         query.setParameter("p_usuario", usuario);
         query.setParameter("p_sexo", sexo);
@@ -218,10 +238,28 @@ public class PersonalService implements IPersonalService{
         query.setParameter("p_num_ipss", ipss);
         query.setParameter("p_num_cuspp", cuspp);
         query.setParameter("p_afp", afp);
+        query.setParameter("p_ocupacion", ocupacion);
+
+        query.setParameter("p_contrato", contrato);
+        query.setParameter("p_basico", bas);
+        query.setParameter("p_bonicargo", boni);
+        query.setParameter("p_jornadas", jorn);
 
         query.execute();
 
     }
 
+    private Boolean validaDouble(String dato){
+
+        Double value =0.0;
+        try {
+            value = Double.parseDouble(dato);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
 }
+

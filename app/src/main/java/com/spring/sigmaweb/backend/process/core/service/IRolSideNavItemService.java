@@ -15,9 +15,9 @@ public interface IRolSideNavItemService {
 
     public List<SidenavItemDTO> listesquemaMenuAll();
 
-    public List<SidenavItemDTO> ordenarMenuPadreHijos( List<RolSideNavItemMenuOrderDTO> lista);
+    public List<SidenavItemDTO> ordenarMenuPadreHijos( List<RolSideNavItemMenuOrderDTO> lista, String idObra);
 
-    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral();
+    public List<RolSideNavItemMenuOrderDTO> findByMenuGeneral(String idObra);
 
     public List<RolSideNavItemActivosDTO> findByMenuPorRolAndObraActivos(String idrol, String idobra);
 

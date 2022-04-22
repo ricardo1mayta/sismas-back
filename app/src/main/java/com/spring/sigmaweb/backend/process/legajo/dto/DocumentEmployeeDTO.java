@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class DocumentEmployeeDTO implements Serializable {
-    private Long idFilePer;
+    private String idFilePer;
     private String idObraFilePer;
     private Long idPersonal;
     private String apePaternoPers;
@@ -28,7 +28,7 @@ public class DocumentEmployeeDTO implements Serializable {
 
     private String creaPorFilePer;
 
-    public DocumentEmployeeDTO(Long idFilePer, String idObraFilePer, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, String titleFilePer, String fileNameFilePer, String urlFilePer, String tipoFilePer, Long opcionFilePer, Long idItemPadreFileper, String descripcionFilePer, String typeFilePer, Long sizeFilePer, Date uploadDateFilePer, String creaPorFilePer) {
+    public DocumentEmployeeDTO(String idFilePer, String idObraFilePer, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, String titleFilePer, String fileNameFilePer, String urlFilePer, String tipoFilePer, Long opcionFilePer, Long idItemPadreFileper, String descripcionFilePer, String typeFilePer, Long sizeFilePer, Date uploadDateFilePer, String creaPorFilePer) {
         this.idFilePer = idFilePer;
         this.idObraFilePer = idObraFilePer;
         this.idPersonal = idPersonal;
@@ -44,6 +44,7 @@ public class DocumentEmployeeDTO implements Serializable {
         this.descripcionFilePer = descripcionFilePer;
         this.typeFilePer = typeFilePer;
         this.sizeFilePer = sizeFilePer;
+
         this.uploadDateFilePer = uploadDateFilePer;
         this.creaPorFilePer = creaPorFilePer;
     }
@@ -54,11 +55,11 @@ public class DocumentEmployeeDTO implements Serializable {
     }
 
 
-    public Long getIdFilePer() {
+    public String getIdFilePer() {
         return idFilePer;
     }
 
-    public void setIdFilePer(Long idFilePer) {
+    public void setIdFilePer(String idFilePer) {
         this.idFilePer = idFilePer;
     }
 
@@ -189,6 +190,7 @@ public class DocumentEmployeeDTO implements Serializable {
     public void setFileNameFilePer(String fileNameFilePer) {
         this.fileNameFilePer = fileNameFilePer;
     }
+
 
     private static final long serialVersionUID = 1L;
 }

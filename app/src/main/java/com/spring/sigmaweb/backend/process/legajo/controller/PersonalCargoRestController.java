@@ -1,10 +1,8 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
-import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
+import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
@@ -79,6 +77,100 @@ public class PersonalCargoRestController {
         return personalCargoService.findAll();
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargoestadodto/{estado}")
+    public List<CargosDto> showCargoPorEstado(@PathVariable Integer estado){
+        Boolean est = estado == 1;
+        return personalCargoService.findCargosDto(est);
+    }
+
+    @PostMapping("/cargosave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createCargo(@RequestBody CargosDto cargo, BindingResult result) {
+        Cargo cargoNew = null;
+        Cargo cargoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            cargoInsert = new Cargo();
+
+            cargoInsert.setNombreCar(cargo.getNombreCar());
+            cargoInsert.setAbreviadoCar(cargo.getAbreviadoCar());
+            cargoInsert.setEstadoCar(cargo.getEstadoCar());
+            cargoInsert.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoInsert.setFechaIngCar(new Date());
+            cargoInsert.setCreaPorCar(cargo.getCreaPorCar());
+
+            cargoNew = personalCargoService.savecargo(cargoInsert);
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personalpuesto", cargoNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/cargoupdate")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cargo updatePuestos (@RequestBody CargosDto cargo) {
+
+        Cargo cargoAct = personalCargoService.findByIdCargo(cargo.getIdCargo());
+
+        if(cargoAct !=null) {
+            cargoAct.setNombreCar(cargo.getNombreCar());
+            cargoAct.setAbreviadoCar(cargo.getAbreviadoCar());
+            cargoAct.setEstadoCar(cargo.getEstadoCar());
+            cargoAct.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoAct.setFechaModiCar(new Date());
+            cargoAct.setModiPorCar(cargo.getModiPorCar());
+        }
+        return personalCargoService.savecargo(cargoAct);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/cargodelete/{idcargo}")
+    public ResponseEntity<?> delete(@PathVariable Long idcargo ){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Cargo cargo = personalCargoService.findByIdCargo(idcargo);
+            personalCargoService.delete(cargo);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    //Cargos TR
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargotrporid/{idcargoTr}")
+    public CargoTReg showCargoTrPorId(@PathVariable Long idcargoTr){
+        return personalCargoService.findByIdCargoTr(idcargoTr);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargotrall")
+    public List<CargoTReg> showCargoTrAll(){
+        return personalCargoService.findAllCargoTr();
+    }
 
     //CRUD
     @PostMapping("/personalcargosave")

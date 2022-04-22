@@ -2,13 +2,12 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalPuestoDTO;
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalPuesto;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
+import com.spring.sigmaweb.backend.process.legajo.dto.PuestosDto;
+import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalPuestoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
+import com.spring.sigmaweb.backend.process.legajo.service.IPuestoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -35,6 +34,9 @@ public class PersonalPuestoRestController {
 
     @Autowired
     private IPersonalVidaLaboralService personalvidalaboralservice;
+
+    @Autowired
+    private IPuestoService puestosservice;
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalpuestopersonalobravila/{idpersona}/{idobra}/{idpervila}")
@@ -130,7 +132,7 @@ public class PersonalPuestoRestController {
             perpuestoAct.setIdAreaPerpuest(personalpuesto.getIdAreaPerpuest());
             perpuestoAct.setIdTipoNivelPlanillaPerpuest(personalpuesto.getIdTipoNivelPlanillaPerpuest());
             perpuestoAct.setIdPuestoTPerpuest(personalpuesto.getIdPuestoTPerpuest());
-
+            System.out.println(personalpuesto.getIdPuestoTPerpuest());
             perpuestoAct.setFlgPuestoDirePerpuest(personalpuesto.getFlgPuestoDirePerpuest());
             perpuestoAct.setFlgPuestoConfiPerpuest(personalpuesto.getFlgPuestoConfiPerpuest());
             perpuestoAct.setFlgPuestoNofilcalPerpuest(personalpuesto.getFlgPuestoNofilcalPerpuest());
@@ -147,11 +149,111 @@ public class PersonalPuestoRestController {
         }
         return personalpuestoservice.save(perpuestoAct);
     }
+    //CRUD DEL PUESTO
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/puestoidobra/{idPuesto}/{idObraPues}")
+    public Puestos showPuestoPoridObra(@PathVariable Long idPuesto, @PathVariable String idObraPues){
+        return puestosservice.findByIdPuestoAndIdObraPues(idPuesto, idObraPues);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/puestocodigoobra/{codigoPues}/{idObraPues}")
+    public Puestos showPuestoPorCodigoObra(@PathVariable String codigoPues, @PathVariable String idObraPues){
+        return puestosservice.findByCodigoPuesAndIdObraPues(codigoPues, idObraPues);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/puestoobraestadolist/{idObraPues}/{estadoPues}")
+    public List<PuestosDto> showPuestoPorObraEstadoList(@PathVariable String idObraPues, @PathVariable Integer estadoPues){
+        Boolean estado = estadoPues == 1;
+        return puestosservice.findByIdObraPuesAndEstadoPues(idObraPues, estado);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/puestoobralist/{idObraPues}")
+    public List<PuestosDto> showPuestoPorObraList(@PathVariable String idObraPues){
+        return puestosservice.findByIdObraPues(idObraPues );
+    }
+
+    @PostMapping("/puestosave")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createPuestos(@RequestBody PuestosDto puesto, BindingResult result) {
+        Puestos puestoNew = null;
+        Puestos puestoInsert = null;
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            puestoInsert = new Puestos();
+
+            puestoInsert.setNombrePues(puesto.getNombrePues());
+            puestoInsert.setAbreviadoPues(puesto.getAbreviadoPues());
+            puestoInsert.setCodigoPues(puesto.getCodigoPues());
+            puestoInsert.setIdObraPues(puesto.getIdObraPues());
+            puestoInsert.setEstadoPues(puesto.getEstadoPues());
+            puestoInsert.setIdTipoGoPues(puesto.getIdTipoGoPues());
+            puestoInsert.setFechaIngPues(new Date());
+            puestoInsert.setCreaPorPues(puesto.getCreaPorPues());
+
+            puestoNew = puestosservice.save(puestoInsert);
+        } catch(DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("personalpuesto", puestoNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
 
 
+    @PutMapping("/puestoupdate")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Puestos updatePuestos (@RequestBody PuestosDto puesto) {
 
+        Puestos puestoAct =puestosservice.findByIdPuestoAndIdObraPues(puesto.getIdPuesto(), puesto.getIdObraPues());
 
+        if(puestoAct !=null) {
+            puestoAct.setNombrePues(puesto.getNombrePues());
+            puestoAct.setAbreviadoPues(puesto.getAbreviadoPues());
+            puestoAct.setCodigoPues(puesto.getCodigoPues());
 
+            puestoAct.setEstadoPues(puesto.getEstadoPues());
+            puestoAct.setIdTipoGoPues(puesto.getIdTipoGoPues());
+            puestoAct.setFechaModiPues(new Date());
+            puestoAct.setModiPorPues(puesto.getCreaPorPues());
+        }
+        return puestosservice.save(puestoAct);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/puestodelete/{idPuesto}/{idObra}")
+    public ResponseEntity<?> delete(@PathVariable Long idPuesto, @PathVariable String idObra ){
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Puestos puesto = puestosservice.findByIdPuestoAndIdObraPues(idPuesto, idObra);
+            puestosservice.delete(puesto);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar de la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino con exito!");
+
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
 
 
 

@@ -1,9 +1,12 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
+import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
 import com.spring.sigmaweb.backend.process.legajo.repository.ICargoDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.ICargoTRegDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalCargosDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,9 @@ public class PersonalCargoService implements IPersonalCargoService{
 
     @Autowired
     private ICargoDao cargoDao;
+
+    @Autowired
+    private ICargoTRegDao cargoTrDao;
 
     @Autowired
     private IPersonalCargosDao personalcargoDao;
@@ -69,4 +75,37 @@ public class PersonalCargoService implements IPersonalCargoService{
     public List<Cargo> findAll() {
         return cargoDao.findAll();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CargosDto> findCargosDto(Boolean estado) {
+        return cargoDao.findCargosDto(estado);
+    }
+
+    @Override
+    @Transactional
+    public Cargo savecargo(Cargo cargo) {
+        return cargoDao.save( cargo);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Cargo cargo) {
+        cargoDao.delete(cargo);
+    }
+
+    //CARGO TR
+    @Override
+    @Transactional(readOnly = true)
+    public CargoTReg findByIdCargoTr(Long idCargoTr) {
+        return cargoTrDao.findByIdCargoTr(idCargoTr);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CargoTReg> findAllCargoTr() {
+        return cargoTrDao.findAll();
+    }
+
+
 }

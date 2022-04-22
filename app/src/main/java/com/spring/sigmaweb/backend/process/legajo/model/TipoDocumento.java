@@ -26,6 +26,9 @@ public class TipoDocumento implements Serializable {
     @Column(nullable = false, length = 50, name = "tipofile")
     private String tipoFile;
 
+    @Column(nullable = true, length = 50, name = "num_repeat_tipofile")
+    private Integer numRepeatTipoFile;
+
     @Column(nullable = false, name = "estado_tipofile", columnDefinition = "boolean default true")
     private Boolean estadoTipoFile;
 
@@ -88,6 +91,14 @@ public class TipoDocumento implements Serializable {
 
     public void setIdObraTipoFile(String idObraTipoFile) {
         this.idObraTipoFile = idObraTipoFile;
+    }
+
+    public Integer getNumRepeatTipoFile() {
+        return numRepeatTipoFile;
+    }
+
+    public void setNumRepeatTipoFile(Integer numRepeatTipoFile) {
+        this.numRepeatTipoFile = numRepeatTipoFile;
     }
 
     private static final long serialVersionUID = 1L;

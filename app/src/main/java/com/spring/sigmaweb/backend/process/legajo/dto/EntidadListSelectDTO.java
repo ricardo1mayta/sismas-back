@@ -11,10 +11,9 @@ public class EntidadListSelectDTO implements Serializable{
     private String telefonoEnt;
     private String urlEnt;
     private String emailEnt;
+    private String codigoDocExternoEnt;
 
-    public EntidadListSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt,
-                                String telefonoEnt, String urlEnt, String emailEnt) {
-        super();
+    public EntidadListSelectDTO(Long idEntidad, String idobra, String rucEnt, String nombreEnt, String nombreComerEnt, String telefonoEnt, String urlEnt, String emailEnt, String codigoDocExternoEnt) {
         this.idEntidad = idEntidad;
         this.idobra = idobra;
         this.rucEnt = rucEnt;
@@ -23,6 +22,7 @@ public class EntidadListSelectDTO implements Serializable{
         this.telefonoEnt = telefonoEnt;
         this.urlEnt = urlEnt;
         this.emailEnt = emailEnt;
+        this.codigoDocExternoEnt = codigoDocExternoEnt;
     }
 
     public Long getIdEntidad() {
@@ -72,6 +72,14 @@ public class EntidadListSelectDTO implements Serializable{
     }
     public void setEmailEnt(String emailEnt) {
         this.emailEnt = emailEnt;
+    }
+
+    public String getCodigoDocExternoEnt() {
+        return codigoDocExternoEnt;
+    }
+
+    public void setCodigoDocExternoEnt(String codigoDocExternoEnt) {
+        this.codigoDocExternoEnt = codigoDocExternoEnt;
     }
 
     private static final long serialVersionUID = 1L;

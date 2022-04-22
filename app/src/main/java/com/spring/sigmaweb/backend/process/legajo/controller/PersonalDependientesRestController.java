@@ -124,6 +124,7 @@ public class PersonalDependientesRestController {
             personalDepInsert.setPersonalDep(personal);
             personalDepInsert.setParentescoPerDep(tablaT);
             personalDepInsert.setFlgvive(personaldep.getFlgvive());
+            personalDepInsert.setFlgDiscapacidadPerdep(personaldep.getFlgDiscapacidadPerdep());
             personalDepInsert.setNombrePerDep(personaldep.getNombrePerDep());
             personalDepInsert.setApPaternoPerDep(personaldep.getApPaternoPerDep());
             personalDepInsert.setApMaternoPerDep(personaldep.getApMaternoPerDep());
@@ -169,6 +170,7 @@ public class PersonalDependientesRestController {
 
         personalDepAct.setParentescoPerDep(tablaT);
         personalDepAct.setFlgvive(personaldepDTO.getFlgvive());
+        personalDepAct.setFlgDiscapacidadPerdep(personaldepDTO.getFlgDiscapacidadPerdep());
         personalDepAct.setNombrePerDep(personaldepDTO.getNombrePerDep());
         personalDepAct.setApPaternoPerDep(personaldepDTO.getApPaternoPerDep());
         personalDepAct.setApMaternoPerDep(personaldepDTO.getApMaternoPerDep());

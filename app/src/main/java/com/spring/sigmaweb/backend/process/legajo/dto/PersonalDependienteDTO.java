@@ -12,6 +12,7 @@ public class PersonalDependienteDTO implements Serializable {
     private Integer idparentPerDep ;
     private String descparentPerDep ;
     private Boolean flgvive ;
+    private Boolean flgDiscapacidadPerdep;
     private String nombrePerDep ;
     private String apPaternoPerDep ;
     private String apMaternoPerDep ;
@@ -44,7 +45,7 @@ public class PersonalDependienteDTO implements Serializable {
     private String modiPorPerDep;
 
     public PersonalDependienteDTO(Long idPersonalDep, Long idPersonal, String idobra, Integer idparentPerDep,
-                                  String descparentPerDep, Boolean flgvive, String nombrePerDep, String apPaternoPerDep,
+                                  String descparentPerDep, Boolean flgvive, Boolean flgDiscapacidadPerdep, String nombrePerDep, String apPaternoPerDep,
                                   String apMaternoPerDep, Byte sexoAPerDep, Integer idEstcivPerDep, String descEstcivPerDep,
                                   Integer idTipodocPerDep, String descTipodocPerDep, String nroDocPerDep, Date fechaNacPerDep,
                                   String telefonoPerDep, String nacionalidadPerDep, Long gradoAcademicoPerDep, String nombreGrado,
@@ -57,6 +58,7 @@ public class PersonalDependienteDTO implements Serializable {
         this.idparentPerDep = idparentPerDep;
         this.descparentPerDep = descparentPerDep;
         this.flgvive = flgvive;
+        this.flgDiscapacidadPerdep= flgDiscapacidadPerdep;
         this.nombrePerDep = nombrePerDep;
         this.apPaternoPerDep = apPaternoPerDep;
         this.apMaternoPerDep = apMaternoPerDep;
@@ -344,6 +346,14 @@ public class PersonalDependienteDTO implements Serializable {
 
     public void setModiPorPerDep(String modiPorPerDep) {
         this.modiPorPerDep = modiPorPerDep;
+    }
+
+    public Boolean getFlgDiscapacidadPerdep() {
+        return flgDiscapacidadPerdep;
+    }
+
+    public void setFlgDiscapacidadPerdep(Boolean flgDiscapacidadPerdep) {
+        this.flgDiscapacidadPerdep = flgDiscapacidadPerdep;
     }
 
     private static final long serialVersionUID = 1L;

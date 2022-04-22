@@ -11,8 +11,8 @@ import java.util.Date;
 @Table(name = "mo_document_uploaded_employee")
 public class DocumentEmployee implements Serializable  {
     @Id
-    @Column(name = "id_fileper",  nullable = false, unique = true)
-    private Long idFilePer;
+    @Column(name = "id_fileper",  nullable = false, unique = true, length=100)
+    private String idFilePer;
 
     @Column(name = "id_obrafileper", nullable = false, length = 6)
     private String idObraFilePer;
@@ -43,11 +43,12 @@ public class DocumentEmployee implements Serializable  {
     @Column(name = "description_fileper", nullable = false, length = 500)
     private String descripcionFilePer;
 
-    @Column(name = "typefile_fileper", nullable = false, length = 50)
+    @Column(name = "typefile_fileper", nullable = false, length = 200)
     private String typeFilePer;
 
     @Column(name = "size_fileper", nullable = false)
     private Long sizeFilePer;
+
 
     @Column(nullable = false, name = "upload_date_fileper")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -62,11 +63,11 @@ public class DocumentEmployee implements Serializable  {
         this.uploadDateFilePer= new Date();
     }
 
-    public Long getIdFilePer() {
+    public String getIdFilePer() {
         return idFilePer;
     }
 
-    public void setIdFilePer(Long idFilePer) {
+    public void setIdFilePer(String idFilePer) {
         this.idFilePer = idFilePer;
     }
 

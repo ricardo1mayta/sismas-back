@@ -37,6 +37,20 @@ public class PersonalDTO implements Serializable {
         this.celularPers = celularPers;
         this.sexoPers = sexoPers;
     }
+    public PersonalDTO(Long idPersonal, String codigoPer, String nombrePers, String apePaternoPers, String apeMaternoPers,
+                       Date fechaNacPers, Integer idTipoDocPer, String nroDocPers, String emailPers, String celularPers, Byte sexoPers) {
+        this.idPersonal = idPersonal;
+        this.codigoPer = codigoPer;
+        this.nombrePers = nombrePers;
+        this.apePaternoPers = apePaternoPers;
+        this.apeMaternoPers = apeMaternoPers;
+        this.fechaNacPers = fechaNacPers;
+        this.idTipoDocPer = idTipoDocPer;
+        this.nroDocPers = nroDocPers;
+        this.emailPers = emailPers;
+        this.celularPers = celularPers;
+        this.sexoPers = sexoPers;
+    }
 
     public Long getIdPersonal() {
         return idPersonal;

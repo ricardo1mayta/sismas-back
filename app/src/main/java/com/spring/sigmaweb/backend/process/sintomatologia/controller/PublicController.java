@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin(origins = {"*"})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/publics")
+@RequestMapping("/sigmaweb/publics")
 public class PublicController {
 
     private final PublicService publicService;

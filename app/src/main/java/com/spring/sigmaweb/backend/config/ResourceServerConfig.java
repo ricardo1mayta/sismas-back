@@ -15,17 +15,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(
+        http.authorizeRequests().antMatchers(HttpMethod.GET,
                         "/sigmaweb/api/obras","/sigmaweb/api/health","/sigmaweb/api/versionapp", "/sigmaweb/actuator/**", "/sigmaweb/actuator", "/sigmaweb/oauth/token", "/sigmaweb/api/obra/active/**","/sigmaweb/sidenav/**",
-                                    "/sigmaweb/gradoAcademico/**","/v1/publics/**","/v1/publics/fichas/**","/v1/publics/fichas/registrar*","/fichas/**")
+                                    "/sigmaweb/gradoAcademico/**","/sigmaweb/publics/**","/sigmaweb/publics/fichas/**","/sigmaweb/publics/fichas/registrar*","/fichas/**")
                 .permitAll()
-
+                .antMatchers(HttpMethod.POST, "/sigmaweb/publics/fichas/registrar").permitAll()
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/familiaList/{idUser}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiList/{idFami}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/matricula/{idalum}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/matriculafamilia/{idfami}/{obraname}/{anioM}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/usuarios").hasRole("ADMI").anyRequest().authenticated().and().cors();
+
+
     }
 
 

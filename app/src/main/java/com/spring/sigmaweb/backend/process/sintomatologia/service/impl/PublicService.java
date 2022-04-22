@@ -61,11 +61,11 @@ public class PublicService {
         Calendar calendar = Calendar.getInstance();
         Date dateObj = calendar.getTime();
 
-        FichaSintomatologica fss =ficha.findFichaByDocByDay(numDoc, dateObj);
-        if (fss==null){
-            e.put("mensaje"," Ya existe un registro de la ficha sintomatológica con la fecha de hoy!");
-            return new ResponseEntity<>(e,HttpStatus.NOT_FOUND);
-        }
+//        FichaSintomatologica fss =ficha.findFichaByDocByDay(numDoc, dateObj);
+//        if (fss==null){
+//            e.put("mensaje"," Ya existe un registro de la ficha sintomatológica con la fecha de hoy!");
+//            return new ResponseEntity<>(e,HttpStatus.NOT_FOUND);
+//        }
 
         FichaSintomatologicaDTO f = ficha.findByDocPersonalFichaDetalle(numDoc);
         if(f == null){

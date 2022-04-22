@@ -289,6 +289,12 @@ public class Personal implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerdesv", cascade = CascadeType.ALL)
     private List<PersonalDesvinculacion> personalDesvinculacion;
 
+    public Personal(Long idPersonal) {
+        this.idPersonal=idPersonal;
+    }
+
+    public Personal(){
+    }
     @PrePersist
     public void prePersist() {
         this.personalDependiente = new ArrayList<>();

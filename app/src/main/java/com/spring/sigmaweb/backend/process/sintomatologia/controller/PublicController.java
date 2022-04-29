@@ -82,8 +82,15 @@ public class PublicController {
         List<SintomaDTO> dto=  mapper.map(e, new TypeToken<List<SintomaDTO>>(){}.getType());
         return dto;
     }
+
     @GetMapping("/mail")
     public void enviar(){
-        notificationTask.reportPresonal();
+        notificationTask.sendNotificactionPendingRegister();
+    }
+
+
+    @GetMapping("/mail2")
+    public void enviar2() throws Exception {
+        notificationTask.sendNotificationFichaRegistered();
     }
 }

@@ -38,6 +38,15 @@ public class FichaSintomatologicaDTO implements Serializable {
         this.idObra =idObra;
         this.fechaNacPers=fechaNacPers;
     }
+    public FichaSintomatologicaDTO(Long idPersonal, String nombrePers, String nroDocPers, String emailPers, String idObra,Date fechaNacPers,String telefono) {
+        this.idPersonal = idPersonal;
+        this.nombrePers = nombrePers;
+        this.nroDocPers = nroDocPers;
+        this.emailPers = emailPers;
+        this.idObra =idObra;
+        this.fechaNacPers=fechaNacPers;
+        this.telefono=telefono;
+    }
 
     private static final long serialVersionUID = 1L;
 }

@@ -21,12 +21,14 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"
-            + "	ps.fechaNacPers)"
+            + "	ps.fechaNacPers,"
+            + " ps.celularPers )"
             + " from Personal p "
 //            + " inner join Obra o on (p.obraPer = o.idobra) "
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
             + " where ps.nroDocPers = :numDoc "
-            + " and p.obraPer.idobra like(:obraName) ")
+            + " and p.obraPer.idobra like(:obraName) "
+            + " and p.estadoPer=true")
     public List<FichaSintomatologicaDTO> findByDocPersonalFicha(@Param("numDoc") String numDoc, @Param("obraName") String obraName);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
@@ -213,7 +215,8 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + " inner join PersonalPuesto pp on (p.idPersonal = pp.idPersonalPerpuest.idPersonal)"
             + " inner join TablasTabla tt on (pp.idTipoNivelPlanillaPerpuest=tt.codigoTab)"
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
-            + " where p.obraPer.idobra =:obraName ")
+            + " where p.obraPer.idobra =:obraName "
+            + " and p.estadoPer=true")
     public List<FichaExport> personalforSector(@Param("obraName") String obraName);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
@@ -227,6 +230,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + " inner join TablasTabla tt on (pp.idTipoNivelPlanillaPerpuest=tt.codigoTab)"
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
             + " where p.obraPer.idobra =:obraName "
+            + " and p.estadoPer=true"
             + " and pp.idTipoNivelPlanillaPerpuest in (30301,30302)")
     public List<FichaSintomatologicaDTO> personalforSectoNotification(@Param("obraName") String obraName);
 

@@ -1,6 +1,5 @@
 package com.spring.sigmaweb.backend.process.sintomatologia.service.impl;
 
-import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.sintomatologia.dto.*;
 import com.spring.sigmaweb.backend.process.sintomatologia.model.FichaExport;
 import com.spring.sigmaweb.backend.process.sintomatologia.model.FichaSintomatologica;
@@ -9,7 +8,6 @@ import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSinto
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSintomatologicaDao;
 import com.spring.sigmaweb.backend.utils.Utils;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 @RequiredArgsConstructor
 @Service
@@ -149,9 +146,6 @@ public class LocalService {
         }
 
         feFinal.addAll(fe);
-        feFinal.forEach(ff->{
-
-        });
         //CREANDO REGISTROS
 
         for (int i1 = 0; i1 < feFinal.size(); i1++) {
@@ -189,9 +183,72 @@ public class LocalService {
             if (p.getFlagContactoCovid()==null){
                 row.createCell(10).setCellValue( "");
             }else if(p.getFlagContactoCovid()){
-                row.createCell(10).setCellValue( "SI TUVO CONTACTO");
+                row.createCell(10).setCellValue( "SI");
             }else{
-                row.createCell(10).setCellValue( "NO TUVO CONTACTO");
+                row.createCell(10).setCellValue( "NO");
+            }
+            row.createCell(11).setCellValue( p.getObservacion() == null ? "": p.getObservacion());
+            row.createCell(12).setCellValue( p.getIdFicha() == null ? "NO" : "SI");
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        workbook.write(out);
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+
+    public ByteArrayInputStream exportFichasPersonaLNotification(String idObra, Date fechaRegistro) throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:DOWNLOAD_PERSONAL_FICHAS.xlsx");
+        Workbook workbook = new XSSFWorkbook(resource.getInputStream());
+        Sheet sheet = workbook.getSheet("PLANTILLA");
+
+        List<SintomaDTO> s= new ArrayList<>();
+        List<EnfermedadDTO> e= new ArrayList<>();
+        List<FichaExport> fe= ficha.listFichaDetalleExport(idObra, fechaRegistro);
+        fe.forEach(l->{
+            l.setEnfermedadList(fichaEnfermedad.listarEnfermedadDicha(l.getIdFicha()));
+            l.setSintomaList(fichaSintomaDao.listarSintomaFicha(l.getIdFicha()));
+        });
+
+        //CREANDO REGISTROS
+
+        for (int i1 = 0; i1 < fe.size(); i1++) {
+            String enfermedades= "";
+            String sintomas="";
+            FichaExport p= fe.get(i1);
+
+            Row row = sheet.createRow(i1 + 1);
+            row.createCell(0).setCellValue(p.getIdFicha() == null ? 0 : p.getIdFicha());
+            row.createCell(1).setCellValue(p.getNombrePers().toUpperCase());
+            row.createCell(2).setCellValue(p.getNroDocPers().toUpperCase());
+            row.createCell(3).setCellValue(p.getTelefono() == null ? "" :p.getTelefono());
+            row.createCell(4).setCellValue(p.getEmailPers().toUpperCase());
+            row.createCell(5).setCellValue(p.getEdad() == null ? "" :p.getEdad());
+            row.createCell(6).setCellValue(p.getTalla() == null ? "" : p.getTalla());
+            row.createCell(7).setCellValue(p.getPeso() == null ? "" : p.getPeso());
+
+            if(p.getEnfermedadList().size()==0 ){
+                row.createCell(8).setCellValue( enfermedades);
+            }else{
+                for (EnfermedadDTO dto: p.getEnfermedadList()){
+                    enfermedades = enfermedades + "," + dto.getDescripcion();
+                }
+                row.createCell(8).setCellValue( enfermedades);
+            }
+            if(p.getSintomaList().size()== 0 ){
+                row.createCell(9).setCellValue( sintomas);
+            }else{
+                for (SintomaDTO dto: p.getSintomaList()){
+                    sintomas = sintomas + "," + dto.getDescripcion();
+                }
+                row.createCell(9).setCellValue( sintomas);
+            }
+
+            if (p.getFlagContactoCovid()==null){
+                row.createCell(10).setCellValue( "");
+            }else if(p.getFlagContactoCovid()){
+                row.createCell(10).setCellValue( "SI");
+            }else{
+                row.createCell(10).setCellValue( "NO");
             }
             row.createCell(11).setCellValue( p.getObservacion() == null ? "": p.getObservacion());
             row.createCell(12).setCellValue( p.getIdFicha() == null ? "NO" : "SI");

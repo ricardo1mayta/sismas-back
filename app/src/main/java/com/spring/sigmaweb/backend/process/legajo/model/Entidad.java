@@ -109,7 +109,7 @@ public class Entidad implements Serializable {
     @Column(nullable = false, name = "flg_financiera_ent", columnDefinition = "boolean default false")
     private Boolean flgFinacieraEnt;
 
-    @Column(nullable = false, name = "codigo_doc_externo_ent", length = 50)
+    @Column(nullable = false, name = "codigo_doc_externo_ent", length = 100)
     private String codigoDocExternoEnt;
 
     @Column(nullable = false, name = "fechaing_ent")

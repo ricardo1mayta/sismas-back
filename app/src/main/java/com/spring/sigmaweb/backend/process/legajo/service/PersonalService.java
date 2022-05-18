@@ -230,7 +230,7 @@ public class PersonalService implements IPersonalService{
 
         query.setParameter("p_idpersonal", idper);
         query.setParameter("p_obra", obra);
-        query.setParameter("p_idpervila", idpervila);
+        query.setParameter("p_idpervila", idpervila != null ? idpervila : -1);
         query.setParameter("p_codigo", codigo);
         query.setParameter("p_usuario", usuario);
         query.setParameter("p_sexo", sexo);

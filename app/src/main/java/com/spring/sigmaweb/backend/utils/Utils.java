@@ -46,6 +46,11 @@ public class Utils {
         DateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
         return  dateFormat.format(date);
     }
+    public static String toDateSringHour(Date date){
+        DateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        return  dateFormat.format(date);
+    }
+
     public static boolean isTrue(Boolean condition) {
         if (condition == null) return false;
         return condition;

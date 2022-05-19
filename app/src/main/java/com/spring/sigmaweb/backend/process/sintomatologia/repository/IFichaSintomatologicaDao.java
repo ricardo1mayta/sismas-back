@@ -216,6 +216,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + " inner join TablasTabla tt on (pp.idTipoNivelPlanillaPerpuest=tt.codigoTab)"
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
             + " where p.obraPer.idobra =:obraName "
+            + " and pp.idTipoNivelPlanillaPerpuest in (30301,30302)"
             + " and p.estadoPer=true")
     public List<FichaExport> personalforSector(@Param("obraName") String obraName);
 
@@ -231,7 +232,8 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
             + " where p.obraPer.idobra =:obraName "
             + " and p.estadoPer=true"
-            + " and pp.idTipoNivelPlanillaPerpuest in (30301,30302)")
+            + " and pp.idTipoNivelPlanillaPerpuest in (30301,30302)"
+            + " and p.estadoPer=true")
     public List<FichaSintomatologicaDTO> personalforSectoNotification(@Param("obraName") String obraName);
 
 }

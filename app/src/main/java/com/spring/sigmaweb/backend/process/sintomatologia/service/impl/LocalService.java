@@ -189,6 +189,8 @@ public class LocalService {
             }
             row.createCell(11).setCellValue( p.getObservacion() == null ? "": p.getObservacion());
             row.createCell(12).setCellValue( p.getIdFicha() == null ? "NO" : "SI");
+            row.createCell(13).setCellValue( p.getFechaRegistro()==null ? "" : Utils.toDateSringHour(p.getFechaRegistro()));
+
         }
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

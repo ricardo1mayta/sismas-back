@@ -81,7 +81,7 @@ public class FichaSintomatologiaController {
        return  ResponseEntity.ok(service.listaPersonalObra(name, idObra, page, size));
     }
 
-//    @Secured({"ROLE_ADMI","ROLE_COLA"})
+    @Secured({"ROLE_ADMI","ROLE_COLA"})
     @PostMapping(value = "/export")
     public ResponseEntity<InputStreamResource> exportUserHour(@RequestParam String idObra,@RequestParam String fechaRegistro) throws Exception {
         ByteArrayInputStream in = service.exportFichasPersonal(idObra,fechaRegistro);

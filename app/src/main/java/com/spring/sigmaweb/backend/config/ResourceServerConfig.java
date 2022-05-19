@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                                     "/sigmaweb/gradoAcademico/**","/sigmaweb/publics/**","/sigmaweb/publics/fichas/**","/sigmaweb/publics/fichas/registrar*","sigmaweb/publics/**")
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/sigmaweb/publics/fichas/registrar").permitAll()
-                .antMatchers(HttpMethod.POST, "/sigmaweb/fichas/export**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/sigmaweb/fichas/export**").permitAll()
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/familiaList/{idUser}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiList/{idFami}/{obraname}").hasAnyRole("FAMI","ADMI")
                 .antMatchers(HttpMethod.GET, "/sigmaweb/api/alumnoFamiListprereq/{codialum}/{obra}").hasAnyRole("FAMI","ADMI")

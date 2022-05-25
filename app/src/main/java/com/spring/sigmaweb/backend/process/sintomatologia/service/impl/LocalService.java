@@ -149,8 +149,8 @@ public class LocalService {
         //CREANDO REGISTROS
 
         for (int i1 = 0; i1 < feFinal.size(); i1++) {
-            String enfermedades= "";
-            String sintomas="";
+            StringBuilder enfermedades= new StringBuilder("");
+            StringBuilder sintomas= new StringBuilder("");
             FichaExport p= feFinal.get(i1);
 
             Row row = sheet.createRow(i1 + 1);
@@ -164,24 +164,24 @@ public class LocalService {
             row.createCell(7).setCellValue(p.getPeso() == null ? "" : p.getPeso());
 
             if(p.getEnfermedadList().size()==0 ){
-                row.createCell(8).setCellValue( enfermedades);
+                row.createCell(8).setCellValue( enfermedades.toString());
             }else{
                 for (EnfermedadDTO dto: p.getEnfermedadList()){
-                    enfermedades = enfermedades + "," + dto.getDescripcion();
+                    enfermedades = new StringBuilder(enfermedades + ", " + dto.getDescripcion());
                 }
-                row.createCell(8).setCellValue( enfermedades);
+                row.createCell(8).setCellValue( enfermedades.deleteCharAt(0).toString());
             }
             if(p.getSintomaList().size()== 0 ){
-                row.createCell(9).setCellValue( sintomas);
+                row.createCell(9).setCellValue( sintomas.toString());
             }else{
                 for (SintomaDTO dto: p.getSintomaList()){
-                    sintomas = sintomas + "," + dto.getDescripcion();
+                    sintomas = new StringBuilder(sintomas + ", " + dto.getDescripcion());
                 }
-                row.createCell(9).setCellValue( sintomas);
+                row.createCell(9).setCellValue( sintomas.deleteCharAt(0).toString());
             }
 
             if (p.getFlagContactoCovid()==null){
-                row.createCell(10).setCellValue( "");
+                row.createCell(10).setCellValue( "NO");
             }else if(p.getFlagContactoCovid()){
                 row.createCell(10).setCellValue( "SI");
             }else{
@@ -214,8 +214,8 @@ public class LocalService {
         //CREANDO REGISTROS
 
         for (int i1 = 0; i1 < fe.size(); i1++) {
-            String enfermedades= "";
-            String sintomas="";
+            StringBuilder enfermedades= new StringBuilder("");
+            StringBuilder sintomas= new StringBuilder("");
             FichaExport p= fe.get(i1);
 
             Row row = sheet.createRow(i1 + 1);
@@ -229,24 +229,24 @@ public class LocalService {
             row.createCell(7).setCellValue(p.getPeso() == null ? "" : p.getPeso());
 
             if(p.getEnfermedadList().size()==0 ){
-                row.createCell(8).setCellValue( enfermedades);
+                row.createCell(8).setCellValue( enfermedades.toString());
             }else{
                 for (EnfermedadDTO dto: p.getEnfermedadList()){
-                    enfermedades = enfermedades + "," + dto.getDescripcion();
+                    enfermedades = new StringBuilder(enfermedades + ", " + dto.getDescripcion());
                 }
-                row.createCell(8).setCellValue( enfermedades);
+                row.createCell(8).setCellValue(enfermedades.deleteCharAt(0).toString());
             }
             if(p.getSintomaList().size()== 0 ){
-                row.createCell(9).setCellValue( sintomas);
+                row.createCell(9).setCellValue(sintomas.toString());
             }else{
                 for (SintomaDTO dto: p.getSintomaList()){
-                    sintomas = sintomas + "," + dto.getDescripcion();
+                    sintomas = new StringBuilder( sintomas + ", " + dto.getDescripcion());
                 }
-                row.createCell(9).setCellValue( sintomas);
+                row.createCell(9).setCellValue( sintomas.deleteCharAt(0).toString());
             }
 
             if (p.getFlagContactoCovid()==null){
-                row.createCell(10).setCellValue( "");
+                row.createCell(10).setCellValue( "NO");
             }else if(p.getFlagContactoCovid()){
                 row.createCell(10).setCellValue( "SI");
             }else{
@@ -254,6 +254,7 @@ public class LocalService {
             }
             row.createCell(11).setCellValue( p.getObservacion() == null ? "": p.getObservacion());
             row.createCell(12).setCellValue( p.getIdFicha() == null ? "NO" : "SI");
+            row.createCell(13).setCellValue( p.getFechaRegistro()==null ? "" : Utils.toDateSringHour(p.getFechaRegistro()));
         }
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

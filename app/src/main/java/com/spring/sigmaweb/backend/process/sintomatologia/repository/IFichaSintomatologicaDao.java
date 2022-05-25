@@ -17,7 +17,7 @@ import java.util.List;
 public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatologica,Long> {
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"
@@ -32,7 +32,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     public List<FichaSintomatologicaDTO> findByDocPersonalFicha(@Param("numDoc") String numDoc, @Param("obraName") String obraName);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"
@@ -46,7 +46,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -67,7 +67,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -88,7 +88,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -108,7 +108,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -129,7 +129,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -150,7 +150,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -169,7 +169,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     public List<FichaSintomatologicaDTO> listMailNotification(@Param("obraName") String obraName,@Param("fechaRegistro") Date fechaRegistro);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"
@@ -187,7 +187,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.model.FichaExport("
             + " f.idFicha,"
             + " f.personal.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	f.email,"
             + "	f.telefono,"
@@ -206,7 +206,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     public List<FichaExport> listFichaDetalleExport(@Param("obraName") String obraName, @Param("fechaRegistro") Date fechaRegistro);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.model.FichaExport(p.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"
@@ -221,7 +221,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
     public List<FichaExport> personalforSector(@Param("obraName") String obraName);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"
-            + " concat(ps.apePaternoPers ,' ',ps.apePaternoPers,' ',ps.nombrePers),"
+            + " concat(ps.apePaternoPers ,' ',ps.apeMaternoPers,' ',ps.nombrePers),"
             + "	ps.nroDocPers,"
             + "	ps.emailCorPers,"
             + "	p.obraPer.idobra,"

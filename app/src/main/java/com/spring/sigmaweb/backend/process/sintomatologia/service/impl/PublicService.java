@@ -87,6 +87,7 @@ public class PublicService {
                 psf=p;
                 String  fn= Utils.toDateSring(p.getFechaNacPers());
                 psf.setEdad(Utils.calculateYear(fn));
+                psf.setFlagContactoCovid(false);
             }
 
             fl= new FichaListEnfermedadSintomaDTO();

@@ -83,7 +83,7 @@ public class FichaSintomatologiaController {
 
     @Secured({"ROLE_ADMI","ROLE_COLA"})
     @PostMapping(value = "/export")
-    public ResponseEntity<InputStreamResource> exportUserHour(@RequestParam String idObra,@RequestParam String fechaRegistro) throws Exception {
+    public ResponseEntity<InputStreamResource> exportarRegistroFichasDia(@RequestParam String idObra,@RequestParam String fechaRegistro) throws Exception {
         ByteArrayInputStream in = service.exportFichasPersonal(idObra,fechaRegistro);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=reporteFichaSintomatologica.xlsx");

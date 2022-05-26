@@ -30,7 +30,7 @@ public class NotificationTask {
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
 
-    @Scheduled(cron = "0 20 16 * * 0-5", zone = "America/Lima")
+//    @Scheduled(cron = "0 30 16 * * 0-5", zone = "America/Lima")
     public void sendNotificactionPendingRegister(){
 
         Mail mail= new Mail();
@@ -51,7 +51,6 @@ public class NotificationTask {
             if (!flag){fsFinal.add(f);}
             flag=false;
         }
-
 
         for (FichaSintomatologicaDTO dto: fsFinal){
             try {
@@ -95,14 +94,14 @@ public class NotificationTask {
 //        helper.setCc(new String[]{as.getEmail()});
         helper.setSubject("Notificación reporte de Ficha Sintomatológica");
         String notification =
-                "<h1 style=\"color: #5e9ca0; text-align: left;\">SISTEMAS</h1>\n" +
-                        "<h3>Notificaci&oacute;n reporte de registro Ficha Sintomatológica </h3>\n" +
-                        "<p>El siguiente correo es envíado automaticamente a las 19:00 pm con el reporte de registro de ficha sintomatológica correspondiente al día  <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigman para hacer el seguimiento.</p>\n" +
+                "<h1 style=\"color: #5e9ca0; text-align: left;\">SALUD OCUPACIONAL</h1>\n" +
+                        "<h3>Notificaci&oacute;n, reporte de registro Ficha Sintomatológica </h3>\n" +
+                        "<p>El siguiente correo es envíado automaticamente a las 19:00 horas con el reporte de registro de ficha sintomatológica correspondiente al día  <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigma para hacer el seguimiento.</p>\n" +
                         "<br>" +
-                        "<p><strong>hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/modulelegajo/fichasSintomatologica target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
+                        "<p><strong>Hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/modulelegajo/fichasSintomatologica target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
                         "<p>&nbsp;</p>";
         String message=notification.replace("DIA_REG", Utils.toDateMoreDay(new Date()));
-        helper.setText(message, true); // Use this or above line.
+        helper.setText(message, true);
         // Envío Async de Correo
         new Thread(() -> mailSender.send(mimeMessage)).start();
     }
@@ -125,15 +124,15 @@ public class NotificationTask {
         helper.setFrom("notificaciones.sigma@maristas.edu.pe");
         helper.setTo(fichaDTO.getEmailPers());
 //        helper.setCc(new String[]{as.getEmail()});
-        helper.setSubject("Notificación de Ficha Sintomatológica ,pendiente registro!");
+        helper.setSubject("Notificación de Ficha Sintomatológica, registro pendiente");
 
         String notification =
-                "<h1 style=\"color: #5e9ca0; text-align: center;\">RECURSOS HUMANOS - MARISTAS</h1>\n" +
+                "<h1 style=\"color: #5e9ca0; text-align: center;\">GESTION DEL TALENTO</h1>\n" +
                 "<h3>Notificaci&oacute;n de Ficha Sintomatológica </h3>\n" +
-                "<p>Sr(a). PERSONAL_NAME</p>\n" +
-                "<p>Recordatorio, Usted. tiene pendiente el registro de la ficha sintomatológica correspondiente al día <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigman para realizar el registro.</p>\n" +
+                "<p>Estimado(a) PERSONAL_NAME</p>\n" +
+                "<p>Recordatorio, Usted. tiene pendiente el registro de la ficha sintomatológica correspondiente al día <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigma para realizar el registro.</p>\n" +
                 "<br/>LINK FICHA SINTOMATOLÓGICA<br/>\n" +
-                "<p><strong>hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/ficha/buscar target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
+                "<p><strong>Hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/ficha/buscar target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
                 "<p>&nbsp;</p>";
         String message=notification.replace("PERSONAL_NAME", fichaDTO.getNombrePers())
                 .replace("DIA_REG", Utils.toDateMoreDay(new Date()));

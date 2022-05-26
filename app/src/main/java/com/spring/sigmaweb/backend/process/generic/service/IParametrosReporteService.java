@@ -9,4 +9,8 @@ public interface IParametrosReporteService {
     public List<ParametrosReporteDTO> findByParametrosPorReporte(Long idrepo);
 
     public List<Reporte> findByIdModuloTipoRepoEstadoRepo(String idmodulo, String tiporepo, Boolean estadorepo);
+
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepoGrupo(String idmodulo, String tiporepo, Boolean estadorepo, Integer idgrupo, String idobra);
+
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepoGrupoRol(String idmodulo, String tiporepo, Boolean estadorepo, Integer idgrupo, String idobra, String idrol);
 }

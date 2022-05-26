@@ -2,7 +2,6 @@ package com.spring.sigmaweb.backend.process.legajo.repository;
 
 
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
-
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -78,6 +77,7 @@ public interface IJornadaContratoDao extends CrudRepository<PersonalContratoJorn
             "inner join Obra o on (p.obraPer = o.idobra) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPerCont= ?3 ")
     public List<JornadaPersonalContratoDTO> findJornadasPersonalAndObraAndContratoDTOList(Long idpersonal, String idobra, Long idpercont);
+
 
 
 

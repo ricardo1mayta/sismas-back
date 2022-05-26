@@ -32,10 +32,12 @@ public class Provincia implements Serializable {
     @Column(name = "id_prov", nullable = false, unique = true)
     private Long idProv;
 
-    @JsonIgnoreProperties({"provinciasDepa","familiaDepart","padreDepart","madreDepart","alumnosDepa","hibernateLazyInitializer", "handler"})
+    /*@JsonIgnoreProperties({"provinciasDepa","hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_depa",foreignKey = @ForeignKey(name="fk_provincia_departamento"))
-    private Departamento departamento;
+    @JoinColumn(name = "id_depa",foreignKey = @ForeignKey(name="fk_provincia_departamento"))*/
+
+    @Column(name="id_depa", nullable = false)
+    private Long departamento;
 
     @Column(name="nombre_prov", nullable = false, length = 50)
     private String nombreProv;
@@ -49,39 +51,15 @@ public class Provincia implements Serializable {
     public void prePersist() {
         this.creaFechaProv = new Date();
     }
-
+/*
     @JsonIgnoreProperties({"provincia","hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "provincia", cascade = CascadeType.ALL)
     private List<Distrito> distritosProv;
 
     public Provincia() {
-    /*this.alumnosProv=new ArrayList<>();
-    this.familiaProvin=new ArrayList<>();
-    this.padreProvi=new ArrayList<>();
-    this.madreProvi=new ArrayList<>();
-    this.otrosProv=new ArrayList<>();*/
         this.distritosProv =new ArrayList<>();
     }
-    /*
-        @JsonIgnoreProperties({"provincias","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "provincias", cascade = CascadeType.ALL)
-        private List<Alumno> alumnosProv;
 
-        @JsonIgnoreProperties({"provinciaFami","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "provinciaFami", cascade = CascadeType.ALL)
-        private List<Familia> familiaProvin;
-
-        @JsonIgnoreProperties({"idProvPadre","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "idProvPadre", cascade = CascadeType.ALL)
-        private List<Familia> padreProvi;
-
-        @JsonIgnoreProperties({"idDistMadre","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "idDistMadre", cascade = CascadeType.ALL)
-        private List<Familia> madreProvi;
-
-        @JsonIgnoreProperties({"idProvOtro","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "idProvOtro", cascade = CascadeType.ALL)
-        private List<Familia_otros> otrosProv;
     */
 
     public Long getIdProv() {
@@ -92,11 +70,11 @@ public class Provincia implements Serializable {
         this.idProv = idProv;
     }
 
-    public Departamento getDepartamento() {
+    public Long getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(Departamento departamento) {
+    public void setDepartamento(Long departamento) {
         this.departamento = departamento;
     }
 

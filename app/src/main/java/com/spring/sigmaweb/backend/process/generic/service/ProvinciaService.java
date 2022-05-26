@@ -21,6 +21,7 @@ public class ProvinciaService implements IProvinciaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Provincia> findById(Long id) {
         // TODO Auto-generated method stub
         return provinciaDao.findById(id);

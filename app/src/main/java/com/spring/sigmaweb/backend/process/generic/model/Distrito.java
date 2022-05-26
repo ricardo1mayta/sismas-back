@@ -25,12 +25,14 @@ public class Distrito implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_dist", nullable = false, unique = true)
     private Long idDist;
-
-    @JsonIgnoreProperties({ "distritosProv", "familiaProvin", "padreProvi", "madreProvi", "alumnosProv", "idProvOtro",
+/*
+    @JsonIgnoreProperties({ "distritosProv",
             "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_prov", foreignKey = @ForeignKey(name = "fk_distrito_provincia"))
-    private Provincia provincia;
+    */
+    @Column(name = "id_prov", nullable = false)
+    private Long provincia;
 
     @Column(name = "nombre_dist", nullable = false, length = 50)
     private String nombreDist;
@@ -48,11 +50,11 @@ public class Distrito implements Serializable{
         this.idDist = idDist;
     }
 
-    public Provincia getProvincia() {
+    public Long getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(Provincia provincia) {
+    public void setProvincia(Long provincia) {
         this.provincia = provincia;
     }
 

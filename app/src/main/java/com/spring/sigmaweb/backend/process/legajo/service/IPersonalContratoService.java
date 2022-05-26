@@ -7,6 +7,7 @@ import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
 
 import java.util.Date;
 import java.util.List;
@@ -60,5 +61,9 @@ public interface IPersonalContratoService {
     );
 
     public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico);
+
+    //Reportes
+    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato);
+
 
 }

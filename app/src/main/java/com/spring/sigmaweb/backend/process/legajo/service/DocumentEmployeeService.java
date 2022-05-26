@@ -80,7 +80,7 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
         String txt="";
         String txtopcion="";
         switch (idobra) {
-            case "BARIBA" :
+            case "BARINA" :
                 indexObra = 1; break;
             case "CHAMPC" :
                 indexObra = 2; break;

@@ -1,22 +1,21 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
-import com.spring.sigmaweb.backend.process.core.model.RolSideNavItem;
 import com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.JornadaPersonalContratoDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
 import com.spring.sigmaweb.backend.process.legajo.repository.IContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IJornadaContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 
@@ -168,4 +167,28 @@ public class PersonalContratoService implements IPersonalContratoService{
     public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico) {
         return historicovinculolaboralDao.save(historico);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer grupoocacional, Integer tipoplanilla, Integer idtipocontrato) {
+        Sort sortContrato = Sort.by(Sort.Direction.ASC, "tcont.descripTab");
+        Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
+        Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
+        Sort sortNombres = Sort.by(Sort.Direction.ASC, "psn.nombrePers");
+        Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrpl.descripTab");
+        Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgroc.descripTab");
+        Sort grupSort = null;
+
+        if(tipoplanilla==0 && idtipocontrato == 0 ){
+            grupSort = sortContrato.and(sortApepat.and(sortApeMat.and(sortNombres)));
+        } else if(tipoplanilla!=0 && idtipocontrato == 0){
+            grupSort = sortContrato.and(sortPlanilla.and(sortOcupacional.and(sortApeMat.and(sortNombres))));
+        } else if(tipoplanilla==0 && idtipocontrato != 0){
+            grupSort = sortContrato.and(sortOcupacional.and(sortPlanilla.and(sortApepat.and(sortApeMat.and(sortNombres)))));
+        } else if(tipoplanilla !=0 && idtipocontrato != 0){
+            grupSort = sortContrato.and(sortPlanilla.and(sortOcupacional.and(sortApepat.and(sortApeMat.and(sortNombres)))));
+        }
+        return contratoDao.reportContratosPorObra(idobra, estadoper, grupoocacional, tipoplanilla,idtipocontrato, grupSort);
+    }
+
 }

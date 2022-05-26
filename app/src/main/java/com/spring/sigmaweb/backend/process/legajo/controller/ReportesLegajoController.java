@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.*;
+import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IReportesLegajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -16,6 +17,9 @@ public class ReportesLegajoController {
 
     @Autowired
     private IReportesLegajoService reportelegajoService;
+
+    @Autowired
+    private IPersonalContratoService personalcontratoservice;
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reportdirectoriolegajo/{obraname}/{estadoper}/{textofiltro}")
@@ -71,4 +75,11 @@ public class ReportesLegajoController {
         return reportelegajoService.reportListaEntPensionPersonal(obraname, estadoper, tipopens, identidad);
     }
 
+    //========================= REPORTES CONTRATOS & CONVENIOS =========================
+    //============================================================
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportcontratoObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}")
+    public List<ReportContract> reporteContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato){
+        return personalcontratoservice.reportContratosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato);
+    }
 }

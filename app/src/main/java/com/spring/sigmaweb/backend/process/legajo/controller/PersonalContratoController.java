@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 import com.spring.sigmaweb.backend.process.core.service.IUsuarioService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
@@ -457,5 +458,9 @@ public class PersonalContratoController {
 
 
     }
+
+
+
+
 
 }

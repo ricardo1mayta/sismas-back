@@ -42,42 +42,16 @@ public class Departamento implements Serializable{
     public void prePersist() {
         this.creaFechaDepa = new Date();
     }
-
+/*
     @JsonIgnoreProperties({"departamento","departamentoFami","iddepaPadre","iddepaMadre","iddepaOtro","hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "departamento", cascade = CascadeType.ALL)
     private List<Provincia> provinciasDepa;
 
-    /*
-    @JsonIgnoreProperties({"departamentos","hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "departamentos", cascade = CascadeType.ALL)
-    private List<Alumno> alumnosDepa;
-
-    @JsonIgnoreProperties({"departamento","iddepaPadre","iddepaMadre","iddepaOtro","departamentoFami","hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "departamentoFami", cascade = CascadeType.ALL)
-    private List<Familia> familiaDepart;
-
-    @JsonIgnoreProperties({"departamento","departamentoFami","iddepaPadre","iddepaMadre","iddepaOtro","hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "iddepaPadre", cascade = CascadeType.ALL)
-    private List<Familia> padreDepart;
-
-    @JsonIgnoreProperties({"departamento","departamentoFami","iddepaPadre","iddepaMadre","iddepaOtro","hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "iddepaMadre", cascade = CascadeType.ALL)
-    private List<Familia> madreDepart;
-
-    @JsonIgnoreProperties({"departamento","departamentoFami","iddepaPadre","iddepaMadre","iddepaOtro","hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "iddepaOtro", cascade = CascadeType.ALL)
-    private List<Familia_otros> otroDepart;
-*/
-
     public Departamento() {
-        /*this.alumnosDepa = new ArrayList<>();
-        this.familiaDepart = new ArrayList<>();
-        this.padreDepart = new ArrayList<>();
-        this.madreDepart = new ArrayList<>();
-        this.otroDepart = new ArrayList<>();*/
+
         this.provinciasDepa = new ArrayList<>();
     }
-
+*/
     public Long getIdDepa() {
         return idDepa;
     }
@@ -103,7 +77,5 @@ public class Departamento implements Serializable{
     }
 
     private static final long serialVersionUID = 1L;
-
-
 
 }

@@ -30,7 +30,7 @@ public class NotificationTask {
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
 
-//    @Scheduled(cron = "0 30 16 * * 0-5", zone = "America/Lima")
+    @Scheduled(cron = "0 30 16 * * 0-5", zone = "America/Lima")
     public void sendNotificactionPendingRegister(){
 
         Mail mail= new Mail();

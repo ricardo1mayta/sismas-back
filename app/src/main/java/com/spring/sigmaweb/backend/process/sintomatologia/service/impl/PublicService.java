@@ -63,7 +63,7 @@ public class PublicService {
 
         FichaSintomatologica fss =ficha.findFichaByDocByDay(numDoc, dateObj);
         if (fss!=null){
-            e.put("mensaje"," Ya existe un registro de la ficha sintomatológica con la fecha de hoy!");
+            e.put("mensaje","Ficha ya registrada para el día "+ Utils.toDateMoreDay(new Date()) );
             return new ResponseEntity<>(e,HttpStatus.NOT_FOUND);
         }
 

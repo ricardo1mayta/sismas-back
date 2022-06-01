@@ -3,6 +3,9 @@ package com.spring.sigmaweb.backend.process.legajo.repository;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalConveniosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalConvenio;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportAgreement;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -127,8 +130,54 @@ public interface IConvenioDao extends CrudRepository<PersonalConvenio, Long> {
     )
     public List<PersonalConveniosDTO> findConvenioActivoPracticasListDto(Long idpersona, String idobra, Long idpervila);
 
+    //QUERYS PARA REPORTES CONTRATOS
+    //======================================================================================================
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.reports.ReportAgreement(" +
+            "o.idobra," +
+            "o.nombreobra," +
+            "p.idPersonal," +
+            "p.codigoPer," +
+            "(case p.estadoPer when true then 'ACTIVO' when false then 'INACTIVO' else '' end) as estadoPer," +
+            "psn.apePaternoPers," +
+            "psn.apeMaternoPers," +
+            "psn.nombrePers," +
 
+            "tdocu.codigoTab as idTipoDocPers," +
+            "tdocu.descrip2Tab as tipoDocPers," +
+            "psn.nroDocPers," +
+            "tgroc.descripTab as grupoOcupacional, " +
+            "tgrpl.descripTab as nivelPlanilla, " +
 
+            "pvl.idPervila," +
+            "pc.idPerConv," +
+            "tconv.codigoTab as idTipoPerconv," +
+            "tconv.descripTab as tipoPerconv," +
+
+            "pc.fechaIniPerconv," +
+            "pc.fechaFinPerconv," +
+            "pc.fechaTerminoPerconv," +
+            "pc.observacionesPerconv," +
+
+            "pc.estadoPerconv," +
+            "pc.fechaIngPerconv," +
+            "pc.creaPorPerconv" +
+            ") " +
+            "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
+            "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila='ACTIVO') " +
+            "left join PersonalConvenio pc on (pc.idObraPerconv=o.idobra and pc.idPersonalPerconv = p.idPersonal and pc.idPervilaPerconv=pvl.idPervila ) " +
+            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest) " +
+            "left join TablasTabla tconv on (pc.idTipoPerconv = tconv.codigoTab) " +
+            "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
+            "left join TablasTabla tgroc on (pp.idAreaPerpuest = tgroc.codigoTab and tgroc.tipoTab = (case ?1 when 'SECTOR' then 306 else 305 end) ) " +
+            "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
+            "where o.idobra =?1 and " +
+            "p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
+            "and coalesce(tconv.codigoTab,0) = (case ?5 when 0 then coalesce(tconv.codigoTab,0) else ?5 end ) " +
+            "and coalesce(pp.idAreaPerpuest,0) = (case ?3 when 0 then coalesce(pp.idAreaPerpuest,0) else ?3 end ) " +
+            "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) "
+    )
+    public List<ReportAgreement> reportConveniosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio, Sort sort);
 
 
 }

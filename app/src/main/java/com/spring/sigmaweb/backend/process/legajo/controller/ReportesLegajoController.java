@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
+import com.spring.sigmaweb.backend.process.legajo.service.IPersonalConvenioService;
 import com.spring.sigmaweb.backend.process.legajo.service.IReportesLegajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -20,6 +21,9 @@ public class ReportesLegajoController {
 
     @Autowired
     private IPersonalContratoService personalcontratoservice;
+
+    @Autowired
+    private IPersonalConvenioService personalconvenioservice;
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reportdirectoriolegajo/{obraname}/{estadoper}/{textofiltro}")
@@ -82,4 +86,18 @@ public class ReportesLegajoController {
     public List<ReportContract> reporteContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato){
         return personalcontratoservice.reportContratosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato);
     }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reporthistoricocontratoobra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}/{textolike}")
+    public List<ReportContract> reporteHistoricoContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato, @PathVariable String textolike){
+        String texto = textolike.equals("_") ? "": textolike.trim();
+        return personalcontratoservice.reportContratosHistoricoPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato, texto);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportconveniosObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}")
+    public List<ReportAgreement> reporteConveniosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio){
+        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio);
+    }
+
 }

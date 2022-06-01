@@ -205,6 +205,7 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "psn.nroDocPers," +
             "tgroc.descripTab as grupoOcupacional, " +
             "tgrpl.descripTab as nivelPlanilla, " +
+            "pvl.idPervila," +
 
             "pc.idPerCont," +
             "tcont.codigoTab as idTipoPercont," +
@@ -215,13 +216,15 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "pc.estadoPercont," +
             "pc.jornadaSemanalPercont," +
             "pc.remuneracionPercont," +
+            "pc.jornadaSemanalPercont as jornadaSemanalAct," +
+            "pc.remuneracionPercont as remuneracionAct," +
             "pc.fecIniPruebaPercont," +
             "pc.fecFinPruebaPercont" +
             ") " +
-            "from PersonalContrato pc inner join Obra o on (pc.idObraPercont=o.idobra) " +
-            "inner join Personal p on (o.idobra = p.obraPer and pc.idPersonalPercont = p.idPersonal) " +
+            "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
             "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila='ACTIVO') " +
+            "left join PersonalContrato pc on (pc.idObraPercont=o.idobra and pc.idPersonalPercont = p.idPersonal and pc.idPervilaPercont=pvl.idPervila ) " +
             "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest) " +
             "left join TablasTabla tcont on (pc.idTipoPercont = tcont.codigoTab) " +
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
@@ -234,4 +237,54 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) "
     )
     public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, Sort sort);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.reports.ReportContract(" +
+            "o.idobra," +
+            "o.nombreobra," +
+            "p.idPersonal," +
+            "psn.apePaternoPers," +
+            "psn.apeMaternoPers," +
+            "psn.nombrePers," +
+
+            "pvl.idPervila," +
+            "pc.idPerCont," +
+            "tcont.codigoTab as idTipoPercont," +
+            "tcont.descripTab as tipoPercont," +
+            "pc.fechaIniPercont," +
+            "pc.fechaFinPercont," +
+            "pc.fechaTerminoPercont," +
+
+            "pc.estadoPercont," +
+            "pc.jornadaSemanalPercont," +
+            "pc.remuneracionPercont," +
+            "pc.fecIniPruebaPercont," +
+            "pc.fecFinPruebaPercont," +
+
+            "phv.motivoHistvila," +
+            "tmoti.descripTab as descMotivoHistvila," +
+            "phv.tipoHistvila," +
+            "phv.fechaCambioHistvila," +
+            "phv.jornadaSemaNewHistvila," +
+            "phv.remuneracionNewHistvila" +
+            ") " +
+            "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
+            "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila='ACTIVO') " +
+            "inner join PersonalContrato pc on (pc.idObraPercont=o.idobra and pc.idPersonalPercont = p.idPersonal and pc.idPervilaPercont=pvl.idPervila ) " +
+            "left join PersonalHistoricoVinculoLaboral phv on (o.idobra = phv.idObraHistvila and p.idPersona = phv.idPersonalHistvila and pc.idPerCont = phv.idPercontHistvila and pvl.idPervila = phv.idPervilaHistvila) " +
+            "left join TablasTabla tmoti on (phv.motivoHistvila = tmoti.codigoTab) " +
+            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest) " +
+            "left join TablasTabla tcont on (pc.idTipoPercont = tcont.codigoTab) " +
+            "left join TablasTabla tgroc on (pp.idAreaPerpuest = tgroc.codigoTab and tgroc.tipoTab = (case ?1 when 'SECTOR' then 306 else 305 end) ) " +
+            "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
+            "where o.idobra =?1 and " +
+            "p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
+            "and concat(coalesce(psn.apePaternoPers, ''), ' ',coalesce(psn.apeMaternoPers, ''), ' ',coalesce(psn.nombrePers, '')) like concat('%',?6,'%') " +
+            "and coalesce(tcont.codigoTab,0) = (case ?5 when 0 then coalesce(tcont.codigoTab,0) else ?5 end ) " +
+            "and coalesce(pp.idAreaPerpuest,0) = (case ?3 when 0 then coalesce(pp.idAreaPerpuest,0) else ?3 end ) " +
+            "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end )" +
+            "order by o.idobra, concat(coalesce(psn.apePaternoPers, ''),coalesce(psn.apeMaternoPers, ''),coalesce(psn.nombrePers, '')), " +
+            "pc.fechaIniPercont desc, phv.fechaCambioHistvila"
+    )
+    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike);
 }

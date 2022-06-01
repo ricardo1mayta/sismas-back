@@ -35,6 +35,13 @@ public class PersonalContratoController {
     @Autowired
     private IUsuarioService usuarioservice;
 
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/pruebahistorico/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}")
+    public HistoricoVilaLabotalDTO showprueba(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo){
+        return personalcontratoservice.findByUltimoCambioHistoricoVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo);
+    }
+
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/contratoidcontrato/{idPerCont}")
     public PersonalContrato showContratoPorIdContrato(@PathVariable Long idPerCont){
@@ -166,10 +173,10 @@ public class PersonalContratoController {
             Date dataOld = calendar.getTime();
             for (PersonalContrato c : contratosOld) {
 
-                if(c.getIdPerCont() != contratoNew.getIdPerCont()){
+                if( !c.getIdPerCont().equals(contratoNew.getIdPerCont()) ){
                     c.setEstadoPercont("FINALIZADO");
                     c.setFechaTerminoPercont(dataOld );
-                    if(c.getIdTipoPercont() == 15410){ /*plazo indeterminado*/
+                    if(c.getIdTipoPercont().equals(15410)){ /*plazo indeterminado*/
                         c.setFechaFinPercont(dataOld);
                     }
                     personalcontratoservice.save(c);

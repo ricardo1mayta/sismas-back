@@ -8,6 +8,7 @@ import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
+import org.springframework.data.domain.Sort;
 
 import java.util.Date;
 import java.util.List;
@@ -64,6 +65,15 @@ public interface IPersonalContratoService {
 
     //Reportes
     public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato);
+
+    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike);
+
+
+    public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLab(String idObraHistvila,
+                                                                            Long idPersonalHistvila,
+                                                                            Long idPervilaHistvila,
+                                                                            Long idPercontHistvila,
+                                                                            String tipo);
 
 
 }

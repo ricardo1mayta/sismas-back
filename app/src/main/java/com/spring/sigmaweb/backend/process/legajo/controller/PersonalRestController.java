@@ -358,7 +358,7 @@ public class PersonalRestController {
 
                 personaResult=personaService.save(personaResult);
             }
-            //System.out.println(personaResult.getIdPersona());
+
             personalNew = new Personal();
             personalNew.setIdPerSigma(Long.valueOf(0));
             personalNew.setObraPer(obraNew.get());
@@ -433,7 +433,7 @@ public class PersonalRestController {
         PersonalHistorico itemHist = new PersonalHistorico();
 
         TablasTabla tablaT = tablastablaservice.findByCodigoTab(personalDTO.getIdTipoDocPer());
-        //System.out.println(tablaT.getDescripTab());
+
         Optional<Distrito> distDomi = distritoservice.findById(personalDTO.getIdDistDomiPer());
 
         PersonalAct.getIdPersona().setNombrePers(personalDTO.getNombrePers());
@@ -499,7 +499,7 @@ public class PersonalRestController {
             if(PersonalAct.getIdPersona().getInteriorDomiPers() != null) {direccion += PersonalAct.getIdPersona().getInteriorDomiPers() +" ";}
             if (PersonalAct.getIdPersona().getTipoZonaDomiPers() != null) {direccion += tablastablaservice.findByCodigoTab( PersonalAct.getIdPersona().getTipoZonaDomiPers() ).getDescrip2Tab() +" ";}
             if (PersonalAct.getIdPersona().getNombreZonaDomiPers() != null) {direccion += PersonalAct.getIdPersona().getNombreZonaDomiPers() +" - ";}
-            //System.out.println(PersonalAct.getIdDistDomiPer());
+
             if (PersonalAct.getIdPersona().getIdDistDomiPers() != null) {direccion += PersonalAct.getIdPersona().getIdDistDomiPers().getNombreDist(); }
 
             itemHist.setDireccionHist(direccion);

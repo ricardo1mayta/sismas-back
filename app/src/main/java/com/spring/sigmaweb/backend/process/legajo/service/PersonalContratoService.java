@@ -12,10 +12,13 @@ import com.spring.sigmaweb.backend.process.legajo.repository.IJornadaContratoDao
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -179,8 +182,10 @@ public class PersonalContratoService implements IPersonalContratoService{
         Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgroc.descripTab");
         Sort grupSort = null;
 
-        if(tipoplanilla==0 && idtipocontrato == 0 ){
+        if(tipoplanilla==0 && idtipocontrato == 0 ) {
             grupSort = sortContrato.and(sortApepat.and(sortApeMat.and(sortNombres)));
+        } else if(grupoocacional == -1 && idtipocontrato == -1){
+            grupSort = sortOcupacional.and(sortContrato);
         } else if(tipoplanilla!=0 && idtipocontrato == 0){
             grupSort = sortContrato.and(sortPlanilla.and(sortOcupacional.and(sortApeMat.and(sortNombres))));
         } else if(tipoplanilla==0 && idtipocontrato != 0){
@@ -188,7 +193,42 @@ public class PersonalContratoService implements IPersonalContratoService{
         } else if(tipoplanilla !=0 && idtipocontrato != 0){
             grupSort = sortContrato.and(sortPlanilla.and(sortOcupacional.and(sortApepat.and(sortApeMat.and(sortNombres)))));
         }
-        return contratoDao.reportContratosPorObra(idobra, estadoper, grupoocacional, tipoplanilla,idtipocontrato, grupSort);
+
+        Integer tipoGrupo = (grupoocacional == -1 ? 0 :grupoocacional);
+        Integer tipoCont = (idtipocontrato == -1 ? 0 : idtipocontrato);
+
+        List<ReportContract> dataReport = contratoDao.reportContratosPorObra(idobra, estadoper, tipoGrupo, tipoplanilla,tipoCont, grupSort);
+        List<HistoricoVilaLabotalDTO> dataAct = new ArrayList<>();
+
+        if(tipoplanilla != -1 && idtipocontrato != -1){
+            for (ReportContract c : dataReport) {
+
+                dataAct= historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLab(idobra,c.getIdPersonal(),c.getIdPervila(),c.getIdPerCont(), "JORN");
+                if(dataAct.size() > 0){
+                    c.setJornadaSemanalAct(dataAct.get(0).getJornadaSemaNewHistvila());
+                }
+                dataAct.clear();
+                dataAct= historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLab(idobra,c.getIdPersonal(),c.getIdPervila(),c.getIdPerCont(), "REMU");
+                if(dataAct.size() > 0){
+                    c.setRemuneracionPerAct(dataAct.get(0).getRemuneracionNewHistvila());
+                }
+                dataAct.clear();
+            }
+        }
+
+        return dataReport;
+    }
+
+    @Override
+    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike) {
+        return contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike);
+    }
+
+    @Override
+    public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLab(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipo) {
+
+        List<HistoricoVilaLabotalDTO> all = historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo);
+        return all.get(0);
     }
 
 }

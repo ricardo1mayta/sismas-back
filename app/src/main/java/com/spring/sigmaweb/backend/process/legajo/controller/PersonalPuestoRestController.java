@@ -132,7 +132,7 @@ public class PersonalPuestoRestController {
             perpuestoAct.setIdAreaPerpuest(personalpuesto.getIdAreaPerpuest());
             perpuestoAct.setIdTipoNivelPlanillaPerpuest(personalpuesto.getIdTipoNivelPlanillaPerpuest());
             perpuestoAct.setIdPuestoTPerpuest(personalpuesto.getIdPuestoTPerpuest());
-            System.out.println(personalpuesto.getIdPuestoTPerpuest());
+
             perpuestoAct.setFlgPuestoDirePerpuest(personalpuesto.getFlgPuestoDirePerpuest());
             perpuestoAct.setFlgPuestoConfiPerpuest(personalpuesto.getFlgPuestoConfiPerpuest());
             perpuestoAct.setFlgPuestoNofilcalPerpuest(personalpuesto.getFlgPuestoNofilcalPerpuest());

@@ -49,7 +49,7 @@ public class RolSideNavItemService implements IRolSideNavItemService{
         SidenavItemDTO menuItem =new SidenavItemDTO();
 
         for (RolSideNavItemMenuOrderDTO row : lista) {
-            //System.out.println(row.getName());
+
             if(row.getIdModulo().equals("STO") && !idObra.equals("SECTOR") ){
                 continue;
             }

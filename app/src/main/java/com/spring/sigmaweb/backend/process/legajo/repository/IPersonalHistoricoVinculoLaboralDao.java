@@ -1,8 +1,10 @@
 package com.spring.sigmaweb.backend.process.legajo.repository;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalConveniosDTO;
+
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -134,5 +136,35 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
     )
     public HistoricoVilaLabotalDTO findByObraAndPersonalAndVidaLabAndContratoAndIdDto(
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, Long idHistvila);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO(" +
+            "hvl.idHistvila, " +
+            "hvl.idObraHistvila," +
+            "p.idPersonal as idPersonalHistvila," +
+            "pc.idPerCont as idPercontHistvila," +
+            "pvl.idPervila as idPervilaHistvila," +
+            "hvl.motivoHistvila," +
+            "tmo.descripTab as textMotivoHistvila, " +
+            "hvl.tipoHistvila," +
+            "hvl.fechaCambioHistvila," +
+            "hvl.jornadaSemaNewHistvila," +
+            "hvl.remuneracionNewHistvila," +
+            "hvl.fechaIngHistvila," +
+            "hvl.creaPorHistvila" +
+            ") " +
+            "from PersonalHistoricoVinculoLaboral hvl inner join Personal p on (hvl.idPersonalHistvila = p.idPersonal and hvl.idObraHistvila = p.obraPer) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (hvl.idPervilaHistvila = pvl.idPervila and hvl.idObraHistvila = pvl.idObraPervila) " +
+            "inner join Obra o on (hvl.idObraHistvila = o.idobra) " +
+            "inner join PersonalContrato pc on (hvl.idPercontHistvila = pc.idPerCont and hvl.idObraHistvila = pc.idObraPercont) " +
+            "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
+            "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2  and hvl.idPervilaHistvila = ?3 " +
+            "and hvl.idPercontHistvila = ?4 and hvl.tipoHistvila = ?5 " +
+            "order by hvl.fechaCambioHistvila desc, hvl.idHistvila desc")
+    public List<HistoricoVilaLabotalDTO> findByUltimoCambioHistoricoVidaLab(String idObraHistvila,
+                                                                    Long idPersonalHistvila,
+                                                                    Long idPervilaHistvila,
+                                                                    Long idPercontHistvila,
+                                                                    String tipo);
 
 }

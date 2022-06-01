@@ -27,6 +27,8 @@ public class ReportContract implements Serializable {
     private String grupoOcupacional;
     private String nivelPlanilla;
 
+    private Long idPervila;
+
     private Long idPerCont;
     private Integer idTipoPercont;
     private String tipoPercont;
@@ -49,6 +51,9 @@ public class ReportContract implements Serializable {
     private Double jornadaSemanalPercont;
     private Double remuneracionPercont;
 
+    private Double jornadaSemanalAct;
+    private Double remuneracionPerAct;
+
     private String observacionesPercont;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -63,7 +68,18 @@ public class ReportContract implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaIngPercont;
 
-    public ReportContract(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, String grupoOcupacional, String nivelPlanilla, Long idPerCont, Integer idTipoPercont, String tipoPercont, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String estadoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Date fecIniPruebaPercont, Date fecFinPruebaPercont) {
+    private Integer motivoHistvila;
+    private String descMotivoHistvila;
+    private String tipoHistvila;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCambioHistvila;
+
+    private Double jornadaSemaNewHistvila;
+    private Double remuneracionNewHistvila;
+
+    public ReportContract(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, String grupoOcupacional, String nivelPlanilla, Long idPervila, Long idPerCont, Integer idTipoPercont, String tipoPercont, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String estadoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Double jornadaSemanalAct, Double remuneracionPerAct, Date fecIniPruebaPercont, Date fecFinPruebaPercont) {
         this.idobra = idobra;
         this.nombreobra = nombreobra;
         this.idPersonal = idPersonal;
@@ -77,7 +93,7 @@ public class ReportContract implements Serializable {
         this.nroDocPers = nroDocPers;
         this.grupoOcupacional = grupoOcupacional;
         this.nivelPlanilla =  nivelPlanilla;
-
+        this.idPervila = idPervila;
         this.idPerCont = idPerCont;
         this.idTipoPercont = idTipoPercont;
         this.tipoPercont = tipoPercont;
@@ -87,8 +103,41 @@ public class ReportContract implements Serializable {
         this.estadoPercont = estadoPercont;
         this.jornadaSemanalPercont = jornadaSemanalPercont;
         this.remuneracionPercont = remuneracionPercont;
+        this.jornadaSemanalAct = jornadaSemanalAct;
+        this.remuneracionPerAct = remuneracionPerAct;
         this.fecIniPruebaPercont = fecIniPruebaPercont;
         this.fecFinPruebaPercont = fecFinPruebaPercont;
+    }
+
+    //historico contrato
+    public ReportContract(String idobra, String nombreobra, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idPervila, Long idPerCont, Integer idTipoPercont, String tipoPercont, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String estadoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Date fecIniPruebaPercont, Date fecFinPruebaPercont, Integer motivoHistvila, String descMotivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaNewHistvila, Double remuneracionNewHistvila) {
+        this.idobra = idobra;
+        this.nombreobra = nombreobra;
+        this.idPersonal = idPersonal;
+        this.apePaternoPers = apePaternoPers;
+        this.apeMaternoPers = apeMaternoPers;
+        this.nombrePers = nombrePers;
+
+        this.idPervila = idPervila;
+        this.idPerCont = idPerCont;
+        this.idTipoPercont = idTipoPercont;
+        this.tipoPercont = tipoPercont;
+        this.fechaIniPercont = fechaIniPercont;
+        this.fechaFinPercont = fechaFinPercont;
+        this.fechaTerminoPercont = fechaTerminoPercont;
+
+        this.estadoPercont = estadoPercont;
+        this.jornadaSemanalPercont = jornadaSemanalPercont;
+        this.remuneracionPercont = remuneracionPercont;
+        this.fecIniPruebaPercont = fecIniPruebaPercont;
+        this.fecFinPruebaPercont = fecFinPruebaPercont;
+
+        this.motivoHistvila = motivoHistvila;
+        this.descMotivoHistvila = descMotivoHistvila;
+        this.tipoHistvila = tipoHistvila;
+        this.fechaCambioHistvila = fechaCambioHistvila;
+        this.jornadaSemaNewHistvila = jornadaSemaNewHistvila;
+        this.remuneracionNewHistvila = remuneracionNewHistvila;
     }
 
     public String getIdobra() {
@@ -298,4 +347,77 @@ public class ReportContract implements Serializable {
     public void setNivelPlanilla(String nivelPlanilla) {
         this.nivelPlanilla = nivelPlanilla;
     }
+
+    public Long getIdPervila() {
+        return idPervila;
+    }
+
+    public void setIdPervila(Long idPervila) {
+        this.idPervila = idPervila;
+    }
+
+    public Double getJornadaSemanalAct() {
+        return jornadaSemanalAct;
+    }
+
+    public void setJornadaSemanalAct(Double jornadaSemanalAct) {
+        this.jornadaSemanalAct = jornadaSemanalAct;
+    }
+
+    public Double getRemuneracionPerAct() {
+        return remuneracionPerAct;
+    }
+
+    public void setRemuneracionPerAct(Double remuneracionPerAct) {
+        this.remuneracionPerAct = remuneracionPerAct;
+    }
+
+    public Integer getMotivoHistvila() {
+        return motivoHistvila;
+    }
+
+    public void setMotivoHistvila(Integer motivoHistvila) {
+        this.motivoHistvila = motivoHistvila;
+    }
+
+    public String getDescMotivoHistvila() {
+        return descMotivoHistvila;
+    }
+
+    public void setDescMotivoHistvila(String descMotivoHistvila) {
+        this.descMotivoHistvila = descMotivoHistvila;
+    }
+
+    public String getTipoHistvila() {
+        return tipoHistvila;
+    }
+
+    public void setTipoHistvila(String tipoHistvila) {
+        this.tipoHistvila = tipoHistvila;
+    }
+
+    public Date getFechaCambioHistvila() {
+        return fechaCambioHistvila;
+    }
+
+    public void setFechaCambioHistvila(Date fechaCambioHistvila) {
+        this.fechaCambioHistvila = fechaCambioHistvila;
+    }
+
+    public Double getJornadaSemaNewHistvila() {
+        return jornadaSemaNewHistvila;
+    }
+
+    public void setJornadaSemaNewHistvila(Double jornadaSemaNewHistvila) {
+        this.jornadaSemaNewHistvila = jornadaSemaNewHistvila;
+    }
+
+    public Double getRemuneracionNewHistvila() {
+        return remuneracionNewHistvila;
+    }
+
+    public void setRemuneracionNewHistvila(Double remuneracionNewHistvila) {
+        this.remuneracionNewHistvila = remuneracionNewHistvila;
+    }
+
 }

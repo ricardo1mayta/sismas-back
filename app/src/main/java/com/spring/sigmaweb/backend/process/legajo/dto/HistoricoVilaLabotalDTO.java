@@ -92,6 +92,22 @@ public class HistoricoVilaLabotalDTO implements Serializable {
         this.estadoHistvila = estadoHistvila;
     }
 
+    public HistoricoVilaLabotalDTO(Long idHistvila, String idObraHistvila, Long idPersonalHistvila, Long idPercontHistvila, Long idPervilaHistvila, Integer motivoHistvila, String textMotivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaNewHistvila, Double remuneracionNewHistvila, Date fechaIngHistvila, String creaPorHistvila) {
+        this.idHistvila = idHistvila;
+        this.idObraHistvila = idObraHistvila;
+        this.idPersonalHistvila = idPersonalHistvila;
+        this.idPercontHistvila = idPercontHistvila;
+        this.idPervilaHistvila = idPervilaHistvila;
+        this.motivoHistvila = motivoHistvila;
+        this.textMotivoHistvila = textMotivoHistvila;
+        this.tipoHistvila = tipoHistvila;
+        this.fechaCambioHistvila = fechaCambioHistvila;
+        this.jornadaSemaNewHistvila = jornadaSemaNewHistvila;
+        this.remuneracionNewHistvila = remuneracionNewHistvila;
+        this.fechaIngHistvila = fechaIngHistvila;
+        this.creaPorHistvila = creaPorHistvila;
+    }
+
     public HistoricoVilaLabotalDTO() {
         super();
         // TODO Auto-generated constructor stub

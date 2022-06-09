@@ -39,8 +39,8 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "psn.nombrePers, " +
             "car.idCargo as idCargoPercargo, " +
             "car.nombreCar as CargoPercargo, " +
-            "tarea.codigoTab as idAreaPercont, " +
-            "tarea.descripTab as AreaPercont, " +
+            "tarea.codigoTab as idAreaPercargo, " +
+            "tarea.descripTab as AreaPercargo, " +
             " 0 as idTipoNivelPlanillaPercargo, " +
             "'' as TipoNivelPlanillaPercargo, " +
             "0 as idPuestoPercargo, " +
@@ -66,7 +66,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
 
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
+            "left join TablasTabla tarea on (pc.idAreaPercargo = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
             //"left join TablasTabla tplanilla on (pc.idTipoNivelPlanillaPercargo = tplanilla.codigoTab and (case ?2 when 'SECTOR' then 303 else 302 end)=tplanilla.tipoTab) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pc.idPercargo= ?3 and pvl.idPervila=?4"
     )
@@ -84,8 +84,8 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
             "psn.nombrePers, " +
             "car.idCargo as idCargoPercargo, " +
             "car.nombreCar as CargoPercargo, " +
-            "tarea.codigoTab as idAreaPercont, " +
-            "tarea.descripTab as AreaPercont, " +
+            "tarea.codigoTab as idAreaPercargo, " +
+            "tarea.descripTab as AreaPercargo, " +
             "0 as idTipoNivelPlanillaPercargo, " +
             "'' as TipoNivelPlanillaPercargo, " +
             "0 as idPuestoPercargo, " +
@@ -111,7 +111,7 @@ public interface IPersonalCargosDao extends CrudRepository<PersonalCargo, Long> 
            // "inner join CargoTReg pus on (pc.idPuestoPercargo = pus.idCargoTr) " +
             "inner join PersonalVidaLaboral pvl on (pc.idPervilaPercargo = pvl.idPervila and pc.idObraPercargo = pvl.idObraPervila) " +
             "inner join Obra o on (p.obraPer = o.idobra) " +
-            "left join TablasTabla tarea on (pc.idAreaPercont = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
+            "left join TablasTabla tarea on (pc.idAreaPercargo = tarea.codigoTab and 305 = tarea.tipoTab) " + //(case ?2 when 'SECTOR' then 306 else 305 end)
            // "left join TablasTabla tplanilla on (pc.idTipoNivelPlanillaPercargo = tplanilla.codigoTab and (case ?2 when 'SECTOR' then 303 else 302 end)=tplanilla.tipoTab) " +
             "where p.idPersonal=?1 and o.idobra = ?2 and pvl.idPervila=?3"
     )

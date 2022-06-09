@@ -33,7 +33,7 @@ public class PersonalCargo implements Serializable {
     private PersonalVidaLaboral idPervilaPercargo;
 
     @Column(nullable = false, name = "id_area_percargo")
-    private Integer idAreaPercont;
+    private Integer idAreaPercargo; //private Integer idAreaPercont;
 
     @Column(nullable = true, name = "id_tiponivelplanilla_percargo")
     private Integer idTipoNivelPlanillaPercargo;
@@ -128,12 +128,12 @@ public class PersonalCargo implements Serializable {
         this.idCargoPercargo = idCargoPercargo;
     }
 
-    public Integer getIdAreaPercont() {
-        return idAreaPercont;
+    public Integer getIdAreaPercargo() {
+        return idAreaPercargo;
     }
 
-    public void setIdAreaPercont(Integer idAreaPercont) {
-        this.idAreaPercont = idAreaPercont;
+    public void setIdAreaPercargo(Integer idAreaPercargo) {
+        this.idAreaPercargo = idAreaPercargo;
     }
 
     public Integer getIdTipoNivelPlanillaPercargo() {

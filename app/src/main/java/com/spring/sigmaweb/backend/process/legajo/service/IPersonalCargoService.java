@@ -6,6 +6,8 @@ import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
 import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
 import com.spring.sigmaweb.backend.process.legajo.model.DocumentEmployee;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportPuestosCargos;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -38,4 +40,6 @@ public interface IPersonalCargoService {
     public CargoTReg findByIdCargoTr(Long idCargoTr);
 
     public List<CargoTReg> findAllCargoTr();
+
+
 }

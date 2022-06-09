@@ -3,6 +3,8 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDesvinculacionDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalDesvinculacion;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportDesvinculacion;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
@@ -33,4 +35,9 @@ public interface IPersonalDesvinculacionService {
     public Integer updatePerdocDesvincula(String idperentr, String obraname, Long idperdesv, Boolean flgEnt, Double monto, Date fecha, String idfile);
 
     public Integer deletePersonalDocDesv(String idperentr, String obraname, Long idperdesv);
+
+    //reportes
+    public List<ReportDesvinculacion> reportDesvinculacionesColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin, String ordenOpcion);
+
+    public List<ReportDesvinculacion> reportDesvinculacionesChecklistColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin, Integer estadoEntrega, String ordenOpcion);
 }

@@ -1,12 +1,18 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.generic.model.Obra;
+import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDesvinculacionDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.dataPlanillaDTO;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalDesvinculacion;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportDesvinculacion;
+import com.spring.sigmaweb.backend.process.legajo.repository.IContratoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDesvinculacionDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDocDesvinculacionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +30,9 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
 
     @Autowired
     private IPersonalDocDesvinculacionDao docdesvinculacionDao;
+
+    @Autowired
+    private IContratoDao personalcontratoDao;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -121,5 +130,77 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
     @Transactional
     public Integer deletePersonalDocDesv(String idperentr, String obraname, Long idperdesv) {
         return docdesvinculacionDao.deletePersonalDocDesv(idperentr, obraname, idperdesv);
+    }
+
+    @Override
+    public List<ReportDesvinculacion> reportDesvinculacionesColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin, String ordenOpcion) {
+        Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrpl.descripTab");
+        Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgroc.descripTab");
+        Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
+        Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
+        Sort sortNombres = Sort.by(Sort.Direction.ASC, "psn.nombrePers");
+
+        Sort grupSort = null;
+        if(ordenOpcion.equals("GO")){
+            grupSort = sortOcupacional.and(sortApepat.and(sortApeMat.and(sortNombres)));
+        } else {
+            grupSort = sortPlanilla.and(sortApepat.and(sortApeMat.and(sortNombres)));
+        }
+        List<ReportDesvinculacion> result =personalDesvinculacionDao.reportDesvinculacionesColaborador(idobra, estadoper, tipogrupo, tipoplanilla, tipoDesvinculacion,fechaini, Fechafin, grupSort);
+        List<PersonalContratoObraDTO> data =null;
+        Long idPer=Long.parseLong("-1");
+        Long idVila=Long.parseLong("-1");
+        for (ReportDesvinculacion item : result) {
+            if(!idPer.equals(item.getIdPersonal()) && !idVila.equals(item.getIdPervila())){
+                data = personalcontratoDao.findByIdPersonalPercontAndIdPervilaPercontAndIdObraPervila(item.getIdPersonal(),item.getIdPervila(),item.getIdobra());
+                idPer = item.getIdPersonal();
+                idVila = item.getIdPervila();
+            }
+            item.setTipoUltPercont(data.get(0).getTipoContrato());
+            item.setFechaFinUltPercont(data.get(0).getFechaFinPercont());
+            item.setFechaTerminoUltPercont(data.get(0).getFechaTerminoPercont());
+            item.setFechaIniUltPercont(data.get(0).getFechaIniPercont());
+        }
+
+
+        return result;
+    }
+
+    @Override
+    public List<ReportDesvinculacion> reportDesvinculacionesChecklistColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin,Integer estadoEntrega, String ordenOpcion) {
+        Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrpl.descripTab");
+        Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgroc.descripTab");
+        Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
+        Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
+        Sort sortNombres = Sort.by(Sort.Direction.ASC, "psn.nombrePers");
+        Sort sortDocNombre = Sort.by(Sort.Direction.ASC, "dd.descripcionDocdesv");
+
+        Sort grupSort = null;
+        if(ordenOpcion.equals("GO")){
+            grupSort = sortOcupacional.and(sortApepat.and(sortApeMat.and(sortNombres.and(sortDocNombre))));
+        } else if(ordenOpcion.equals("NC")){
+            grupSort = sortApepat.and(sortApeMat.and(sortNombres.and(sortDocNombre)));
+        } else {
+            grupSort = sortPlanilla.and(sortApepat.and(sortApeMat.and(sortNombres.and(sortDocNombre))));
+        }
+
+        List<ReportDesvinculacion> result =personalDesvinculacionDao.reportDesvinculacionesChecklistColaborador(idobra, estadoper, tipogrupo, tipoplanilla, tipoDesvinculacion,fechaini, Fechafin, estadoEntrega, grupSort);
+        List<PersonalContratoObraDTO> data =null;
+        Long idPer=Long.parseLong("-1");
+        Long idVila=Long.parseLong("-1");
+
+        for (ReportDesvinculacion item : result) {
+            if(!idPer.equals(item.getIdPersonal()) && !idVila.equals(item.getIdPervila())){
+                data = personalcontratoDao.findByIdPersonalPercontAndIdPervilaPercontAndIdObraPervila(item.getIdPersonal(),item.getIdPervila(),item.getIdobra());
+                idPer = item.getIdPersonal();
+                idVila = item.getIdPervila();
+            }
+            item.setTipoUltPercont(data.get(0).getTipoContrato());
+            item.setFechaFinUltPercont(data.get(0).getFechaFinPercont());
+            item.setFechaTerminoUltPercont(data.get(0).getFechaTerminoPercont());
+            item.setFechaIniUltPercont(data.get(0).getFechaIniPercont());
+        }
+
+        return result;
     }
 }

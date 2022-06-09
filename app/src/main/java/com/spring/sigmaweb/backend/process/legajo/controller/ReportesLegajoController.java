@@ -2,13 +2,12 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.legajo.reports.*;
-import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
-import com.spring.sigmaweb.backend.process.legajo.service.IPersonalConvenioService;
-import com.spring.sigmaweb.backend.process.legajo.service.IReportesLegajoService;
+import com.spring.sigmaweb.backend.process.legajo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"})
@@ -24,6 +23,12 @@ public class ReportesLegajoController {
 
     @Autowired
     private IPersonalConvenioService personalconvenioservice;
+
+    @Autowired
+    private IPersonalPuestoService personalpuestoservice;
+
+    @Autowired
+    private IPersonalDesvinculacionService desvinculacionService;
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reportdirectoriolegajo/{obraname}/{estadoper}/{textofiltro}")
@@ -99,5 +104,37 @@ public class ReportesLegajoController {
     public List<ReportAgreement> reporteConveniosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio){
         return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio);
     }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportconvenioscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}")
+    public List<ReportAgreement> reporteConveniosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio){
+        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio);
+    }
+
+    //========================= REPORTES PUESTOS Y CARGOS =========================
+    //============================================================
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportpuestoscargoscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipopuesto}/{ordenOpcion}")
+    public List<ReportPuestosCargos> reportePuestosCargosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipopuesto, @PathVariable String ordenOpcion){
+        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion);
+    }
+
+
+    //REPORTES DESVINCULACION
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportelistadesvinculaciones/{idobra}/{estadoper}/{tipogrupo}/{tipoplanilla}/{tipoDesvinculacion}/{fechaini}/{Fechafin}/{ordenOpcion}")
+    public List<ReportDesvinculacion> showReporteDesvinculaciones(@PathVariable String idobra, @PathVariable Integer estadoper, @PathVariable Integer tipogrupo, @PathVariable Integer tipoplanilla, @PathVariable Integer tipoDesvinculacion, @PathVariable String fechaini, @PathVariable String Fechafin, @PathVariable String ordenOpcion){
+
+
+        return desvinculacionService.reportDesvinculacionesColaborador(idobra, estadoper, tipogrupo, tipoplanilla, tipoDesvinculacion, Integer.parseInt(fechaini), Integer.parseInt(Fechafin), ordenOpcion);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportechecklistdesvinculaciones/{idobra}/{estadoper}/{tipogrupo}/{tipoplanilla}/{tipoDesvinculacion}/{fechaini}/{Fechafin}/{estadoEntrega}/{ordenOpcion}")
+    public List<ReportDesvinculacion> showReportesCheckListDesviculaciones(@PathVariable String idobra, @PathVariable Integer estadoper, @PathVariable Integer tipogrupo, @PathVariable Integer tipoplanilla, @PathVariable Integer tipoDesvinculacion, @PathVariable String fechaini, @PathVariable String Fechafin, @PathVariable Integer estadoEntrega, @PathVariable String ordenOpcion){
+        return desvinculacionService.reportDesvinculacionesChecklistColaborador(idobra, estadoper, tipogrupo, tipoplanilla, tipoDesvinculacion, Integer.parseInt(fechaini), Integer.parseInt(Fechafin), estadoEntrega, ordenOpcion);
+    }
+
 
 }

@@ -25,8 +25,8 @@ public class PersonalCargosDTO implements Serializable {
     private Long idCargoPercargo;
     private String cargoPercargo;
 
-    private Integer idAreaPercont;
-    private String areaPercont;
+    private Integer idAreaPercargo;
+    private String areaPercargo;
 
     private Integer idTipoNivelPlanillaPercargo;
     private String tipoNivelPlanillaPercargo;
@@ -61,7 +61,7 @@ public class PersonalCargosDTO implements Serializable {
 
     private String modiPorPercargo;
 
-    public PersonalCargosDTO(Long idPercargo, String idObraPercargo, Long idPersonal, Long idPervila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercont, String areaPercont, Integer idTipoNivelPlanillaPercargo, String tipoNivelPlanillaPercargo, Integer idPuestoPercargo, String puestoPercargo, Boolean flgCargoDirePercargo, Boolean flgCargoConfiPercargo, Boolean flgCargoNofilcalPercargo, Boolean flgCargoNoAplicaPercargo, String observacionesPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Double bonifCargoEstPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Date fechaIngPercargo, String creaPorPercargo, Date fechaModiPercargo, String modiPorPercargo) {
+    public PersonalCargosDTO(Long idPercargo, String idObraPercargo, Long idPersonal, Long idPervila, Date fechaInicioPervila, Date fechaFinPervila, String estadoPervila, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercargo, String areaPercargo, Integer idTipoNivelPlanillaPercargo, String tipoNivelPlanillaPercargo, Integer idPuestoPercargo, String puestoPercargo, Boolean flgCargoDirePercargo, Boolean flgCargoConfiPercargo, Boolean flgCargoNofilcalPercargo, Boolean flgCargoNoAplicaPercargo, String observacionesPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Double bonifCargoEstPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Date fechaIngPercargo, String creaPorPercargo, Date fechaModiPercargo, String modiPorPercargo) {
         this.idPercargo = idPercargo;
         this.idObraPercargo = idObraPercargo;
         this.idPersonal = idPersonal;
@@ -74,8 +74,8 @@ public class PersonalCargosDTO implements Serializable {
         this.nombrePers = nombrePers;
         this.idCargoPercargo = idCargoPercargo;
         this.cargoPercargo = cargoPercargo;
-        this.idAreaPercont = idAreaPercont;
-        this.areaPercont = areaPercont;
+        this.idAreaPercargo = idAreaPercargo;
+        this.areaPercargo = areaPercargo;
         this.idTipoNivelPlanillaPercargo = idTipoNivelPlanillaPercargo;
         this.tipoNivelPlanillaPercargo = tipoNivelPlanillaPercargo;
         this.idPuestoPercargo = idPuestoPercargo;
@@ -197,20 +197,20 @@ public class PersonalCargosDTO implements Serializable {
         this.cargoPercargo = cargoPercargo;
     }
 
-    public Integer getIdAreaPercont() {
-        return idAreaPercont;
+    public Integer getIdAreaPercargo() {
+        return idAreaPercargo;
     }
 
-    public void setIdAreaPercont(Integer idAreaPercont) {
-        this.idAreaPercont = idAreaPercont;
+    public void setIdAreaPercargo(Integer idAreaPercargo) {
+        this.idAreaPercargo = idAreaPercargo;
     }
 
-    public String getAreaPercont() {
-        return areaPercont;
+    public String getAreaPercargo() {
+        return areaPercargo;
     }
 
-    public void setAreaPercont(String areaPercont) {
-        this.areaPercont = areaPercont;
+    public void setAreaPercargo(String areaPercargo) {
+        this.areaPercargo = areaPercargo;
     }
 
     public Integer getIdTipoNivelPlanillaPercargo() {

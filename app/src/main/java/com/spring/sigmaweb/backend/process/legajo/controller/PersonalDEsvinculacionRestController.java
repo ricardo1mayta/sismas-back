@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDesvinculacionDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportDesvinculacion;
 import com.spring.sigmaweb.backend.process.legajo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -314,9 +315,6 @@ public class PersonalDEsvinculacionRestController {
 
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
-
-
-
 
 
 }

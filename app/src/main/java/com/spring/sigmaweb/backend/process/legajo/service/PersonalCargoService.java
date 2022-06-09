@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Cargo;
 import com.spring.sigmaweb.backend.process.legajo.model.CargoTReg;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalCargo;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportPuestosCargos;
 import com.spring.sigmaweb.backend.process.legajo.repository.ICargoDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.ICargoTRegDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalCargosDao;
@@ -106,6 +107,8 @@ public class PersonalCargoService implements IPersonalCargoService{
     public List<CargoTReg> findAllCargoTr() {
         return cargoTrDao.findAll();
     }
+
+
 
 
 }

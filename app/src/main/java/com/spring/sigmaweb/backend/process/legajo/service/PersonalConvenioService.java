@@ -79,5 +79,19 @@ public class PersonalConvenioService implements IPersonalConvenioService{
         return convenioDao.reportConveniosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipoconvenio,grupSort);
     }
 
+    @Override
+    public List<ReportAgreement> reportConveniosPorColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio) {
+        Sort sortConvenio = Sort.by(Sort.Direction.ASC, "tconv.descripTab");
+        Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
+        Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
+        Sort sortNombres = Sort.by(Sort.Direction.ASC, "psn.nombrePers");
+        Sort sortfechaConv = Sort.by(Sort.Direction.ASC, "pc.fechaIniPerconv");
+
+        Sort grupSort = null;
+        grupSort = sortApepat.and(sortApeMat.and(sortNombres.and(sortfechaConv.and(sortConvenio))));
+
+        return convenioDao.reportConveniosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipoconvenio,grupSort);
+    }
+
 
 }

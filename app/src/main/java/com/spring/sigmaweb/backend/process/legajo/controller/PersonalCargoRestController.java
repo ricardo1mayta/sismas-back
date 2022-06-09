@@ -200,7 +200,7 @@ public class PersonalCargoRestController {
             cargoInsert.setIdPervilaPercargo(vidaLaboral);
             cargoInsert.setIdPersonalPercargo(persoCargo);
             cargoInsert.setIdCargoPercargo(cargo.getIdCargoPercargo());
-            cargoInsert.setIdAreaPercont(cargo.getIdAreaPercont());
+            cargoInsert.setIdAreaPercargo(cargo.getIdAreaPercargo());
             cargoInsert.setIdTipoNivelPlanillaPercargo(cargo.getIdTipoNivelPlanillaPercargo());
             cargoInsert.setIdPuestoPercargo(cargo.getIdPuestoPercargo());
             cargoInsert.setFlgCargoConfiPercargo(cargo.getFlgCargoConfiPercargo());
@@ -240,7 +240,7 @@ public class PersonalCargoRestController {
         if(percargoAct !=null) {
 
             percargoAct.setIdCargoPercargo(personalCargo.getIdCargoPercargo());
-            percargoAct.setIdAreaPercont(personalCargo.getIdAreaPercont());
+            percargoAct.setIdAreaPercargo(personalCargo.getIdAreaPercargo());
             percargoAct.setIdTipoNivelPlanillaPercargo(personalCargo.getIdTipoNivelPlanillaPercargo());
             percargoAct.setIdPuestoPercargo(personalCargo.getIdPuestoPercargo());
             percargoAct.setFlgCargoConfiPercargo(personalCargo.getFlgCargoConfiPercargo());

@@ -2,8 +2,10 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalPuestoDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalPuesto;
+import com.spring.sigmaweb.backend.process.legajo.reports.ReportPuestosCargos;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalPuestoDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +45,30 @@ public class PersonalPuestoService implements IPersonalPuestoService{
     @Transactional
     public PersonalPuesto save(PersonalPuesto newPuesto) {
         return personalpuestoDao.save(newPuesto);
+    }
+
+    @Override
+    public List<ReportPuestosCargos> reportPuestosCargosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String ordenOpcion) {
+        Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrplp.descripTab");
+        Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgrocp.descripTab");
+        Sort sortPuesto = Sort.by(Sort.Direction.ASC,"cp.nombrePues");
+        Sort sortCargo = Sort.by(Sort.Direction.ASC,"cc.nombreCar");
+        Sort sortFechaCargo = Sort.by(Sort.Direction.ASC,"pc.fechaIniPercargo");
+        Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
+        Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
+        Sort sortNombres = Sort.by(Sort.Direction.ASC, "psn.nombrePers");
+
+
+        Sort grupSort = null;
+        if(ordenOpcion.equals("GO")){
+            grupSort = sortOcupacional.and(sortApepat.and(sortApeMat.and(sortNombres).and(sortPuesto.and(sortFechaCargo.and(sortCargo)))));
+        } else {
+            grupSort = sortPlanilla.and(sortApepat.and(sortApeMat.and(sortNombres).and(sortPuesto.and(sortFechaCargo.and(sortCargo)))));
+        }
+
+
+
+
+        return personalpuestoDao.reportPuestosCargosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipocontrato, grupSort);
     }
 }

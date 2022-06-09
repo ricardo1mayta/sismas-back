@@ -89,6 +89,21 @@ public class PersonalContratoObraDTO implements Serializable {
         this.modiPorPercont = modiPorPercont;
     }
 
+    public PersonalContratoObraDTO(Long idPerCont, String idObraPercont, Long idPersonal, Integer idTipoPercont, String tipoContrato, Date fechaIniPercont, Date fechaFinPercont, String observacionesPercont, String estadoPercont, Date fechaTerminoPercont, Date fechaIngPercont, String creaPorPercont) {
+        this.idPerCont = idPerCont;
+        this.idObraPercont = idObraPercont;
+        this.idPersonal = idPersonal;
+        this.idTipoPercont = idTipoPercont;
+        this.tipoContrato = tipoContrato;
+        this.fechaIniPercont = fechaIniPercont;
+        this.fechaFinPercont = fechaFinPercont;
+        this.observacionesPercont = observacionesPercont;
+        this.estadoPercont = estadoPercont;
+        this.fechaTerminoPercont = fechaTerminoPercont;
+        this.fechaIngPercont = fechaIngPercont;
+        this.creaPorPercont = creaPorPercont;
+    }
+
     public PersonalContratoObraDTO() {
         super();
         // TODO Auto-generated constructor stub

@@ -104,10 +104,10 @@ public class PublicService {
         f.setEdad(Utils.calculateYear(fn));
 
         fe= fichaEnfermedad.listarEnfermedadDicha(f.getIdFicha());
-        fs=fichaSintomaDao.listarSintomaFicha(f.getIdFicha());
+//        fs=fichaSintomaDao.listarSintomaFicha(f.getIdFicha());
 
         fl= new FichaListEnfermedadSintomaDTO();
-
+        f.setFlagContactoCovid(false);
         fl.setFicha(f);
         fl.setListEnfermedad(fe);
         fl.setListSintoma(fs);

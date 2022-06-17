@@ -32,7 +32,6 @@ public class PublicController {
     @GetMapping("/fichas/numDoc")
     public ResponseEntity<?>  findByDocPersonal(@RequestParam String numDoc, @RequestParam String obraName){
         return publicService.findByDocPersonalFicha(numDoc,obraName);
-//        return publicService.findByDocPersonalFicha("08352063","BARINA");
     }
 
     @PostMapping("/fichas/registrar")

@@ -17,12 +17,13 @@ import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeServi
 import com.spring.sigmaweb.backend.process.legajo.service.IEntidadService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.util.StringUtils;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -422,11 +423,15 @@ public class PersonalRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/personalupdate/{idpersonal}/{obraname}")
     @ResponseStatus(HttpStatus.CREATED)
     public Personal updatepersonalInfopersonalesDTO(@RequestBody PersonalDatosPersonalesDTO personalDTO, @PathVariable Long idpersonal, @PathVariable String obraname) {
 
         Personal PersonalAct = personalservice.findByIdPersonalAndObraname(idpersonal, obraname);
+        Persona personaAct = personaService.findByIdPersona(idpersonal);
+        Obra obra = obraservice.findById(obraname).get();
+
         List<PersonalHistorico> historico = new ArrayList<PersonalHistorico>();
         String direccion="";
 
@@ -435,7 +440,7 @@ public class PersonalRestController {
         TablasTabla tablaT = tablastablaservice.findByCodigoTab(personalDTO.getIdTipoDocPer());
 
         Optional<Distrito> distDomi = distritoservice.findById(personalDTO.getIdDistDomiPer());
-
+/*
         PersonalAct.getIdPersona().setNombrePers(personalDTO.getNombrePers());
         PersonalAct.getIdPersona().setApePaternoPers(personalDTO.getApePaternoPers());
         PersonalAct.getIdPersona().setApeMaternoPers(personalDTO.getApeMaternoPers());
@@ -443,87 +448,96 @@ public class PersonalRestController {
         PersonalAct.getIdPersona().setIdTipoDocPers(tablaT);
         PersonalAct.getIdPersona().setNroDocPers(personalDTO.getNroDocPers());
         PersonalAct.getIdPersona().setIdPaisDocPers(personalDTO.getIdPaisDocPers());
+*/
+        personaAct.setNombrePers(personalDTO.getNombrePers());
+        personaAct.setApePaternoPers(personalDTO.getApePaternoPers());
+        personaAct.setApeMaternoPers(personalDTO.getApeMaternoPers());
+        PersonalAct.setFotoPer(personalDTO.getFotoPer());
+        personaAct.setIdTipoDocPers(tablaT);
+        personaAct.setNroDocPers(personalDTO.getNroDocPers());
+        personaAct.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
 
-        if(!PersonalAct.getIdPersona().getEstCivilPers().getCodigoTab().equals( personalDTO.getEstCivilPer() ) ) {
+        if(!personaAct.getEstCivilPers().getCodigoTab().equals( personalDTO.getEstCivilPer() ) ) {
 
             //guarda en historico
             itemHist.setTipoEstCivilHist(PersonalAct.getIdPersona().getEstCivilPers().getCodigoTab());
             itemHist.setFechaCambECHist(PersonalAct.getIdPersona().getFecCambioEstCivilPers());
             itemHist.setCreaPorHist(personalDTO.getModiPorPer());
-            itemHist.setObraHist(PersonalAct.getObraPer());
+            itemHist.setObraHist(obra);//PersonalAct.getObraPer());
             itemHist.setTipoHist("ESTCIV");
             historico.add(itemHist);
         }
 
         tablaT = tablastablaservice.findByCodigoTab(personalDTO.getEstCivilPer());
-        PersonalAct.getIdPersona().setEstCivilPers(tablaT);
-        PersonalAct.getIdPersona().setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
+        personaAct.setEstCivilPers(tablaT);
+        personaAct.setFecCambioEstCivilPers(personalDTO.getFecCambioEstCivilPers());
 
-        PersonalAct.getIdPersona().setSexoPers(personalDTO.getSexoPers());
-        PersonalAct.getIdPersona().setCelularPers(personalDTO.getCelularPers());
-        PersonalAct.getIdPersona().setCelularBPers(personalDTO.getCelularBPers());
-        PersonalAct.getIdPersona().setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
-        PersonalAct.getIdPersona().setEmailPers(personalDTO.getEmailPers());
-        PersonalAct.getIdPersona().setEmailCorPers(personalDTO.getEmailCorPers());
+        personaAct.setSexoPers(personalDTO.getSexoPers());
+        personaAct.setCelularPers(personalDTO.getCelularPers());
+        personaAct.setCelularBPers(personalDTO.getCelularBPers());
+        personaAct.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
+        personaAct.setEmailPers(personalDTO.getEmailPers());
+        personaAct.setEmailCorPers(personalDTO.getEmailCorPers());
         PersonalAct.setEstadoPer(personalDTO.getEstadoPer());
         PersonalAct.setContactoEmerPer(personalDTO.getContactoEmerPer());
         PersonalAct.setTelefContEmerPer(personalDTO.getTelefContEmerPer());
         PersonalAct.setIdParentContEmerPer(personalDTO.getIdParentContEmerPer());
-        PersonalAct.getIdPersona().setReligionProfesaPers(personalDTO.getReligionProfesaPers());
+        personaAct.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
         PersonalAct.setNumeroEssaludPer(personalDTO.getNumeroEssaludPer());
         PersonalAct.setNumeroEpsPer(personalDTO.getNumeroEpsPer());
         PersonalAct.setIdEntidadEpsPer(personalDTO.getIdEntEPS());
         PersonalAct.setNumeroPensionPer(personalDTO.getNumeroPensionPer());
         PersonalAct.setIdEntidadPensPer(personalDTO.getIdEntPen());
         PersonalAct.setIdTipoPensionPer(personalDTO.getIdTipoPensionPer());
-        PersonalAct.getIdPersona().setFechaNacPers(personalDTO.getFechaNacPers());
-        PersonalAct.getIdPersona().setIdPaisNacPers(personalDTO.getIdPaisNacPers());
-        PersonalAct.getIdPersona().setNacionalidadPers(personalDTO.getNacionalidadPers());
-        PersonalAct.getIdPersona().setIdDistNacPers(personalDTO.getIdDistNacPers());
-        PersonalAct.getIdPersona().setObservaNacPers(personalDTO.getObservaNacPers());
+        personaAct.setFechaNacPers(personalDTO.getFechaNacPers());
+        personaAct.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
+        personaAct.setNacionalidadPers(personalDTO.getNacionalidadPers());
+        personaAct.setIdDistNacPers(personalDTO.getIdDistNacPers());
+        personaAct.setObservaNacPers(personalDTO.getObservaNacPers());
         PersonalAct.setCodigoPer(personalDTO.getCodigoPer());
 
-        if (!PersonalAct.getIdPersona().getTipoViaDomiPers().equals(personalDTO.getTipoViaDomiPers()) ||
-                !PersonalAct.getIdPersona().getDomicilioPers().trim().equals(personalDTO.getDomicilioPers().trim()) ||
-                !PersonalAct.getIdPersona().getNumeroDomiPers().trim().equals(personalDTO.getNumeroDomiPers().trim()) ||
-                !PersonalAct.getIdPersona().getInteriorDomiPers().trim().equals(personalDTO.getInteriorDomiPers().trim()) ||
-                !PersonalAct.getIdPersona().getTipoZonaDomiPers().equals(personalDTO.getTipoZonaDomiPers()) ||
-                !PersonalAct.getIdPersona().getNombreZonaDomiPers().trim().equals( personalDTO.getNombreZonaDomiPers().trim()) ||
-                !PersonalAct.getIdPersona().getIdDistDomiPers().getIdDist().equals(personalDTO.getIdDistDomiPer()) ) {
+        if (!personaAct.getTipoViaDomiPers().equals(personalDTO.getTipoViaDomiPers()) ||
+                !personaAct.getDomicilioPers().trim().equals(personalDTO.getDomicilioPers().trim()) ||
+                !personaAct.getNumeroDomiPers().trim().equals(personalDTO.getNumeroDomiPers().trim()) ||
+                !personaAct.getInteriorDomiPers().trim().equals(personalDTO.getInteriorDomiPers().trim()) ||
+                !personaAct.getTipoZonaDomiPers().equals(personalDTO.getTipoZonaDomiPers()) ||
+                !personaAct.getNombreZonaDomiPers().trim().equals( personalDTO.getNombreZonaDomiPers().trim()) ||
+                !personaAct.getIdDistDomiPers().getIdDist().equals(personalDTO.getIdDistDomiPer()) ) {
 
             //guarda en historico
             itemHist = new PersonalHistorico();
             direccion="";
-            if (PersonalAct.getIdPersona().getTipoViaDomiPers() != null) {direccion = tablastablaservice.findByCodigoTab( PersonalAct.getIdPersona().getTipoViaDomiPers() ).getDescrip2Tab() + " " + PersonalAct.getIdPersona().getDomicilioPers() +" ";}
-            if(PersonalAct.getIdPersona().getNumeroDomiPers() != null) {direccion += PersonalAct.getIdPersona().getNumeroDomiPers() +", ";}
-            if(PersonalAct.getIdPersona().getInteriorDomiPers() != null) {direccion += PersonalAct.getIdPersona().getInteriorDomiPers() +" ";}
-            if (PersonalAct.getIdPersona().getTipoZonaDomiPers() != null) {direccion += tablastablaservice.findByCodigoTab( PersonalAct.getIdPersona().getTipoZonaDomiPers() ).getDescrip2Tab() +" ";}
-            if (PersonalAct.getIdPersona().getNombreZonaDomiPers() != null) {direccion += PersonalAct.getIdPersona().getNombreZonaDomiPers() +" - ";}
+            if (personaAct.getTipoViaDomiPers() != null) {direccion = tablastablaservice.findByCodigoTab( personaAct.getTipoViaDomiPers() ).getDescrip2Tab() + " " + personaAct.getDomicilioPers() +" ";}
+            if(personaAct.getNumeroDomiPers() != null) {direccion += personaAct.getNumeroDomiPers() +", ";}
+            if(personaAct.getInteriorDomiPers() != null) {direccion += personaAct.getInteriorDomiPers() +" ";}
+            if (personaAct.getTipoZonaDomiPers() != null) {direccion += tablastablaservice.findByCodigoTab( personaAct.getTipoZonaDomiPers() ).getDescrip2Tab() +" ";}
+            if (personaAct.getNombreZonaDomiPers() != null) {direccion += personaAct.getNombreZonaDomiPers() +" - ";}
 
-            if (PersonalAct.getIdPersona().getIdDistDomiPers() != null) {direccion += PersonalAct.getIdPersona().getIdDistDomiPers().getNombreDist(); }
+            if (personaAct.getIdDistDomiPers() != null) {direccion += personaAct.getIdDistDomiPers().getNombreDist(); }
 
             itemHist.setDireccionHist(direccion);
             itemHist.setCreaPorHist(personalDTO.getCreaPorPer());
-            itemHist.setObraHist(PersonalAct.getObraPer());
+            itemHist.setObraHist(obra);//PersonalAct.getObraPer());
             itemHist.setTipoHist("DIRECC");
             historico.add(itemHist);
         }
 
-        PersonalAct.getIdPersona().setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
-        PersonalAct.getIdPersona().setDomicilioPers(personalDTO.getDomicilioPers().trim());
-        PersonalAct.getIdPersona().setNumeroDomiPers(personalDTO.getNumeroDomiPers().trim());
-        PersonalAct.getIdPersona().setInteriorDomiPers(personalDTO.getInteriorDomiPers().trim());
-        PersonalAct.getIdPersona().setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
-        PersonalAct.getIdPersona().setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers().trim());
-        PersonalAct.getIdPersona().setIdDistDomiPers( distDomi.get());
+        personaAct.setTipoViaDomiPers(personalDTO.getTipoViaDomiPers());
+        personaAct.setDomicilioPers(personalDTO.getDomicilioPers().trim());
+        personaAct.setNumeroDomiPers(personalDTO.getNumeroDomiPers().trim());
+        personaAct.setInteriorDomiPers(personalDTO.getInteriorDomiPers().trim());
+        personaAct.setTipoZonaDomiPers(personalDTO.getTipoZonaDomiPers());
+        personaAct.setNombreZonaDomiPers(personalDTO.getNombreZonaDomiPers().trim());
+        personaAct.setIdDistDomiPers( distDomi.get());
 
-        PersonalAct.getIdPersona().setObservacionDomiPers(personalDTO.getObservacionDomiPers());
+        personaAct.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
         PersonalAct.setFlgEsDiscapacitadoPer(personalDTO.getFlgEsDiscapacitadoPer());
         PersonalAct.setEspecDiscapacidadPer(personalDTO.getEspecDiscapacidadPer());
         PersonalAct.setFechaActivoPer(personalDTO.getFechaActivoPer());
         PersonalAct.setFechaBajaPer(personalDTO.getFechaBajaPer());
         PersonalAct.setModiPorPer(personalDTO.getModiPorPer());
         PersonalAct.setFechaModiPer(new Date());
+        PersonalAct.setIdPersona(personaAct);
 
         if (historico.size() > 0) {
             for (PersonalHistorico h : historico) {
@@ -531,7 +545,7 @@ public class PersonalRestController {
             }
             personalservice.saveAll(historico);
         }
-
+        PersonalAct.setObraPer(obra);
         return personalservice.save(PersonalAct);
     }
 
@@ -673,7 +687,6 @@ public class PersonalRestController {
                 PersonalAct.setFechaSolAperturaCtaHaberesPer(new Date());
             }
         }
-
 
         PersonalAct.setFlgPermitirCambioCtsPer(personalDTO.getFlgPermitirCambioCtsPer());
         PersonalAct.setFlgPermitirCambioHaberesPer(personalDTO.getFlgPermitirCambioHaberesPer());

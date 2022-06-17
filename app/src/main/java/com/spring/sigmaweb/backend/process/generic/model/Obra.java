@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spring.sigmaweb.backend.process.core.model.Usuario;
 import com.spring.sigmaweb.backend.process.legajo.model.Entidad;
+import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 
 @Entity
 @Table(name = "mg_obras")
@@ -31,7 +32,7 @@ public class Obra implements Serializable {
     @Column(name = "idObra", length = 6, nullable = false)
     private String idobra;
 
-    @Column(name = "orden_obra", nullable = false, unique = true)
+    @Column(name = "orden_obra", nullable = false)//, unique = true)
     private Long orden;
 
     @Column(nullable = false, length = 60, name = "nombreObra", unique = true)
@@ -93,26 +94,32 @@ public class Obra implements Serializable {
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraDoc", cascade = CascadeType.ALL)
         private List<DocumentoObra> obradocumentos;
     */
-    @JsonIgnoreProperties({"obraUs", "hibernateLazyInitializer", "handler"})
+   /* @JsonIgnoreProperties({"obraUs", "hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraUs", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
-    /*
-        @JsonIgnoreProperties({"obraPer","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraPer", cascade = CascadeType.ALL)
-        private List<Personal> personal;
 
-        @JsonIgnoreProperties({"obraRolItem","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraRolItem", cascade = CascadeType.ALL)
-        private List<Mm_rolSideNavItem> sideNavItemRolObra;
+            @JsonIgnoreProperties({"obraPer","hibernateLazyInitializer", "handler"})
+            @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraPer", cascade = CascadeType.ALL)
+            private List<Personal> personal;
 
-        @JsonIgnoreProperties({"obraHist","hibernateLazyInitializer", "handler"})
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraHist", cascade = CascadeType.ALL)
-        private List<mo_personalHistorico> obraHistorico;
-    */
-    @JsonIgnoreProperties({"obraEnt", "hibernateLazyInitializer", "handler"})
+            @JsonIgnoreProperties({"obraRolItem","hibernateLazyInitializer", "handler"})
+            @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraRolItem", cascade = CascadeType.ALL)
+            private List<Mm_rolSideNavItem> sideNavItemRolObra;
+
+            @JsonIgnoreProperties({"obraHist","hibernateLazyInitializer", "handler"})
+            @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraHist", cascade = CascadeType.ALL)
+            private List<mo_personalHistorico> obraHistorico;
+
+    @JsonIgnoreProperties(value ={"obraEnt", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraEnt", cascade = CascadeType.ALL)
     private List<Entidad> obraEntidad;
+    */
+/*
+    @JsonIgnoreProperties(value ={ "hibernateLazyInitializer", "handler"}, allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obraPer", cascade = CascadeType.ALL)
+    private List<Personal> obraPersonal;
 
+*/
     public Obra() {
        /* this.alumnos = new ArrayList<>();
         this.familia = new ArrayList<>();
@@ -129,7 +136,6 @@ public class Obra implements Serializable {
         this.fechaingobra = new Date();
     }
 
-    private static final long serialVersionUID = 1L;
 
     public String getIdobra() {
         return idobra;
@@ -266,4 +272,6 @@ public class Obra implements Serializable {
     public void setEstadoObra(Long estadoObra) {
         this.estadoObra = estadoObra;
     }
+
+    private static final long serialVersionUID = 1L;
 }

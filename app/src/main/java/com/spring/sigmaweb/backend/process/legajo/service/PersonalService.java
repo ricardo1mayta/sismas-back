@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 @Service
+@Transactional
 public class PersonalService implements IPersonalService{
 
     @Autowired
@@ -66,6 +67,7 @@ public class PersonalService implements IPersonalService{
     @Transactional
     public Personal save(Personal personal) {
         // TODO Auto-generated method stub
+
         return personalDao.save(personal);
     }
 

@@ -53,7 +53,7 @@ public class PublicController {
 
         List<Enfermedad> enfermedades = mapper.map(dto.getListEnfermedad(), new TypeToken<List<Enfermedad>>() {
         }.getType());
-        return publicService.saveFicha(f,enfermedades , sintomas);
+        return null;//publicService.saveFicha(f,enfermedades , sintomas);
     }
 
     @GetMapping("/fichas")
@@ -93,4 +93,6 @@ public class PublicController {
     public void enviar2() throws Exception {
         notificationTask.sendNotificationFichaRegistered();
     }
+
+
 }

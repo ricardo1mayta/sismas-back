@@ -22,4 +22,5 @@ public interface IPersonalPuestoService {
 
     public List<ReportPuestosCargos> reportPuestosCargosPorObra (String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipopuesto, String ordenOpcion);
 
+    public List<ReportPuestosCargos> reportPuestosCargosPorPersonalObra (String idobra, Long idPersonal);
 }

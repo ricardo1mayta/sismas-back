@@ -30,7 +30,7 @@ public class NotificationTask {
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
 
-    @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+    //@Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
     public void sendNotificactionPendingRegister(){
 
         Mail mail= new Mail();
@@ -62,7 +62,7 @@ public class NotificationTask {
             }
         }
     }
-
+    /*habilitar al subir*/
     @Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
     public void sendNotificationFichaRegistered() throws  Exception{
         Mail mail= new Mail();

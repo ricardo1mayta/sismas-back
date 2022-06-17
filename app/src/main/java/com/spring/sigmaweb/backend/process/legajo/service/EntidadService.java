@@ -46,6 +46,7 @@ public class EntidadService implements IEntidadService{
 
     @Override
     public EntidadDataSelectDTO findByIdEntidadObra(Long idEntidad, String idobra) {
+
         return entidadDao.findByIdEntidadObra(idEntidad, idobra);
     }
 

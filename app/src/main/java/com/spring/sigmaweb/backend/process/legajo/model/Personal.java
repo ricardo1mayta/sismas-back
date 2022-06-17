@@ -28,7 +28,7 @@ import com.spring.sigmaweb.backend.process.generic.model.Persona;
 
 @Entity
 @Table(name = "mo_personal")
-
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
 public class Personal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +38,12 @@ public class Personal implements Serializable {
     @Column(name = "idper_sigma", nullable = false)
     private Long idPerSigma;
 
-    @JsonIgnoreProperties(value = { "alumnos", "familia", "obradocumentos", "usuarios", "personal",
-            "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_obra_per", foreignKey = @ForeignKey(name = "fk_personal_obra"))
     private Obra obraPer;
 
-    @JsonIgnoreProperties(value = {"personal", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "id_pers_per", foreignKey = @ForeignKey(name = "fk_personal_persona"))
     private Persona idPersona;

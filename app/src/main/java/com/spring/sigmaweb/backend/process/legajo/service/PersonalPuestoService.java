@@ -71,4 +71,9 @@ public class PersonalPuestoService implements IPersonalPuestoService{
 
         return personalpuestoDao.reportPuestosCargosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipocontrato, grupSort);
     }
+
+    @Override
+    public List<ReportPuestosCargos> reportPuestosCargosPorPersonalObra(String idobra, Long idPersonal) {
+        return personalpuestoDao.reportPuestosCargosPorPersonalObra(idobra, idPersonal);
+    }
 }

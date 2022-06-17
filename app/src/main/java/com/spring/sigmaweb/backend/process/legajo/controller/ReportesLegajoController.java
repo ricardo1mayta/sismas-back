@@ -120,6 +120,11 @@ public class ReportesLegajoController {
         return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportpuestoscargosidpersonalobra/{idobra}/{idPersonal}")
+    public List<ReportPuestosCargos> reportePuestosCargosPorColaborador(@PathVariable String idobra, @PathVariable Long idPersonal){
+        return personalpuestoservice.reportPuestosCargosPorPersonalObra(idobra, idPersonal);
+    }
 
     //REPORTES DESVINCULACION
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})

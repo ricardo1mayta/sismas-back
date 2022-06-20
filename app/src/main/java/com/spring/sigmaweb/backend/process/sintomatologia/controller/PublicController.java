@@ -52,7 +52,7 @@ public class PublicController {
 
         List<Enfermedad> enfermedades = mapper.map(dto.getListEnfermedad(), new TypeToken<List<Enfermedad>>() {
         }.getType());
-        return null;//publicService.saveFicha(f,enfermedades , sintomas);
+        return publicService.saveFicha(f,enfermedades , sintomas);
     }
 
     @GetMapping("/fichas")

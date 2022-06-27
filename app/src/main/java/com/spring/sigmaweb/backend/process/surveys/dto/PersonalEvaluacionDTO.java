@@ -63,6 +63,35 @@ public class PersonalEvaluacionDTO implements Serializable {
         this.modiporPereval = modiporPereval;
     }
 
+    public PersonalEvaluacionDTO(Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idPeriodoPereval, Integer anioPeri, String codigoperPereval) {
+        this.idEventoPereval = idEventoPereval;
+        this.nombreEvent = nombreEvent;
+        this.idObraPereval = idObraPereval;
+        this.idPersonal = idPersonal;
+        this.nombrePers = nombrePers;
+        this.apePaternoPers = apePaternoPers;
+        this.apeMaternoPers = apeMaternoPers;
+        this.nomCompleto = nomCompleto;
+        this.idPeriodoPereval = idPeriodoPereval;
+        this.anioPeri = anioPeri;
+        this.codigoperPereval = codigoperPereval;
+    }
+
+    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idCargoPuestoPereval, String nombreCargoPuestoPereval, Boolean flgEsCargoprincipalPereval) {
+        this.idPereval = idPereval;
+        this.idEventoPereval = idEventoPereval;
+        this.nombreEvent = nombreEvent;
+        this.idObraPereval = idObraPereval;
+        this.idPersonal = idPersonal;
+        this.nombrePers = nombrePers;
+        this.apePaternoPers = apePaternoPers;
+        this.apeMaternoPers = apeMaternoPers;
+        this.nomCompleto = nomCompleto;
+        this.idCargoPuestoPereval = idCargoPuestoPereval;
+        this.nombreCargoPuestoPereval = nombreCargoPuestoPereval;
+        this.flgEsCargoprincipalPereval = flgEsCargoprincipalPereval;
+    }
+
     public String getNomCompleto() {
         return nomCompleto;
     }

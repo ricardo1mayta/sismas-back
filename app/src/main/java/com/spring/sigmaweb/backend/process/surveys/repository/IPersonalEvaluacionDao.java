@@ -50,4 +50,57 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo);
 
+    @Query("select Distinct new com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO (" +
+            "pe.idEventoPereval," +
+            "ep.nombreEvent," +
+            "o.idobra as idObraPereval," +
+            "p.idPersonal," +
+            "psn.nombrePers," +
+            "psn.apePaternoPers," +
+            "psn.apeMaternoPers," +
+            "TRIM( concat(COALESCE(concat(psn.apePaternoPers,' '), ''), COALESCE(concat(psn.apeMaternoPers, ' '), ''), COALESCE(psn.nombrePers, '')) ) as nomCompleto, " +
+
+            "pe.idPeriodoPereval," +
+            "per.anioPeri," +
+            "pe.codigoperPereval" +
+            ") " +
+            "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
+            "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
+            "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and o.idobra = ep.idObraEvent and ep.idPeriodoEvent=per.idPeriodo) " +
+            "where o.idobra = ?1 "
+
+    )
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra);
+
+    @Query("select new com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO (" +
+            "pe.idPereval," +
+            "pe.idEventoPereval," +
+            "ep.nombreEvent," +
+            "o.idobra as idObraPereval," +
+            "p.idPersonal," +
+            "psn.nombrePers," +
+            "psn.apePaternoPers," +
+            "psn.apeMaternoPers," +
+            "TRIM( concat(COALESCE(concat(psn.apePaternoPers,' '), ''), COALESCE(concat(psn.apeMaternoPers, ' '), ''), COALESCE(psn.nombrePers, '')) ) as nomCompleto, " +
+            "pe.idCargoPuestoPereval," +
+            "(case pe.flgEsCargoprincipalPereval when true then pst.nombrePues else cgo.nombreCar end) as nombreCargoPuestoPereval," +
+            "pe.flgEsCargoprincipalPereval" +
+            ") " +
+            "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
+            "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
+            "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and o.idobra = ep.idObraEvent and ep.idPeriodoEvent=per.idPeriodo) " +
+            "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
+            "left join Puestos pst on (pe.idCargoPuestoPereval = pst.idPuesto and pe.flgEsCargoprincipalPereval = true) " +
+            "left join Cargo cgo on (pe.idCargoPuestoPereval = cgo.idCargo and pe.flgEsCargoprincipalPereval = false) " +
+            "where o.idobra = ?1 " +
+            "and p.idPersonal = ?2 " +
+            "order by (case pe.flgEsCargoprincipalPereval when true then 0 else 1 end)"
+
+    )
+    public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal);
+
 }

@@ -19,4 +19,16 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
     public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu, Long idpuesto, Long idcargo) {
         return personalevaluaciondao.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra) {
+        return personalevaluaciondao.findByIdObraPerevalDistinctList(idobra);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal) {
+         return personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal);
+    }
 }

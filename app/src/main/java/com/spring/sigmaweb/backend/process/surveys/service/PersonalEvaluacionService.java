@@ -1,7 +1,9 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
+import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
+import com.spring.sigmaweb.backend.process.surveys.repository.IMatrizEvaluacionDao;
 import com.spring.sigmaweb.backend.process.surveys.repository.IPersonalEvaluacionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.List;
 public class PersonalEvaluacionService implements IPersonalEvaluacionService {
     @Autowired
     private IPersonalEvaluacionDao personalevaluaciondao;
+
+    @Autowired
+    IMatrizEvaluacionDao matrizEvaluacionDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -29,6 +34,7 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
     @Override
     @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal) {
+
          return personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal);
     }
 }

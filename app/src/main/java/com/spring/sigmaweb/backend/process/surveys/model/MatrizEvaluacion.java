@@ -26,18 +26,11 @@ public class MatrizEvaluacion implements Serializable {
     @Column(nullable = false, name = "id_evaluador_maev")
     private Long idEvaluadorMaev;
 
-    @Column(nullable = false, name = "id_cargo_evaluador_maev")
-    private Long idCargoEvaluadorMaev;
-
     @Column(nullable = false, name = "id_evaluado_maev")
     private Long idEvaluadoMaev;
 
-    @Column(nullable = false, name = "id_cargo_evaluado_maev")
-    private Long idCargoEvaluadoMaev;
-
     @Column(nullable = false, length = 1, name = "estado_maev")
     private String estadoMaev;
-
 
     @Column(nullable = false, name = "fechaing_maev")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -95,28 +88,12 @@ public class MatrizEvaluacion implements Serializable {
         this.idEvaluadorMaev = idEvaluadorMaev;
     }
 
-    public Long getIdCargoEvaluadorMaev() {
-        return idCargoEvaluadorMaev;
-    }
-
-    public void setIdCargoEvaluadorMaev(Long idCargoEvaluadorMaev) {
-        this.idCargoEvaluadorMaev = idCargoEvaluadorMaev;
-    }
-
     public Long getIdEvaluadoMaev() {
         return idEvaluadoMaev;
     }
 
     public void setIdEvaluadoMaev(Long idEvaluadoMaev) {
         this.idEvaluadoMaev = idEvaluadoMaev;
-    }
-
-    public Long getIdCargoEvaluadoMaev() {
-        return idCargoEvaluadoMaev;
-    }
-
-    public void setIdCargoEvaluadoMaev(Long idCargoEvaluadoMaev) {
-        this.idCargoEvaluadoMaev = idCargoEvaluadoMaev;
     }
 
     public String getEstadoMaev() {

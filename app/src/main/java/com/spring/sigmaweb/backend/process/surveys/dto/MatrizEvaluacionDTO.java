@@ -17,6 +17,7 @@ public class MatrizEvaluacionDTO implements Serializable {
     private String descripcionEventoMaev;
 
     private Long idEvaluadorMaev;
+    private Long idPersonalEvaluadorMaev;
     private String nombrePersEvaluador;
     private String apePaternoPersEvaluador;
     private String apeMaternoPersEvaluador;
@@ -28,6 +29,7 @@ public class MatrizEvaluacionDTO implements Serializable {
     private String descripcionTipoGoEvaluador;
 
     private Long idEvaluadoMaev;
+    private Long idPersonalEvaluadoMaev;
     private String nombrePersEvaluado;
     private String apePaternoPersEvaluado;
     private String apeMaternoPersEvaluado;
@@ -56,7 +58,7 @@ public class MatrizEvaluacionDTO implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public MatrizEvaluacionDTO(Long idMatrizEval, String idObraMaev, Long idPeriodoMaev, Integer anioPeriodoMaev, Long idEventoMaev, String descripcionEventoMaev, Long idEvaluadorMaev, String nombrePersEvaluador, String apePaternoPersEvaluador, String apeMaternoPersEvaluador, String nomCompletoEvaluador, Long idCargoEvaluadorMaevEvaluador, String nombreCargoMaevEvaluador, Boolean flgEsCargoprincipalEvaluador, Integer idTipoGoEvaluador, String descripcionTipoGoEvaluador, Long idEvaluadoMaev, String nombrePersEvaluado, String apePaternoPersEvaluado, String apeMaternoPersEvaluado, String nomCompletoEvaluado, Long idCargoEvaluadoMaev, String nombreCargoMaevEvaluado, Boolean flgEsCargoprincipalEvaluado, Integer idTipoGoEvaluado, String descripcionTipoGoEvaluado, String estadoMaev, Date fechaingMaev, String creaporMaev, Date fechamodiMaev, String modiporMaev) {
+    public MatrizEvaluacionDTO(Long idMatrizEval, String idObraMaev, Long idPeriodoMaev, Integer anioPeriodoMaev, Long idEventoMaev, String descripcionEventoMaev, Long idEvaluadorMaev, Long idPersonalEvaluadorMaev, String nombrePersEvaluador, String apePaternoPersEvaluador, String apeMaternoPersEvaluador, String nomCompletoEvaluador, Long idCargoEvaluadorMaevEvaluador, String nombreCargoMaevEvaluador, Boolean flgEsCargoprincipalEvaluador, Integer idTipoGoEvaluador, String descripcionTipoGoEvaluador, Long idEvaluadoMaev, Long idPersonalEvaluadoMaev, String nombrePersEvaluado, String apePaternoPersEvaluado, String apeMaternoPersEvaluado, String nomCompletoEvaluado, Long idCargoEvaluadoMaev, String nombreCargoMaevEvaluado, Boolean flgEsCargoprincipalEvaluado, Integer idTipoGoEvaluado, String descripcionTipoGoEvaluado, String estadoMaev, Date fechaingMaev, String creaporMaev, Date fechamodiMaev, String modiporMaev) {
         this.idMatrizEval = idMatrizEval;
         this.idObraMaev = idObraMaev;
         this.idPeriodoMaev = idPeriodoMaev;
@@ -64,6 +66,7 @@ public class MatrizEvaluacionDTO implements Serializable {
         this.idEventoMaev = idEventoMaev;
         this.descripcionEventoMaev = descripcionEventoMaev;
         this.idEvaluadorMaev = idEvaluadorMaev;
+        this.idPersonalEvaluadorMaev = idPersonalEvaluadorMaev;
         this.nombrePersEvaluador = nombrePersEvaluador;
         this.apePaternoPersEvaluador = apePaternoPersEvaluador;
         this.apeMaternoPersEvaluador = apeMaternoPersEvaluador;
@@ -74,6 +77,7 @@ public class MatrizEvaluacionDTO implements Serializable {
         this.idTipoGoEvaluador = idTipoGoEvaluador;
         this.descripcionTipoGoEvaluador = descripcionTipoGoEvaluador;
         this.idEvaluadoMaev = idEvaluadoMaev;
+        this.idPersonalEvaluadoMaev = idPersonalEvaluadoMaev;
         this.nombrePersEvaluado = nombrePersEvaluado;
         this.apePaternoPersEvaluado = apePaternoPersEvaluado;
         this.apeMaternoPersEvaluado = apeMaternoPersEvaluado;
@@ -336,6 +340,22 @@ public class MatrizEvaluacionDTO implements Serializable {
 
     public void setFlgEsCargoprincipalEvaluado(Boolean flgEsCargoprincipalEvaluado) {
         this.flgEsCargoprincipalEvaluado = flgEsCargoprincipalEvaluado;
+    }
+
+    public Long getIdPersonalEvaluadorMaev() {
+        return idPersonalEvaluadorMaev;
+    }
+
+    public void setIdPersonalEvaluadorMaev(Long idPersonalEvaluadorMaev) {
+        this.idPersonalEvaluadorMaev = idPersonalEvaluadorMaev;
+    }
+
+    public Long getIdPersonalEvaluadoMaev() {
+        return idPersonalEvaluadoMaev;
+    }
+
+    public void setIdPersonalEvaluadoMaev(Long idPersonalEvaluadoMaev) {
+        this.idPersonalEvaluadoMaev = idPersonalEvaluadoMaev;
     }
 
     private static final long serialVersionUID = 1L;

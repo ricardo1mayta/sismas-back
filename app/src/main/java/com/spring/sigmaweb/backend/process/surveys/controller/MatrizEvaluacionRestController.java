@@ -30,10 +30,22 @@ public class MatrizEvaluacionRestController {
 
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/matrizevalucionobrapersonalcargo/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
-    public List<MatrizEvaluacionDTO> showPersonalEvaluacionList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
+    @GetMapping("/matrizevalucionobrapersonalcargoEvaluador/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
+    public List<MatrizEvaluacionDTO> showPersonalEvaluacionEvaluadorList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
+        System.out.println(idobra);
         Boolean esprinc = (esPrincipal==1 ? true : false);
         return matrizEvaluadorService.findListaByObraByPeriodoByEventoidByEvaluador(idobra,idpersonal, idcargoPuesto, esprinc);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/matrizevalucionobrapersonalcargoEvaluado/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
+    public List<MatrizEvaluacionDTO> showPersonalEvaluacionEvaluadoList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
+        System.out.println(idobra);
+        System.out.println(idpersonal);
+        System.out.println(idcargoPuesto);
+        System.out.println(esPrincipal);
+        Boolean esprinc = (esPrincipal==1 ? true : false);
+        return matrizEvaluadorService.findListaByObraByPeriodoByEventoidByEvaluado(idobra,idpersonal, idcargoPuesto, esprinc);
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
@@ -42,6 +54,9 @@ public class MatrizEvaluacionRestController {
     public ResponseEntity<?> createMatrizEvaluacion(@RequestBody MatrizEvaluacionDTO matriz, BindingResult result) {
         MatrizEvaluacion matrizNew= null;
         MatrizEvaluacion matrizInsert= null;
+
+
+
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -54,6 +69,18 @@ public class MatrizEvaluacionRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
+            //Valida si ya esta registrado el mismo personal en la evaluación
+            List<MatrizEvaluacion> findRes = matrizEvaluadorService.contarEvaluadoresEvaluado(matriz.getIdObraMaev(), matriz.getIdPersonalEvaluadorMaev(), matriz.getIdPersonalEvaluadoMaev());
+
+            if(findRes !=null){
+                if(findRes.size()>0){
+                    response.put("mensaje", "Evaluador evalua mas de 1 vez al evaluado!");
+                    response.put("error", "error de validación");
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+                }
+            }
+
+
             matrizInsert = new MatrizEvaluacion();
             matrizInsert.setIdObraMaev(matriz.getIdObraMaev());
             matrizInsert.setIdPeriodoMaev(matriz.getIdPeriodoMaev());
@@ -97,6 +124,13 @@ public class MatrizEvaluacionRestController {
         response.put("mensaje", " Se elimino el registro correctamente");
         response.put("matrizevaluadorDel", matrizdelete);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/matrizevalucioncountEvaluadoresevaluado/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
+    public Integer countEvaluadoresPorEvaluador(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
+        Boolean esprinc = (esPrincipal==1 ? true : false);
+        return matrizEvaluadorService.spuCountEvaluadoresEvaluado(idobra,idpersonal, idcargoPuesto, esprinc);
     }
 
 }

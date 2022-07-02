@@ -27,6 +27,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "evaluador.idCargoPuestoPereval," +
             "(case evaluador.flgEsCargoprincipalPereval when true then ptoevaluador.nombrePues else cgoevaluador.nombreCar end) as nombreCargoMaevEvaluador," +
             "evaluador.flgEsCargoprincipalPereval as flgEsCargoprincipalEvaluador," +
+            "evaluador.flgPrincipalEvalPereval as flgPrincipalEvalEvaluador," +
             "evaluador.idGrupoOcupacionalPereval as idTipoGoEvaluador," +
             "goevaluador.descripTab as descripcionTipoGoEvaluador," +
             "me.idEvaluadoMaev," +
@@ -38,6 +39,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "evaluado.idCargoPuestoPereval," +
             "(case evaluado.flgEsCargoprincipalPereval when true then ptoevaluado.nombrePues else cgoevaluado.nombreCar end) as nombreCargoMaevEvaluado," +
             "evaluado.flgEsCargoprincipalPereval as flgEsCargoprincipalEvaluado," +
+            "evaluado.flgPrincipalEvalPereval as flgPrincipalEvalEvaluado," +
             "evaluado.idGrupoOcupacionalPereval as idTipoGoEvaluado," +
             "goevaluado.descripTab as descripcionTipoGoEvaluado," +
             "me.estadoMaev," +
@@ -64,7 +66,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "where o.idobra = ?1 " +
             "and pevaluador.idPersonal=?2 " +
             "and evaluador.idCargoPuestoPereval = ?3 " +
-            "and evaluador.flgEsCargoprincipalPereval=?4 "
+            "and evaluador.flgEsCargoprincipalPereval=?4 " +
+            "order by psnevaluador.apePaternoPers, psnevaluador.apeMaternoPers, psnevaluador.nombrePers "
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal );
 
@@ -84,6 +87,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "evaluador.idCargoPuestoPereval," +
             "(case evaluador.flgEsCargoprincipalPereval when true then ptoevaluador.nombrePues else cgoevaluador.nombreCar end) as nombreCargoMaevEvaluador," +
             "evaluador.flgEsCargoprincipalPereval as flgEsCargoprincipalEvaluador," +
+            "evaluador.flgPrincipalEvalPereval as flgPrincipalEvalEvaluador," +
             "evaluador.idGrupoOcupacionalPereval as idTipoGoEvaluador," +
             "goevaluador.descripTab as descripcionTipoGoEvaluador," +
             "me.idEvaluadoMaev," +
@@ -95,6 +99,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "evaluado.idCargoPuestoPereval," +
             "(case evaluado.flgEsCargoprincipalPereval when true then ptoevaluado.nombrePues else cgoevaluado.nombreCar end) as nombreCargoMaevEvaluado," +
             "evaluado.flgEsCargoprincipalPereval as flgEsCargoprincipalEvaluado," +
+            "evaluado.flgPrincipalEvalPereval as flgPrincipalEvalEvaluado," +
             "evaluado.idGrupoOcupacionalPereval as idTipoGoEvaluado," +
             "goevaluado.descripTab as descripcionTipoGoEvaluado," +
             "me.estadoMaev," +
@@ -121,7 +126,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "where o.idobra = ?1 " +
             "and pevaluado.idPersonal=?2 " +
             "and evaluado.idCargoPuestoPereval = ?3 " +
-            "and evaluado.flgEsCargoprincipalPereval=?4"
+            "and evaluado.flgEsCargoprincipalPereval=?4 " +
+            "order by psnevaluado.apePaternoPers, psnevaluado.apeMaternoPers, psnevaluado.nombrePers"
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluado(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal);
 

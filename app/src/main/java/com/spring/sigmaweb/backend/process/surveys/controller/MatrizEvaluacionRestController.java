@@ -32,7 +32,7 @@ public class MatrizEvaluacionRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/matrizevalucionobrapersonalcargoEvaluador/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
     public List<MatrizEvaluacionDTO> showPersonalEvaluacionEvaluadorList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
-        System.out.println(idobra);
+
         Boolean esprinc = (esPrincipal==1 ? true : false);
         return matrizEvaluadorService.findListaByObraByPeriodoByEventoidByEvaluador(idobra,idpersonal, idcargoPuesto, esprinc);
     }
@@ -40,10 +40,7 @@ public class MatrizEvaluacionRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/matrizevalucionobrapersonalcargoEvaluado/{idobra}/{idpersonal}/{idcargoPuesto}/{esPrincipal}")
     public List<MatrizEvaluacionDTO> showPersonalEvaluacionEvaluadoList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal){
-        System.out.println(idobra);
-        System.out.println(idpersonal);
-        System.out.println(idcargoPuesto);
-        System.out.println(esPrincipal);
+
         Boolean esprinc = (esPrincipal==1 ? true : false);
         return matrizEvaluadorService.findListaByObraByPeriodoByEventoidByEvaluado(idobra,idpersonal, idcargoPuesto, esprinc);
     }

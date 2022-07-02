@@ -28,6 +28,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "per.anioPeri," +
             "pe.codigoperPereval," +
             "pe.flgEsCargoprincipalPereval," +
+            "pe.flgPrincipalEvalPereval," +
             "tgo.codigoTab as idGrupoOcupacionalPereval," +
             "tgo.descripTab as nombreGrupoOcupacionalPereval," +
             "pe.fechaingPereval," +
@@ -87,7 +88,8 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "TRIM( concat(COALESCE(concat(psn.apePaternoPers,' '), ''), COALESCE(concat(psn.apeMaternoPers, ' '), ''), COALESCE(psn.nombrePers, '')) ) as nomCompleto, " +
             "pe.idCargoPuestoPereval," +
             "(case pe.flgEsCargoprincipalPereval when true then pst.nombrePues else cgo.nombreCar end) as nombreCargoPuestoPereval," +
-            "pe.flgEsCargoprincipalPereval" +
+            "pe.flgEsCargoprincipalPereval, " +
+            "pe.flgPrincipalEvalPereval" +
             ") " +
             "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
             "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +

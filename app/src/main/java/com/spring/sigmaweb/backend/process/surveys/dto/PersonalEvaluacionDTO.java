@@ -25,6 +25,7 @@ public class PersonalEvaluacionDTO implements Serializable {
     private String codigoperPereval;
 
     private Boolean flgEsCargoprincipalPereval;
+    private Boolean flgPrincipalEvalPereval;
     private Integer idGrupoOcupacionalPereval;
     private String nombreGrupoOcupacionalPereval;
 
@@ -39,7 +40,7 @@ public class PersonalEvaluacionDTO implements Serializable {
     private Date fechamodiPereval;
     private String modiporPereval;
 
-    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idCargoPuestoPereval, String nombreCargoPuestoPereval, Long idPeriodoPereval, Integer anioPeri, String codigoperPereval, Boolean flgEsCargoprincipalPereval, Integer idGrupoOcupacionalPereval, String nombreGrupoOcupacionalPereval, Date fechaingPereval, String creaporPereval, Date fechamodiPereval, String modiporPereval) {
+    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idCargoPuestoPereval, String nombreCargoPuestoPereval, Long idPeriodoPereval, Integer anioPeri, String codigoperPereval, Boolean flgEsCargoprincipalPereval,Boolean flgPrincipalEvalPereval, Integer idGrupoOcupacionalPereval, String nombreGrupoOcupacionalPereval, Date fechaingPereval, String creaporPereval, Date fechamodiPereval, String modiporPereval) {
         this.idPereval = idPereval;
         this.idEventoPereval = idEventoPereval;
         this.nombreEvent = nombreEvent;
@@ -55,6 +56,7 @@ public class PersonalEvaluacionDTO implements Serializable {
         this.anioPeri = anioPeri;
         this.codigoperPereval = codigoperPereval;
         this.flgEsCargoprincipalPereval = flgEsCargoprincipalPereval;
+        this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
         this.idGrupoOcupacionalPereval = idGrupoOcupacionalPereval;
         this.nombreGrupoOcupacionalPereval = nombreGrupoOcupacionalPereval;
         this.fechaingPereval = fechaingPereval;
@@ -77,7 +79,7 @@ public class PersonalEvaluacionDTO implements Serializable {
         this.codigoperPereval = codigoperPereval;
     }
 
-    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idCargoPuestoPereval, String nombreCargoPuestoPereval, Boolean flgEsCargoprincipalPereval) {
+    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, String nombreEvent, String idObraPereval, Long idPersonal, String nombrePers, String apePaternoPers, String apeMaternoPers, String nomCompleto, Long idCargoPuestoPereval, String nombreCargoPuestoPereval, Boolean flgEsCargoprincipalPereval, Boolean flgPrincipalEvalPereval) {
         this.idPereval = idPereval;
         this.idEventoPereval = idEventoPereval;
         this.nombreEvent = nombreEvent;
@@ -90,6 +92,7 @@ public class PersonalEvaluacionDTO implements Serializable {
         this.idCargoPuestoPereval = idCargoPuestoPereval;
         this.nombreCargoPuestoPereval = nombreCargoPuestoPereval;
         this.flgEsCargoprincipalPereval = flgEsCargoprincipalPereval;
+        this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
     }
 
     public String getNomCompleto() {
@@ -258,5 +261,13 @@ public class PersonalEvaluacionDTO implements Serializable {
 
     public void setModiporPereval(String modiporPereval) {
         this.modiporPereval = modiporPereval;
+    }
+
+    public Boolean getFlgPrincipalEvalPereval() {
+        return flgPrincipalEvalPereval;
+    }
+
+    public void setFlgPrincipalEvalPereval(Boolean flgPrincipalEvalPereval) {
+        this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
     }
 }

@@ -37,11 +37,6 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     @Override
     @Transactional(readOnly = true)
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluado(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal) {
-        System.out.println(idobra);
-        System.out.println(idpersonal);
-        System.out.println(idcargoPuesto);
-        System.out.println(esPrincipal);
-
         return matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluado(idobra, idpersonal, idcargoPuesto, esPrincipal);
     }
 

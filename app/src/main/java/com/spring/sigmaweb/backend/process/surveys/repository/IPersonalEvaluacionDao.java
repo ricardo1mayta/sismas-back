@@ -48,7 +48,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "and tgo.codigoTab = (case ?2 when -1 then tgo.codigoTab else ?2 end )" +
             "and coalesce(pst.idPuesto,0) = (case ?3 when -1 then coalesce(pst.idPuesto, 0) else ?3 end )" +
             "and coalesce(cgo.idCargo,0) = (case ?4 when -1 then coalesce(cgo.idCargo,0) else ?4 end ) " +
-            "order by psn.apePaternoPers,psn.apeMaternoPers,psn.nombrePers,  (case pe.flgEsCargoprincipalPereval when true then 0 else 1 end)"
+            "order by psn.apePaternoPers,psn.apeMaternoPers,psn.nombrePers,  (case pe.flgPrincipalEvalPereval when true then 0 else 1 end)"
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo);
 
@@ -101,7 +101,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "left join Cargo cgo on (pe.idCargoPuestoPereval = cgo.idCargo and pe.flgEsCargoprincipalPereval = false) " +
             "where o.idobra = ?1 " +
             "and p.idPersonal = ?2 " +
-            "order by (case pe.flgEsCargoprincipalPereval when true then 0 else 1 end)"
+            "order by (case pe.flgPrincipalEvalPereval when true then 0 else 1 end)"
 
     )
     public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal);

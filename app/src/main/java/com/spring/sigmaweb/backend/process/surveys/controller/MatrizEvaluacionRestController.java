@@ -130,4 +130,14 @@ public class MatrizEvaluacionRestController {
         return matrizEvaluadorService.spuCountEvaluadoresEvaluado(idobra,idpersonal, idcargoPuesto, esprinc);
     }
 
+    //REPORTES EVALUACION DE DESEMPEÑO
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportevaluadoevaluador/{idobra}/{tipo}/{idpersonal}/{idcargoPuesto}/{esPrincipal}/{idperiodo}")
+    public List<MatrizEvaluacionDTO> showReportesEvaluadoEvaluador(@PathVariable String idobra, @PathVariable String tipo, @PathVariable Long idpersonal, @PathVariable Long idcargoPuesto, @PathVariable Integer esPrincipal, @PathVariable Long idperiodo){
+
+
+        return matrizEvaluadorService.reportEvaluadoEvaluador(idobra, tipo, idpersonal, idcargoPuesto, esPrincipal, idperiodo);
+    }
+
+
 }

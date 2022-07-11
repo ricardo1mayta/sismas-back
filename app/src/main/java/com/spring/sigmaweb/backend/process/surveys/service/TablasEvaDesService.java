@@ -106,7 +106,24 @@ public class TablasEvaDesService implements ITablasEvaDesService{
     }
 
     @Override
-    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcomp(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp) {
-        return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcomp(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    public PreguntasCompetencia findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(Long idcompetenciapregcomp, Long idpreguntapregcomp, Long idgrupopregcomp, Long ideventopregcomp, Long idpregcomp) {
+        return preguntascompetenciadao.findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(idcompetenciapregcomp, idpreguntapregcomp, idgrupopregcomp, ideventopregcomp,idpregcomp);
+    }
+
+    @Override
+    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp) {
+        return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Override
+    @Transactional
+    public PreguntasCompetencia savePreguntaComp(PreguntasCompetencia preguntasCompetencia) {
+        return preguntascompetenciadao.save(preguntasCompetencia);
+    }
+
+    @Override
+    @Transactional
+    public void deletePreguntacomp(PreguntasCompetencia preguntasCompetencia) {
+        preguntascompetenciadao.delete(preguntasCompetencia);
     }
 }

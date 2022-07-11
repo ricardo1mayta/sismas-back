@@ -10,6 +10,8 @@ import java.util.List;
 public interface IPreguntasCompetenciaDao extends CrudRepository<PreguntasCompetencia,Long> {
     
     public PreguntasCompetencia findByIdPregcomp(Long idpregcomp);
+
+    public PreguntasCompetencia findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(Long idcompetenciapregcomp, Long idpreguntapregcomp, Long idgrupopregcomp, Long ideventopregcomp,Long idpregcomp);
     
     @Query("select new com.spring.sigmaweb.backend.process.surveys.dto.PreguntasCompetenciaDTO(" +
             "pc.idPregcomp," +
@@ -35,6 +37,6 @@ public interface IPreguntasCompetenciaDao extends CrudRepository<PreguntasCompet
             "inner join TablasTabla tabgo on (pc.idGrupoPregcomp = tabgo.codigoTab ) " +
             "where o.idobra = 'SECTOR' and pc.idEventoPregcomp=?1 and pc.idGrupoPregcomp=?2 and pc.idCompetenciaPregcomp=?3 "
     )
-    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcomp(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
+    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
     
 }

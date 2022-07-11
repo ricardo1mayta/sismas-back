@@ -41,6 +41,12 @@ public interface ITablasEvaDesService {
     /*PreguntasCompetencias*/
     public PreguntasCompetencia findByIdPregcomp(Long idpregcomp);
 
-    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcomp(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
+    public PreguntasCompetencia findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(Long idcompetenciapregcomp, Long idpreguntapregcomp, Long idgrupopregcomp, Long ideventopregcomp,Long idpregcomp);
+
+    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
+
+    public PreguntasCompetencia savePreguntaComp(PreguntasCompetencia preguntasCompetencia);
+
+    public void  deletePreguntacomp(PreguntasCompetencia preguntasCompetencia);
 
 }

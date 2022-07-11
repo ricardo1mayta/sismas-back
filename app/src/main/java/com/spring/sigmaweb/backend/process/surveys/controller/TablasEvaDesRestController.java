@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.generic.service.IEventosPeriodoServic
 import com.spring.sigmaweb.backend.process.surveys.dto.PreguntasCompetenciaDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.Competencia;
 import com.spring.sigmaweb.backend.process.surveys.model.Pregunta;
+import com.spring.sigmaweb.backend.process.surveys.model.PreguntasCompetencia;
 import com.spring.sigmaweb.backend.process.surveys.service.ITablasEvaDesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -251,7 +252,84 @@ public class TablasEvaDesRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/listapreguntasxcompetencia/{Ideventopregcomp}/{idgrupopregcomp}/{idcompetenciapregcomp}")
     public List<PreguntasCompetenciaDTO> showPreguntasPorCompetenciaList(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Long idcompetenciapregcomp){
-        return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcomp(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+        return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @PostMapping("/preguntacompetenciasave/{idperiodo}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createPreguntaCompetencia(@RequestBody PreguntasCompetenciaDTO preguntacompetencia, @PathVariable Long idperiodo, BindingResult result) {
+        PreguntasCompetencia pregcompeNew= null;
+        PreguntasCompetencia pregcompeInsert= null;
+
+        List<EventosPeriodo> findEvento= eventosperiodoService.findByIdObraEventAndTipoEventAndIdPeriodoEvent("SECTOR", 40101, idperiodo);
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            if(findEvento.size() == 0) {
+                response.put("mensaje", "Error al realizar el insert en la base de datos");
+                response.put("error", "No existe un evento para evaluación de desempeño en el periodo seleccionado");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+            }
+
+            if(findEvento.size() > 1) {
+                response.put("mensaje", "Error al realizar el insert en la base de datos");
+                response.put("error", "Hay mas de un evento de Evaluación de Desempeño en el mismo año");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+            }
+            pregcompeInsert = new PreguntasCompetencia();
+            pregcompeInsert.setIdCompetenciaPregcomp(preguntacompetencia.getIdCompetenciaPregcomp());
+            pregcompeInsert.setIdPreguntaPregcomp(preguntacompetencia.getIdPreguntaPregcomp());
+            pregcompeInsert.setIdGrupoPregcomp(preguntacompetencia.getIdGrupoPregcomp());
+            pregcompeInsert.setIdEventoPregcomp(preguntacompetencia.getIdEventoPregcomp());
+
+            pregcompeInsert.setFlgActivoPregcomp(preguntacompetencia.getFlgActivoPregcomp());
+            pregcompeInsert.setFechaingPregcomp(new Date());
+            pregcompeInsert.setCreaporPregcomp(preguntacompetencia.getCreaporPregcomp());
+
+            pregcompeNew = tablasevadesService.savePreguntaComp(pregcompeInsert);
+
+        } catch (DataAccessException e){
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El item ha sido creado con éxito!");
+        response.put("preguntacompetencia", pregcompeNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/preguntacompetenciadelete/{idcompetencia}/{idPregunta}/{idgrupo}/{idevento}/{idpregcomp}")
+    public ResponseEntity<?> deletePreguntaCompetencia(@PathVariable Long idcompetencia, @PathVariable Long idPregunta, @PathVariable Long idgrupo, @PathVariable Long idevento, @PathVariable Long idpregcomp){
+        Map<String, Object> response = new HashMap<>();
+        PreguntasCompetencia pregcompedelete = tablasevadesService.findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(idcompetencia, idPregunta, idgrupo, idevento, idpregcomp);
+        try {
+            /*falta verificar que no este usado en otra tabla relacionada*/
+
+            if(pregcompedelete != null){
+                tablasevadesService.deletePreguntacomp(pregcompedelete);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el registro");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el registro correctamente");
+        response.put("preguntacompetencia", pregcompedelete);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 

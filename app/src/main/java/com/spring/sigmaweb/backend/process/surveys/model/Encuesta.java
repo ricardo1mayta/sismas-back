@@ -17,6 +17,9 @@ public class Encuesta implements Serializable {
     @Column(nullable = false, name = "id_matrizeval_encuesta")
     private Long idMatrizevalEncuesta;
 
+    @Column(nullable = false, length = 6,name = "id_obra_encuesta")
+    private String idObraEncuesta;
+
     @Column(nullable = false, name = "total_preguntas_encuesta")
     private Integer totalPreguntasEncuesta;
 
@@ -71,6 +74,14 @@ public class Encuesta implements Serializable {
 
     public void setIdMatrizevalEncuesta(Long idMatrizevalEncuesta) {
         this.idMatrizevalEncuesta = idMatrizevalEncuesta;
+    }
+
+    public String getIdObraEncuesta() {
+        return idObraEncuesta;
+    }
+
+    public void setIdObraEncuesta(String idObraEncuesta) {
+        this.idObraEncuesta = idObraEncuesta;
     }
 
     public Integer getTotalPreguntasEncuesta() {

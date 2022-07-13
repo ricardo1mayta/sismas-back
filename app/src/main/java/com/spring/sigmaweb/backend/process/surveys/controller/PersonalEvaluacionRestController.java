@@ -19,9 +19,9 @@ public class PersonalEvaluacionRestController {
     private IPersonalEvaluacionService personalevaluacionservice;
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalevalaniolist/{idobra}/{idgruoocu}/{idpuesto}/{idcargo}")
-    public List<PersonalEvaluacionDTO> showPersonalEvaluacionList(@PathVariable String idobra, @PathVariable Integer idgruoocu , @PathVariable Long idpuesto, @PathVariable Long idcargo){
-        return personalevaluacionservice.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo);
+    @GetMapping("/personalevalaniolist/{idobra}/{idgruoocu}/{idpuesto}/{idcargo}/{principal}")
+    public List<PersonalEvaluacionDTO> showPersonalEvaluacionList(@PathVariable String idobra, @PathVariable Integer idgruoocu , @PathVariable Long idpuesto, @PathVariable Long idcargo, @PathVariable Integer principal){
+        return personalevaluacionservice.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo, principal);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
@@ -31,9 +31,9 @@ public class PersonalEvaluacionRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/personalevalcargospuestoporpersonal/{idobra}/{idpersonal}")
-    public List<PersonalEvaluacionDTO> showPuestosCargosPersonalEval(@PathVariable String idobra, @PathVariable Long idpersonal){
-        return personalevaluacionservice.findByIdObraPersonallListCargosPuestos(idobra, idpersonal);
+    @GetMapping("/personalevalcargospuestoporpersonal/{idobra}/{idpersonal}/{esPrincipal}")
+    public List<PersonalEvaluacionDTO> showPuestosCargosPersonalEval(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Integer esPrincipal){
+        return personalevaluacionservice.findByIdObraPersonallListCargosPuestos(idobra, idpersonal, esPrincipal);
     }
 
 }

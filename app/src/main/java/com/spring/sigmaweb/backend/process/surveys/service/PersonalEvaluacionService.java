@@ -21,8 +21,8 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu, Long idpuesto, Long idcargo) {
-        return personalevaluaciondao.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo);
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo, Integer principal) {
+        return personalevaluaciondao.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo, principal);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal) {
+    public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal, Integer esPrincipal) {
 
-         return personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal);
+         return personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal, esPrincipal);
     }
 }

@@ -16,9 +16,9 @@ public class ReportesEvaluacionDesRestController {
     private IReportesEvaluacionDesService reportesEvaluaciondes;
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reportcountevaluaciones/{idobra}/{idperiodo}/{tipo}/{orden}")
-    public List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(@PathVariable String idobra, @PathVariable Long idperiodo, @PathVariable String tipo, @PathVariable String orden){
-        return reportesEvaluaciondes.reportCountEvaluaciones(idobra, idperiodo, tipo, orden);
+    @GetMapping("/reportcountevaluaciones/{idobra}/{idperiodo}/{tipo}/{idgo}/{idnivelp}/{orden}")
+    public List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(@PathVariable String idobra, @PathVariable Long idperiodo, @PathVariable String tipo, @PathVariable Long idgo, @PathVariable Long idnivelp, @PathVariable String orden){
+        return reportesEvaluaciondes.reportCountEvaluaciones(idobra, idperiodo, tipo, idgo, idnivelp, orden);
     }
 
 }

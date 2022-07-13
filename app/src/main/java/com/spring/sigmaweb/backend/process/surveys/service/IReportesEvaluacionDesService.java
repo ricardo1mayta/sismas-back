@@ -5,5 +5,5 @@ import com.spring.sigmaweb.backend.process.surveys.model.report.ReportCountEvalu
 import java.util.List;
 
 public interface IReportesEvaluacionDesService {
-    List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(String idobra, Long idperiodo, String tipo, String orden);
+    public List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(String idobra, Long idperiodo, String tipo, Long idgo, Long idnivelp, String orden);
 }

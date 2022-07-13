@@ -106,13 +106,18 @@ public class TablasEvaDesService implements ITablasEvaDesService{
     }
 
     @Override
-    public PreguntasCompetencia findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(Long idcompetenciapregcomp, Long idpreguntapregcomp, Long idgrupopregcomp, Long ideventopregcomp, Long idpregcomp) {
+    public PreguntasCompetencia findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(Long idcompetenciapregcomp, Long idpreguntapregcomp, Integer idgrupopregcomp, Long ideventopregcomp, Long idpregcomp) {
         return preguntascompetenciadao.findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(idcompetenciapregcomp, idpreguntapregcomp, idgrupopregcomp, ideventopregcomp,idpregcomp);
     }
 
     @Override
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp) {
         return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Override
+    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp) {
+        return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp,idgrupopregcomp);
     }
 
     @Override

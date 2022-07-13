@@ -1,10 +1,11 @@
 package com.spring.sigmaweb.backend.process.surveys.controller;
 
-import com.spring.sigmaweb.backend.process.generic.model.Periodo;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
+
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
-import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
+
+import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
+import com.spring.sigmaweb.backend.process.surveys.service.IEncuestaService;
 import com.spring.sigmaweb.backend.process.surveys.service.IMatrizEvaluadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,6 +28,9 @@ public class MatrizEvaluacionRestController {
 
     @Autowired
     private IMatrizEvaluadorService matrizEvaluadorService;
+
+    @Autowired
+    private IEncuestaService encuestaService;
 
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
@@ -51,9 +55,7 @@ public class MatrizEvaluacionRestController {
     public ResponseEntity<?> createMatrizEvaluacion(@RequestBody MatrizEvaluacionDTO matriz, BindingResult result) {
         MatrizEvaluacion matrizNew= null;
         MatrizEvaluacion matrizInsert= null;
-
-
-
+        Encuesta encuestaInsert=null;
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -89,6 +91,16 @@ public class MatrizEvaluacionRestController {
             matrizInsert.setCreaporMaev(matriz.getCreaporMaev());
 
             matrizNew = matrizEvaluadorService.saveMatrizEvaluacion(matrizInsert);
+            //crea la cabecera de la encuesta
+            encuestaInsert =new Encuesta();
+            encuestaInsert.setIdMatrizevalEncuesta(matrizNew.getIdMatrizEval());
+            encuestaInsert.setIdObraEncuesta(matrizNew.getIdObraMaev());
+            encuestaInsert.setTotalPreguntasEncuesta(0); //no se a especificado
+            encuestaInsert.setFlg_activoEncuesta(true); //inicial
+            encuestaInsert.setFlgEstadoEncuesta("R"); //Registrado
+            encuestaInsert.setFechaingEncuesta(new Date());
+            encuestaInsert.setCreaporEncuesta(matriz.getCreaporMaev());
+            encuestaService.saveEncuesta(encuestaInsert);
 
         } catch (DataAccessException e){
             response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -105,12 +117,28 @@ public class MatrizEvaluacionRestController {
     @DeleteMapping("/deletematrizevaluacion/{idobra}/{idmatrizEval}/{idperiodo}/{idevento}")
     public ResponseEntity<?> deleteAll(@PathVariable Long idmatrizEval, @PathVariable String idobra, @PathVariable Long idperiodo, @PathVariable Long idevento){
         Map<String, Object> response = new HashMap<>();
+        Boolean actoEliminar = true;
+        Encuesta encuestaDelete = null;
         MatrizEvaluacion matrizdelete = matrizEvaluadorService.findByIdObraMaevAndIdMatrizEvalAndIdPeriodoMaevAndIdEventoMaev(idobra,idmatrizEval,idperiodo,idevento);
+
         try {
 
-
             if(matrizdelete != null){
-                matrizEvaluadorService.deleteMatrizEvaluador(matrizdelete);
+
+                encuestaDelete = encuestaService.findByIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(idmatrizEval, idobra, idevento);
+                actoEliminar = this.encuestaService.estadodeEncuestaBorrar(encuestaDelete.getIdEncuesta(), matrizdelete.getIdMatrizEval(), matrizdelete.getIdObraMaev());
+                if(actoEliminar){
+                    encuestaService.deleteEncuesta(encuestaDelete);
+                    matrizEvaluadorService.deleteMatrizEvaluador(matrizdelete);
+                } else {
+                    response.put("mensaje", "No se puede Eliminar ");
+                    response.put("error", "Hay datos relacionados a esta evaluación");
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+                }
+            } else{
+                response.put("mensaje", "Matriz no encontrada");
+                response.put("error", "no se encuentra la matriz con los codigos indicados: " + idobra + "," + idmatrizEval + "," + idperiodo + "," + idevento);
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
             }
 
         } catch (DataAccessException e) {

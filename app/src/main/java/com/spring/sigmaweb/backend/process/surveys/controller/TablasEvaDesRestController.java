@@ -255,6 +255,12 @@ public class TablasEvaDesRestController {
         return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
     }
 
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/listacompetenciasgrupoevento/{Ideventopregcomp}/{idgrupopregcomp}")
+    public List<PreguntasCompetenciaDTO> showListaCompetenciasGrupoEvento(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp){
+        return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp, idgrupopregcomp);
+    }
+
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @PostMapping("/preguntacompetenciasave/{idperiodo}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -312,7 +318,7 @@ public class TablasEvaDesRestController {
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @DeleteMapping("/preguntacompetenciadelete/{idcompetencia}/{idPregunta}/{idgrupo}/{idevento}/{idpregcomp}")
-    public ResponseEntity<?> deletePreguntaCompetencia(@PathVariable Long idcompetencia, @PathVariable Long idPregunta, @PathVariable Long idgrupo, @PathVariable Long idevento, @PathVariable Long idpregcomp){
+    public ResponseEntity<?> deletePreguntaCompetencia(@PathVariable Long idcompetencia, @PathVariable Long idPregunta, @PathVariable Integer idgrupo, @PathVariable Long idevento, @PathVariable Long idpregcomp){
         Map<String, Object> response = new HashMap<>();
         PreguntasCompetencia pregcompedelete = tablasevadesService.findByIdCompetenciaPregcompAndIdPreguntaPregcompAndIdGrupoPregcompAndIdEventoPregcompAndIdPregcomp(idcompetencia, idPregunta, idgrupo, idevento, idpregcomp);
         try {

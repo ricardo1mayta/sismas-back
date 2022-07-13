@@ -16,17 +16,21 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
     EntityManager entityManager;
 
     @Override
-    public List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(String idobra, Long idperiodo, String tipo, String orden) {
+    public List<ReportCountEvaluacionesEvalDes> reportCountEvaluaciones(String idobra, Long idperiodo, String tipo, Long idgo, Long idnivelp, String orden) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_reportCountEvaluadoEvaluador", "ReportCountEvaluacionesEvalDes");
         query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_idperiodo", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_tipo", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idgrupo_ocu", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idtipoplanilla", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_orden", String.class, ParameterMode.IN);
 
 
         query.setParameter("p_obra", idobra);
         query.setParameter("p_idperiodo", idperiodo);
         query.setParameter("p_tipo", tipo);
+        query.setParameter("p_idgrupo_ocu", idgo);
+        query.setParameter("p_idtipoplanilla", idnivelp);
         query.setParameter("p_orden", orden);
 
 

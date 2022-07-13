@@ -24,6 +24,9 @@ public class EncuestaDet implements Serializable {
     @Column(nullable = false, name = "id_competencia_encdet")
     private Long idCompetenciaEncdet;
 
+    @Column(nullable = false, length = 6, name = "id_obra_encdet")
+    private Long idObraEncdet;
+
     @Column(nullable = false, name = "respuesta_encdet")
     private Integer respuestaEncdet;
 
@@ -70,6 +73,14 @@ public class EncuestaDet implements Serializable {
 
     public void setIdCompetenciaEncdet(Long idCompetenciaEncdet) {
         this.idCompetenciaEncdet = idCompetenciaEncdet;
+    }
+
+    public Long getIdObraEncdet() {
+        return idObraEncdet;
+    }
+
+    public void setIdObraEncdet(Long idObraEncdet) {
+        this.idObraEncdet = idObraEncdet;
     }
 
     public Integer getRespuestaEncdet() {

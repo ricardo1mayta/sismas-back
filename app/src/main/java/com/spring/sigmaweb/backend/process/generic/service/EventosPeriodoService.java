@@ -20,6 +20,11 @@ public class EventosPeriodoService implements IEventosPeriodoService{
     }
 
     @Override
+    public List<EventosPeriodo> findByIdObraEventAndTipoEventAndIdPeriodoEvent(String idobraevent, Integer tipoEvent, Long idperiodo) {
+        return eventosperiododao.findByIdObraEventAndTipoEventAndIdPeriodoEvent(idobraevent, tipoEvent, idperiodo);
+    }
+
+    @Override
     public List<EventosPeriodoDTO> findByObraAndPeriodoAndAnioPeri(String idobra, Long idperiodo, String estadoevent, String tipoevent) {
         String[] lista= tipoevent.split(",");
         Integer[] listaInt=new Integer[lista.length];
@@ -28,6 +33,18 @@ public class EventosPeriodoService implements IEventosPeriodoService{
             listaInt[i] = Integer.parseInt(lista[i]);
         }
         return eventosperiododao.findByObraAndPeriodoAndAnioPeri(idobra, idperiodo, estadoevent, listaInt);
+    }
+
+    @Override
+    public List<EventosPeriodoDTO> findByObraAndFlgEstadoEventAndTipoEvent(String idobra, String estadoevent, String tipoevent) {
+        String[] lista= tipoevent.split(",");
+        Integer[] listaInt=new Integer[lista.length];
+        for(int i = 0;i < lista.length;i++)
+        {
+            listaInt[i] = Integer.parseInt(lista[i]);
+        }
+
+        return eventosperiododao.findByObraAndFlgEstadoEventAndTipoEvent(idobra, estadoevent, listaInt);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import com.spring.sigmaweb.backend.process.surveys.repository.IMatrizEvaluacionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +87,37 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     @Transactional
     public List<MatrizEvaluacion> contarEvaluadoresEvaluado(String idobra, Long idevaluador, Long idevaluado) {
         return matrizEvaluadordao.contarEvaluadoresEvaluado(idobra, idevaluador, idevaluado);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MatrizEvaluacionDTO> reportEvaluadoEvaluador(String idobra, String tipo, Long idpersonal, Long idcargoPuesto, Integer esPrincipal, Long idperiodo) {
+        Sort sortApepat = null;
+        Sort sortApeMat = null;
+        Sort sortNombres = null;
+        Sort sortApepatDet = null;
+        Sort sortApeMatDet = null;
+        Sort sortNombresDet = null;
+
+        if(tipo.equals("EVALUADOR")){
+            sortApepat = Sort.by(Sort.Direction.ASC, "psnevaluador.apePaternoPers");
+            sortApeMat = Sort.by(Sort.Direction.ASC, "psnevaluador.apeMaternoPers");
+            sortNombres = Sort.by(Sort.Direction.ASC, "psnevaluador.nombrePers");
+            sortApepatDet = Sort.by(Sort.Direction.ASC, "psnevaluado.apePaternoPers");
+            sortApeMatDet = Sort.by(Sort.Direction.ASC, "psnevaluado.apeMaternoPers");
+            sortNombresDet = Sort.by(Sort.Direction.ASC, "psnevaluado.nombrePers");
+        } else {
+            sortApepat = Sort.by(Sort.Direction.ASC, "psnevaluado.apePaternoPers");
+            sortApeMat = Sort.by(Sort.Direction.ASC, "psnevaluado.apeMaternoPers");
+            sortNombres = Sort.by(Sort.Direction.ASC, "psnevaluado.nombrePers");
+            sortApepatDet = Sort.by(Sort.Direction.ASC, "psnevaluador.apePaternoPers");
+            sortApeMatDet = Sort.by(Sort.Direction.ASC, "psnevaluador.apeMaternoPers");
+            sortNombresDet = Sort.by(Sort.Direction.ASC, "psnevaluador.nombrePers");
+        }
+
+        Sort grupSort = null;
+        grupSort = sortApepat.and(sortApeMat.and(sortNombres.and(sortApepatDet.and(sortApeMatDet.and(sortNombresDet)))));
+
+        return matrizEvaluadordao.reportEvaluadoEvaluador(idobra, tipo, idpersonal, idcargoPuesto, esPrincipal, idperiodo, grupSort);
     }
 }

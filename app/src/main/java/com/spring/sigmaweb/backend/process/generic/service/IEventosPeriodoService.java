@@ -8,7 +8,12 @@ import java.util.List;
 public interface IEventosPeriodoService {
     public EventosPeriodo findByIdEventoAndIdObraEvent(Long idevento, String idobraevent);
 
+    public List<EventosPeriodo> findByIdObraEventAndTipoEventAndIdPeriodoEvent(String idobraevent, Integer tipoEvent, Long idperiodo);
+
     public List<EventosPeriodoDTO> findByObraAndPeriodoAndAnioPeri(String idobra, Long idperiodo, String estadoevent, String tipoevent);
 
+    public List<EventosPeriodoDTO> findByObraAndFlgEstadoEventAndTipoEvent(String idobra, String estadoevent, String tipoevent);
+
     public EventosPeriodo saveEvento(EventosPeriodo evento);
+
 }

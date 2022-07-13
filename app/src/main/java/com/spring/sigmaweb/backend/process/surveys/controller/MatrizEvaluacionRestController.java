@@ -126,9 +126,14 @@ public class MatrizEvaluacionRestController {
             if(matrizdelete != null){
 
                 encuestaDelete = encuestaService.findByIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(idmatrizEval, idobra, idevento);
-                actoEliminar = this.encuestaService.estadodeEncuestaBorrar(encuestaDelete.getIdEncuesta(), matrizdelete.getIdMatrizEval(), matrizdelete.getIdObraMaev());
+                if (encuestaDelete !=null){
+                    actoEliminar = this.encuestaService.estadodeEncuestaBorrar(encuestaDelete.getIdEncuesta(), matrizdelete.getIdMatrizEval(), matrizdelete.getIdObraMaev());
+                } else {
+                    actoEliminar=true;
+                }
+
                 if(actoEliminar){
-                    encuestaService.deleteEncuesta(encuestaDelete);
+                    if(encuestaDelete !=null){ encuestaService.deleteEncuesta(encuestaDelete);}
                     matrizEvaluadorService.deleteMatrizEvaluador(matrizdelete);
                 } else {
                     response.put("mensaje", "No se puede Eliminar ");

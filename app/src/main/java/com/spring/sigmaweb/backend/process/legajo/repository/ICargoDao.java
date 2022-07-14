@@ -10,7 +10,7 @@ import java.util.List;
 public interface ICargoDao extends CrudRepository<Cargo, Long> {
     public Cargo findByIdCargo(Long idcargo);
 
-    public List<Cargo> findAll();
+    public List<Cargo> findAllByOrderByNombreCar();
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.CargosDto( c.idCargo," +
             "c.nombreCar," +
@@ -23,7 +23,8 @@ public interface ICargoDao extends CrudRepository<Cargo, Long> {
             "c.fechaModiCar," +
             "c.modiPorCar) " +
             "from Cargo c left join TablasTabla t on (c.idTipoGoCar = t.codigoTab) " +
-            "where c.estadoCar = ?1 "
+            "where c.estadoCar = ?1 " +
+            "order by c.nombreCar"
             )
     public List<CargosDto> findCargosDto(Boolean estado);
 

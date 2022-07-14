@@ -6,6 +6,8 @@ import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
+import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -259,6 +261,27 @@ public class PersonalCargoRestController {
             percargoAct.setModiPorPercargo(personalCargo.getModiPorPercargo());
         }
         return personalCargoService.save(percargoAct);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/personalcargodelete/{idpercargo}/{idpersonal}/{obraname}/{idpervila}")
+    public ResponseEntity<?> deleteAll(@PathVariable Long idpercargo, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
+        Map<String, Object> response = new HashMap<>();
+
+        PersonalCargo personalcargodelete = personalCargoService.findByPersonalAndObraAndIdCargo(idpersonal, obraname, idpercargo, idpervila);
+        try {
+            if(personalcargodelete != null){
+                    personalCargoService.personalcargodelete(personalcargodelete);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el registro");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el registro correctamente");
+        response.put("matrizevaluadorDel", personalcargodelete);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 }

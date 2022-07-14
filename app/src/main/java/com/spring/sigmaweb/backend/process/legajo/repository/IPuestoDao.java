@@ -26,7 +26,8 @@ public interface IPuestoDao extends CrudRepository<Puestos, Long> {
             "p.modiPorPues" +
             ") " +
             "from Puestos p left join TablasTabla t on (p.idTipoGoPues = t.codigoTab) " +
-            "where p.idObraPues = ?1 and p.estadoPues = ?2"
+            "where p.idObraPues = ?1 and p.estadoPues = ?2 " +
+            "order by p.nombrePues"
     )
     public List<PuestosDto> findByIdObraPuesAndEstadoPues(String idObraPues, Boolean estadoPues);
 
@@ -44,7 +45,8 @@ public interface IPuestoDao extends CrudRepository<Puestos, Long> {
             "p.modiPorPues" +
             ") " +
             "from Puestos p left join TablasTabla t on (p.idTipoGoPues = t.codigoTab) " +
-            "where p.idObraPues = ?1"
+            "where p.idObraPues = ?1 " +
+            "order by p.nombrePues"
     )
     public List<PuestosDto> findByIdObraPues(String idObraPues);
 }

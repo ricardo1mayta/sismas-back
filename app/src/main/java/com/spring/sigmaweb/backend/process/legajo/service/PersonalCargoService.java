@@ -63,6 +63,12 @@ public class PersonalCargoService implements IPersonalCargoService{
         return personalcargoDao.save(cargo);
     }
 
+    @Override
+    @Transactional
+    public void personalcargodelete(PersonalCargo personalcargo) {
+        personalcargoDao.delete(personalcargo);
+    }
+
     //CARGO
 
     @Override
@@ -74,7 +80,7 @@ public class PersonalCargoService implements IPersonalCargoService{
     @Override
     @Transactional(readOnly = true)
     public List<Cargo> findAll() {
-        return cargoDao.findAll();
+        return cargoDao.findAllByOrderByNombreCar();
     }
 
     @Override

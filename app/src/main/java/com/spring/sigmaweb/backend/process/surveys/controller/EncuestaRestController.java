@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.surveys.dto.EncuestaDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
+import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.service.IEncuestaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,6 +28,13 @@ public class EncuestaRestController {
     @Autowired
     IEncuestaService encuestaService;
 
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/listaevaluadorxevaluador/{idobra}/{idpersonal}/{idevento}")
+    public List<ListaEvaluadosEvaluador> showPersonalEvaluacionEvaluadorList(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idevento){
+        return encuestaService.listaEvaluadosEvaluador(idobra,idpersonal, idevento);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
     public ResponseEntity<?> createEncuesta(@RequestBody EncuestaDTO encuesta, BindingResult result) {
         Encuesta encuestaNew= null;
         Encuesta encuestaInsert= null;

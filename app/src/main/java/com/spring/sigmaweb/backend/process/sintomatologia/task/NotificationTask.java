@@ -29,7 +29,8 @@ public class NotificationTask {
 
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
-
+    private final Environment env;
+    
     @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
     public void sendNotificactionPendingRegister(){
 
@@ -39,6 +40,8 @@ public class NotificationTask {
         List<FichaSintomatologicaDTO> listPersonalNotification = ficha.personalforSectoNotification("SECTOR");
         List<FichaSintomatologicaDTO> listEmailNotification = ficha.listMailNotification("SECTOR", new Date());
         List<FichaSintomatologicaDTO> fsFinal= new ArrayList<>();
+        String flgActiveTask = env.getProperty("flgActiveTask");
+        
         //VALIDACION DE PERSONAL SIN FICHA
         boolean flag= false;
         for (FichaSintomatologicaDTO f: listPersonalNotification){
@@ -54,9 +57,12 @@ public class NotificationTask {
 
         for (FichaSintomatologicaDTO dto: fsFinal){
             try {
-
-                sendMessageNotification(dto);
-
+            
+                 if(flgActiveTask.equals("1")){
+                    if(!dto.getEmailPers().isEmpty() || dto.getEmailPers()!=null){
+                        sendMessageNotification(dto);
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

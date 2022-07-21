@@ -76,7 +76,7 @@ public class TablasEvaDesService implements ITablasEvaDesService{
 
     @Override
     public List<Competencia> findByFlgActivoCompe(Boolean flgactivocompe) {
-        return competenciaDao.findByFlgActivoCompe(flgactivocompe);
+        return competenciaDao.findByFlgActivoCompeOrderByDescripcionCompe(flgactivocompe);
     }
 
     @Override
@@ -112,11 +112,24 @@ public class TablasEvaDesService implements ITablasEvaDesService{
 
     @Override
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp) {
-        return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+        List<PreguntasCompetenciaDTO> preguntasReturn = preguntascompetenciadao.findByIdEventoPregcompAndCardinalesDto(Ideventopregcomp, Long.parseLong("-1"));
+
+        preguntasReturn.addAll(preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp));
+        return preguntasReturn;
+    }
+
+    @Override
+    public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp, Boolean principal) {
+        List<PreguntasCompetenciaDTO> dataCompetencias = preguntascompetenciadao.findByIdEventoPregcompAndCardinalesDistinct(Ideventopregcomp);
+        if(principal){
+            dataCompetencias.addAll(preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp,idgrupopregcomp));
+        }
+        return dataCompetencias;//preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp,idgrupopregcomp);
     }
 
     @Override
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp) {
+
         return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp,idgrupopregcomp);
     }
 

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "mo_matriz_evaluacion")
+@Table(name = "me_matriz_evaluacion")
 public class MatrizEvaluacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

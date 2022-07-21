@@ -58,8 +58,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
             "inner join TablasTabla goevaluador on (evaluador.idGrupoOcupacionalPereval = goevaluador.codigoTab) " +
             "inner join TablasTabla goevaluado on (evaluado.idGrupoOcupacionalPereval = goevaluado.codigoTab) " +
-            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo and o.idobra = p.idObraPeri) " +
-            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento and o.idobra=ep.idObraEvent and p.idPeriodo = ep.idPeriodoEvent) " +
+            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo ) " +
+            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento and p.idPeriodo = ep.idPeriodoEvent) " + //and o.idobra=ep.idObraEvent
             "left join Puestos ptoevaluador on (evaluador.idCargoPuestoPereval = ptoevaluador.idPuesto and evaluador.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgoevaluador on (evaluador.idCargoPuestoPereval = cgoevaluador.idCargo and evaluador.flgEsCargoprincipalPereval = false) " +
             "left join Puestos ptoevaluado on (evaluado.idCargoPuestoPereval = ptoevaluado.idPuesto and evaluado.flgEsCargoprincipalPereval = true) " +
@@ -68,6 +68,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and pevaluador.idPersonal=?2 " +
             "and evaluador.idCargoPuestoPereval = ?3 " +
             "and evaluador.flgEsCargoprincipalPereval=?4 " +
+            "and ep.idObraEvent = 'SECTOR' " +
             "order by psnevaluador.apePaternoPers, psnevaluador.apeMaternoPers, psnevaluador.nombrePers "
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal );
@@ -118,8 +119,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
             "inner join TablasTabla goevaluador on (evaluador.idGrupoOcupacionalPereval = goevaluador.codigoTab) " +
             "inner join TablasTabla goevaluado on (evaluado.idGrupoOcupacionalPereval = goevaluado.codigoTab) " +
-            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo and o.idobra = p.idObraPeri) " +
-            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento and o.idobra=ep.idObraEvent and p.idPeriodo = ep.idPeriodoEvent) " +
+            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo ) " +
+            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento and p.idPeriodo = ep.idPeriodoEvent) " + //and o.idobra=ep.idObraEvent
             "left join Puestos ptoevaluador on (evaluador.idCargoPuestoPereval = ptoevaluador.idPuesto and evaluador.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgoevaluador on (evaluador.idCargoPuestoPereval = cgoevaluador.idCargo and evaluador.flgEsCargoprincipalPereval = false) " +
             "left join Puestos ptoevaluado on (evaluado.idCargoPuestoPereval = ptoevaluado.idPuesto and evaluado.flgEsCargoprincipalPereval = true) " +
@@ -128,6 +129,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and pevaluado.idPersonal=?2 " +
             "and evaluado.idCargoPuestoPereval = ?3 " +
             "and evaluado.flgEsCargoprincipalPereval=?4 " +
+            "and ep.idObraEvent = 'SECTOR' " +
             "order by psnevaluado.apePaternoPers, psnevaluado.apeMaternoPers, psnevaluado.nombrePers"
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluado(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal);
@@ -189,8 +191,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
             "inner join TablasTabla goevaluador on (evaluador.idGrupoOcupacionalPereval = goevaluador.codigoTab) " +
             "inner join TablasTabla goevaluado on (evaluado.idGrupoOcupacionalPereval = goevaluado.codigoTab) " +
-            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo and o.idobra = p.idObraPeri) " +
-            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento and o.idobra=ep.idObraEvent and p.idPeriodo = ep.idPeriodoEvent) " +
+            "inner join Periodo p on (me.idPeriodoMaev = p.idPeriodo ) " +
+            "inner join EventosPeriodo ep on (me.idEventoMaev = ep.idEvento  and p.idPeriodo = ep.idPeriodoEvent) " + //and o.idobra=ep.idObraEvent
             "left join Puestos ptoevaluador on (evaluador.idCargoPuestoPereval = ptoevaluador.idPuesto and evaluador.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgoevaluador on (evaluador.idCargoPuestoPereval = cgoevaluador.idCargo and evaluador.flgEsCargoprincipalPereval = false) " +
             "left join Puestos ptoevaluado on (evaluado.idCargoPuestoPereval = ptoevaluado.idPuesto and evaluado.flgEsCargoprincipalPereval = true) " +
@@ -202,7 +204,8 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and evaluador.idCargoPuestoPereval = (case ?2 when 'EVALUADOR' then (case ?4 when 0 then evaluador.idCargoPuestoPereval else ?4 end ) else evaluador.idCargoPuestoPereval end) " +
             "and evaluado.flgEsCargoprincipalPereval= (case ?2 when 'EVALUADO' then (case ?5 when 3 then evaluado.flgEsCargoprincipalPereval else ?5 end ) else evaluado.flgEsCargoprincipalPereval end) " +
             "and evaluador.flgEsCargoprincipalPereval= (case ?2 when 'EVALUADOR' then (case ?5 when 3 then evaluador.flgEsCargoprincipalPereval else ?5 end ) else evaluador.flgEsCargoprincipalPereval end) " +
-            "and me.idPeriodoMaev = ?6"
+            "and me.idPeriodoMaev = ?6 " +
+            "and ep.idObraEvent = 'SECTOR'"
     )
     public List<MatrizEvaluacionDTO> reportEvaluadoEvaluador(String idobra, String tipo, Long idpersonal, Long idcargoPuesto, Integer esPrincipal, Long idperiodo, Sort sort);
 

@@ -38,6 +38,12 @@ public class EventosPeriodoRestController {
         return eventosperiodoservice.findByObraAndFlgEstadoEventAndTipoEvent(idobra, estadoevent, tipoevent);
     }
 
+    @Secured({"ROLE_ADMI","ROLE_COLA"})
+    @GetMapping("/eventosperiodoobraaniotipo/{idobra}/{anio}/{tipoevent}/{estado}")
+    public List<EventosPeriodo> showEventosPeriodoPorObraAnioTipoListas(@PathVariable String idobra, @PathVariable Integer anio, @PathVariable String tipoevent, @PathVariable String estado) {
+        return eventosperiodoservice.fingByAnioAndTipoEvento(idobra, anio, tipoevent, estado);
+    }
+
     @PostMapping("/eventoperiodosave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createPeriodo(@RequestBody EventosPeriodoDTO evento, BindingResult result) {

@@ -40,7 +40,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
             "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
-            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and o.idobra = ep.idObraEvent and ep.idPeriodoEvent=per.idPeriodo) " +
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
             "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
             "left join Puestos pst on (pe.idCargoPuestoPereval = pst.idPuesto and pe.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgo on (pe.idCargoPuestoPereval = cgo.idCargo and pe.flgEsCargoprincipalPereval = false) " +
@@ -48,7 +48,8 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "and tgo.codigoTab = (case ?2 when -1 then tgo.codigoTab else ?2 end )" +
             "and coalesce(pst.idPuesto,0) = (case ?3 when -1 then coalesce(pst.idPuesto, 0) else ?3 end )" +
             "and coalesce(cgo.idCargo,0) = (case ?4 when -1 then coalesce(cgo.idCargo,0) else ?4 end ) " +
-            "and pe.flgPrincipalEvalPereval = (case ?5 when -1 then pe.flgPrincipalEvalPereval else (case ?5 when 1 then true else false end) end)" +
+            "and pe.flgPrincipalEvalPereval = (case ?5 when -1 then pe.flgPrincipalEvalPereval else (case ?5 when 1 then true else false end) end) " +
+            "AND ep.idObraEvent = 'SECTOR' " +
             "order by psn.apePaternoPers,psn.apeMaternoPers,psn.nombrePers,  (case pe.flgPrincipalEvalPereval when true then 0 else 1 end)"
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo, Integer principal);
@@ -71,9 +72,8 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
             "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
-            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and o.idobra = ep.idObraEvent and ep.idPeriodoEvent=per.idPeriodo) " +
-            "where o.idobra = ?1 "
-
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
+            "where o.idobra = ?1 and ep.idObraEvent ='SECTOR' "
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra);
 
@@ -96,16 +96,22 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
             "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
-            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and o.idobra = ep.idObraEvent and ep.idPeriodoEvent=per.idPeriodo) " +
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
             "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
             "left join Puestos pst on (pe.idCargoPuestoPereval = pst.idPuesto and pe.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgo on (pe.idCargoPuestoPereval = cgo.idCargo and pe.flgEsCargoprincipalPereval = false) " +
             "where o.idobra = ?1 " +
             "and p.idPersonal = ?2 " +
+            "and ep.idObraEvent = 'sector'" +
             "and pe.flgPrincipalEvalPereval = (case ?3 when 3 then pe.flgPrincipalEvalPereval when 1 then true else false end) " +
             "order by (case pe.flgPrincipalEvalPereval when true then 0 else 1 end)"
 
     )
     public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal, Integer esPrincipal);
+
+
+
+
+
 
 }

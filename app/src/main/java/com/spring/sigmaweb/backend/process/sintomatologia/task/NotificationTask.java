@@ -8,6 +8,9 @@ import com.spring.sigmaweb.backend.utils.Utils;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
+
+import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -29,9 +32,11 @@ public class NotificationTask {
 
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
+
     private final Environment env;
     
     @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+
     public void sendNotificactionPendingRegister(){
 
         Mail mail= new Mail();
@@ -68,7 +73,7 @@ public class NotificationTask {
             }
         }
     }
-    /*habilitar al subir*/
+
     @Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
     public void sendNotificationFichaRegistered() throws  Exception{
         Mail mail= new Mail();

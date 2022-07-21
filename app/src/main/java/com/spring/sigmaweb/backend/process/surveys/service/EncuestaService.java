@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.repository.IEncuestaDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,5 +77,23 @@ public class EncuestaService implements IEncuestaService{
             resultado = true;
         }
         return resultado;
+    }
+
+    @Override
+    public List<ListaEvaluadosEvaluador> listaEvaluadosEvaluador(String idObra, Long idPersonal, Long idEvento) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_lista_evaluados_x_evaluador","ListaEvaluadosEvaluador");
+
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_id_personal", long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idevento", long.class, ParameterMode.IN);
+
+
+        query.setParameter("p_obra", idObra);
+        query.setParameter("p_id_personal", idPersonal);
+        query.setParameter("p_idevento", idEvento);
+
+        List<ListaEvaluadosEvaluador> result = query.getResultList();
+
+        return result;
     }
 }

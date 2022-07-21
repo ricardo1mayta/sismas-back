@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "ms_preguntas_competencia")
+@Table(name = "me_preguntas_competencia")
 public class PreguntasCompetencia implements Serializable {
 
     @Id
@@ -26,6 +26,16 @@ public class PreguntasCompetencia implements Serializable {
 
     @Column(nullable = false, name = "id_evento_pregcomp")
     private Long idEventoPregcomp;
+
+    @Column(nullable = false, name = "descripcion_pregcomp", length = 600)
+    private String descripcionPregcomp;
+
+    @Column(nullable = false, name = "orden_competencia_pregcomp")
+    private Integer ordenCompetenciaPregcomp;
+
+    @Column(nullable = false, name = "orden_pregunta_pregcomp")
+    private Integer ordenPreguntaPregcomp;
+
 
     @Column(nullable = false, name = "flg_activo_pregcomp", columnDefinition = "boolean default true")
     private Boolean flgActivoPregcomp;
@@ -89,6 +99,30 @@ public class PreguntasCompetencia implements Serializable {
 
     public void setFlgActivoPregcomp(Boolean flgActivoPregcomp) {
         this.flgActivoPregcomp = flgActivoPregcomp;
+    }
+
+    public String getDescripcionPregcomp() {
+        return descripcionPregcomp;
+    }
+
+    public void setDescripcionPregcomp(String descripcionPregcomp) {
+        this.descripcionPregcomp = descripcionPregcomp;
+    }
+
+    public Integer getOrdenCompetenciaPregcomp() {
+        return ordenCompetenciaPregcomp;
+    }
+
+    public void setOrdenCompetenciaPregcomp(Integer ordenCompetenciaPregcomp) {
+        this.ordenCompetenciaPregcomp = ordenCompetenciaPregcomp;
+    }
+
+    public Integer getOrdenPreguntaPregcomp() {
+        return ordenPreguntaPregcomp;
+    }
+
+    public void setOrdenPreguntaPregcomp(Integer ordenPreguntaPregcomp) {
+        this.ordenPreguntaPregcomp = ordenPreguntaPregcomp;
     }
 
     public Date getFechaingPregcomp() {

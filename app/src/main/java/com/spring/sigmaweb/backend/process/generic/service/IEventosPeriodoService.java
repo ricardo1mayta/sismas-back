@@ -14,6 +14,8 @@ public interface IEventosPeriodoService {
 
     public List<EventosPeriodoDTO> findByObraAndFlgEstadoEventAndTipoEvent(String idobra, String estadoevent, String tipoevent);
 
+    public List<EventosPeriodo>fingByAnioAndTipoEvento(String idobra, Integer anio, String tipoEvent, String estado);
+
     public EventosPeriodo saveEvento(EventosPeriodo evento);
 
 }

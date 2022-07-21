@@ -252,12 +252,21 @@ public class TablasEvaDesRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/listapreguntasxcompetencia/{Ideventopregcomp}/{idgrupopregcomp}/{idcompetenciapregcomp}")
     public List<PreguntasCompetenciaDTO> showPreguntasPorCompetenciaList(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Long idcompetenciapregcomp){
+
         return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/listacompetenciasgrupoeventocardinal/{Ideventopregcomp}/{idgrupopregcomp}/{principal}")
+    public List<PreguntasCompetenciaDTO> showListaCompetenciasGrupoEvento(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Integer principal){
+        Boolean esPrincipal = principal == 1 ? true : false;
+        return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Ideventopregcomp, idgrupopregcomp, esPrincipal);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/listacompetenciasgrupoevento/{Ideventopregcomp}/{idgrupopregcomp}")
     public List<PreguntasCompetenciaDTO> showListaCompetenciasGrupoEvento(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp){
+
         return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Ideventopregcomp, idgrupopregcomp);
     }
 

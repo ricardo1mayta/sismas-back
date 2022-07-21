@@ -8,7 +8,8 @@ import com.spring.sigmaweb.backend.utils.Utils;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
-import org.hibernate.cfg.Environment;
+
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -32,7 +33,10 @@ public class NotificationTask {
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
 
-    //@Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+    private final Environment env;
+    
+    @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+
     public void sendNotificactionPendingRegister(){
 
         Mail mail= new Mail();
@@ -41,6 +45,8 @@ public class NotificationTask {
         List<FichaSintomatologicaDTO> listPersonalNotification = ficha.personalforSectoNotification("SECTOR");
         List<FichaSintomatologicaDTO> listEmailNotification = ficha.listMailNotification("SECTOR", new Date());
         List<FichaSintomatologicaDTO> fsFinal= new ArrayList<>();
+        String flgActiveTask = env.getProperty("flgActiveTask");
+        
         //VALIDACION DE PERSONAL SIN FICHA
         boolean flag= false;
         for (FichaSintomatologicaDTO f: listPersonalNotification){
@@ -56,16 +62,19 @@ public class NotificationTask {
 
         for (FichaSintomatologicaDTO dto: fsFinal){
             try {
-
-                sendMessageNotification(dto);
-
+            
+                 if(flgActiveTask.equals("1")){
+                    if(!dto.getEmailPers().isEmpty() || dto.getEmailPers()!=null){
+                        sendMessageNotification(dto);
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    /*habilitar al subir*/
-   // @Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
+
+    @Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
     public void sendNotificationFichaRegistered() throws  Exception{
         Mail mail= new Mail();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

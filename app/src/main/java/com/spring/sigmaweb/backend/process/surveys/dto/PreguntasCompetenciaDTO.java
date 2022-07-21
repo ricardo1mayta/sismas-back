@@ -21,6 +21,9 @@ public class PreguntasCompetenciaDTO implements Serializable {
     private String descripcionEvento;
     private Long idPeriodoEvento;
     private Integer anioPeriodoEvento;
+    private String descripcionPregcomp;
+    private Integer ordenCompetenciaPregcomp;
+    private Integer ordenPreguntaPregcomp;
     private Boolean flgActivoPregcomp;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -29,7 +32,7 @@ public class PreguntasCompetenciaDTO implements Serializable {
 
     private String creaporPregcomp;
 
-    public PreguntasCompetenciaDTO(Long idPregcomp, Long idCompetenciaPregcomp, String descripcionCompetencia, Long idPreguntaPregcomp, String descripcionPregunta, Integer idGrupoPregcomp, String descripcionGrupo, Long idEventoPregcomp, String descripcionEvento, Long idPeriodoEvento, Integer anioPeriodoEvento, Boolean flgActivoPregcomp, Date fechaingPregcomp, String creaporPregcomp) {
+    public PreguntasCompetenciaDTO(Long idPregcomp, Long idCompetenciaPregcomp, String descripcionCompetencia, Long idPreguntaPregcomp, String descripcionPregunta, Integer idGrupoPregcomp, String descripcionGrupo, Long idEventoPregcomp, String descripcionEvento, Long idPeriodoEvento, Integer anioPeriodoEvento, String descripcionPregcomp, Integer ordenCompetenciaPregcomp, Integer ordenPreguntaPregcomp, Boolean flgActivoPregcomp, Date fechaingPregcomp, String creaporPregcomp) {
         this.idPregcomp = idPregcomp;
         this.idCompetenciaPregcomp = idCompetenciaPregcomp;
         this.descripcionCompetencia = descripcionCompetencia;
@@ -41,6 +44,9 @@ public class PreguntasCompetenciaDTO implements Serializable {
         this.descripcionEvento = descripcionEvento;
         this.idPeriodoEvento = idPeriodoEvento;
         this.anioPeriodoEvento = anioPeriodoEvento;
+        this.descripcionPregcomp = descripcionPregcomp;
+        this.ordenCompetenciaPregcomp = ordenCompetenciaPregcomp;
+        this.ordenPreguntaPregcomp = ordenPreguntaPregcomp;
         this.flgActivoPregcomp = flgActivoPregcomp;
         this.fechaingPregcomp = fechaingPregcomp;
         this.creaporPregcomp = creaporPregcomp;
@@ -172,5 +178,29 @@ public class PreguntasCompetenciaDTO implements Serializable {
 
     public void setCreaporPregcomp(String creaporPregcomp) {
         this.creaporPregcomp = creaporPregcomp;
+    }
+
+    public String getDescripcionPregcomp() {
+        return descripcionPregcomp;
+    }
+
+    public void setDescripcionPregcomp(String descripcionPregcomp) {
+        this.descripcionPregcomp = descripcionPregcomp;
+    }
+
+    public Integer getOrdenCompetenciaPregcomp() {
+        return ordenCompetenciaPregcomp;
+    }
+
+    public void setOrdenCompetenciaPregcomp(Integer ordenCompetenciaPregcomp) {
+        this.ordenCompetenciaPregcomp = ordenCompetenciaPregcomp;
+    }
+
+    public Integer getOrdenPreguntaPregcomp() {
+        return ordenPreguntaPregcomp;
+    }
+
+    public void setOrdenPreguntaPregcomp(Integer ordenPreguntaPregcomp) {
+        this.ordenPreguntaPregcomp = ordenPreguntaPregcomp;
     }
 }

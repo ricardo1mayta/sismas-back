@@ -17,6 +17,8 @@ import java.io.Serializable;
         @FieldResult(name = "id_cargopuesto_pereval", column = "id_cargopuesto_pereval"),
         @FieldResult(name = "flg_es_cargoprincipal_pereval", column = "flg_es_cargoprincipal_pereval"),
         @FieldResult(name = "flg_principal_eval_pereval", column = "flg_principal_eval_pereval"),
+        @FieldResult(name = "id_grupo_ocupacional_pereval", column = "id_grupo_ocupacional_pereval"),
+        @FieldResult(name = "id_evento_maev", column = "id_evento_maev"),
         @FieldResult(name = "estado", column = "estado")}
     )
 )
@@ -37,13 +39,15 @@ public class ListaEvaluadosEvaluador implements Serializable {
     private Long id_cargopuesto_pereval;
     private Boolean flg_es_cargoprincipal_pereval;
     private Boolean flg_principal_eval_pereval;
+    private Integer id_grupo_ocupacional_pereval;
+    private Long id_evento_maev;
     private String estado;
 
     public ListaEvaluadosEvaluador(){
         super();
     }
 
-    public ListaEvaluadosEvaluador(Long id, Long id_personal, Long id_encuesta, Long id_matrizeval, String ape_paterno_pers, String ape_materno_pers, String nombre_pers, String nomCompleto, String cargo, Long id_cargopuesto_pereval, Boolean flg_es_cargoprincipal_pereval, Boolean flg_principal_eval_pereval, String estado) {
+    public ListaEvaluadosEvaluador(Long id, Long id_personal, Long id_encuesta, Long id_matrizeval, String ape_paterno_pers, String ape_materno_pers, String nombre_pers, String nomCompleto, String cargo, Long id_cargopuesto_pereval, Boolean flg_es_cargoprincipal_pereval, Boolean flg_principal_eval_pereval, Integer id_grupo_ocupacional_pereval, Long id_evento_maev, String estado) {
         this.id = id;
         this.id_personal = id_personal;
         this.id_encuesta = id_encuesta;
@@ -56,7 +60,25 @@ public class ListaEvaluadosEvaluador implements Serializable {
         this.id_cargopuesto_pereval = id_cargopuesto_pereval;
         this.flg_es_cargoprincipal_pereval = flg_es_cargoprincipal_pereval;
         this.flg_principal_eval_pereval = flg_principal_eval_pereval;
+        this.id_grupo_ocupacional_pereval = id_grupo_ocupacional_pereval;
+        this.id_evento_maev = id_evento_maev;
         this.estado = estado;
+    }
+
+    public Integer getId_grupo_ocupacional_pereval() {
+        return id_grupo_ocupacional_pereval;
+    }
+
+    public void setId_grupo_ocupacional_pereval(Integer id_grupo_ocupacional_pereval) {
+        this.id_grupo_ocupacional_pereval = id_grupo_ocupacional_pereval;
+    }
+
+    public Long getId_evento_maev() {
+        return id_evento_maev;
+    }
+
+    public void setId_evento_maev(Long id_evento_maev) {
+        this.id_evento_maev = id_evento_maev;
     }
 
     public Long getId() {

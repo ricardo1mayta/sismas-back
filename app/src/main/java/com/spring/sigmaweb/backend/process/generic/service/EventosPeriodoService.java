@@ -48,6 +48,18 @@ public class EventosPeriodoService implements IEventosPeriodoService{
     }
 
     @Override
+    public List<EventosPeriodo> fingByAnioAndTipoEvento(String idobra, Integer anio, String tipoEvent, String estado) {
+        String[] lista= tipoEvent.split(",");
+        Integer[] listaInt=new Integer[lista.length];
+        for(int i = 0;i < lista.length;i++)
+        {
+            listaInt[i] = Integer.parseInt(lista[i]);
+        }
+
+        return eventosperiododao.fingByAnioAndTipoEvento(idobra, anio, listaInt, estado);
+    }
+
+    @Override
     @Transactional
     public EventosPeriodo saveEvento(EventosPeriodo evento) {
         return eventosperiododao.save(evento);

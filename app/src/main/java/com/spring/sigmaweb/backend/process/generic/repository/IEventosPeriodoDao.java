@@ -66,5 +66,13 @@ public interface IEventosPeriodoDao extends CrudRepository<EventosPeriodo,Long> 
     )
     public List<EventosPeriodoDTO> findByObraAndFlgEstadoEventAndTipoEvent(String idobra, String estadoevent, Integer[] tipoevent);
 
+    @Query("select ep " +
+            "from EventosPeriodo ep inner join Periodo p on (ep.idPeriodoEvent = p.idPeriodo) " +
+            "inner join Obra o on (p.idObraPeri=o.idobra) " +
+            "where p.idObraPeri = ?1 " +
+            "and p.anioPeri = (case ?2 when -1 then p.anioPeri else ?2 end) " +
+            "and ep.tipoEvent in ?3 " +
+            "and ep.flgEstadoEvent = ?4")
+    public List<EventosPeriodo> fingByAnioAndTipoEvento(String idobra, Integer anio, Integer[] tipoEvent, String estado);
 
 }

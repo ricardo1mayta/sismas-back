@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.surveys.controller;
 import com.spring.sigmaweb.backend.process.surveys.dto.EncuestaDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.service.IEncuestaService;
@@ -35,6 +36,7 @@ public class EncuestaRestController {
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @PostMapping("/encuestasave")
     public ResponseEntity<?> createEncuesta(@RequestBody EncuestaDTO encuesta, BindingResult result) {
         Encuesta encuestaNew= null;
         Encuesta encuestaInsert= null;
@@ -115,6 +117,58 @@ public class EncuestaRestController {
         response.put("mensaje", " Se elimino el registro correctamente");
         response.put("encuestadelete", encuestadelete);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @PostMapping("/encuestadetallesave/{idencuesta}/{idobra}/{idMatriz}/{idEvento}")
+    public ResponseEntity<?> createEncuestaDetalle(@RequestBody List<EncuestaDet> encuestasDet, @PathVariable Long idencuesta, @PathVariable String idobra, @PathVariable Long idMatriz, @PathVariable Long idEvento, BindingResult result) {
+        Encuesta encuestaNew= null;
+        Encuesta encuestaInsert= null;
+
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            //Valida si ya esta creada la evaluacion para la misma matriz
+            List<EncuestaDet> findEncuesta = encuestaService.findByIdEncuestaEncdetAndIdObraEncdet(idencuesta, idobra);
+
+            if(findEncuesta.size() > 0){
+                response.put("mensaje", "Ya hay respuestas en esta encuesta!");
+                response.put("error", "Ya hay respuestas en esta encuesta!");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+            }
+
+            encuestaService.saveEncuestaDet(encuestasDet);
+
+            //Actualiza encuesta
+            Encuesta encuestaUpdate = encuestaService.findByIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(idMatriz, idobra, idEvento);
+            if (encuestaUpdate != null) {
+                encuestaUpdate.setTotalPreguntasEncuesta(encuestasDet.size());
+                encuestaUpdate.setFlgEstadoEncuesta("F");
+                encuestaUpdate.setFechaFinEncuesta(new Date());
+                encuestaUpdate.setModiporEncuesta(encuestasDet.get(0).getCreaporEncdet());
+                encuestaUpdate.setFechamodiEncuesta(new Date());
+
+                encuestaService.saveEncuesta(encuestaUpdate);
+            }
+
+        } catch (DataAccessException e){
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "Respuestas creadas con éxito!");
+        response.put("encuesta", encuestaNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
 

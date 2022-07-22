@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.surveys.service;
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
+import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.repository.IMatrizEvaluacionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -119,5 +120,10 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
         grupSort = sortApepat.and(sortApeMat.and(sortNombres.and(sortApepatDet.and(sortApeMatDet.and(sortNombresDet)))));
 
         return matrizEvaluadordao.reportEvaluadoEvaluador(idobra, tipo, idpersonal, idcargoPuesto, esPrincipal, idperiodo, grupSort);
+    }
+
+    @Override
+    public ListaEvaluadosEvaluador findByAutoevaluación(String idobra, Long idpersonal, Long idevento) {
+        return matrizEvaluadordao.findByAutoevaluación(idobra, idpersonal,idevento);
     }
 }

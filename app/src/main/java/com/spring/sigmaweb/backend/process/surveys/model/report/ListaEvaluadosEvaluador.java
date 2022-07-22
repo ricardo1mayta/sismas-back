@@ -13,6 +13,7 @@ import java.io.Serializable;
         @FieldResult(name = "ape_materno_pers", column = "ape_materno_pers"),
         @FieldResult(name = "nombre_pers", column = "nombre_pers"),
         @FieldResult(name = "nomCompleto", column = "nomCompleto"),
+        @FieldResult(name = "codigo_per", column = "codigo_per"),
         @FieldResult(name = "cargo", column = "cargo"),
         @FieldResult(name = "id_cargopuesto_pereval", column = "id_cargopuesto_pereval"),
         @FieldResult(name = "flg_es_cargoprincipal_pereval", column = "flg_es_cargoprincipal_pereval"),
@@ -35,6 +36,7 @@ public class ListaEvaluadosEvaluador implements Serializable {
     private String ape_materno_pers;
     private String nombre_pers;
     private String nomCompleto;
+    private String codigo_per;
     private String cargo;
     private Long id_cargopuesto_pereval;
     private Boolean flg_es_cargoprincipal_pereval;
@@ -47,7 +49,7 @@ public class ListaEvaluadosEvaluador implements Serializable {
         super();
     }
 
-    public ListaEvaluadosEvaluador(Long id, Long id_personal, Long id_encuesta, Long id_matrizeval, String ape_paterno_pers, String ape_materno_pers, String nombre_pers, String nomCompleto, String cargo, Long id_cargopuesto_pereval, Boolean flg_es_cargoprincipal_pereval, Boolean flg_principal_eval_pereval, Integer id_grupo_ocupacional_pereval, Long id_evento_maev, String estado) {
+    public ListaEvaluadosEvaluador(Long id, Long id_personal, Long id_encuesta, Long id_matrizeval, String ape_paterno_pers, String ape_materno_pers, String nombre_pers, String nomCompleto, String codigo_per,String cargo, Long id_cargopuesto_pereval, Boolean flg_es_cargoprincipal_pereval, Boolean flg_principal_eval_pereval, Integer id_grupo_ocupacional_pereval, Long id_evento_maev, String estado) {
         this.id = id;
         this.id_personal = id_personal;
         this.id_encuesta = id_encuesta;
@@ -56,6 +58,7 @@ public class ListaEvaluadosEvaluador implements Serializable {
         this.ape_materno_pers = ape_materno_pers;
         this.nombre_pers = nombre_pers;
         this.nomCompleto = nomCompleto;
+        this.codigo_per = codigo_per;
         this.cargo = cargo;
         this.id_cargopuesto_pereval = id_cargopuesto_pereval;
         this.flg_es_cargoprincipal_pereval = flg_es_cargoprincipal_pereval;
@@ -183,5 +186,13 @@ public class ListaEvaluadosEvaluador implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getCodigo_per() {
+        return codigo_per;
+    }
+
+    public void setCodigo_per(String codigo_per) {
+        this.codigo_per = codigo_per;
     }
 }

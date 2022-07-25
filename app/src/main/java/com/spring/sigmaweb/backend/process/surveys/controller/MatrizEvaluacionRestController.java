@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
+import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.service.IEncuestaService;
 import com.spring.sigmaweb.backend.process.surveys.service.IMatrizEvaluadorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,14 @@ public class MatrizEvaluacionRestController {
         Boolean esprinc = (esPrincipal==1 ? true : false);
         return matrizEvaluadorService.findListaByObraByPeriodoByEventoidByEvaluado(idobra,idpersonal, idcargoPuesto, esprinc);
     }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/matrizevaluacionautoevaluacion/{idobra}/{idpersonal}/{idevento}")
+    public ListaEvaluadosEvaluador showAutoevaluacion(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Long idevento){
+
+        return matrizEvaluadorService.findByAutoevaluación(idobra, idpersonal, idevento);
+    }
+
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @PostMapping("/matrizevaluadorsave")

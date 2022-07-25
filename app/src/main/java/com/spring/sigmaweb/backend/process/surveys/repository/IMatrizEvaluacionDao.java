@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.surveys.repository;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
+import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -208,5 +209,34 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and ep.idObraEvent = 'SECTOR'"
     )
     public List<MatrizEvaluacionDTO> reportEvaluadoEvaluador(String idobra, String tipo, Long idpersonal, Long idcargoPuesto, Integer esPrincipal, Long idperiodo, Sort sort);
+
+    //valida si ya esta registrada la matriz de auto evaluación
+    @Query("select new com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador ( pevaluado.idPersonal as id," +
+            "pevaluado.idPersonal as id_persona, " +
+            "enc.idEncuesta as id_encuesta, " +
+            "me.idMatrizEval as id_matrizeval, " +
+            "psnevaluado.apePaternoPers as ape_paterno_pers, " +
+            "psnevaluado.apeMaternoPers as ape_materno_pers, " +
+            "psnevaluado.nombrePers as nombre_pers, " +
+            "TRIM( concat(COALESCE(concat(psnevaluado.apePaternoPers,' '), ''), COALESCE(concat(psnevaluado.apeMaternoPers, ' '), ''), COALESCE(psnevaluado.nombrePers, '')) )  as nomCompleto, " +
+            "pevaluado.codigoPer as codigo_per, " +
+            "(case evaluado.flgEsCargoprincipalPereval when true then ptoevaluado.nombrePues else cgoevaluado.nombreCar end) as cargo," +
+            "evaluado.idCargoPuestoPereval as id_cargopuesto_pereval," +
+            "evaluado.flgEsCargoprincipalPereval as flg_es_cargoprincipal_pereval," +
+            "evaluado.flgPrincipalEvalPereval as flg_principal_eval_pereval," +
+            "evaluado.idGrupoOcupacionalPereval as id_grupo_ocupacional_pereval, " +
+            "me.idEventoMaev as id_evento_maev, " +
+            "(case enc.flgEstadoEncuesta when 'R' then 'PENDIENTE' when 'P' then 'PROCESO' when 'F' then 'REALIZADO' else '<< ? >>' end) as estado " +
+            ") " +
+            "from MatrizEvaluacion me inner join Obra o on (me.idObraMaev=o.idobra) " +
+            "inner join PersonalEvaluacion evaluado on (me.idEvaluadorMaev = evaluado.idPereval and o.idobra = evaluado.idObraPereval) " +
+            "inner join Personal pevaluado on (evaluado.idPersonalPereval = pevaluado.idPersonal and o.idobra = pevaluado.obraPer) " +
+            "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
+            "inner join Encuesta enc on ( me.idMatrizEval = enc.idMatrizevalEncuesta and me.idObraMaev = enc.idObraEncuesta) " +
+            "left join Puestos ptoevaluado on (evaluado.idCargoPuestoPereval = ptoevaluado.idPuesto and evaluado.flgEsCargoprincipalPereval = true) " +
+            "left join Cargo cgoevaluado on (evaluado.idCargoPuestoPereval = cgoevaluado.idCargo and evaluado.flgEsCargoprincipalPereval = false) " +
+            "where o.idobra = ?1 and pevaluado.idPersonal=?2 and me.idEvaluadorMaev = me.idEvaluadoMaev " +
+            "and me.idEventoMaev = ?3 ")
+    public ListaEvaluadosEvaluador findByAutoevaluación(String idobra, Long idpersonal,  Long idevento);
 
 }

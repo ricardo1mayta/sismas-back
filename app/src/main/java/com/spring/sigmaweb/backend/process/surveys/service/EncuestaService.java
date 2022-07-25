@@ -2,8 +2,10 @@ package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.repository.IEncuestaDao;
+import com.spring.sigmaweb.backend.process.surveys.repository.IEncuestaDetDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,9 @@ import java.util.List;
 public class EncuestaService implements IEncuestaService{
     @Autowired
     private IEncuestaDao encuestaDao;
+
+    @Autowired
+    private IEncuestaDetDao encuestaDetDao;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -95,5 +100,16 @@ public class EncuestaService implements IEncuestaService{
         List<ListaEvaluadosEvaluador> result = query.getResultList();
 
         return result;
+    }
+    //detalle de encuesta
+    @Override
+    @Transactional
+    public void saveEncuestaDet(List<EncuestaDet> encuestadet) {
+         encuestaDetDao.saveAll(encuestadet);
+    }
+
+    @Override
+    public List<EncuestaDet> findByIdEncuestaEncdetAndIdObraEncdet(Long idencuestaencdet, String idobraencdet) {
+        return encuestaDetDao.findByIdEncuestaEncdetAndIdObraEncdet(idencuestaencdet, idobraencdet);
     }
 }

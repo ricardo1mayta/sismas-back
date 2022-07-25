@@ -1,11 +1,13 @@
 package com.spring.sigmaweb.backend.process.legajo.controller;
 
+import com.spring.sigmaweb.backend.process.legajo.dto.DocumentEmployeeDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalContratoObraDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalConveniosDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalConvenio;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
+import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalConvenioService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
@@ -35,6 +37,9 @@ public class PersonalConvenioRestController {
 
     @Autowired
     private IPersonalVidaLaboralService personalvidalaboralservice;
+
+    @Autowired
+    private IDocumentEmployeeService documentosservices;
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/findforid/{idPerConv}")
@@ -155,5 +160,47 @@ public class PersonalConvenioRestController {
         }
         return personalConvenioService.save(convenioAct);
     }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/conveniodelete/{idpersonal}/{idobra}/{idconvenio}/{idvidalab}")
+    public ResponseEntity<?> deleteConvenio(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idconvenio, @PathVariable Long idvidalab){
+        Map<String, Object> response = new HashMap<>();
+
+        PersonalConvenio convenioDelete = personalConvenioService.findByPersonalAndObraAndConvenio(idpersonal, idobra, idconvenio, idvidalab);
+        List<DocumentEmployeeDTO> documentos= documentosservices.findByDocumentPersonalAndObraAndTipoList(idpersonal,idobra, "CONVENIO", idconvenio);
+        try {
+
+            if(convenioDelete != null){
+                if(convenioDelete.getEstadoPerconv().equals("FINALIZADO")){
+                    if(documentos.size()>0){
+                        response.put("mensaje", "No se puede Eliminar ");
+                        response.put("error", "Hay documentos adjuntos al convenio a eliminar, elimínelos primero ");
+                        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+                    } else {
+                        personalConvenioService.deleteConvenio(convenioDelete);
+                    }
+
+                } else {
+                    response.put("mensaje", "No se puede Eliminar ");
+                    response.put("error", "No se puede eliminar un convenio activo");
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+                }
+            } else{
+                response.put("mensaje", "Convenio no encontrado");
+                response.put("error", "no se encuentra el convenio a eliminar");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el registro");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el registro correctamente");
+        response.put("personalconvenio", convenioDelete);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+
 
 }

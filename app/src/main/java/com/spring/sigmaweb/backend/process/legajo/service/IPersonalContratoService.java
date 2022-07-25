@@ -30,6 +30,8 @@ public interface IPersonalContratoService {
 
     public PersonalContrato save (PersonalContrato contrato);
 
+    public void deletePersonalContrato (PersonalContrato contrato);
+
     //************** JORNADA *********************
 
     public PersonalContratoJornada findByIdPerjorn(Long idPerjorn);

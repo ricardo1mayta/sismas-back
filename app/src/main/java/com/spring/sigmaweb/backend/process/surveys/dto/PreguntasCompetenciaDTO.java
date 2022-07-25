@@ -52,7 +52,7 @@ public class PreguntasCompetenciaDTO implements Serializable {
         this.creaporPregcomp = creaporPregcomp;
     }
 
-    public PreguntasCompetenciaDTO(Long idCompetenciaPregcomp, String descripcionCompetencia, Integer idGrupoPregcomp, String descripcionGrupo, Long idEventoPregcomp, String descripcionEvento, Long idPeriodoEvento, Integer anioPeriodoEvento) {
+    public PreguntasCompetenciaDTO(Long idCompetenciaPregcomp, String descripcionCompetencia, Integer idGrupoPregcomp, String descripcionGrupo, Long idEventoPregcomp, String descripcionEvento, Long idPeriodoEvento, Integer anioPeriodoEvento, String descripcionPregcomp) {
         this.idCompetenciaPregcomp = idCompetenciaPregcomp;
         this.descripcionCompetencia = descripcionCompetencia;
         this.idGrupoPregcomp = idGrupoPregcomp;
@@ -61,6 +61,7 @@ public class PreguntasCompetenciaDTO implements Serializable {
         this.descripcionEvento = descripcionEvento;
         this.idPeriodoEvento = idPeriodoEvento;
         this.anioPeriodoEvento = anioPeriodoEvento;
+        this.descripcionPregcomp = descripcionPregcomp;
     }
 
     public PreguntasCompetenciaDTO() {

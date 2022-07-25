@@ -17,6 +17,9 @@ public class Competencia implements Serializable {
     @Column(nullable = false, length = 100, name = "descripcion_compe")
     private String descripcionCompe;
 
+    @Column(nullable = false, length = 500, name = "detalle_compe")
+    private String detalleCompe;
+
     @Column(nullable = false, name = "id_evento_compe")
     private Long idEventoCompe;
 
@@ -106,6 +109,14 @@ public class Competencia implements Serializable {
 
     public void setModiporCompe(String modiporCompe) {
         this.modiporCompe = modiporCompe;
+    }
+
+    public String getDetalleCompe() {
+        return detalleCompe;
+    }
+
+    public void setDetalleCompe(String detalleCompe) {
+        this.detalleCompe = detalleCompe;
     }
 
     private static final long serialVersionUID = 1L;

@@ -83,7 +83,8 @@ public interface IPreguntasCompetenciaDao extends CrudRepository<PreguntasCompet
             "pc.idEventoPregcomp," +
             "evpe.nombreEvent as descripcionEvento," +
             "peri.idPeriodo as idPeriodoEvento," +
-            "peri.anioPeri as anioPeriodoEvento " +
+            "peri.anioPeri as anioPeriodoEvento," +
+            "comp.detalleCompe as descripcionPregcomp " +
             ")" +
             "from PreguntasCompetencia pc inner join EventosPeriodo evpe on (pc.idEventoPregcomp = evpe.idEvento) " +
             "inner join Periodo peri on (evpe.idPeriodoEvent = peri.idPeriodo and evpe.idObraEvent = peri.idObraPeri) " +
@@ -103,7 +104,8 @@ public interface IPreguntasCompetenciaDao extends CrudRepository<PreguntasCompet
             "pc.idEventoPregcomp," +
             "evpe.nombreEvent as descripcionEvento," +
             "peri.idPeriodo as idPeriodoEvento," +
-            "peri.anioPeri as anioPeriodoEvento " +
+            "peri.anioPeri as anioPeriodoEvento," +
+            "comp.detalleCompe as descripcionPregcomp " +
             ")" +
             "from PreguntasCompetencia pc inner join EventosPeriodo evpe on (pc.idEventoPregcomp = evpe.idEvento) " +
             "inner join Periodo peri on (evpe.idPeriodoEvent = peri.idPeriodo and evpe.idObraEvent = peri.idObraPeri) " +

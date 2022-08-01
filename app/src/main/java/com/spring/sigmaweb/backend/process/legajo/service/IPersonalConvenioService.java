@@ -20,6 +20,7 @@ public interface IPersonalConvenioService {
     public List<PersonalConveniosDTO> findConvenioActivoPracticasListDto(Long idpersona, String idobra, Long idpervila);
 
     public PersonalConvenio save (PersonalConvenio convenio);
+    public void deleteConvenio (PersonalConvenio convenio);
 
 
     //REPORTES

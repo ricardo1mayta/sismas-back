@@ -94,6 +94,12 @@ public class PersonalContratoService implements IPersonalContratoService{
         return contratoDao.save(contrato);
     }
 
+    @Override
+    @Transactional
+    public void deletePersonalContrato(PersonalContrato contrato) {
+        contratoDao.delete(contrato);
+    }
+
 
     //********************************************************************************
 

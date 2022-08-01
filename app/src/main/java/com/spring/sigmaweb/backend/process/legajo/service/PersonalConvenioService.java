@@ -56,6 +56,12 @@ public class PersonalConvenioService implements IPersonalConvenioService{
     }
 
     @Override
+    @Transactional
+    public void deleteConvenio(PersonalConvenio convenio) {
+        convenioDao.delete(convenio);
+    }
+
+    @Override
     public List<ReportAgreement> reportConveniosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio) {
         Sort sortConvenio = Sort.by(Sort.Direction.ASC, "tconv.descripTab");
         Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");

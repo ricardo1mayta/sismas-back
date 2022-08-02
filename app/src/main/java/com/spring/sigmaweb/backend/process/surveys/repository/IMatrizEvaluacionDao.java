@@ -70,6 +70,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and evaluador.idCargoPuestoPereval = ?3 " +
             "and evaluador.flgEsCargoprincipalPereval=?4 " +
             "and ep.idObraEvent = 'SECTOR' " +
+            "and me.idEvaluadorMaev != me.idEvaluadoMaev " +
             "order by psnevaluador.apePaternoPers, psnevaluador.apeMaternoPers, psnevaluador.nombrePers "
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal );
@@ -131,6 +132,7 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "and evaluado.idCargoPuestoPereval = ?3 " +
             "and evaluado.flgEsCargoprincipalPereval=?4 " +
             "and ep.idObraEvent = 'SECTOR' " +
+            "and me.idEvaluadoMaev != me.idEvaluadorMaev " +
             "order by psnevaluado.apePaternoPers, psnevaluado.apeMaternoPers, psnevaluado.nombrePers"
     )
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluado(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal);

@@ -259,7 +259,10 @@ public class TablasEvaDesRestController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/listacompetenciasgrupoeventocardinal/{Ideventopregcomp}/{idgrupopregcomp}/{principal}")
     public List<PreguntasCompetenciaDTO> showListaCompetenciasGrupoEvento(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Integer principal){
-        Boolean esPrincipal = principal == 1 ? true : false;
+        Boolean esPrincipal = false; //principal == 1 ? true : false;
+        if(principal == 1) {
+            esPrincipal=true;
+        }
         return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Ideventopregcomp, idgrupopregcomp, esPrincipal);
     }
 

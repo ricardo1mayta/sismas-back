@@ -119,6 +119,11 @@ public class TablasEvaDesService implements ITablasEvaDesService{
     }
 
     @Override
+    public List<PreguntasCompetenciaDTO> findByPregunatasPorCompetenciaAndGrupo(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp) {
+        return preguntascompetenciadao.findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Override
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp, Boolean principal) {
         List<PreguntasCompetenciaDTO> dataCompetencias = preguntascompetenciadao.findByIdEventoPregcompAndCardinalesDistinct(Ideventopregcomp);
         if(principal){

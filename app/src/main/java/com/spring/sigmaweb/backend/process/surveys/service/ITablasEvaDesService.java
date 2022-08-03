@@ -45,6 +45,8 @@ public interface ITablasEvaDesService {
 
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompAndIdCompetenciaPregcompDto(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
 
+    public List<PreguntasCompetenciaDTO> findByPregunatasPorCompetenciaAndGrupo(Long Ideventopregcomp, Integer idgrupopregcomp, Long idcompetenciapregcomp);
+
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp,Boolean principal);
 
     public List<PreguntasCompetenciaDTO> findByIdEventoPregcompAndIdGrupoPregcompDtoDistinct(Long Ideventopregcomp, Integer idgrupopregcomp);

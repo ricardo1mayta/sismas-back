@@ -33,6 +33,9 @@ public class Puestos implements Serializable {
     @Column(nullable = true, name = "id_tipo_go_pues")
     private Integer idTipoGoPues;
 
+    @Column(nullable = true, name = "equivalencia_cargo_pues")
+    private Long equivalenciaCargoPues;
+
     @Column(nullable = false, name = "fechaing_pues")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -108,6 +111,14 @@ public class Puestos implements Serializable {
 
     public void setIdTipoGoPues(Integer idTipoGoPues) {
         this.idTipoGoPues = idTipoGoPues;
+    }
+
+    public Long getEquivalenciaCargoPues() {
+        return equivalenciaCargoPues;
+    }
+
+    public void setEquivalenciaCargoPues(Long equivalenciaCargoPues) {
+        this.equivalenciaCargoPues = equivalenciaCargoPues;
     }
 
     public Date getFechaIngPues() {

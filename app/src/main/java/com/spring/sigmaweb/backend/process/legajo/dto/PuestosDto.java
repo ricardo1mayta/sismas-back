@@ -13,6 +13,8 @@ public class PuestosDto {
     private Boolean estadoPues;
     private Integer idTipoGoPues;
     private String tipoGoPues;
+    private Long equivalenciaCargoPues;
+    private String descEquivalenciaCargoPues;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaIngPues;
@@ -29,7 +31,8 @@ public class PuestosDto {
         // TODO Auto-generated constructor stub
     }
 
-    public PuestosDto(Long idPuesto, String nombrePues, String abreviadoPues, String codigoPues, String idObraPues, Boolean estadoPues, Integer idTipoGoPues, String tipoGoPues, Date fechaIngPues, String creaPorPues, Date fechaModiPues, String modiPorPues) {
+
+    public PuestosDto(Long idPuesto, String nombrePues, String abreviadoPues, String codigoPues, String idObraPues, Boolean estadoPues, Integer idTipoGoPues, String tipoGoPues, Long equivalenciaCargoPues, String descEquivalenciaCargoPues, Date fechaIngPues, String creaPorPues, Date fechaModiPues, String modiPorPues) {
         this.idPuesto = idPuesto;
         this.nombrePues = nombrePues;
         this.abreviadoPues = abreviadoPues;
@@ -38,6 +41,8 @@ public class PuestosDto {
         this.estadoPues = estadoPues;
         this.idTipoGoPues = idTipoGoPues;
         this.tipoGoPues = tipoGoPues;
+        this.equivalenciaCargoPues = equivalenciaCargoPues;
+        this.descEquivalenciaCargoPues = descEquivalenciaCargoPues;
         this.fechaIngPues = fechaIngPues;
         this.creaPorPues = creaPorPues;
         this.fechaModiPues = fechaModiPues;
@@ -98,6 +103,22 @@ public class PuestosDto {
 
     public void setIdTipoGoPues(Integer idTipoGoPues) {
         this.idTipoGoPues = idTipoGoPues;
+    }
+
+    public Long getEquivalenciaCargoPues() {
+        return equivalenciaCargoPues;
+    }
+
+    public void setEquivalenciaCargoPues(Long equivalenciaCargoPues) {
+        this.equivalenciaCargoPues = equivalenciaCargoPues;
+    }
+
+    public String getDescEquivalenciaCargoPues() {
+        return descEquivalenciaCargoPues;
+    }
+
+    public void setDescEquivalenciaCargoPues(String descEquivalenciaCargoPues) {
+        this.descEquivalenciaCargoPues = descEquivalenciaCargoPues;
     }
 
     public String getTipoGoPues() {

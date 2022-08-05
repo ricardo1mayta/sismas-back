@@ -14,17 +14,14 @@ public class EvaluacionIndicadoresLogro implements Serializable {
     @Column(name = "id_evalindlog", nullable = false, unique = true)
     private Long idEvalindlog;
 
-    @Column(nullable = false, name = "id_indicador_evalindlog")
-    private Long idIndicadorEvalindlog;
+    @Column(nullable = false, name = "id_indicgo_evalindlog")
+    private Long idIndicgoEvalindlog;
 
-    @Column(nullable = false, name = "id_grupoocupacional_evalindlog")
-    private Integer idGrupoocupacionalEvalindlog;
+    @Column(nullable = false, length = 6, name = "id_obra_evalindlog")
+    private String idObraEvalindlog;
 
     @Column(nullable = false, name = "id_personal_evalindlog")
     private Long idPersonalEvalindlog;
-
-    @Column(nullable = false, name = "id_evento_evalindlog")
-    private Long idEventoEvalindlog;
 
     @Column(nullable = true, name = "promedio_evalindlog")
     private Double promedioEvalindlog;
@@ -59,20 +56,20 @@ public class EvaluacionIndicadoresLogro implements Serializable {
         this.idEvalindlog = idEvalindlog;
     }
 
-    public Long getIdIndicadorEvalindlog() {
-        return idIndicadorEvalindlog;
+    public Long getIdIndicgoEvalindlog() {
+        return idIndicgoEvalindlog;
     }
 
-    public void setIdIndicadorEvalindlog(Long idIndicadorEvalindlog) {
-        this.idIndicadorEvalindlog = idIndicadorEvalindlog;
+    public void setIdIndicgoEvalindlog(Long idIndicgoEvalindlog) {
+        this.idIndicgoEvalindlog = idIndicgoEvalindlog;
     }
 
-    public Integer getIdGrupoocupacionalEvalindlog() {
-        return idGrupoocupacionalEvalindlog;
+    public String getIdObraEvalindlog() {
+        return idObraEvalindlog;
     }
 
-    public void setIdGrupoocupacionalEvalindlog(Integer idGrupoocupacionalEvalindlog) {
-        this.idGrupoocupacionalEvalindlog = idGrupoocupacionalEvalindlog;
+    public void setIdObraEvalindlog(String idObraEvalindlog) {
+        this.idObraEvalindlog = idObraEvalindlog;
     }
 
     public Long getIdPersonalEvalindlog() {
@@ -81,14 +78,6 @@ public class EvaluacionIndicadoresLogro implements Serializable {
 
     public void setIdPersonalEvalindlog(Long idPersonalEvalindlog) {
         this.idPersonalEvalindlog = idPersonalEvalindlog;
-    }
-
-    public Long getIdEventoEvalindlog() {
-        return idEventoEvalindlog;
-    }
-
-    public void setIdEventoEvalindlog(Long idEventoEvalindlog) {
-        this.idEventoEvalindlog = idEventoEvalindlog;
     }
 
     public Double getPromedioEvalindlog() {

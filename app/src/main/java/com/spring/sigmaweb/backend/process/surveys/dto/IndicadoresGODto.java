@@ -1,57 +1,51 @@
-package com.spring.sigmaweb.backend.process.surveys.model;
+package com.spring.sigmaweb.backend.process.surveys.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "me_indicadores_grupo_ocupacional")
-public class IndicadoresGO implements Serializable  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_indicgo", nullable = false, unique = true)
+public class IndicadoresGODto implements Serializable {
     private Long idIndicgo;
-
-    @Column(nullable = false, name = "id_indicador_indicgo")
     private Long idIndicadorIndicgo;
-
-    @Column(nullable = false, name = "id_grupoocupacional_indicgo")
+    private String indicadorIndicgo;
     private Integer idGrupoocupacionalIndicgo;
-
-    @Column(nullable = false, length = 6, name="id_obra_indicgo")
+    private String grupoocupacionalIndicgo;
     private String idObraIndicgo;
-
-    @Column(nullable = false, name = "id_puesto_indicgo")
     private Long idPuestoIndicgo;
-
-    @Column(nullable = false, name = "id_evento_indicgo")
+    private String puestoIndicgo;
     private Long idEventoIndicgo;
-
-    @Column(nullable = false, name = "flg_activo_indicgo", columnDefinition = "boolean default true")
     private Boolean flgActivoIndicgo;
 
-
-    @Column(nullable = false, name = "fechaing_indicgo")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaingIndicgo;
 
-    @Column(nullable = false, name = "creapor_indicgo", length = 100)
     private String creaporIndicgo;
 
-    @Column(nullable = true, name = "fechamodi_indicgo")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodiIndicgo;
 
-    @Column(nullable = true, name = "modipor_indicgo", length = 100)
     private String modiporIndicgo;
 
-    @PrePersist
-    public void prePersist() {
-        this.fechaingIndicgo = new Date();
+    public IndicadoresGODto(Long idIndicgo, Long idIndicadorIndicgo, String indicadorIndicgo, Integer idGrupoocupacionalIndicgo, String grupoocupacionalIndicgo, String idObraIndicgo, Long idPuestoIndicgo, String puestoIndicgo, Long idEventoIndicgo, Boolean flgActivoIndicgo, Date fechaingIndicgo, String creaporIndicgo, Date fechamodiIndicgo, String modiporIndicgo) {
+        this.idIndicgo = idIndicgo;
+        this.idIndicadorIndicgo = idIndicadorIndicgo;
+        this.indicadorIndicgo = indicadorIndicgo;
+        this.idGrupoocupacionalIndicgo = idGrupoocupacionalIndicgo;
+        this.grupoocupacionalIndicgo = grupoocupacionalIndicgo;
+        this.idObraIndicgo = idObraIndicgo;
+        this.idPuestoIndicgo = idPuestoIndicgo;
+        this.puestoIndicgo = puestoIndicgo;
+        this.idEventoIndicgo = idEventoIndicgo;
+        this.flgActivoIndicgo = flgActivoIndicgo;
+        this.fechaingIndicgo = fechaingIndicgo;
+        this.creaporIndicgo = creaporIndicgo;
+        this.fechamodiIndicgo = fechamodiIndicgo;
+        this.modiporIndicgo = modiporIndicgo;
     }
 
     public Long getIdIndicgo() {
@@ -70,12 +64,28 @@ public class IndicadoresGO implements Serializable  {
         this.idIndicadorIndicgo = idIndicadorIndicgo;
     }
 
+    public String getIndicadorIndicgo() {
+        return indicadorIndicgo;
+    }
+
+    public void setIndicadorIndicgo(String indicadorIndicgo) {
+        this.indicadorIndicgo = indicadorIndicgo;
+    }
+
     public Integer getIdGrupoocupacionalIndicgo() {
         return idGrupoocupacionalIndicgo;
     }
 
     public void setIdGrupoocupacionalIndicgo(Integer idGrupoocupacionalIndicgo) {
         this.idGrupoocupacionalIndicgo = idGrupoocupacionalIndicgo;
+    }
+
+    public String getGrupoocupacionalIndicgo() {
+        return grupoocupacionalIndicgo;
+    }
+
+    public void setGrupoocupacionalIndicgo(String grupoocupacionalIndicgo) {
+        this.grupoocupacionalIndicgo = grupoocupacionalIndicgo;
     }
 
     public String getIdObraIndicgo() {
@@ -92,6 +102,14 @@ public class IndicadoresGO implements Serializable  {
 
     public void setIdPuestoIndicgo(Long idPuestoIndicgo) {
         this.idPuestoIndicgo = idPuestoIndicgo;
+    }
+
+    public String getPuestoIndicgo() {
+        return puestoIndicgo;
+    }
+
+    public void setPuestoIndicgo(String puestoIndicgo) {
+        this.puestoIndicgo = puestoIndicgo;
     }
 
     public Long getIdEventoIndicgo() {

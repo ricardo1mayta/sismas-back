@@ -32,6 +32,8 @@ public interface IPersonalCargoService {
 
     public List<Cargo> findAll();
 
+    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar);
+
     public List<CargosDto> findCargosDto(Boolean estado);
 
     public Cargo savecargo(Cargo cargo);

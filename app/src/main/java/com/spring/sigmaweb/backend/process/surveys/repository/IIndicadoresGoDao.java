@@ -17,7 +17,7 @@ public interface IIndicadoresGoDao extends CrudRepository<IndicadoresGO,Long> {
             "tgo.descripTab as grupoocupacionalIndicgo," +
             "igo.idObraIndicgo," +
             "igo.idPuestoIndicgo," +
-            "p.nombrePues as puestoIndicgo," +
+            "c.nombreCar as puestoIndicgo," +
             "igo.idEventoIndicgo," +
             "igo.flgActivoIndicgo," +
             "igo.fechaingIndicgo," +
@@ -27,11 +27,11 @@ public interface IIndicadoresGoDao extends CrudRepository<IndicadoresGO,Long> {
             ") " +
             "from IndicadoresGO igo inner join IndicadoresLogro il on (igo.idIndicadorIndicgo = il.idIndicadorLogro) " +
             "inner join TablasTabla tgo on (igo.idGrupoocupacionalIndicgo = tgo.codigoTab) " +
-            "left join Puestos p on (igo.idPuestoIndicgo = p.idPuesto ) " +
+            "left join Cargo c on (igo.idPuestoIndicgo = c.idCargo ) " +
             "where coalesce(igo.idObraIndicgo, '_') = ?1 " +
             "and tgo.codigoTab = ?2 " +
-            "and coalesce(p.idPuesto,-1) = (case when ?2 != 30501 then coalesce(p.idPuesto,-1) else ?3 end) " +
+            "and coalesce(c.idCargo,-1) = (case when ?2 != 30501 then coalesce(c.idCargo,-1) else ?3 end) " +
             "and igo.idEventoIndicgo = ?4"
     )
-    public List<IndicadoresGODto> findByObraAndGrupoOcupacionalAndPuestoAndEvento(String idobra, Integer idgo, Long idpuesto, Long idevento);
+    public List<IndicadoresGODto> findByObraAndGrupoOcupacionalAndPuestoAndEvento(String idobra, Integer idgo, Long idcargo, Long idevento);
 }

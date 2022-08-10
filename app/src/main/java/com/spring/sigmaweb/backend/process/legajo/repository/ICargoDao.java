@@ -20,6 +20,7 @@ public interface ICargoDao extends CrudRepository<Cargo, Long> {
             "c.estadoCar," +
             "c.idTipoGoCar," +
             "t.descripTab as tipoGoCar," +
+            "c.flgEsCargosectorCar," +
             "c.fechaIngCar," +
             "c.creaPorCar," +
             "c.fechaModiCar," +

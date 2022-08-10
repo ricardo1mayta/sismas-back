@@ -10,6 +10,7 @@ public class EvaluacionIndicadoresLogroDTO implements Serializable {
     private String descripcionIndicador;
     private Integer idGrupoOcupacional;
     private String descripcionGrupoOcupa;
+    private String descripcionNivelPlanilla;
 
     private Long idPersonalEvalindlog;
     private String apePaternoPers;
@@ -17,11 +18,17 @@ public class EvaluacionIndicadoresLogroDTO implements Serializable {
     private String nombrePers;
     private Long idPuestoPerpuest;
     private String nombrePues;
+    private Integer ordenIndicgo;
     private Double promedioEvalindlog;
     private String creaporEvalindlog;
     private String modiporEvalindlog;
 
-    public EvaluacionIndicadoresLogroDTO(Long idEvalindlog, String idObraEvalindlog, Long idIndicgoEvalindlog, Long idIndicador, String descripcionIndicador, Integer idGrupoOcupacional, String descripcionGrupoOcupa, Long idPersonalEvalindlog, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idPuestoPerpuest, String nombrePues, Double promedioEvalindlog, String creaporEvalindlog, String modiporEvalindlog) {
+    public EvaluacionIndicadoresLogroDTO() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    public EvaluacionIndicadoresLogroDTO(Long idEvalindlog, String idObraEvalindlog, Long idIndicgoEvalindlog, Long idIndicador, String descripcionIndicador, Integer idGrupoOcupacional, String descripcionGrupoOcupa, String descripcionNivelPlanilla, Long idPersonalEvalindlog, String apePaternoPers, String apeMaternoPers, String nombrePers, Long idPuestoPerpuest, String nombrePues, Integer ordenIndicgo, Double promedioEvalindlog, String creaporEvalindlog, String modiporEvalindlog) {
         this.idEvalindlog = idEvalindlog;
         this.idObraEvalindlog = idObraEvalindlog;
         this.idIndicgoEvalindlog = idIndicgoEvalindlog;
@@ -29,12 +36,14 @@ public class EvaluacionIndicadoresLogroDTO implements Serializable {
         this.descripcionIndicador = descripcionIndicador;
         this.idGrupoOcupacional = idGrupoOcupacional;
         this.descripcionGrupoOcupa = descripcionGrupoOcupa;
+        this.descripcionNivelPlanilla = descripcionNivelPlanilla;
         this.idPersonalEvalindlog = idPersonalEvalindlog;
         this.apePaternoPers = apePaternoPers;
         this.apeMaternoPers = apeMaternoPers;
         this.nombrePers = nombrePers;
         this.idPuestoPerpuest = idPuestoPerpuest;
         this.nombrePues = nombrePues;
+        this.ordenIndicgo = ordenIndicgo;
         this.promedioEvalindlog = promedioEvalindlog;
         this.creaporEvalindlog = creaporEvalindlog;
         this.modiporEvalindlog = modiporEvalindlog;
@@ -96,6 +105,14 @@ public class EvaluacionIndicadoresLogroDTO implements Serializable {
         this.descripcionGrupoOcupa = descripcionGrupoOcupa;
     }
 
+    public String getDescripcionNivelPlanilla() {
+        return descripcionNivelPlanilla;
+    }
+
+    public void setDescripcionNivelPlanilla(String descripcionNivelPlanilla) {
+        this.descripcionNivelPlanilla = descripcionNivelPlanilla;
+    }
+
     public Long getIdPersonalEvalindlog() {
         return idPersonalEvalindlog;
     }
@@ -138,6 +155,14 @@ public class EvaluacionIndicadoresLogroDTO implements Serializable {
 
     public String getNombrePues() {
         return nombrePues;
+    }
+
+    public Integer getOrdenIndicgo() {
+        return ordenIndicgo;
+    }
+
+    public void setOrdenIndicgo(Integer ordenIndicgo) {
+        this.ordenIndicgo = ordenIndicgo;
     }
 
     public void setNombrePues(String nombrePues) {

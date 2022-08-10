@@ -30,8 +30,9 @@ public class IndicadoresGODto implements Serializable {
     private Date fechamodiIndicgo;
 
     private String modiporIndicgo;
+    private Integer ordenIndicgo;
 
-    public IndicadoresGODto(Long idIndicgo, Long idIndicadorIndicgo, String indicadorIndicgo, Integer idGrupoocupacionalIndicgo, String grupoocupacionalIndicgo, String idObraIndicgo, Long idPuestoIndicgo, String puestoIndicgo, Long idEventoIndicgo, Boolean flgActivoIndicgo, Date fechaingIndicgo, String creaporIndicgo, Date fechamodiIndicgo, String modiporIndicgo) {
+    public IndicadoresGODto(Long idIndicgo, Long idIndicadorIndicgo, String indicadorIndicgo, Integer idGrupoocupacionalIndicgo, String grupoocupacionalIndicgo, String idObraIndicgo, Long idPuestoIndicgo, String puestoIndicgo, Long idEventoIndicgo, Boolean flgActivoIndicgo, Date fechaingIndicgo, String creaporIndicgo, Date fechamodiIndicgo, String modiporIndicgo, Integer ordenIndicgo) {
         this.idIndicgo = idIndicgo;
         this.idIndicadorIndicgo = idIndicadorIndicgo;
         this.indicadorIndicgo = indicadorIndicgo;
@@ -46,6 +47,7 @@ public class IndicadoresGODto implements Serializable {
         this.creaporIndicgo = creaporIndicgo;
         this.fechamodiIndicgo = fechamodiIndicgo;
         this.modiporIndicgo = modiporIndicgo;
+        this.ordenIndicgo = ordenIndicgo;
     }
 
     public Long getIdIndicgo() {
@@ -158,5 +160,13 @@ public class IndicadoresGODto implements Serializable {
 
     public void setModiporIndicgo(String modiporIndicgo) {
         this.modiporIndicgo = modiporIndicgo;
+    }
+
+    public Integer getOrdenIndicgo() {
+        return ordenIndicgo;
+    }
+
+    public void setOrdenIndicgo(Integer ordenIndicgo) {
+        this.ordenIndicgo = ordenIndicgo;
     }
 }

@@ -12,6 +12,7 @@ public class CargosDto implements Serializable {
     private Boolean estadoCar;
     private Integer idTipoGoCar;
     private String tipoGoCar;
+    private Boolean flgEsCargosectorCar;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaIngCar;
@@ -28,13 +29,14 @@ public class CargosDto implements Serializable {
         // TODO Auto-generated constructor stub
     }
 
-    public CargosDto(Long idCargo, String nombreCar, String abreviadoCar, Boolean estadoCar, Integer idTipoGoCar, String tipoGoCar, Date fechaIngCar, String creaPorCar, Date fechaModiCar, String modiPorCar) {
+    public CargosDto(Long idCargo, String nombreCar, String abreviadoCar, Boolean estadoCar, Integer idTipoGoCar, String tipoGoCar, Boolean flgEsCargosectorCar, Date fechaIngCar, String creaPorCar, Date fechaModiCar, String modiPorCar) {
         this.idCargo = idCargo;
         this.nombreCar = nombreCar;
         this.abreviadoCar = abreviadoCar;
         this.estadoCar = estadoCar;
         this.idTipoGoCar = idTipoGoCar;
         this.tipoGoCar = tipoGoCar;
+        this.flgEsCargosectorCar = flgEsCargosectorCar;
         this.fechaIngCar = fechaIngCar;
         this.creaPorCar = creaPorCar;
         this.fechaModiCar = fechaModiCar;
@@ -87,6 +89,14 @@ public class CargosDto implements Serializable {
 
     public void setTipoGoCar(String tipoGoCar) {
         this.tipoGoCar = tipoGoCar;
+    }
+
+    public Boolean getFlgEsCargosectorCar() {
+        return flgEsCargosectorCar;
+    }
+
+    public void setFlgEsCargosectorCar(Boolean flgEsCargosectorCar) {
+        this.flgEsCargosectorCar = flgEsCargosectorCar;
     }
 
     public Date getFechaIngCar() {

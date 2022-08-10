@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.EvaluacionIndicadoresLogroDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.IndicadoresGODto;
+import com.spring.sigmaweb.backend.process.surveys.model.EvaluacionIndicadoresLogro;
 import com.spring.sigmaweb.backend.process.surveys.repository.IEvaluacionIndicadoresLogroDao;
 import com.spring.sigmaweb.backend.process.surveys.repository.IIndicadoresGoDao;
 import com.spring.sigmaweb.backend.process.surveys.repository.IIndicadoresLogroDao;
@@ -35,5 +36,17 @@ public class IndicadoresLogroService implements IIndicadoresLogroService{
     public List<EvaluacionIndicadoresLogroDTO> findByEvaluacionObraGrupoocupacionalEvento(String idobra, Integer idgo, Long idpuesto, Long idevento) {
 
         return evaluacionIndicadoresLogroDao.findByEvaluacionObraGrupoocupacionalEvento(idobra, idgo, idpuesto, idevento);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EvaluacionIndicadoresLogro findByIdIndicgoEvalindlogAndIdObraEvalindlogAndIdPersonalEvalindlog(Long idIndicgoEvalindlog, String idobra, Long idPersonalEvalindlog) {
+        return evaluacionIndicadoresLogroDao.findByIdIndicgoEvalindlogAndIdObraEvalindlogAndIdPersonalEvalindlog(idIndicgoEvalindlog, idobra, idPersonalEvalindlog);
+    }
+
+    @Override
+    @Transactional
+    public EvaluacionIndicadoresLogro saveEvaluacionIndLog(EvaluacionIndicadoresLogro evaluacion) {
+        return evaluacionIndicadoresLogroDao.save(evaluacion);
     }
 }

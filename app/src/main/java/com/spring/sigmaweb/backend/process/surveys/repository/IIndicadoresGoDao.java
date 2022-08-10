@@ -23,7 +23,8 @@ public interface IIndicadoresGoDao extends CrudRepository<IndicadoresGO,Long> {
             "igo.fechaingIndicgo," +
             "igo.creaporIndicgo," +
             "igo.fechamodiIndicgo," +
-            "igo.modiporIndicgo" +
+            "igo.modiporIndicgo, " +
+            "igo.ordenIndicgo " +
             ") " +
             "from IndicadoresGO igo inner join IndicadoresLogro il on (igo.idIndicadorIndicgo = il.idIndicadorLogro) " +
             "inner join TablasTabla tgo on (igo.idGrupoocupacionalIndicgo = tgo.codigoTab) " +
@@ -31,7 +32,8 @@ public interface IIndicadoresGoDao extends CrudRepository<IndicadoresGO,Long> {
             "where coalesce(igo.idObraIndicgo, '_') = ?1 " +
             "and tgo.codigoTab = ?2 " +
             "and coalesce(c.idCargo,-1) = (case when ?2 != 30501 then coalesce(c.idCargo,-1) else ?3 end) " +
-            "and igo.idEventoIndicgo = ?4"
+            "and igo.idEventoIndicgo = ?4 " +
+            "order by igo.ordenIndicgo, il.descripcionIndic"
     )
     public List<IndicadoresGODto> findByObraAndGrupoOcupacionalAndPuestoAndEvento(String idobra, Integer idgo, Long idcargo, Long idevento);
 }

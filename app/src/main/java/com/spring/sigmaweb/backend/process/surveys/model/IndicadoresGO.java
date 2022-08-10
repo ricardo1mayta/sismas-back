@@ -32,6 +32,8 @@ public class IndicadoresGO implements Serializable  {
     @Column(nullable = false, name = "flg_activo_indicgo", columnDefinition = "boolean default true")
     private Boolean flgActivoIndicgo;
 
+    @Column(nullable = false, name = "orden_indicgo")
+    private Integer ordenIndicgo;
 
     @Column(nullable = false, name = "fechaing_indicgo")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
@@ -108,6 +110,14 @@ public class IndicadoresGO implements Serializable  {
 
     public void setFlgActivoIndicgo(Boolean flgActivoIndicgo) {
         this.flgActivoIndicgo = flgActivoIndicgo;
+    }
+
+    public Integer getOrdenIndicgo() {
+        return ordenIndicgo;
+    }
+
+    public void setOrdenIndicgo(Integer ordenIndicgo) {
+        this.ordenIndicgo = ordenIndicgo;
     }
 
     public Date getFechaingIndicgo() {

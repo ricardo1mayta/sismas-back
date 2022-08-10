@@ -175,6 +175,15 @@ public class PersonalPuestoRestController {
         return puestosservice.findByIdObraPues(idObraPues );
     }
 
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/puestoobraestadogolist/{idObraPues}/{estadoPues}/{idgo}")
+    public List<PuestosDto> showPuestoPorObraEstadoAndGOList(@PathVariable String idObraPues, @PathVariable Integer estadoPues, @PathVariable Integer idgo){
+
+        Boolean estado = estadoPues == 1;
+
+        return puestosservice.findByIdObraPuesAndEstadoPuesAndGrupoOcupa(idObraPues, estado, idgo );
+    }
+
     @PostMapping("/puestosave")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createPuestos(@RequestBody PuestosDto puesto, BindingResult result) {
@@ -202,6 +211,7 @@ public class PersonalPuestoRestController {
             puestoInsert.setIdObraPues(puesto.getIdObraPues());
             puestoInsert.setEstadoPues(puesto.getEstadoPues());
             puestoInsert.setIdTipoGoPues(puesto.getIdTipoGoPues());
+            puestoInsert.setEquivalenciaCargoPues(puesto.getEquivalenciaCargoPues());
             puestoInsert.setFechaIngPues(new Date());
             puestoInsert.setCreaPorPues(puesto.getCreaPorPues());
 
@@ -230,6 +240,7 @@ public class PersonalPuestoRestController {
 
             puestoAct.setEstadoPues(puesto.getEstadoPues());
             puestoAct.setIdTipoGoPues(puesto.getIdTipoGoPues());
+            puestoAct.setEquivalenciaCargoPues(puesto.getEquivalenciaCargoPues());
             puestoAct.setFechaModiPues(new Date());
             puestoAct.setModiPorPues(puesto.getCreaPorPues());
         }

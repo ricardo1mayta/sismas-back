@@ -257,9 +257,18 @@ public class TablasEvaDesRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/listapreguntasxcompetenciaespecifico/{Ideventopregcomp}/{idgrupopregcomp}/{idcompetenciapregcomp}")
+    public List<PreguntasCompetenciaDTO> showPreguntasPorCompetenciaespecifico(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Long idcompetenciapregcomp){
+        return tablasevadesService.findByPregunatasPorCompetenciaAndGrupo(Ideventopregcomp, idgrupopregcomp, idcompetenciapregcomp);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/listacompetenciasgrupoeventocardinal/{Ideventopregcomp}/{idgrupopregcomp}/{principal}")
     public List<PreguntasCompetenciaDTO> showListaCompetenciasGrupoEvento(@PathVariable Long Ideventopregcomp, @PathVariable Integer idgrupopregcomp, @PathVariable Integer principal){
-        Boolean esPrincipal = principal == 1 ? true : false;
+        Boolean esPrincipal = false; //principal == 1 ? true : false;
+        if(principal == 1) {
+            esPrincipal=true;
+        }
         return tablasevadesService.findByIdEventoPregcompAndIdGrupoPregcompCardinalesDtoDistinct(Ideventopregcomp, idgrupopregcomp, esPrincipal);
     }
 

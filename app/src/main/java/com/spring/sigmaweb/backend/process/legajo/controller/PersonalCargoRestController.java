@@ -80,6 +80,13 @@ public class PersonalCargoRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargoporgoestado/{idgo}/{estadocargo}")
+    public List<Cargo> showCargoPorGrupoOcupaAndEstado(@PathVariable Integer idgo, @PathVariable Integer estadocargo){
+        Boolean estado = (estadocargo == 1 ? true : false);
+        return personalCargoService.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(idgo, estado);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/cargoestadodto/{estado}")
     public List<CargosDto> showCargoPorEstado(@PathVariable Integer estado){
         Boolean est = estado == 1;
@@ -111,6 +118,7 @@ public class PersonalCargoRestController {
             cargoInsert.setAbreviadoCar(cargo.getAbreviadoCar());
             cargoInsert.setEstadoCar(cargo.getEstadoCar());
             cargoInsert.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoInsert.setFlgEsCargosectorCar(cargo.getFlgEsCargosectorCar());
             cargoInsert.setFechaIngCar(new Date());
             cargoInsert.setCreaPorCar(cargo.getCreaPorCar());
 
@@ -136,6 +144,7 @@ public class PersonalCargoRestController {
             cargoAct.setAbreviadoCar(cargo.getAbreviadoCar());
             cargoAct.setEstadoCar(cargo.getEstadoCar());
             cargoAct.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoAct.setFlgEsCargosectorCar(cargo.getFlgEsCargosectorCar());
             cargoAct.setFechaModiCar(new Date());
             cargoAct.setModiPorCar(cargo.getModiPorCar());
         }

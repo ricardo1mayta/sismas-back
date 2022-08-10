@@ -27,6 +27,9 @@ public class Cargo implements Serializable {
     @Column(nullable = true, name = "id_tipo_go_car")
     private Integer idTipoGoCar;
 
+    @Column(nullable = true, name = "flg_es_cargosector_car")
+    private Boolean flgEsCargosectorCar;
+
     @Column(nullable = false, name = "fechaing_car")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,6 +85,14 @@ public class Cargo implements Serializable {
 
     public Date getFechaIngCar() {
         return fechaIngCar;
+    }
+
+    public Boolean getFlgEsCargosectorCar() {
+        return flgEsCargosectorCar;
+    }
+
+    public void setFlgEsCargosectorCar(Boolean flgEsCargosectorCar) {
+        this.flgEsCargosectorCar = flgEsCargosectorCar;
     }
 
     public void setFechaIngCar(Date fechaIngCar) {

@@ -85,6 +85,12 @@ public class PersonalCargoService implements IPersonalCargoService{
 
     @Override
     @Transactional(readOnly = true)
+    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar) {
+        return cargoDao.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Idtipogocar, estadocar);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<CargosDto> findCargosDto(Boolean estado) {
         return cargoDao.findCargosDto(estado);
     }

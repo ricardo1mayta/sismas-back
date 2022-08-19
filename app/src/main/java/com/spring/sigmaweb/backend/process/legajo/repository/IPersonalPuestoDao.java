@@ -148,8 +148,8 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
 
             "pvl.idPervila," +
             "pp.idPerpuest," +
-            "coalesce(cp.idPuesto, -1) as idPuestoPerpuest," +
-            "coalesce(cp.nombrePues, 'NO ASIGNADO') as puestoPerpuest," +
+            "coalesce(pst.idPuesto, -1) as idPuestoPerpuest," +
+            "coalesce(pst.nombrePues, 'NO ASIGNADO') as puestoPerpuest," +
             "coalesce(tgrocp.codigoTab, -1) as idAreaPerpuest," +
             "coalesce(tgrocp.descripTab, 'NO ASIGNADO') as areaPerpuest," +
             "coalesce(tgrplp.codigoTab, -1) as idTipoNivelPlanillaPerpuest," +
@@ -183,23 +183,33 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             ")" +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
-            "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila='ACTIVO') " +
+            "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila in ('ACTIVO', 'FINALIZADO')) " +
             "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila=pp.idPervilaPerpuest) " +
             "left join PersonalCargo pc on (o.idobra = pc.idObraPercargo and p.idPersonal=pc.idPersonalPercargo and pvl.idPervila = pc.idPervilaPercargo ) " +
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
-            "left join TablasTabla tgrocp on (pp.idAreaPerpuest = tgrocp.codigoTab ) " +
+
             "left join TablasTabla tgrplp on (pp.idTipoNivelPlanillaPerpuest = tgrplp.codigoTab and tgrplp.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "left join TablasTabla tgrocc on (pc.idAreaPercargo = tgrocc.codigoTab ) " +
             "left join TablasTabla tgrplc on (pc.idTipoNivelPlanillaPercargo = tgrplc.codigoTab and tgrplc.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
-            "left join Puestos cp on (pp.idPuestoPerpuest = cp.idPuesto) " +
+            "left join Puestos pst on (pp.idPuestoPerpuest = pst.idPuesto and o.idobra = pst.idObraPues) " +
+            "left join TablasTabla tgrocp on (coalesce(pst.idTipoGoPues, pp.idAreaPerpuest) = tgrocp.codigoTab ) " +
             "left join Cargo cc on (pc.idCargoPercargo = cc.idCargo) " +
             "where o.idobra =?1 and " +
             "p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
-            "and coalesce(cp.idPuesto,0) = (case ?5 when 0 then coalesce(cp.idPuesto,0) else ?5 end ) " +
-            "and coalesce(pp.idAreaPerpuest,0) = (case ?3 when 0 then coalesce(pp.idAreaPerpuest,0) else ?3 end ) " +
-            "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) "
+            "and coalesce(pst.idPuesto,0) = (case ?5 when 0 then coalesce(pst.idPuesto,0) else ?5 end ) " +
+            "and coalesce(pst.idTipoGoPues,pp.idAreaPerpuest) = (case ?3 when 0 then coalesce(pst.idTipoGoPues,pp.idAreaPerpuest) else ?3 end ) " +
+            "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) " +
+            "and ( " +
+            "(" +
+                 "( ?6 between coalesce( CONVERT(DATE_FORMAT(  pp.fechaIniPerpuest, '%Y%m%d'), SIGNED), ?6) and coalesce( CONVERT(DATE_FORMAT(  pp.fechaFinPerpuest, '%Y%m%d'), SIGNED), ?7)) " +
+            " or ( ?7 between coalesce( CONVERT(DATE_FORMAT(  pp.fechaIniPerpuest, '%Y%m%d'), SIGNED), ?6) and coalesce( CONVERT(DATE_FORMAT(  pp.fechaFinPerpuest, '%Y%m%d'), SIGNED), ?7))" +
+            ")  or " +
+            "(" +
+               "( ?6 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercargo, '%Y%m%d'), SIGNED), ?6) and coalesce(CONVERT(DATE_FORMAT( pc.fechaFinPercargo, '%Y%m%d'), SIGNED), ?7)) " +
+            "or ( ?7 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercargo, '%Y%m%d'), SIGNED), ?6) and coalesce(CONVERT(DATE_FORMAT( pc.fechaFinPercargo, '%Y%m%d'), SIGNED), ?7)) ) " +
+            ") "
     )
-    public List<ReportPuestosCargos> reportPuestosCargosPorObra (String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, Sort sort);
+    public List<ReportPuestosCargos> reportPuestosCargosPorObra (String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, Integer periodoIni, Integer periodoFin, Sort sort);
 
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.reports.ReportPuestosCargos(" +
@@ -256,13 +266,14 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
             "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila='ACTIVO') " +
             "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila=pp.idPervilaPerpuest) " +
+            "left join Puestos cp on (pp.idPuestoPerpuest = cp.idPuesto and o.idobra= cp.idObraPues) " +
             "left join PersonalCargo pc on (o.idobra = pc.idObraPercargo and p.idPersonal=pc.idPersonalPercargo and pvl.idPervila = pc.idPervilaPercargo ) " +
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
-            "left join TablasTabla tgrocp on (pp.idAreaPerpuest = tgrocp.codigoTab ) " +
+            "left join TablasTabla tgrocp on (oalesce(cp.idTipoGoPues, pp.idAreaPerpuest) = tgrocp.codigoTab ) " +
             "left join TablasTabla tgrplp on (pp.idTipoNivelPlanillaPerpuest = tgrplp.codigoTab and tgrplp.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "left join TablasTabla tgrocc on (pc.idAreaPercargo = tgrocc.codigoTab ) " +
             "left join TablasTabla tgrplc on (pc.idTipoNivelPlanillaPercargo = tgrplc.codigoTab and tgrplc.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
-            "left join Puestos cp on (pp.idPuestoPerpuest = cp.idPuesto) " +
+
             "left join Cargo cc on (pc.idCargoPercargo = cc.idCargo) " +
             "where o.idobra =?1 " +
             "and p.idPersonal = ?2 "

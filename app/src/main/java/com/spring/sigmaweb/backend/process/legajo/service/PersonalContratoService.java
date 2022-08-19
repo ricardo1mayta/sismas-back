@@ -18,9 +18,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PersonalContratoService implements IPersonalContratoService{
@@ -179,7 +182,8 @@ public class PersonalContratoService implements IPersonalContratoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer grupoocacional, Integer tipoplanilla, Integer idtipocontrato) {
+    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer grupoocacional, Integer tipoplanilla, Integer idtipocontrato, Integer periodoIni, Integer periodoFin) {
+
         Sort sortContrato = Sort.by(Sort.Direction.ASC, "tcont.descripTab");
         Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
         Sort sortApeMat = Sort.by(Sort.Direction.ASC, "psn.apeMaternoPers");
@@ -203,7 +207,7 @@ public class PersonalContratoService implements IPersonalContratoService{
         Integer tipoGrupo = (grupoocacional == -1 ? 0 :grupoocacional);
         Integer tipoCont = (idtipocontrato == -1 ? 0 : idtipocontrato);
 
-        List<ReportContract> dataReport = contratoDao.reportContratosPorObra(idobra, estadoper, tipoGrupo, tipoplanilla,tipoCont, grupSort);
+        List<ReportContract> dataReport = contratoDao.reportContratosPorObra(idobra, estadoper, tipoGrupo, tipoplanilla,tipoCont, periodoIni,periodoFin, grupSort);
         List<HistoricoVilaLabotalDTO> dataAct = new ArrayList<>();
 
         if(tipoplanilla != -1 && idtipocontrato != -1){
@@ -226,11 +230,13 @@ public class PersonalContratoService implements IPersonalContratoService{
     }
 
     @Override
-    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike) {
-        return contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike);
+    @Transactional(readOnly = true)
+    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike, Integer periodoIni, Integer periodoFin) {
+        return contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike, periodoIni, periodoFin);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLab(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipo) {
 
         List<HistoricoVilaLabotalDTO> all = historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo);

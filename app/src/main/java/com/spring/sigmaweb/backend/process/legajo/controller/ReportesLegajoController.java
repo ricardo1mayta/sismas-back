@@ -87,37 +87,37 @@ public class ReportesLegajoController {
     //========================= REPORTES CONTRATOS & CONVENIOS =========================
     //============================================================
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reportcontratoObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}")
-    public List<ReportContract> reporteContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato){
-        return personalcontratoservice.reportContratosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato);
+    @GetMapping("/reportcontratoObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}/{periodoIni}/{periodoFin}")
+    public List<ReportContract> reporteContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato, @PathVariable Integer periodoIni, @PathVariable Integer periodoFin){
+        return personalcontratoservice.reportContratosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato, periodoIni, periodoFin);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reporthistoricocontratoobra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}/{textolike}")
-    public List<ReportContract> reporteHistoricoContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato, @PathVariable String textolike){
+    @GetMapping("/reporthistoricocontratoobra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipocontrato}/{textolike}/{periodoini}/{periodofin}")
+    public List<ReportContract> reporteHistoricoContratosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipocontrato, @PathVariable String textolike, @PathVariable Integer periodoini, @PathVariable Integer periodofin){
         String texto = textolike.equals("_") ? "": textolike.trim();
-        return personalcontratoservice.reportContratosHistoricoPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato, texto);
+        return personalcontratoservice.reportContratosHistoricoPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipocontrato, texto, periodoini, periodofin);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reportconveniosObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}")
-    public List<ReportAgreement> reporteConveniosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio){
-        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio);
+    @GetMapping("/reportconveniosObra/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}/{periodoini}/{periodofin}")
+    public List<ReportAgreement> reporteConveniosPorObra(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio, @PathVariable Integer periodoini, @PathVariable Integer periodofin){
+        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio, periodoini, periodofin);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reportconvenioscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}")
-    public List<ReportAgreement> reporteConveniosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio){
-        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio);
+    @GetMapping("/reportconvenioscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}/{periodoini}/{periodofin}")
+    public List<ReportAgreement> reporteConveniosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio, @PathVariable Integer periodoini, @PathVariable Integer periodofin){
+        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio, periodoini, periodofin);
     }
 
     //========================= REPORTES PUESTOS Y CARGOS =========================
     //============================================================
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/reportpuestoscargoscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipopuesto}/{ordenOpcion}")
-    public List<ReportPuestosCargos> reportePuestosCargosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipopuesto, @PathVariable String ordenOpcion){
-        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion);
+    @GetMapping("/reportpuestoscargoscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipopuesto}/{ordenOpcion}/{periodoIni}/{periodoFin}")
+    public List<ReportPuestosCargos> reportePuestosCargosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipopuesto, @PathVariable String ordenOpcion, @PathVariable Integer periodoIni, @PathVariable Integer periodoFin){
+        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion, periodoIni, periodoFin);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})

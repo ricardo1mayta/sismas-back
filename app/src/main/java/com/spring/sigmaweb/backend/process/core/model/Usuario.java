@@ -48,13 +48,10 @@ public class Usuario implements Serializable {
     @Column(name = "codi_user", nullable = true)
     private Long idcodTipoUser;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "roles"})
+    @ManyToMany
     private List<Rol> roles;
-    /*
-        @JsonIgnoreProperties({"usuario","hibernateLazyInitializer", "handler"})
-        @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
-        private Familia familia;
-        */
+
     @JsonIgnoreProperties({"alumnos", "familia", "obradocumentos", "usuarios", "personal", "hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     private Obra obraUs;

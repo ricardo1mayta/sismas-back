@@ -24,7 +24,7 @@ public interface IPersonalConvenioService {
 
 
     //REPORTES
-    public List<ReportAgreement> reportConveniosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio);
+    public List<ReportAgreement> reportConveniosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio, Integer periodoIni, Integer periodoFin);
 
-    public List<ReportAgreement> reportConveniosPorColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio);
+    public List<ReportAgreement> reportConveniosPorColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipoconvenio, Integer periodoIni, Integer periodoFin);
 }

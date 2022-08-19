@@ -177,16 +177,17 @@ public interface IPersonalDesvinculacionDao extends CrudRepository<PersonalDesvi
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
             "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila) " +
             "inner join PersonalDesvinculacion pd on (o.idobra = pd.idObraPerdesv and p.idPersonal = pd.idPersonalPerdesv and pvl.idPervila = pd.idPervilaPerdesv) " +
-            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest) " +
+            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila = pp.idPervilaPerpuest) " +
+            "left join Puestos pst on (pp.idPuestoPerpuest = pst.idPuesto and o.idobra = pst.idObraPues) " +
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
-            "left join TablasTabla tgroc on (pp.idAreaPerpuest = tgroc.codigoTab ) " +
+            "left join TablasTabla tgroc on (coalesce(pst.idTipoGoPues, pp.idAreaPerpuest) = tgroc.codigoTab ) " +
             "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "left join TablasTabla tmode on (pd.idMotivoPerdesv = tmode.codigoTab and 319 = tmode.tipoTab) " +
             "where o.idobra =?1 " +
             "and tmode.codigoTab = (case ?5 when 0 then coalesce(tmode.codigoTab,0) else ?5 end ) " +
             "and (CONVERT(DATE_FORMAT(pd.fechaCesePerdesv, '%Y%m%d'), SIGNED) between ?6 and ?7) " +
             "and p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
-            "and coalesce(pp.idAreaPerpuest,0) = (case ?3 when 0 then coalesce(pp.idAreaPerpuest,0) else ?3 end ) " +
+            "and coalesce(tgroc.codigoTab,0) = (case ?3 when 0 then coalesce(tgroc.codigoTab,0) else ?3 end ) " +
             "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) "
     )
     public List<ReportDesvinculacion> reportDesvinculacionesColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin, Sort sort);
@@ -237,22 +238,23 @@ public interface IPersonalDesvinculacionDao extends CrudRepository<PersonalDesvi
             "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila) " +
             "inner join PersonalDesvinculacion pd on (o.idobra = pd.idObraPerdesv and p.idPersonal = pd.idPersonalPerdesv and pvl.idPervila = pd.idPervilaPerdesv) " +
 
-            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest) " +
+            "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila = pp.idPervilaPerpuest) " +
+            "left join Puestos pst on (pp.idPuestoPerpuest = pst.idPuesto and o.idobra = pst.idObraPues) " +
             "left join PersonalDocDesvinculacion pdd on (pd.idPerDesv = pdd.idPerdesvPerentr and o.idobra = pdd.idObraPerentr) " +
             "left join DocumentoDesvinculacion dd on (pdd.idTipoDocDesvPerentr = dd.idDocdesv and o.idobra=dd.idObraDocdesv) " +
             "left join DocumentEmployee de on (o.idobra =de.idObraFilePer and p.idPersonal = de.idPersonalFilePer and pd.idPerDesv =de.idItemPadreFileper and dd.idDocdesv=de.opcionFilePer and de.tipoFilePer='DESVINCDOC') " +
 
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
-            "left join TablasTabla tgroc on (pp.idAreaPerpuest = tgroc.codigoTab ) " +
+            "left join TablasTabla tgroc on (coalesce(pst.idTipoGoPues, pp.idAreaPerpuest) = tgroc.codigoTab ) " +
             "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "left join TablasTabla tmode on (pd.idMotivoPerdesv = tmode.codigoTab and 319 = tmode.tipoTab) " +
 
             "where o.idobra =?1 " +
-            "and tmode.codigoTab = (case ?5 when 0 then coalesce(tmode.codigoTab,0) else ?5 end ) " +
+            "and coalesce(tmode.codigoTab, 0) = (case ?5 when 0 then coalesce(tmode.codigoTab,0) else ?5 end ) " +
             "and (CONVERT(DATE_FORMAT(pd.fechaCesePerdesv, '%Y%m%d'), SIGNED) between ?6 and ?7) " +
             "and p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
-            "and pdd.flgEntregoPerentr = (case ?8 when 1 then true when 0 then false else pdd.flgEntregoPerentr end ) " +
-            "and coalesce(pp.idAreaPerpuest,0) = (case ?3 when 0 then coalesce(pp.idAreaPerpuest,0) else ?3 end ) " +
+            "and coalesce(pdd.flgEntregoPerentr, false) = (case ?8 when 1 then true when 0 then false else coalesce(pdd.flgEntregoPerentr, false) end ) " +
+            "and coalesce(tgroc.codigoTab,0) = (case ?3 when 0 then coalesce(tgroc.codigoTab,0) else ?3 end ) " +
             "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end ) "
     )
     public List<ReportDesvinculacion> reportDesvinculacionesChecklistColaborador(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer tipoDesvinculacion, Integer fechaini, Integer Fechafin,Integer estadoEntrega, Sort sort);

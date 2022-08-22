@@ -12,6 +12,8 @@ import java.io.Serializable;
         @FieldResult(name = "idPersonalMaev", column = "idPersonalMaev"),
         @FieldResult(name = "nomCompletoEvaluador", column = "nomCompletoEvaluador"),
         @FieldResult(name = "nomCompletoEvaluado", column = "nomCompletoEvaluado"),
+        @FieldResult(name = "codigoperPereval", column = "codigoperPereval"),
+        @FieldResult(name = "nrodocPers", column = "nrodocPers"),
         @FieldResult(name = "idTipoGo", column = "idTipoGo"),
         @FieldResult(name = "descripcionTipoGo", column = "descripcionTipoGo"),
         @FieldResult(name = "idTipoNivelPlanilla", column = "idTipoNivelPlanilla"),
@@ -33,6 +35,8 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
     private Long idPersonalMaev;
     private String nomCompletoEvaluador;
     private String nomCompletoEvaluado;
+    private String codigoperPereval;
+    private String nrodocPers;
     private Integer idTipoGo;
     private String descripcionTipoGo;
     private Integer idTipoNivelPlanilla;
@@ -45,7 +49,7 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
         super();
     }
 
-    public ReportEstadoEvaluacionEvaluadorEvaluado(Long id, String idObra, Long idPerido, Integer anioPerido, Long idEvento, Long idPersonalMaev, String nomCompletoEvaluador, String nomCompletoEvaluado, Integer idTipoGo, String descripcionTipoGo, Integer idTipoNivelPlanilla, String descTipoNivelPlanilla, Integer programados, Integer completos, Integer pendientes) {
+    public ReportEstadoEvaluacionEvaluadorEvaluado(Long id, String idObra, Long idPerido, Integer anioPerido, Long idEvento, Long idPersonalMaev, String nomCompletoEvaluador, String nomCompletoEvaluado, String codigoperPereval, String nrodocPers, Integer idTipoGo, String descripcionTipoGo, Integer idTipoNivelPlanilla, String descTipoNivelPlanilla, Integer programados, Integer completos, Integer pendientes) {
         this.id = id;
         this.idObra = idObra;
         this.idPerido = idPerido;
@@ -54,6 +58,8 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
         this.idPersonalMaev = idPersonalMaev;
         this.nomCompletoEvaluador = nomCompletoEvaluador;
         this.nomCompletoEvaluado = nomCompletoEvaluado;
+        this.codigoperPereval = codigoperPereval;
+        this.nrodocPers = nrodocPers;
         this.idTipoGo = idTipoGo;
         this.descripcionTipoGo = descripcionTipoGo;
         this.idTipoNivelPlanilla = idTipoNivelPlanilla;
@@ -181,5 +187,21 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
 
     public void setPendientes(Integer pendientes) {
         this.pendientes = pendientes;
+    }
+
+    public String getCodigoperPereval() {
+        return codigoperPereval;
+    }
+
+    public void setCodigoperPereval(String codigoperPereval) {
+        this.codigoperPereval = codigoperPereval;
+    }
+
+    public String getNrodocPers() {
+        return nrodocPers;
+    }
+
+    public void setNrodocPers(String nrodocPers) {
+        this.nrodocPers = nrodocPers;
     }
 }

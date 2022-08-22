@@ -27,7 +27,6 @@ public class IndicadoresLogroService implements IIndicadoresLogroService{
     @Override
     @Transactional(readOnly = true)
     public List<IndicadoresGODto> findByObraAndGrupoOcupacionalAndPuestoAndEvento(String idobra, Integer idgo, Long idpuesto, Long idevento) {
-
         return indicadoresGoDao.findByObraAndGrupoOcupacionalAndPuestoAndEvento(idobra, idgo, idpuesto, idevento);
     }
 

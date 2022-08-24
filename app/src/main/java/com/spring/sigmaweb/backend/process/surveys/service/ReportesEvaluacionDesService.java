@@ -95,4 +95,11 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
 
         return result;
     }
+
+    @Override
+    public Integer update_promediosEvaldes(Long idpersonal, String idobra) {
+        return null;
+    }
+
+
 }

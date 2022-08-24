@@ -15,4 +15,6 @@ public interface IReportesEvaluacionDesService {
     public List<ReportEstadoEvaluacionEvaluadorEvaluado> reportEstadoEvaluacionEvaluadorEvaluado(String idobra, String tipo, Long idPeriodo, String orden);
 
     public List<ReportNoParticipan> reportNoParticipanEvaldesemp(String idobra, Long idPeriodo);
+
+    public Integer update_promediosEvaldes(Long idpersonal, String idobra);
 }

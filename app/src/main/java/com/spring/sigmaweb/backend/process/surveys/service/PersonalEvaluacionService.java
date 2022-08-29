@@ -24,16 +24,29 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
     @Override
     @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPerevalList(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo, Integer principal) {
-        return personalevaluaciondao.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo, principal);
+        List<PersonalEvaluacionDTO> result = personalevaluaciondao.findByIdObraPerevalList(idobra, idgruoocu, idpuesto, idcargo, principal);
+        List<PersonalEvaluacionDTO> externos = new ArrayList<PersonalEvaluacionDTO>();
+        if(idobra.equals("SECTOR")){
+            externos = personalevaluaciondao.findByIdObraPerevalListExterno(idobra, idgruoocu, idpuesto, idcargo, principal);
+
+            if(externos.size()>0){
+                result.addAll(externos);
+            }
+
+        }
+        return result;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra) {
         List<PersonalEvaluacionDTO> result =personalevaluaciondao.findByIdObraPerevalDistinctList(idobra);
-        List<PersonalEvaluacionDTO> externos = personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);
+        List<PersonalEvaluacionDTO> externos = new ArrayList<PersonalEvaluacionDTO>();
         if(idobra.equals("SECTOR")){
-            result.addAll(externos);
+            externos = personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);
+            if(externos.size()>0){
+                result.addAll(externos);
+            }
         }
 
         return result;
@@ -46,7 +59,9 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
         List<PersonalEvaluacionDTO> externos = new ArrayList<PersonalEvaluacionDTO>();
         if(idobra.equals("SECTOR")){
             externos = personalevaluaciondao.findByIdObraPersonallListCargosPuestosExterno(idobra, idpersonal, esPrincipal);
-            result.addAll(externos);
+            if(externos.size()>0){
+                result.addAll(externos);
+            }
         }
         return result;
     }

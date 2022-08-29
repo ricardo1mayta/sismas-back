@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, Long> {
@@ -51,10 +53,10 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "me.modiporMaev" +
             ") " +
             "from MatrizEvaluacion me inner join Obra o on (me.idObraMaev=o.idobra) " +
-            "inner join PersonalEvaluacion evaluador on (me.idEvaluadorMaev = evaluador.idPereval and o.idobra = evaluador.idObraPereval) " +
+            "inner join PersonalEvaluacion evaluador on (me.idEvaluadorMaev = evaluador.idPereval and o.idobra = evaluador.idObraPereval and evaluador.flgExternoPereval= false) " +
             "inner join Personal pevaluador on (evaluador.idPersonalPereval = pevaluador.idPersonal and o.idobra = pevaluador.obraPer) " +
             "inner join Persona psnevaluador on (pevaluador.idPersona = psnevaluador.idPersona and o.idobra=psnevaluador.obraPers) " +
-            "inner join PersonalEvaluacion evaluado on (me.idEvaluadoMaev = evaluado.idPereval and o.idobra = evaluado.idObraPereval) " +
+            "inner join PersonalEvaluacion evaluado on (me.idEvaluadoMaev = evaluado.idPereval and o.idobra = evaluado.idObraPereval and evaluado.flgExternoPereval= false) " +
             "inner join Personal pevaluado on (evaluado.idPersonalPereval = pevaluado.idPersonal and o.idobra = pevaluado.obraPer) " +
             "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
             "inner join TablasTabla goevaluador on (evaluador.idGrupoOcupacionalPereval = goevaluador.codigoTab) " +
@@ -113,10 +115,10 @@ public interface IMatrizEvaluacionDao extends CrudRepository<MatrizEvaluacion, L
             "me.modiporMaev" +
             ") " +
             "from MatrizEvaluacion me inner join Obra o on (me.idObraMaev=o.idobra) " +
-            "inner join PersonalEvaluacion evaluador on (me.idEvaluadorMaev = evaluador.idPereval and o.idobra = evaluador.idObraPereval) " +
+            "inner join PersonalEvaluacion evaluador on (me.idEvaluadorMaev = evaluador.idPereval and o.idobra = evaluador.idObraPereval and evaluador.flgExternoPereval= false) " +
             "inner join Personal pevaluador on (evaluador.idPersonalPereval = pevaluador.idPersonal and o.idobra = pevaluador.obraPer) " +
             "inner join Persona psnevaluador on (pevaluador.idPersona = psnevaluador.idPersona and o.idobra=psnevaluador.obraPers) " +
-            "inner join PersonalEvaluacion evaluado on (me.idEvaluadoMaev = evaluado.idPereval and o.idobra = evaluado.idObraPereval) " +
+            "inner join PersonalEvaluacion evaluado on (me.idEvaluadoMaev = evaluado.idPereval and o.idobra = evaluado.idObraPereval and evaluado.flgExternoPereval= false) " +
             "inner join Personal pevaluado on (evaluado.idPersonalPereval = pevaluado.idPersonal and o.idobra = pevaluado.obraPer) " +
             "inner join Persona psnevaluado on (pevaluado.idPersona= psnevaluado.idPersona and o.idobra=psnevaluado.obraPers) " +
             "inner join TablasTabla goevaluador on (evaluador.idGrupoOcupacionalPereval = goevaluador.codigoTab) " +

@@ -1,6 +1,7 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
+import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionExtDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import org.springframework.data.domain.Sort;
@@ -26,4 +27,7 @@ public interface IMatrizEvaluadorService {
     public List<MatrizEvaluacionDTO> reportEvaluadoEvaluador(String idobra, String tipo, Long idpersonal, Long idcargoPuesto, Integer esPrincipal,Long idperiodo);
 
     public ListaEvaluadosEvaluador findByAutoevaluación(String idobra, Long idpersonal, Long idevento);
+
+    //EXTERNOS
+    public List<MatrizEvaluacionExtDTO> externosEvaluadoEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal, String tipo);
 }

@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
+import com.spring.sigmaweb.backend.process.core.dto.SidenavItemDTO;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,13 +30,29 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
     @Override
     @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra) {
-        return personalevaluaciondao.findByIdObraPerevalDistinctList(idobra);
+        List<PersonalEvaluacionDTO> result =personalevaluaciondao.findByIdObraPerevalDistinctList(idobra);
+        List<PersonalEvaluacionDTO> externos = personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);
+        if(idobra.equals("SECTOR")){
+            result.addAll(externos);
+        }
+
+        return result;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal, Integer esPrincipal) {
-
-         return personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal, esPrincipal);
+        List<PersonalEvaluacionDTO> result = personalevaluaciondao.findByIdObraPersonallListCargosPuestos(idobra, idpersonal, esPrincipal);
+        List<PersonalEvaluacionDTO> externos = new ArrayList<PersonalEvaluacionDTO>();
+        if(idobra.equals("SECTOR")){
+            externos = personalevaluaciondao.findByIdObraPersonallListCargosPuestosExterno(idobra, idpersonal, esPrincipal);
+            result.addAll(externos);
+        }
+        return result;
+    }
+//EXTERNOS
+    @Override
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListExternos(String idobra) {
+        return personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);
     }
 }

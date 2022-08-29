@@ -33,7 +33,12 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     @Override
     @Transactional(readOnly = true)
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal) {
+        if(idpersonal == 40 || idpersonal == 41 || idpersonal == 42){
+
+        }
         return matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal);
+
+
     }
 
     @Override

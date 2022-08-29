@@ -1,9 +1,6 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportCountEvaluacionesEvalDes;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportEstadoEvaluacionEvaluadorEvaluado;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportEvaluadoresEvaluados;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportNoParticipan;
+import com.spring.sigmaweb.backend.process.surveys.model.report.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -97,9 +94,25 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
     }
 
     @Override
+    public List<ReportIndividualesEvaluacionDesemp> reportIndividualesEvaluacionDesemp(Long idPersonal, String idobra) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_report_resultados_individuales", "ReportIndividualesEvaluacionDesemp");
+        query.registerStoredProcedureParameter("p_id_personal", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+
+        query.setParameter("p_id_personal", idPersonal);
+        query.setParameter("p_obra", idobra);
+
+        List<ReportIndividualesEvaluacionDesemp> result = query.getResultList();
+
+        return result;
+    }
+
+    @Override
     public Integer update_promediosEvaldes(Long idpersonal, String idobra) {
         return null;
     }
+
+
 
 
 }

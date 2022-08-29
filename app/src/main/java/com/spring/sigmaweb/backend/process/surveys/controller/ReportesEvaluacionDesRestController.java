@@ -1,9 +1,6 @@
 package com.spring.sigmaweb.backend.process.surveys.controller;
 
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportCountEvaluacionesEvalDes;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportEstadoEvaluacionEvaluadorEvaluado;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportEvaluadoresEvaluados;
-import com.spring.sigmaweb.backend.process.surveys.model.report.ReportNoParticipan;
+import com.spring.sigmaweb.backend.process.surveys.model.report.*;
 import com.spring.sigmaweb.backend.process.surveys.service.IReportesEvaluacionDesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -42,6 +39,13 @@ public class ReportesEvaluacionDesRestController {
     public List<ReportNoParticipan> reportesNoParticipanEvaldesemp(@PathVariable String idobra, @PathVariable Long idperiodo){
 
         return reportesEvaluaciondes.reportNoParticipanEvaldesemp(idobra, idperiodo);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportesindividualesevaldes/{idPersonal}/{idobra}")
+    public List<ReportIndividualesEvaluacionDesemp> reportesResultadosEvalDes(@PathVariable Long idPersonal, @PathVariable String idobra){
+
+        return reportesEvaluaciondes.reportIndividualesEvaluacionDesemp(idPersonal, idobra);
     }
 
 }

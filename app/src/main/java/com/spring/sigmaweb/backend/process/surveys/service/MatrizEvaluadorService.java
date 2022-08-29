@@ -1,7 +1,10 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
+import com.spring.sigmaweb.backend.process.core.dto.SidenavItemDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.ReportDirectorioPersonal;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
+import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionExtDTO;
+import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
 import com.spring.sigmaweb.backend.process.surveys.repository.IMatrizEvaluacionDao;
@@ -14,12 +17,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     @Autowired
     private IMatrizEvaluacionDao matrizEvaluadordao;
+
 
     @PersistenceContext
     EntityManager entityManager;
@@ -31,15 +36,39 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal) {
-        return matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal);
+
+        List<MatrizEvaluacionDTO> result = matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal);
+        List<MatrizEvaluacionExtDTO> externos = new ArrayList<MatrizEvaluacionExtDTO>();
+
+        if(idobra.equals("SECTOR")) {
+            externos = this.externosEvaluadoEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal, "EVALUADOR");
+
+            if(externos.size()>0){
+                for(MatrizEvaluacionExtDTO row : externos) {
+                    //System.out.println( this.returnEvaluadoevaluador(row).getIdEvaluadorMaev());
+                    result.add(this.returnEvaluadoevaluador(row));
+                }
+            }
+        }
+        return result;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<MatrizEvaluacionDTO> findListaByObraByPeriodoByEventoidByEvaluado(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal) {
-        return matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluado(idobra, idpersonal, idcargoPuesto, esPrincipal);
+        List<MatrizEvaluacionDTO> result = matrizEvaluadordao.findListaByObraByPeriodoByEventoidByEvaluado(idobra, idpersonal, idcargoPuesto, esPrincipal);
+
+        List<MatrizEvaluacionExtDTO> externos = new ArrayList<MatrizEvaluacionExtDTO>();
+        if(idobra.equals("SECTOR")) {
+            externos = this.externosEvaluadoEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal, "EVALUADO");
+            System.out.println(externos.size());
+            if(externos.size()>0){
+                for(MatrizEvaluacionExtDTO row : externos) {
+                    result.add(this.returnEvaluadoevaluador(row));
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -126,4 +155,75 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
     public ListaEvaluadosEvaluador findByAutoevaluación(String idobra, Long idpersonal, Long idevento) {
         return matrizEvaluadordao.findByAutoevaluación(idobra, idpersonal,idevento);
     }
+
+    @Override
+    public List<MatrizEvaluacionExtDTO> externosEvaluadoEvaluador(String idobra, Long idpersonal, Long idcargoPuesto, Boolean esPrincipal, String tipo) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_externos_matriz_evaluacion","MatrizEvaluacionExtDTO");
+        query.registerStoredProcedureParameter("p_idobra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_idpersonal", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_cargopuesto", Long.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_esprincipal", Boolean.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_tipo", String.class, ParameterMode.IN);
+
+        query.setParameter("p_idobra", idobra);
+        query.setParameter("p_idpersonal", idpersonal);
+        query.setParameter("p_cargopuesto", idcargoPuesto);
+        query.setParameter("p_esprincipal", esPrincipal);
+        query.setParameter("p_tipo", tipo);
+        System.out.println(idobra);
+        System.out.println(idpersonal);
+        System.out.println(idcargoPuesto);
+        System.out.println(esPrincipal);
+        System.out.println(tipo);
+
+        List<MatrizEvaluacionExtDTO> result = query.getResultList();
+
+        return result;
+    }
+
+
+
+    //para externos
+    private MatrizEvaluacionDTO returnEvaluadoevaluador(MatrizEvaluacionExtDTO row){
+        MatrizEvaluacionDTO newRow = new MatrizEvaluacionDTO();
+
+        newRow.setIdMatrizEval(row.getIdMatrizEval());
+        newRow.setIdObraMaev(row.getIdObraMaev());
+        newRow.setIdPeriodoMaev(row.getIdPeriodoMaev());
+        newRow.setAnioPeriodoMaev(row.getAnioPeriodoMaev());
+        newRow.setIdEventoMaev(row.getIdEventoMaev());
+        newRow.setDescripcionEventoMaev(row.getDescripcionEventoMaev());
+        newRow.setIdEvaluadorMaev(row.getIdEvaluadorMaev());
+        newRow.setIdPersonalEvaluadorMaev(row.getIdPersonalEvaluadorMaev());
+        newRow.setNombrePersEvaluador(row.getNombrePersEvaluador());
+        newRow.setApePaternoPersEvaluador(row.getApePaternoPersEvaluador());
+        newRow.setApeMaternoPersEvaluador(row.getApeMaternoPersEvaluador());
+        newRow.setNomCompletoEvaluador(row.getNomCompletoEvaluador());
+        newRow.setIdCargoEvaluadorMaevEvaluador(row.getIdCargoEvaluadorMaevEvaluador());
+        newRow.setNombreCargoMaevEvaluador(row.getNombreCargoMaevEvaluador());
+        newRow.setFlgEsCargoprincipalEvaluador(row.getFlgEsCargoprincipalEvaluador());
+        newRow.setFlgPrincipalEvalEvaluador(row.getFlgPrincipalEvalEvaluador());
+        newRow.setIdTipoGoEvaluador(row.getIdTipoGoEvaluador());
+        newRow.setDescripcionTipoGoEvaluador(row.getDescripcionTipoGoEvaluador());
+        newRow.setIdEvaluadoMaev(row.getIdEvaluadoMaev());
+        newRow.setIdPersonalEvaluadoMaev(row.getIdPersonalEvaluadoMaev());
+        newRow.setNombrePersEvaluado(row.getNombrePersEvaluado());
+        newRow.setApePaternoPersEvaluado(row.getApePaternoPersEvaluado());
+        newRow.setApeMaternoPersEvaluado(row.getApeMaternoPersEvaluado());
+        newRow.setNomCompletoEvaluado(row.getNomCompletoEvaluado());
+        newRow.setIdCargoEvaluadoMaev(row.getIdCargoEvaluadoMaev());
+        newRow.setNombreCargoMaevEvaluado(row.getNombreCargoMaevEvaluado());
+        newRow.setFlgEsCargoprincipalEvaluado(row.getFlgEsCargoprincipalEvaluado());
+        newRow.setFlgPrincipalEvalEvaluado(row.getFlgPrincipalEvalEvaluado());
+        newRow.setIdTipoGoEvaluado(row.getIdTipoGoEvaluado());
+        newRow.setDescripcionTipoGoEvaluado(row.getDescripcionTipoGoEvaluado());
+        newRow.setEstadoMaev(row.getEstadoMaev());
+        newRow.setFechaingMaev(row.getFechaingMaev());
+        newRow.setCreaporMaev(row.getCreaporMaev());
+        newRow.setFechamodiMaev(row.getFechamodiMaev());
+        newRow.setModiporMaev(row.getModiporMaev());
+
+        return newRow;
+    }
+
 }

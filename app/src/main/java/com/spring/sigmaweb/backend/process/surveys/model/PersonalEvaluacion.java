@@ -39,6 +39,9 @@ public class PersonalEvaluacion implements Serializable {
     @Column(nullable = false, name = "flg_principal_eval_pereval", columnDefinition = "boolean default false")
     private Boolean flgPrincipalEvalPereval;
 
+    @Column(nullable = false, name = "flg_externo_pereval", columnDefinition = "boolean default false")
+    private Boolean flgExternoPereval;
+
     @Column(nullable = false, name = "id_grupo_ocupacional_pereval")
     private Integer idGrupoOcupacionalPereval;
 
@@ -168,6 +171,14 @@ public class PersonalEvaluacion implements Serializable {
 
     public void setFlgPrincipalEvalPereval(Boolean flgPrincipalEvalPereval) {
         this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
+    }
+
+    public Boolean getFlgExternoPereval() {
+        return flgExternoPereval;
+    }
+
+    public void setFlgExternoPereval(Boolean flgExternoPereval) {
+        this.flgExternoPereval = flgExternoPereval;
     }
 
     private static final long serialVersionUID = 1L;

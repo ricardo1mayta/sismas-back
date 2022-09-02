@@ -165,7 +165,11 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
         query.registerStoredProcedureParameter("p_esprincipal", Boolean.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_tipo", String.class, ParameterMode.IN);
 
-
+        query.setParameter("p_idobra", idobra);
+        query.setParameter("p_idpersonal", idpersonal);
+        query.setParameter("p_cargopuesto", idcargoPuesto);
+        query.setParameter("p_esprincipal", esPrincipal);
+        query.setParameter("p_tipo", tipo);
 
         List<MatrizEvaluacionExtDTO> result = query.getResultList();
 

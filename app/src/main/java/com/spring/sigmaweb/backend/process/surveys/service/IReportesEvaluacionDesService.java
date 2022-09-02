@@ -15,5 +15,5 @@ public interface IReportesEvaluacionDesService {
 
     public List<ReportIndividualesEvaluacionDesemp> reportIndividualesEvaluacionDesemp(Long idPersonal, String idobra);
 
-    public Integer update_promediosEvaldes(Long idpersonal, String idobra);
+    public List<ReportGeneralEvaluacionDesemp> reportGeneralEvaluacionDesemps(Long idpersonal, String idobra, Double pesoCar, Double pesoEsp, Double pesoIl) ;
 }

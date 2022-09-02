@@ -61,7 +61,7 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
         List<MatrizEvaluacionExtDTO> externos = new ArrayList<MatrizEvaluacionExtDTO>();
         if(idobra.equals("SECTOR")) {
             externos = this.externosEvaluadoEvaluador(idobra, idpersonal, idcargoPuesto, esPrincipal, "EVALUADO");
-            System.out.println(externos.size());
+
             if(externos.size()>0){
                 for(MatrizEvaluacionExtDTO row : externos) {
                     result.add(this.returnEvaluadoevaluador(row));
@@ -165,16 +165,7 @@ public class MatrizEvaluadorService implements IMatrizEvaluadorService{
         query.registerStoredProcedureParameter("p_esprincipal", Boolean.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_tipo", String.class, ParameterMode.IN);
 
-        query.setParameter("p_idobra", idobra);
-        query.setParameter("p_idpersonal", idpersonal);
-        query.setParameter("p_cargopuesto", idcargoPuesto);
-        query.setParameter("p_esprincipal", esPrincipal);
-        query.setParameter("p_tipo", tipo);
-        System.out.println(idobra);
-        System.out.println(idpersonal);
-        System.out.println(idcargoPuesto);
-        System.out.println(esPrincipal);
-        System.out.println(tipo);
+
 
         List<MatrizEvaluacionExtDTO> result = query.getResultList();
 

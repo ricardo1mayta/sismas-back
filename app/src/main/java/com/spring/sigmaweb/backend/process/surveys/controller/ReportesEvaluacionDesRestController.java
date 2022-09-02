@@ -48,4 +48,11 @@ public class ReportesEvaluacionDesRestController {
         return reportesEvaluaciondes.reportIndividualesEvaluacionDesemp(idPersonal, idobra);
     }
 
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportesgeneralesevaldes/{idpersonal}/{pesoCar}/{pesoEsp}/{pesoIl}/{idobra}")
+    public List<ReportGeneralEvaluacionDesemp> reportesResultadosEvalDes(@PathVariable Long idpersonal,@PathVariable Double pesoCar, @PathVariable Double pesoEsp, @PathVariable Double pesoIl,  @PathVariable String idobra){
+
+        return reportesEvaluaciondes.reportGeneralEvaluacionDesemps(idpersonal, idobra, pesoCar, pesoEsp, pesoIl);
+    }
+
 }

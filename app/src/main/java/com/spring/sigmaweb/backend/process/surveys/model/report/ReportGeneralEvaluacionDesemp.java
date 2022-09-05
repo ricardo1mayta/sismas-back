@@ -14,7 +14,8 @@ import javax.persistence.*;
         @FieldResult(name = "promedioCompe", column = "promedioCompe"),
         @FieldResult(name = "promedioAuto", column = "promedioAuto"),
         @FieldResult(name = "promedio", column = "promedio"),
-        @FieldResult(name = "promedio_ponderado", column = "promedio_ponderado"), }
+        @FieldResult(name = "promedio_ponderado", column = "promedio_ponderado"),
+        @FieldResult(name = "peso_compe", column = "peso_compe"),}
     )
 )
 
@@ -32,12 +33,13 @@ public class ReportGeneralEvaluacionDesemp {
     private Double promedioAuto;
     private Double promedio;
     private Double promedio_ponderado;
+    private Double peso_compe;
 
     public ReportGeneralEvaluacionDesemp(){
         super();
     }
 
-    public ReportGeneralEvaluacionDesemp(Long id, Long id_personal, String grupo_ocupacional, String tipo_competencia_prome, Long id_competencia, String descripcion_compe, Double promedioCompe, Double promedioAuto, Double promedio, Double promedio_ponderado) {
+    public ReportGeneralEvaluacionDesemp(Long id, Long id_personal, String grupo_ocupacional, String tipo_competencia_prome, Long id_competencia, String descripcion_compe, Double promedioCompe, Double promedioAuto, Double promedio, Double promedio_ponderado, Double peso_compe) {
         this.id = id;
         this.id_personal = id_personal;
         this.grupo_ocupacional = grupo_ocupacional;
@@ -48,6 +50,7 @@ public class ReportGeneralEvaluacionDesemp {
         this.promedioAuto = promedioAuto;
         this.promedio = promedio;
         this.promedio_ponderado = promedio_ponderado;
+        this.peso_compe = peso_compe;
     }
 
     public Long getId() {
@@ -128,5 +131,13 @@ public class ReportGeneralEvaluacionDesemp {
 
     public void setPromedio_ponderado(Double promedio_ponderado) {
         this.promedio_ponderado = promedio_ponderado;
+    }
+
+    public Double getPeso_compe() {
+        return peso_compe;
+    }
+
+    public void setPeso_compe(Double peso_compe) {
+        this.peso_compe = peso_compe;
     }
 }

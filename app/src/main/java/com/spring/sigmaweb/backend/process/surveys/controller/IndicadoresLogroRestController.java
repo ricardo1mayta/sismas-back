@@ -93,7 +93,7 @@ public class IndicadoresLogroRestController {
                 //crear
                 if(evaluacion.getIdEvalindlog() ==null && evaluacion.getPromedioEvalindlog() != null ){
                     evaluacionInsert = new EvaluacionIndicadoresLogro();
-                    evaluacionInsert.setIdIndicgoEvalindlog(evaluacion.getIdIndicgoEvalindlog());
+                    evaluacionInsert.setIdIndicgoEvalindlog(evaluacion.getIdIndicador());
                     evaluacionInsert.setIdObraEvalindlog(evaluacion.getIdObraEvalindlog());
                     evaluacionInsert.setIdPersonalEvalindlog(evaluacion.getIdPersonalEvalindlog());
                     evaluacionInsert.setPromedioEvalindlog(evaluacion.getPromedioEvalindlog());

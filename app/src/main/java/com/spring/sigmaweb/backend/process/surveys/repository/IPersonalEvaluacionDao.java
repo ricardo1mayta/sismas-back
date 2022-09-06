@@ -101,7 +101,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "left join Puestos pst on (pe.idCargoPuestoPereval = pst.idPuesto and pe.flgEsCargoprincipalPereval = true) " +
             "left join Cargo cgo on (pe.idCargoPuestoPereval = cgo.idCargo and pe.flgEsCargoprincipalPereval = false) " +
             "where o.idobra = ?1 " +
-            "and p.idPersonal = ?2 " +
+            "and p.idPersonal = (case ?2 when -1 then p.idPersonal else ?2 end) " +
             "and ep.idObraEvent = 'sector'" +
             "and pe.flgPrincipalEvalPereval = (case ?3 when 3 then pe.flgPrincipalEvalPereval when 1 then true else false end) " +
             "order by (case pe.flgPrincipalEvalPereval when true then 0 else 1 end)"

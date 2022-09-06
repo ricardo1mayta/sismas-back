@@ -99,6 +99,11 @@ public class TablasTablaService implements ITablasTablaService{
     }
 
     @Override
+    public List<TablasTabla> findBYTipoModoPago(Integer tipotab) {
+        return tablastablaDao.findBYTipoModoPago(tipotab);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public TablasTabla findByCodigoTab(Integer codigoTab) {
         // TODO Auto-generated method stub

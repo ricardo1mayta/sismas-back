@@ -288,6 +288,8 @@ public class Personal implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerdesv", cascade = CascadeType.ALL)
     private List<PersonalDesvinculacion> personalDesvinculacion;
 
+    private Boolean flgNotificacion;
+
     public Personal(Long idPersonal) {
         this.idPersonal=idPersonal;
     }
@@ -813,6 +815,14 @@ public class Personal implements Serializable {
 
     public void setFlgPermitirCambioHaberesPer(Boolean flgPermitirCambioHaberesPer) {
         this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
+    }
+
+    public Boolean getFlgNotificacion() {
+        return flgNotificacion;
+    }
+
+    public void setFlgNotificacion(Boolean flgNotificacion) {
+        this.flgNotificacion = flgNotificacion;
     }
 
     private static final long serialVersionUID = 1L;

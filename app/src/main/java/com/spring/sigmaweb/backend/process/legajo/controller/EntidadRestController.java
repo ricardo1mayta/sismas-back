@@ -4,10 +4,9 @@ import com.spring.sigmaweb.backend.process.generic.model.Obra;
 import com.spring.sigmaweb.backend.process.generic.service.IObraService;
 import com.spring.sigmaweb.backend.process.legajo.dto.EntidadDataSelectDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.EntidadListSelectDTO;
-import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDependienteDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.Entidad;
-import com.spring.sigmaweb.backend.process.legajo.model.PersonalDependiente;
 import com.spring.sigmaweb.backend.process.legajo.service.IEntidadService;
+import com.spring.sigmaweb.backend.process.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -51,6 +50,18 @@ public class EntidadRestController {
     @GetMapping("/entidadporobra/{idobra}")
     public List<EntidadDataSelectDTO> showListEntidadesporObra(@PathVariable String idobra){
         return entidadservice.findByEntidadObra(idobra);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/entidadporobrat/{idobra}")
+    public List<EntidadDataSelectDTO> showListEntidadesporObraT(@PathVariable String idobra){
+        return entidadservice.findByEntidadObraT(idobra);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/entidadporobra/proveedores/{idobra}")
+    public List<EntidadDataSelectDTO> showListEntidadesProveedoresporObra(@PathVariable String idobra){
+        return entidadservice.findByEntidadProveedoresObra(idobra);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
@@ -115,6 +126,16 @@ public class EntidadRestController {
             entidadInsert.setCreaPorEnt(entidad.getCreaPorEnt());
             entidadInsert.setFechaIngEnt(entidad.getFechaIngEnt());
             entidadInsert.setEstadoEnt(entidad.getEstadoEnt());
+            //agregado para proveedores
+            entidadInsert.setContactoEnt(entidad.getContactoEnt());
+            entidadInsert.setPartidaRegEnt(entidad.getPartidaRegEnt());
+            entidadInsert.setRepresentanteEnt(entidad.getRepresentanteEnt());
+            entidadInsert.setRepresentanteNroDocEnt(entidad.getRepresentanteNroDocEnt());
+            entidadInsert.setNroCtaSolesEnt(entidad.getNroCtaSolesEnt());
+            entidadInsert.setNroCtaDolarEnt(entidad.getNroCtaDolarEnt());
+            entidadInsert.setCciSolesEnt(entidad.getCciSolesEnt());
+            entidadInsert.setCciDolarEnt(entidad.getCciDolarEnt());
+
 
             entidadNew = entidadservice.save(entidadInsert);
 
@@ -157,8 +178,26 @@ public class EntidadRestController {
         entidadAct.setFlgSaludEnt(flgSaludEnt);
         entidadAct.setCodigoDocExternoEnt((entidadDTO.getCodigoDocExternoEnt()));
         entidadAct.setModiPorEnt(entidadDTO.getModiPorEnt());
+
+        //agregado para proveedores
+        entidadAct.setContactoEnt(entidadDTO.getContactoEnt());
+        entidadAct.setPartidaRegEnt(entidadDTO.getPartidaRegEnt());
+        entidadAct.setRepresentanteEnt(entidadDTO.getRepresentanteEnt());
+        entidadAct.setRepresentanteNroDocEnt(entidadDTO.getRepresentanteNroDocEnt());
+        entidadAct.setNroCtaSolesEnt(entidadDTO.getNroCtaSolesEnt());
+        entidadAct.setNroCtaDolarEnt(entidadDTO.getNroCtaDolarEnt());
+        entidadAct.setCciSolesEnt(entidadDTO.getCciSolesEnt());
+        entidadAct.setCciDolarEnt(entidadDTO.getCciDolarEnt());
         entidadAct.setFechaModiEnt(new Date());
 
         return entidadservice.save(entidadAct);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @PutMapping("update/estado/{idEntidad}")
+    public Entidad updateEtnidad(@PathVariable Long idEntidad){
+        Entidad entidad= entidadservice.findByIdEntidad(idEntidad);
+        entidad.setEstadoEnt(Constants.FLAG_ESTADO.INACTIVO);
+        return entidadservice.save(entidad);
     }
 }

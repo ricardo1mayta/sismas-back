@@ -50,6 +50,16 @@ public class PersonalService implements IPersonalService{
     }
 
     @Override
+    public PersonalDatosListDTO findByIdUser(Long idUsuario) {
+        return personalDao.findByIdUser(idUsuario);
+    }
+
+    @Override
+    public PersonalDatosListDTO findByIdPersonalResumen(Long idPersonal) {
+        return personalDao.findByIdPersonalResumen(idPersonal);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PersonalDatosPersonalesDTO findByIdPersonaAndObraPersonalInfoPersonal(Long idpersonal, String obraname) {
         // TODO Auto-generated method stub

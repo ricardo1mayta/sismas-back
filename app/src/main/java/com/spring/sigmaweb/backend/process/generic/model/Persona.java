@@ -163,6 +163,9 @@ public class Persona implements Serializable {
     @Column(nullable = true, name = "cod_inter_pers")
     private Long codInterPers;
 
+    private Boolean estadoPer;
+
+    private String referenciaContactoPers;
     //---------------------------- * ----------------------------
 
     @JsonIgnoreProperties({"idPersona", "hibernateLazyInitializer", "handler"})
@@ -451,5 +454,21 @@ public class Persona implements Serializable {
 
     public void setCodInterPers(Long codInterPers) {
         this.codInterPers = codInterPers;
+    }
+
+    public Boolean getEstadoPer() {
+        return estadoPer;
+    }
+
+    public void setEstadoPer(Boolean estadoPer) {
+        this.estadoPer = estadoPer;
+    }
+
+    public String getReferenciaContactoPers() {
+        return referenciaContactoPers;
+    }
+
+    public void setReferenciaContactoPers(String referenciaContactoPers) {
+        this.referenciaContactoPers = referenciaContactoPers;
     }
 }

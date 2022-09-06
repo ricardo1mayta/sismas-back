@@ -21,7 +21,9 @@ public class PersonalDTO implements Serializable {
     private String emailPers;
     private String celularPers;
     private Byte sexoPers;
+    public PersonalDTO(){
 
+    }
     public PersonalDTO(Long idPersonal, String codigoPer, String idobra, String nombrePers, String apePaternoPers, String apeMaternoPers,
                        Date fechaNacPers, Integer idTipoDocPer, String nroDocPers, String emailPers, String celularPers, Byte sexoPers) {
         this.idPersonal = idPersonal;

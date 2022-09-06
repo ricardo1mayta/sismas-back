@@ -2,7 +2,10 @@ package com.spring.sigmaweb.backend.process.generic.repository;
 
 import com.spring.sigmaweb.backend.process.generic.model.Persona;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 public interface IPersonaDao extends CrudRepository<Persona, Long> {
     public Persona findByIdPersona(Long idPersona);
@@ -11,5 +14,6 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
     public Persona findByNroDocPersAndObraPers(String nroDocPers, String obraPers);
 
-
+    @Query(value = "FROM Persona  p where p.obraPers=:obraPers and p.estadoPer=true order by p.idPersona desc ")
+    List<Persona> findByObraPers(String obraPers);
 }

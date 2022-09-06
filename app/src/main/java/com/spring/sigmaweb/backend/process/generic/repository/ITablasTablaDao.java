@@ -33,5 +33,6 @@ public interface ITablasTablaDao extends CrudRepository<TablasTabla,Long>{
             +" order by pd.codigoTab,h.codigoTab")
     public List<TipoContratoDTO> getTipoContrato(Integer tipotab);
 
-
+    @Query("FROM TablasTabla t where t.tipoTab=?1 and t.codigoTab not in (15805,15806,15807) ")
+    List<TablasTabla>findBYTipoModoPago(Integer tipotab);
 }

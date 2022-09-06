@@ -51,6 +51,16 @@ public class EntidadService implements IEntidadService{
     }
 
     @Override
+    public List<EntidadDataSelectDTO> findByEntidadProveedoresObra( String idobra) {
+        return entidadDao.findByEntidadProveedoresObra(idobra);
+    }
+
+    @Override
+    public List<EntidadDataSelectDTO> findByEntidadObraT(String idobra) {
+        return entidadDao.findByEntidadObraT(idobra);
+    }
+
+    @Override
     @Transactional
     public Entidad save(Entidad entidad) {
         return entidadDao.save(entidad);

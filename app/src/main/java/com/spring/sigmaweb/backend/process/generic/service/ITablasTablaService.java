@@ -12,4 +12,6 @@ public interface ITablasTablaService {
     public List<TablasTabla> findByCodigoList(Integer tipotab,String listCodigos);
     public List<TablasTabla> findByCodigoListNot(Integer tipotab,String listCodigos);
     public List<GroupContratos> getTipoContrato(Integer tipotab);
+    public List<TablasTabla> findBYTipoModoPago(Integer tipotab);
+
 }

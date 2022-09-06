@@ -4,7 +4,7 @@ import com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaListEnfermeda
 import com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO;
 import com.spring.sigmaweb.backend.process.sintomatologia.model.FichaSintomatologica;
 import com.spring.sigmaweb.backend.process.sintomatologia.service.impl.LocalService;
-import com.spring.sigmaweb.backend.utils.Utils;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.io.InputStreamResource;

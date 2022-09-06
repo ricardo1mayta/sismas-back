@@ -3,11 +3,14 @@ package com.spring.sigmaweb.backend.process.sintomatologia.task;
 import com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO;
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSintomatologicaDao;
 import com.spring.sigmaweb.backend.process.sintomatologia.service.impl.LocalService;
-import com.spring.sigmaweb.backend.utils.Mail;
-import com.spring.sigmaweb.backend.utils.Utils;
+import com.spring.sigmaweb.backend.process.utils.Mail;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,9 +23,12 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Slf4j
+//@Profile("!dev")
+//@Configuration
 @Component
 @RequiredArgsConstructor
 public class NotificationTask {
@@ -30,20 +36,28 @@ public class NotificationTask {
     private final  IFichaSintomatologicaDao ficha;
     private final LocalService service;
 
-    //@Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+    private final Environment env;
+//    @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
+    @Scheduled(cron = "0 01 16 * * 0-4", zone = "America/Lima")
     public void sendNotificactionPendingRegister(){
-
         Mail mail= new Mail();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate fecha=LocalDate.now();
-        List<FichaSintomatologicaDTO> listPersonalNotification = ficha.personalforSectoNotification("SECTOR");
-        List<FichaSintomatologicaDTO> listEmailNotification = ficha.listMailNotification("SECTOR", new Date());
-        List<FichaSintomatologicaDTO> fsFinal= new ArrayList<>();
+        List<FichaSintomatologicaDTO> listPersonalNotification;
+        List<FichaSintomatologicaDTO> listEmailNotification;
+        List<FichaSintomatologicaDTO> fsFinal;
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(ZoneId.of("America/Lima")));
+        log.info(new Date().toString());
+        log.info(cal.getTime().toString());
+        listPersonalNotification = ficha.personalforSectoNotification("SECTOR");
+        listEmailNotification = ficha.listMailNotification("SECTOR", cal.getTime());
+        fsFinal= new ArrayList<>();
+        String flgActiveTask = env.getProperty("flgActiveTask");
         //VALIDACION DE PERSONAL SIN FICHA
         boolean flag= false;
+
         for (FichaSintomatologicaDTO f: listPersonalNotification){
 
             for (FichaSintomatologicaDTO f2: listEmailNotification){
+
                 if (Objects.equals(f.getIdPersonal(), f2.getIdPersonal())){
                     flag=true;
                 }
@@ -55,7 +69,13 @@ public class NotificationTask {
         for (FichaSintomatologicaDTO dto: fsFinal){
             try {
 
-                sendMessageNotification(dto);
+                log.info(flgActiveTask);
+                if(flgActiveTask.equals("1")){
+                    if(!dto.getEmailPers().isEmpty() || dto.getEmailPers()!=null || dto.getEmailPers().length()<5){
+//                        sendMessageNotification(dto);
+                    }
+                }
+//                log.info(dto.getEmailPers().concat(dto.getNombrePers()));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,13 +83,13 @@ public class NotificationTask {
         }
     }
     /*habilitar al subir*/
-    @Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
+    //@Scheduled(cron = "0 0 19 * * 0-4", zone = "America/Lima")
     public void sendNotificationFichaRegistered() throws  Exception{
         Mail mail= new Mail();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         LocalDate fecha=LocalDate.now();
         try {
-            sendReport();
+            //sendReport();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,7 +160,8 @@ public class NotificationTask {
                 .replace("DIA_REG", Utils.toDateMoreDay(new Date()));
         helper.setText(message, true); // Use this or above line.
         // Envío Async de Correo
-        new Thread(() -> mailSender.send(mimeMessage)).start();
+        log.info(fichaDTO.getEmailPers());
+//         mailSender.send(mimeMessage);
     }
 
 }

@@ -19,6 +19,54 @@ public interface IPersonalDao extends CrudRepository<Personal, Long>{
             + "where p.idPersonal=?1 and o.idobra=?2")
     public Personal findByIdPersonalAndObraname(Long idpersonal, String obraname);
 
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosListDTO( p.idPersonal, "
+            + "ps.obraPers, "
+            + "p.idPerSigma, "
+            + "ps.nombrePers, "
+            + "ps.apePaternoPers, "
+            + "ps.apeMaternoPers, "
+            + "TRIM( concat(COALESCE(concat(ps.apePaternoPers,' '), ''), COALESCE(concat(ps.apeMaternoPers, ' '), ''), COALESCE(ps.nombrePers, '')) ) as nomCompleto, "
+            + "p.fotoPer, "
+            + "COALESCE(p.codigoPer,'') as codigoPer, "
+            + "ps.nroDocPers, "
+            + "ps.emailCorPers as emailcorp, "
+            + "ps.emailPers as emailpers, "
+            + "ps.sexoPers, "
+            + "p.estadoPer,"
+            + "p.fechaAutorizaPer, " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
+            + " from Usuario u inner join Personal p on (p.idPersonal = u.idcodTipoUser) "
+            + " inner join Persona ps on (p.idPersona = ps.idPersona) "
+            + "	inner join TablasTabla doc on (ps.idTipoDocPers = doc.codigoTab) "
+            + "where u.idUser = ?1 ")
+    public PersonalDatosListDTO findByIdUser(Long idUsuario);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosListDTO( p.idPersonal, "
+            + "ps.obraPers, "
+            + "p.idPerSigma, "
+            + "ps.nombrePers, "
+            + "ps.apePaternoPers, "
+            + "ps.apeMaternoPers, "
+            + "TRIM( concat(COALESCE(concat(ps.apePaternoPers,' '), ''), COALESCE(concat(ps.apeMaternoPers, ' '), ''), COALESCE(ps.nombrePers, '')) ) as nomCompleto, "
+            + "p.fotoPer, "
+            + "COALESCE(p.codigoPer,'') as codigoPer, "
+            + "ps.nroDocPers, "
+            + "ps.emailCorPers as emailcorp, "
+            + "ps.emailPers as emailpers, "
+            + "ps.sexoPers, "
+            + "p.estadoPer,"
+            + "p.fechaAutorizaPer, " +
+            "p.fechaModiPer," +
+            "p.fechaIngPer" +
+            ") "
+            + " from  Personal p  "
+            + " inner join Persona ps on (p.idPersona = ps.idPersona) "
+            + "	inner join TablasTabla doc on (ps.idTipoDocPers = doc.codigoTab) "
+            + "where p.idPersonal = ?1 ")
+    PersonalDatosListDTO findByIdPersonalResumen(Long idPersonal);
+
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PersonalDTO (p.idPersonal,"
             + " p.codigoPer,"
             + "	o.idobra,"

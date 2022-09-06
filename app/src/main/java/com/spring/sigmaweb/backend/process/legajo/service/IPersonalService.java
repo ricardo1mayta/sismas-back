@@ -13,6 +13,9 @@ import java.util.List;
 public interface IPersonalService {
     public PersonalDTO findByNroDocPerAndobraPersonal(String nroDocPer, String obraname);
 
+    PersonalDatosListDTO findByIdUser(Long idUsuario);
+    PersonalDatosListDTO findByIdPersonalResumen(Long idPersonal);
+
     public PersonalDatosPersonalesDTO findByIdPersonaAndObraPersonalInfoPersonal(Long idpersonal, String obraname);
 
     public PersonalDatosMedicosDTO findByIdPersonaAndObraInfoMedico(Long idpersonal, String obraname);

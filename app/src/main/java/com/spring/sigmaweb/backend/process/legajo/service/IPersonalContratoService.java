@@ -9,6 +9,7 @@ import com.spring.sigmaweb.backend.process.legajo.model.PersonalContratoJornada;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,8 @@ public interface IPersonalContratoService {
     public PersonalContratoObraDTO findAnteriorContratoPersonalVidaLaboralObra(Long idpersona, String idobra, Long idpervila, Long idpercont, Date fechaini);
 
     public PersonalContrato save (PersonalContrato contrato);
+
+    public void deletePersonalContrato (PersonalContrato contrato);
 
     //************** JORNADA *********************
 
@@ -64,9 +67,9 @@ public interface IPersonalContratoService {
     public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico);
 
     //Reportes
-    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato);
+    public List<ReportContract> reportContratosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, Integer periodoIni, Integer periodoFin);
 
-    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike);
+    public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike, Integer periodoIni, Integer periodoFin);
 
 
     public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLab(String idObraHistvila,

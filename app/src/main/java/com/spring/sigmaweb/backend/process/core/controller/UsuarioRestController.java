@@ -134,6 +134,7 @@ public class UsuarioRestController {
                 usuInsert.setObraUs(obraUsu.get());
                 //inserta roles
                 rolList = rolService.findByNombreRolListAndObra(lista, obraname);
+
                 usuInsert.setRoles(rolList);
 
                 usuNew = usuarioService.save(usuInsert);

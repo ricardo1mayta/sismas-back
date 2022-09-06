@@ -15,6 +15,8 @@ public interface IPuestoService {
 
     public List<PuestosDto> findByIdObraPues(String idObraPues);
 
+    public List<PuestosDto> findByIdObraPuesAndEstadoPuesAndGrupoOcupa(String idObraPues, Boolean estadoPues, Integer idgo);
+
     public Puestos save(Puestos puestos);
 
     public void delete(Puestos puesto);

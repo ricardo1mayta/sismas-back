@@ -25,10 +25,14 @@ public interface IPersonalCargoService {
 
     public PersonalCargo save(PersonalCargo cargo);
 
+    public void personalcargodelete(PersonalCargo personalcargo);
+
     //cargo
     public Cargo findByIdCargo(Long idcargo);
 
     public List<Cargo> findAll();
+
+    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar);
 
     public List<CargosDto> findCargosDto(Boolean estado);
 

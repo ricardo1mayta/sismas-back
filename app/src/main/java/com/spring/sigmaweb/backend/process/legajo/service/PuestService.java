@@ -39,6 +39,13 @@ public class PuestService implements IPuestoService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PuestosDto> findByIdObraPuesAndEstadoPuesAndGrupoOcupa(String idObraPues, Boolean estadoPues, Integer idgo) {
+
+        return puestoDao.findByIdObraPuesAndEstadoPuesAndGrupoOcupa(idObraPues, estadoPues, idgo);
+    }
+
+    @Override
     @Transactional
     public Puestos save(Puestos puesto) {
         return puestoDao.save(puesto);

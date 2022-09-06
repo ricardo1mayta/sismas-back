@@ -4,9 +4,12 @@ import com.spring.sigmaweb.backend.process.core.service.IUsuarioService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
+import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
+import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -34,6 +37,9 @@ public class PersonalContratoController {
 
     @Autowired
     private IUsuarioService usuarioservice;
+
+    @Autowired
+    private IDocumentEmployeeService documentosservices;
 
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
@@ -219,6 +225,46 @@ public class PersonalContratoController {
             contratoAct.setModiPorPercont(contratoDTO.getModiPorPercont());
         }
         return personalcontratoservice.save(contratoAct);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/contratodelete/{idpersonal}/{idobra}/{idcontrato}/{idvidalab}")
+    public ResponseEntity<?> deleteContrato(@PathVariable Long idpersonal, @PathVariable String idobra, @PathVariable Long idcontrato, @PathVariable Long idvidalab){
+        Map<String, Object> response = new HashMap<>();
+        Boolean actoEliminar = true;
+        PersonalContrato contratoDelete = personalcontratoservice.findByPersonalAndObraAndcontrato(idpersonal, idobra, idcontrato, idvidalab);
+        List<DocumentEmployeeDTO> documentos= documentosservices.findByDocumentPersonalAndObraAndTipoList(idpersonal,idobra, "CONTRATO", idcontrato);
+        try {
+
+            if(contratoDelete != null){
+                if(contratoDelete.getEstadoPercont().equals("FINALIZADO")){
+                    if(documentos.size()>0){
+                        response.put("mensaje", "No se puede Eliminar ");
+                        response.put("error", "Hay documentos adjuntos al contrato a eliminar, elimínelos primero ");
+                        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+                    } else {
+                        personalcontratoservice.deletePersonalContrato(contratoDelete);
+                    }
+
+                } else {
+                    response.put("mensaje", "No se puede Eliminar ");
+                    response.put("error", "No se puede eliminar un contrato activo");
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+                }
+            } else{
+                response.put("mensaje", "Contrato no encontrada");
+                response.put("error", "no se encuentra el contrato a eliminar");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el registro");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el registro correctamente");
+        response.put("personalcontrato", contratoDelete);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 

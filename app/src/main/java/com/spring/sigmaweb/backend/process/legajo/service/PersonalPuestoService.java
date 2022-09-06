@@ -48,10 +48,10 @@ public class PersonalPuestoService implements IPersonalPuestoService{
     }
 
     @Override
-    public List<ReportPuestosCargos> reportPuestosCargosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String ordenOpcion) {
+    public List<ReportPuestosCargos> reportPuestosCargosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String ordenOpcion, Integer periodoIni, Integer periodoFin) {
         Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrplp.descripTab");
         Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgrocp.descripTab");
-        Sort sortPuesto = Sort.by(Sort.Direction.ASC,"cp.nombrePues");
+        Sort sortPuesto = Sort.by(Sort.Direction.ASC,"pst.nombrePues");
         Sort sortCargo = Sort.by(Sort.Direction.ASC,"cc.nombreCar");
         Sort sortFechaCargo = Sort.by(Sort.Direction.ASC,"pc.fechaIniPercargo");
         Sort sortApepat = Sort.by(Sort.Direction.ASC, "psn.apePaternoPers");
@@ -69,7 +69,7 @@ public class PersonalPuestoService implements IPersonalPuestoService{
 
 
 
-        return personalpuestoDao.reportPuestosCargosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipocontrato, grupSort);
+        return personalpuestoDao.reportPuestosCargosPorObra(idobra, estadoper, tipogrupo, tipoplanilla, idtipocontrato,periodoIni, periodoFin, grupSort);
     }
 
     @Override

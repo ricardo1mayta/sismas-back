@@ -6,6 +6,8 @@ import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalVidaLaboralService;
+import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
+import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -78,6 +80,13 @@ public class PersonalCargoRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cargoporgoestado/{idgo}/{estadocargo}")
+    public List<Cargo> showCargoPorGrupoOcupaAndEstado(@PathVariable Integer idgo, @PathVariable Integer estadocargo){
+        Boolean estado = (estadocargo == 1 ? true : false);
+        return personalCargoService.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(idgo, estado);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/cargoestadodto/{estado}")
     public List<CargosDto> showCargoPorEstado(@PathVariable Integer estado){
         Boolean est = estado == 1;
@@ -109,6 +118,7 @@ public class PersonalCargoRestController {
             cargoInsert.setAbreviadoCar(cargo.getAbreviadoCar());
             cargoInsert.setEstadoCar(cargo.getEstadoCar());
             cargoInsert.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoInsert.setFlgEsCargosectorCar(cargo.getFlgEsCargosectorCar());
             cargoInsert.setFechaIngCar(new Date());
             cargoInsert.setCreaPorCar(cargo.getCreaPorCar());
 
@@ -134,6 +144,7 @@ public class PersonalCargoRestController {
             cargoAct.setAbreviadoCar(cargo.getAbreviadoCar());
             cargoAct.setEstadoCar(cargo.getEstadoCar());
             cargoAct.setIdTipoGoCar(cargo.getIdTipoGoCar());
+            cargoAct.setFlgEsCargosectorCar(cargo.getFlgEsCargosectorCar());
             cargoAct.setFechaModiCar(new Date());
             cargoAct.setModiPorCar(cargo.getModiPorCar());
         }
@@ -259,6 +270,27 @@ public class PersonalCargoRestController {
             percargoAct.setModiPorPercargo(personalCargo.getModiPorPercargo());
         }
         return personalCargoService.save(percargoAct);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @DeleteMapping("/personalcargodelete/{idpercargo}/{idpersonal}/{obraname}/{idpervila}")
+    public ResponseEntity<?> deleteAll(@PathVariable Long idpercargo, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
+        Map<String, Object> response = new HashMap<>();
+
+        PersonalCargo personalcargodelete = personalCargoService.findByPersonalAndObraAndIdCargo(idpersonal, obraname, idpercargo, idpervila);
+        try {
+            if(personalcargodelete != null){
+                    personalCargoService.personalcargodelete(personalcargodelete);
+            }
+
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al eliminar el registro");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", " Se elimino el registro correctamente");
+        response.put("matrizevaluadorDel", personalcargodelete);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
 }

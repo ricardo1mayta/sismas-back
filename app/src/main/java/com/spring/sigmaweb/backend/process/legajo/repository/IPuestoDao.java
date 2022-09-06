@@ -20,13 +20,17 @@ public interface IPuestoDao extends CrudRepository<Puestos, Long> {
             "p.estadoPues," +
             "p.idTipoGoPues," +
             "t.descripTab as tipoGoPues," +
+            "c.idCargo as equivalenciaCargoPues, " +
+            "c.nombreCar as descEquivalenciaCargoPues," +
             "p.fechaIngPues," +
             "p.creaPorPues," +
             "p.fechaModiPues," +
             "p.modiPorPues" +
             ") " +
             "from Puestos p left join TablasTabla t on (p.idTipoGoPues = t.codigoTab) " +
-            "where p.idObraPues = ?1 and p.estadoPues = ?2"
+            "left join Cargo c on(p.equivalenciaCargoPues = c.idCargo) " +
+            "where p.idObraPues = ?1 and p.estadoPues = ?2 " +
+            "order by p.nombrePues"
     )
     public List<PuestosDto> findByIdObraPuesAndEstadoPues(String idObraPues, Boolean estadoPues);
 
@@ -38,13 +42,41 @@ public interface IPuestoDao extends CrudRepository<Puestos, Long> {
             "p.estadoPues," +
             "p.idTipoGoPues," +
             "t.descripTab as tipoGoPues," +
+            "c.idCargo as equivalenciaCargoPues, " +
+            "c.nombreCar as descEquivalenciaCargoPues," +
             "p.fechaIngPues," +
             "p.creaPorPues," +
             "p.fechaModiPues," +
             "p.modiPorPues" +
             ") " +
             "from Puestos p left join TablasTabla t on (p.idTipoGoPues = t.codigoTab) " +
-            "where p.idObraPues = ?1"
+            "left join Cargo c on(p.equivalenciaCargoPues = c.idCargo) " +
+            "where p.idObraPues = ?1 " +
+            "and p.estadoPues = ?2 " +
+            "and t.codigoTab = ?3 " +
+            "order by p.nombrePues"
+    )
+    public List<PuestosDto> findByIdObraPuesAndEstadoPuesAndGrupoOcupa(String idObraPues, Boolean estadoPues, Integer idgo);
+
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.PuestosDto (p.idPuesto," +
+            "p.nombrePues," +
+            "p.abreviadoPues," +
+            "p.codigoPues," +
+            "p.idObraPues," +
+            "p.estadoPues," +
+            "p.idTipoGoPues," +
+            "t.descripTab as tipoGoPues," +
+            "c.idCargo as equivalenciaCargoPues, " +
+            "c.nombreCar as descEquivalenciaCargoPues," +
+            "p.fechaIngPues," +
+            "p.creaPorPues," +
+            "p.fechaModiPues," +
+            "p.modiPorPues" +
+            ") " +
+            "from Puestos p left join TablasTabla t on (p.idTipoGoPues = t.codigoTab) " +
+            "left join Cargo c on(p.equivalenciaCargoPues = c.idCargo) " +
+            "where p.idObraPues = ?1 " +
+            "order by p.nombrePues"
     )
     public List<PuestosDto> findByIdObraPues(String idObraPues);
 }

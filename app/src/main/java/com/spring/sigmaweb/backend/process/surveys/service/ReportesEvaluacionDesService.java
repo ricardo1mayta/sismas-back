@@ -127,6 +127,23 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
         return result;
     }
 
+    //GRAFICOS
+    @Override
+    public List<GraficosDirectoresPromedio> graficoDirectoresPromedio(String idobra, String idtipo) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_grafico_directivos_obras", "GraficosDirectoresPromedio");
+        query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_id_tipo", String.class, ParameterMode.IN);
+
+        query.setParameter("p_obra", idobra);
+        query.setParameter("p_id_tipo", idtipo);
+
+        List<GraficosDirectoresPromedio> result = query.getResultList();
+
+        return result;
+    }
+
+
+
 
 
 

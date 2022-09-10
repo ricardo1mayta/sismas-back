@@ -16,4 +16,9 @@ public interface IReportesEvaluacionDesService {
     public List<ReportIndividualesEvaluacionDesemp> reportIndividualesEvaluacionDesemp(Long idPersonal, String idobra);
 
     public List<ReportGeneralEvaluacionDesemp> reportGeneralEvaluacionDesemps(Long idpersonal, String idobra, Double pesoCar, Double pesoEsp, Double pesoIl) ;
+
+
+    //Graficos
+    public List<GraficosDirectoresPromedio> graficoDirectoresPromedio(String idobra, String idtipo) ;
+
 }

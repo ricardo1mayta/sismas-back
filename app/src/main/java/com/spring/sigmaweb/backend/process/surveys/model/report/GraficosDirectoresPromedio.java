@@ -16,7 +16,7 @@ import java.io.Serializable;
         @FieldResult(name = "idCargoPuesto", column = "idCargoPuesto"),
         @FieldResult(name = "nombrePuesto", column = "nombrePuesto"),
         @FieldResult(name = "idGrupoOcupacional", column = "idGrupoOcupacional"),
-        @FieldResult(name = "id_cargopuesto_pereval", column = "id_cargopuesto_pereval"),
+       // @FieldResult(name = "id_cargopuesto_pereval", column = "id_cargopuesto_pereval"),
         @FieldResult(name = "idTipoCompetencia", column = "idTipoCompetencia"),
         @FieldResult(name = "promTipocomp", column = "promTipocomp"),}
     )

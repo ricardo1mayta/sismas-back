@@ -1,9 +1,6 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @Table(name = "mt_solicitud_general_detalle")
 public class SolicitudGeneralDetalle {
     @Id

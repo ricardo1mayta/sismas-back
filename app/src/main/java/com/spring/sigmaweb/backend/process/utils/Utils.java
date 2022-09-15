@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.utils;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,5 +72,7 @@ public class Utils {
     public static String addNumberCorrelativeAndOne(Integer number){
         return String.format("%010d",number+1);
     }
+
+
 
 }

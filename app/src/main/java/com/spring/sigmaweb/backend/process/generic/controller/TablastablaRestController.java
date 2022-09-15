@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("/sigmaweb/api")
+    @RequestMapping("/sigmaweb/api")
 public class TablastablaRestController {
     @Autowired
     private ITablasTablaService tablastablaservice;

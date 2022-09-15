@@ -31,8 +31,6 @@ public class DocumentoEgresoController {
     private ResponseEntity<Page<DocumentoEgresoListaDTO>> listarPorObraDocumentoEgreso(@RequestParam String idObra,
                                                                                       @RequestParam Integer page,
                                                                                       @RequestParam Integer size)throws Exception {
-//        return documentoEgresoService.listarPorObra(idObra,page,size);
-
         return new ResponseEntity<>(documentoEgresoService.listarPorObra(idObra,page,size), HttpStatus.OK);
     }
 
@@ -40,6 +38,14 @@ public class DocumentoEgresoController {
     private DocumentoEgresoDto buscarPorIdDocumentoEgreso(@RequestParam Long idDocumentoEgreso) throws Exception {
         documentoEgresoService.buscarPorId(idDocumentoEgreso);
         return mapper.map(documentoEgresoService.buscarPorId(idDocumentoEgreso),DocumentoEgresoDto.class);
+    }
+
+    @GetMapping("/listar/tipo-solicitud")
+    private ResponseEntity<Page<DocumentoEgresoListaDTO>> listarPorTipoSolicitud(@RequestParam String idObra,
+                                                      @RequestParam Integer idTipoSolicitud,
+                                                      @RequestParam Integer page,
+                                                      @RequestParam Integer size){
+        return new ResponseEntity<>(documentoEgresoService.listarPorTipoSolicitud(idObra,idTipoSolicitud,page,size),HttpStatus.OK);
     }
 
     @PostMapping

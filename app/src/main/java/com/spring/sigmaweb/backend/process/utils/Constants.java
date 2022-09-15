@@ -18,6 +18,7 @@ public  class Constants {
     }
     public static class OBJETO_NAME {
         public static  final String SOLICITUD_GENERAL="mt_solicitud_general";
+        public static final String CAJA_CHICA_LIQUIDACION="mt_caja_chica_liquidacion";
     }
 
     public static class TIPO_MODO_PAGO{
@@ -25,6 +26,18 @@ public  class Constants {
         public static  final Integer TRANSFERENCIA=15802;
         public static  final Integer CARTA_ORDEN=15804;
         public static  final Integer TARJETA_CREDITO=15808;
+    }
+
+    public static final String MSJ_DIF_SOL = "(Diferencia A rendir)";
+    public static  class TIPO_DISTRIBUCION{
+        public static final Integer DIVISION=40100;
+        public static final Integer ASIGNACION_DIRECTA=40101;
+        public static final Integer PERSONALIZADA =4002;
+    }
+
+    public static class TIPO_ESTADO_RENDIMIENTO{
+        public static  final Integer INICIADO=40301;
+        public static  final Integer FINALIZADO=40302;
     }
 
 }

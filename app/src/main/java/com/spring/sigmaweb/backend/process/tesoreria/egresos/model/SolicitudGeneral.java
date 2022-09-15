@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spring.sigmaweb.backend.process.generic.model.Persona;
 import com.spring.sigmaweb.backend.process.legajo.model.Entidad;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @Table(name = "mt_solicitud_general")
 public class SolicitudGeneral {
 
@@ -81,7 +79,7 @@ public class SolicitudGeneral {
 
     private Date fechaActualiza;
     private String idResponsableCheque;
-    private String idEstadoRendimiento;
+    private Integer idEstadoRendimiento;
     private String idTipoResponsableCheque;
     private Integer idTipoModoPago;
     private Boolean flgCr;

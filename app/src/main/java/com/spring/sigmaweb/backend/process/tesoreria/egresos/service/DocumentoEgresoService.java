@@ -11,4 +11,6 @@ public interface DocumentoEgresoService extends  ICRUD<DocumentoEgreso,Long>{
     DocumentoEgreso registrarTransaccional(DocumentoEgreso documentoEgreso) throws Exception;
     Integer numeroCorrelativo(String idObra);
     Page<DocumentoEgresoListaDTO> listarPorObra(String idObra,Integer page, Integer size);
+    Page<DocumentoEgresoListaDTO> listarPorTipoSolicitud(String idObra,Integer idTipo,Integer page, Integer size);
+
 }

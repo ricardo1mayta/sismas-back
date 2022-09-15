@@ -1,9 +1,6 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @Table(name = "mt_asiento")
 public class Asiento {
     @Id
@@ -26,12 +24,13 @@ public class Asiento {
     private Integer cuentaDebe;
     private Integer cuentaHaber;
     private Long idCentroResponsabilidad;
-    private BigDecimal monto;
+    private BigDecimal importe;
     private String numeroComprobante;
     private Long idProcesoRecuperacion;
     private Long  idObjetoCargo; //documento
     private Integer idTipoMoneda;
     private Long idTipoCambio;
+    private Float tipoCambio;
     private Integer idTipoOperacion;//por validar
     private Date fechaOperacion;
     private Date fechaDocumento;

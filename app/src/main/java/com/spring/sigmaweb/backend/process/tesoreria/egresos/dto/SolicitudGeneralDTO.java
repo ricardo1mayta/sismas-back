@@ -24,23 +24,13 @@ public class SolicitudGeneralDTO {
 
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler" }, allowSetters = true)
     private PersonalDatosListDTO personal;
-
     private String idObra;
-
-//    private ConceptoDTO Concepto;
-
     private PlanContableDTO planContable;
-
     private TipoSolicitudDTO tipoSolicitud;
-
     private Integer idTipoMoneda;
     private BigDecimal importeSolicitado;
     private BigDecimal importeAprobado;
-
     private Date fechaSolicitud;
-
-//    private CentroResponsabilidadDTO centroResponsabilidad;
-
     private String motivo;
     private String detalle;
     private Integer idEstado;
@@ -54,11 +44,8 @@ public class SolicitudGeneralDTO {
     private String idTipoResponsableCheque;
     private Integer idTipoModoPago;
     private CuentaBancoDTO cuentaBanco;
-
     private TarjetaCreditoDTO tarjetaCredito;
-
     private Boolean flgCr;
-
     private ActividadPresupuestal actividadPresupuestal;
 
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler" }, allowSetters = true)

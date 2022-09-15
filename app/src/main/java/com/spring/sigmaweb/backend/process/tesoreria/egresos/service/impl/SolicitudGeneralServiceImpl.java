@@ -186,4 +186,9 @@ public class SolicitudGeneralServiceImpl extends CRUDImpl<SolicitudGeneral, Long
          repo.actualizarEstado(idEstado,idSolicitudGeneral);
     }
 
+    @Override
+    public void actualizarEstadoRendimiento() {
+
+    }
+
 }

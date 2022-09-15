@@ -54,6 +54,10 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
 
     }
 
+    @Override
+    public Page<DocumentoEgresoListaDTO> listarPorTipoSolicitud(String idObra, Integer idTipo, Integer page, Integer size) {
+        return repo.listarPorTipoSolicitud(idObra,idTipo,PageRequest.of(page,size));
+    }
 
     @Override
     @Transactional
@@ -103,7 +107,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
         documentoEgreso.setFlgRendicion(null);
         documentoEgreso.setIdTipoModoPago(documentoEgresoBody.getIdTipoModoPago());
         documentoEgreso.setIdTipoDocumento(documentoEgresoBody.getIdTipoDocumento());
-        documentoEgreso.setIdTipoCambio(tipoCambio.getIdTipoCambio());//programado validar tipo cambio del dia o de la solicitud
+        documentoEgreso.setIdTipoCambio(tipoCambio.getIdTipoCambio());//programado validar tipo cambio del dia o de la solicitud CONTROL DE
         documentoEgreso.setTipoCambioVenta(tipoCambio.getTipoCambioVenta());
         documentoEgreso.setCreaporPer(documentoEgresoBody.getCreaporPer());
         documentoEgreso.setFechaRegistro(new Date());
@@ -122,7 +126,6 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                     asiento.setIdObjeto(solicitudGeneral.getIdSolicitudGeneral());
                     asiento.setObjeto(Constants.OBJETO_NAME.SOLICITUD_GENERAL);
                     asiento.setCuentaDebe(solicitudGeneral.getPlanContable().getCuentaPlanContable());
-                    asiento.setCuentaHaber(null);
                     //asiento.setIdCentroResponsabilidad(null);
                     asiento.setMonto(null);
                     asiento.setNumeroComprobante(documentoEgresoBody.getNumeroDocumentoReferencia());
@@ -138,7 +141,8 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                     }
                     asiento.setIdObjetoCargo(idObjectoCargo2);//por validar
                     asiento.setIdTipoMoneda(solicitudGeneral.getIdTipoMoneda());
-                    asiento.setIdTipoCambio(documentoEgresoBody.getIdTipoCambio());
+                    asiento.setIdTipoCambio(tipoCambio.getIdTipoCambio());
+                    asiento.setTipoCambio(tipoCambio.getTipoCambioVenta());
                     asiento.setIdTipoOperacion(null);//por validar
                     asiento.setFechaOperacion(new Date());
                     asiento.setFechaDocumento(documentoEgreso.getFechaRegistro());
@@ -166,7 +170,6 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                 asiento.setCuentaDebe(solicitudGeneral.getPlanContable().getCuentaPlanContable());
                 asiento.setCuentaHaber(null);
                 asiento.setIdCentroResponsabilidad(null);
-                asiento.setMonto(null);
                 asiento.setNumeroComprobante(documentoEgresoBody.getNumeroDocumentoReferencia());
                 asiento.setIdProcesoRecuperacion(null);
                 if(solicitudGeneral.getPersonaCargo()!=null){
@@ -181,7 +184,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                 asiento.setIdObjetoCargo(idObjectoCargo2);//por validar
                 asiento.setIdTipoMoneda(solicitudGeneral.getIdTipoMoneda());
                 asiento.setIdTipoCambio(documentoEgresoBody.getIdTipoCambio());
-                asiento.setIdTipoOperacion(null);//por validar
+                asiento.setIdTipoOperacion(0);//por validar
                 asiento.setFechaOperacion(new Date());
                 asiento.setFechaDocumento(documentoEgreso.getFechaRegistro());
                 asiento.setAnio(Utils.toYear(new Date()));

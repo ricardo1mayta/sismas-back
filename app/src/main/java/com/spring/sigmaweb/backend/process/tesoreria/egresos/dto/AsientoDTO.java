@@ -20,7 +20,7 @@ public class AsientoDTO {
     private Integer cuentaDebe;
     private Integer cuentaHaber;
     private Long idCentroResponsabilidad;
-    private BigDecimal monto;
+    private BigDecimal importe;
     private String numeroComprobante;
     private Long idProcesoRecuperacion;
     private String ruc;
@@ -33,7 +33,7 @@ public class AsientoDTO {
     private Integer mes;
     private Integer idTipoDocumento;
     private Date fechaRegistro;
-    private String creapoPer;
+    private String creaporPer;
     private String modiporPer;
     private Date fechaActualiza;
     private Boolean flgEstado;

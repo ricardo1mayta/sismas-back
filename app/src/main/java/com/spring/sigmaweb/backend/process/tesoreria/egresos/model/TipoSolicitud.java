@@ -18,6 +18,7 @@ public class TipoSolicitud {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTipoSolicitud;
+    private Integer idTipo;
     private String nombreTipoSolicitud;
     private Integer idTipoAmbitoSol;
     private String idTipoAutoriza1;

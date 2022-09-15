@@ -14,4 +14,5 @@ public interface ISolicitudGeneralService extends  ICRUD<SolicitudGeneral,Long> 
     SolicitudGeneral desaprobarSolicitudGenertal(SolicitudGeneral s);
     SolicitudGeneral modificarEstadoSolicitudGeneral(Long idSolicitudGeneral, Integer idEstadoSolicitud, String userUpdate);
     void actualizarEstado(Integer idEstado, Long idSolicitudGeneral);
+    void actualizarEstadoRendimiento();
 }

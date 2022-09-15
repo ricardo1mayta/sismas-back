@@ -75,4 +75,8 @@ public interface SolicitudGeneralRespository extends IGenericRepo<SolicitudGener
     @Modifying
     @Query("update SolicitudGeneral  set idEstado=:idEstado  where idSolicitudGeneral=:idSolicitudGeneral ")
     void actualizarEstado(@Param("idEstado") Integer idEstado,@Param("idSolicitudGeneral") Long idSolicitudGeneral);
+
+    @Modifying
+    @Query("update SolicitudGeneral  set idEstadoRendimiento=:idEstadoRendimiento where idSolicitudGeneral=:idSolicitudGeneral")
+    void actualizarEstadoRendimiento(@Param("idSolicitudGeneral")Long idSolicitudGeneral, @Param("idEstadoRendimiento")Integer idEstadoRendimiento);
 }

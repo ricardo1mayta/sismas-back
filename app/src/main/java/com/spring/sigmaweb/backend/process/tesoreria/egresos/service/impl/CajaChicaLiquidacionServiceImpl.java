@@ -50,8 +50,7 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
         TipoCambio tipoCambio = tipoCambioRepo.findByIdOBraAndDate(documentoEgreso.getIdObra(), new Date());
 
         CajaChicaLiquidacion cajaChicaLi = CajaChicaLiquidacion.builder()
-                .idCajaChicaLiquidacion(documentoEgreso.getIdDocumentoEgreso())
-                .idObra(documentoEgreso.getIdObra())
+                .idObra(cajaChicaLiquidacion.getIdObra())
                 .solicitudGeneral(documentoEgreso.getSolicitudGeneral())
                 .idCajaChicaMovimiento(null)
                 .documentoEgreso(documentoEgreso)
@@ -60,11 +59,12 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
                 .numeroDocumento(cajaChicaLiquidacion.getNumeroDocumento())
                 .importe(cajaChicaLiquidacion.getImporte())
                 .descuento(cajaChicaLiquidacion.getDescuento())
+                .impuesto((cajaChicaLiquidacion.getImpuesto()))
                 .importeTotal(cajaChicaLiquidacion.getImporteTotal())
                 .planContable(cajaChicaLiquidacion.getPlanContable())
                 .creaporPer(cajaChicaLiquidacion.getCreaporPer())
                 .idTipoDistribucion(cajaChicaLiquidacion.getIdTipoDistribucion())
-                .fechaLiquidacion(new Date())
+                .fechaLiquidacion(cajaChicaLiquidacion.getFechaLiquidacion())//validar null
                 .descripcion(cajaChicaLiquidacion.getDescripcion())
                 .fechaRegistro(new Date())
                 .flgEstado(Constants.FLAG_ESTADO.ACTIVO)
@@ -79,7 +79,7 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
                     .cuentaDebe(cajaChicaLiquidacion.getPlanContable().getCuentaPlanContable())
                     .cuentaHaber(null)
                     .idCentroResponsabilidad(cr.getIdCentroResponsabilidad())
-                    .monto(cr.getMonto())
+                    .importe(cr.getImporte())
                     .numeroComprobante(cajaChicaLiquidacion.getNumeroDocumento())
                     .idObjetoCargo(cajaChicaLiquidacion.getEntidadProveedor().getIdEntidad())
                     .idTipoMoneda(documentoEgreso.getIdTipoMoneda())
@@ -99,7 +99,7 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
         });
 
 
-        return null;
+        return cajaChicaLi;
     }
 
     @Override

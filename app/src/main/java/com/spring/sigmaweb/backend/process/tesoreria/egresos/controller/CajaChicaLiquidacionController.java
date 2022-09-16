@@ -3,8 +3,8 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.controller;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.AsientoDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajaChicaLiquidacionDto;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.DocumentoEgresoDto;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.RendicionCajaChicaLiquidacionDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CajaChicaLiquidacionDatosDTO;
-import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CentroResponsabilidadAuxDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajaChicaLiquidacion;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CajaChicaLiquidacionService;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +35,8 @@ public class CajaChicaLiquidacionController {
     }
 
     @GetMapping("listar/documento-egreso")
-    public Page<CajaChicaLiquidacionDatosDTO> listarPorIdDocumentoEgreso(@RequestParam String idObra,
-                                                            @RequestParam Integer page,
-                                                            @RequestParam Integer size)throws Exception {
-        return cajaChicaLiquidacionService.listarPorObra(idObra,page,size);
+    public List<CajaChicaLiquidacionDatosDTO> listarPorIdDocumentoEgreso(@RequestParam Long idDocumentoEgreso)throws Exception {
+        return cajaChicaLiquidacionService.listarPorIdDocumentoEgreso(idDocumentoEgreso);
     }
 
     @GetMapping("buscar/id")
@@ -47,11 +45,18 @@ public class CajaChicaLiquidacionController {
     }
 
     @PostMapping
-    public CajaChicaLiquidacionDto registrar(@RequestBody CajaChicaLiquidacion bodyDTO,@RequestParam List<AsientoDTO> asientoDTOList){
-
-        return  mapper.map(cajaChicaLiquidacionService.registrarTransaccional(mapper.map(bodyDTO, CajaChicaLiquidacion.class),asientoDTOList),CajaChicaLiquidacionDto.class);
-
+    public CajaChicaLiquidacionDto registrar(@RequestBody RendicionCajaChicaLiquidacionDTO bodyDTO){
+//        CajaChicaLiquidacionDto cch= bodyDTO.getCajaChicaLiquidacion();
+//        List<AsientoDTO> listaAsiento= bodyDTO.getAsientoDTOList();
+//        CajaChicaLiquidacion cchl= mapper.map(cch,CajaChicaLiquidacion.class);
+        return  mapper.map(cajaChicaLiquidacionService.registrarTransaccional(
+                    mapper.map(
+                            bodyDTO.getCajaChicaLiquidacion(),
+                            CajaChicaLiquidacion.class),
+                    bodyDTO.getAsientoDTOList()),
+                CajaChicaLiquidacionDto.class);
     }
+
 
     @PutMapping
     public CajaChicaLiquidacionDto modificar(@RequestBody DocumentoEgresoDto bodyDTO){
@@ -68,5 +73,8 @@ public class CajaChicaLiquidacionController {
         return cajaChicaLiquidacionService.confirmarRendicion(idDocumentoEgreso,montoEntregado,totalRendir,diferencia);
     }
 
+    public List<AsientoDTO>listarAsientosCajaChicaLiquidacion(@RequestParam String idObra){
+        return null;
+    }
 
 }

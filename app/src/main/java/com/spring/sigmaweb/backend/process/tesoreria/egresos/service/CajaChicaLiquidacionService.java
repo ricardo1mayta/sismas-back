@@ -2,7 +2,6 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.service;
 
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.AsientoDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CajaChicaLiquidacionDatosDTO;
-import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CentroResponsabilidadAuxDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajaChicaLiquidacion;
 import org.springframework.data.domain.Page;
 

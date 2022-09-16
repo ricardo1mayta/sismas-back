@@ -127,7 +127,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                     asiento.setObjeto(Constants.OBJETO_NAME.SOLICITUD_GENERAL);
                     asiento.setCuentaDebe(solicitudGeneral.getPlanContable().getCuentaPlanContable());
                     //asiento.setIdCentroResponsabilidad(null);
-                    asiento.setMonto(null);
+                    asiento.setImporte(null);
                     asiento.setNumeroComprobante(documentoEgresoBody.getNumeroDocumentoReferencia());
                     asiento.setIdProcesoRecuperacion(null);
                     if(solicitudGeneral.getPersonaCargo()!=null){
@@ -154,7 +154,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                     asiento.setFlgEstado(Constants.FLAG_ESTADO.ACTIVO);
 
                     asiento.setIdCentroResponsabilidad(sd.getCentroResponsabilidad().getIdCentroResponsabilidad());
-                    asiento.setMonto(sd.getImporte());
+                    asiento.setImporte(sd.getImporte());
                     asientoService.registrar(asiento);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -193,7 +193,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                 asiento.setFechaRegistro(new Date());
                 asiento.setCreaporPer(documentoEgresoBody.getCreaporPer());
                 asiento.setFlgEstado(Constants.FLAG_ESTADO.ACTIVO);
-                asiento.setMonto(solicitudGeneral.getImporteAprobado());
+                asiento.setImporte(solicitudGeneral.getImporteAprobado());
                 asientoService.registrar(asiento);
             } catch (Exception e) {
                 e.printStackTrace();

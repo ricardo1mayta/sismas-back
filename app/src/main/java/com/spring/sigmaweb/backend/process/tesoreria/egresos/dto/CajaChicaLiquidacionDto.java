@@ -10,6 +10,7 @@ import java.time.Instant;
 @Setter
 public class CajaChicaLiquidacionDto {
     private  Long idCajaChicaLiquidacion;
+    private String idObra;
     private SolicitudGeneralDatosDto idSolicitudGeneral;
     private DocumentoEgresoDto documentoEgreso;
     private EntidadDatosDTO entidadProveedor;

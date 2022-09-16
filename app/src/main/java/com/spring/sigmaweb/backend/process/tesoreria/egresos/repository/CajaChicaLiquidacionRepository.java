@@ -35,6 +35,8 @@ public interface CajaChicaLiquidacionRepository extends IGenericRepo<CajaChicaLi
             +" c.idCajaChicaLiquidacion,"
             +" de.idDocumentoEgreso,"
             +" e.idEntidad,"
+            +" e.nombreEnt,"
+            +" e.rucEnt,"
             +" c.idTipoDocumento,"
             +" td.descripTab,"
             +" c.numeroDocumento,"

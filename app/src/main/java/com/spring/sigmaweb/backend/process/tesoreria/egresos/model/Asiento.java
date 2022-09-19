@@ -42,5 +42,6 @@ public class Asiento {
     private String modiporPer;
     private Date fechaActualiza;
     private Boolean flgEstado;
-
+    private Long idDistribucionPonderacion;
+    private Long idDistribucionPonderacionDet;
 }

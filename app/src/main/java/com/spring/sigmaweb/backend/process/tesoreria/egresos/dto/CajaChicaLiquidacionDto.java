@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -23,10 +24,10 @@ public class CajaChicaLiquidacionDto {
     private BigDecimal importeDevuelto;
     private PlanContableDTO planContable;
     private String creaporPer;
-    private Instant fechaRegistro;
+    private Date fechaRegistro;
     private String modiporPer;
     private Integer idTipoDistribucion;
-    private Instant fechaLiquidacion;
+    private Date fechaLiquidacion;
     private Long idSolicitudGeneralNew;
     private Long idDocumentoEgresoNew;
     private Long idCajaChicaLiquidacionNew;

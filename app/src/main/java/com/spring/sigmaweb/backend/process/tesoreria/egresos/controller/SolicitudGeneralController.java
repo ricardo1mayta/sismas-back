@@ -123,5 +123,4 @@ public class SolicitudGeneralController {
         return tipoSolicitudService.listar().stream().map(s->mapper.map(s,TipoSolicitudDTO.class)).collect(Collectors.toList());
     }
 
-
 }

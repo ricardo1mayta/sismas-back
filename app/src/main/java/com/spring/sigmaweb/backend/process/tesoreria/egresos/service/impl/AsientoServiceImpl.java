@@ -7,6 +7,8 @@ import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.AsientoServ
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AsientoServiceImpl extends CRUDImpl<Asiento,Long> implements AsientoService {
@@ -18,4 +20,9 @@ public class AsientoServiceImpl extends CRUDImpl<Asiento,Long> implements Asient
         return repo;
     }
 
+
+    @Override
+    public List<Asiento> listarPorIdObjectoYObjecto(Long idObjeto, String objeto, String IdOra) {
+        return null;
+    }
 }

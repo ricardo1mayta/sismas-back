@@ -3,6 +3,8 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.service.impl;
 import com.spring.sigmaweb.backend.process.generic.model.TipoCambio;
 import com.spring.sigmaweb.backend.process.generic.repository.ITipoCambioDao;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.AsientoDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajaChicaLiquidacionDto;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.RendicionCajaChicaLiquidacionDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CajaChicaLiquidacionDatosDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CentroResponsabilidadAuxDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.*;
@@ -12,6 +14,7 @@ import com.spring.sigmaweb.backend.process.utils.Constants;
 import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,6 +37,7 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
     private final SolicitudGeneralRespository solicitudGeneralRespo;
     private final SolicitudGeneralDetalleRepository solicitudGeneralDetalleRepo;
     private final DistribucionCRDetalleRepository distribucionCRDetalleRepo;
+    private final ModelMapper mapper;
 
     @Override
     protected IGenericRepo<CajaChicaLiquidacion, Long> getRepo() {
@@ -176,6 +181,18 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
         }
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public RendicionCajaChicaLiquidacionDTO buscarPorIdRendicion(Long idCajaChicaLiquidacion) {
+        RendicionCajaChicaLiquidacionDTO rendicion= new RendicionCajaChicaLiquidacionDTO();
+//        CajaChicaLiquidacion cajaChicaLiquidacion;
+//        List<Asiento> asientoDTOList;
+        CajaChicaLiquidacion cajaChicaLiquidacion=repo.findById(idCajaChicaLiquidacion).orElse(null);
+        List<Asiento> asientoDTOList =asientoRepo.listarPorIdObjectoYObjecto(cajaChicaLiquidacion.getIdCajaChicaLiquidacion(),Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION, cajaChicaLiquidacion.getIdObra());
+        rendicion.setCajaChicaLiquidacion(mapper.map(cajaChicaLiquidacion,CajaChicaLiquidacionDto.class));
+        rendicion.setAsientoDTOList(asientoDTOList.stream().map(a->mapper.map(a,AsientoDTO.class)).collect(Collectors.toList()));
+        return rendicion;
     }
 
     private BigDecimal calcularImporteDistribuido(SolicitudGeneralDetalle solicitudGeneralDetalle){

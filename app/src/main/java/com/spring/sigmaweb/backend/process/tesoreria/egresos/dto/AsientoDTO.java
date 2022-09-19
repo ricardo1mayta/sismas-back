@@ -37,4 +37,6 @@ public class AsientoDTO {
     private String modiporPer;
     private Date fechaActualiza;
     private Boolean flgEstado;
+    private Long idDitribucionPonderacion;
+    private Long idDistribucionPonderacionDet;
 }

@@ -40,8 +40,10 @@ public class CajaChicaLiquidacionController {
     }
 
     @GetMapping("buscar/id")
-    public CajaChicaLiquidacionDto buscarPorId(@RequestParam Long idCajaChicaLiquidacion) throws Exception {
-        return mapper.map(cajaChicaLiquidacionService.buscarPorId(idCajaChicaLiquidacion),CajaChicaLiquidacionDto.class) ;
+    public RendicionCajaChicaLiquidacionDTO buscarPorIdRendicion(@RequestParam Long idCajaChicaLiquidacion) throws Exception {
+
+
+        return cajaChicaLiquidacionService.buscarPorIdRendicion(idCajaChicaLiquidacion);
     }
 
     @PostMapping

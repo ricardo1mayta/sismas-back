@@ -55,4 +55,14 @@ public class ReportesEvaluacionDesRestController {
         return reportesEvaluaciondes.reportGeneralEvaluacionDesemps(idpersonal, idobra, pesoCar, pesoEsp, pesoIl);
     }
 
+
+
+    //Graficos
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/graficodirectorespromedio/{idobra}/{idtipo}")
+    public List<GraficosDirectoresPromedio> graficoDirectoresPromedio(@PathVariable String idobra, @PathVariable String idtipo){
+
+        return reportesEvaluaciondes.graficoDirectoresPromedio(idobra, idtipo);
+    }
+
 }

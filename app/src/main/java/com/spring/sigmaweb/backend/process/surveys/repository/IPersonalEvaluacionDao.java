@@ -66,13 +66,16 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
 
             "pe.idPeriodoPereval," +
             "per.anioPeri," +
-            "pe.codigoperPereval" +
+            "pe.codigoperPereval," +
+            "tgo.codigoTab as idGrupoOcupacionalPereval," +
+            "tgo.descripTab as nombreGrupoOcupacionalPereval " +
             ") " +
             "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
             "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer and pe.flgExternoPereval= false) " +
             "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
             "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
             "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
+            "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
             "where o.idobra = ?1 and ep.idObraEvent ='SECTOR' "
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra);
@@ -123,13 +126,16 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
 
             "pe.idPeriodoPereval," +
             "per.anioPeri," +
-            "pe.codigoperPereval" +
+            "pe.codigoperPereval," +
+            "tgo.codigoTab as idGrupoOcupacionalPereval," +
+            "tgo.descripTab as nombreGrupoOcupacionalPereval " +
             ") " +
             "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
             "inner join PersonalExt p on (pe.idPersonalPereval = p.idPersonalExt and o.idobra = p.idObraPerext and pe.flgExternoPereval= true) " +
             "inner join Persona psn on (p.idPersPerext = psn.idPersona and o.idobra=psn.obraPers) " +
             "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
             "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " +
+            "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
             "where o.idobra = ?1 and ep.idObraEvent ='SECTOR' " +
             "and pe.flgExternoPereval=true"
             )

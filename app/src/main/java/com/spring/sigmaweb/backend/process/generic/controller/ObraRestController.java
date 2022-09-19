@@ -23,6 +23,11 @@ public class ObraRestController {
         return obraService.findAll();
     }
 
+    @GetMapping("/obrascristostamar")
+    public List<Obra> indexCritoAndStamar(){
+        return obraService.findAllAddCristoStamar();
+    }
+
     @GetMapping("/obrasid/{idobra}")
     public Optional<Obra> obrasid(@PathVariable String idobra){
         return obraService.findById(idobra);

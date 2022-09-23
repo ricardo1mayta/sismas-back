@@ -25,4 +25,19 @@ public class ObraServiceImpl implements IObraService {
     public Optional<Obra> findById(String id) {
         return obraDao.findById(id);
     }
+
+    @Override
+    public List<Obra> findAllAddCristoStamar() {
+        List<Obra> obras= (List<Obra>) obraDao.findAll();
+        Obra cristoRey= new Obra();
+        cristoRey.setIdobra("CRISTO");
+        cristoRey.setNombreobra("COLEGIO CRISTO REY - CAJAMARCA");
+        Obra santaMaria= new Obra();
+        santaMaria.setIdobra("STAMAR");
+        santaMaria.setNombreobra("COLEGIO SANTA MARÍA DE LOS ANDES - VMT");
+
+        obras.add(cristoRey);
+        obras.add(santaMaria);
+        return obras;
+    }
 }

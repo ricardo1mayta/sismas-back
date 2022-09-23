@@ -45,7 +45,7 @@ public interface IEvaluacionIndicadoresLogroDao extends CrudRepository<Evaluacio
             "left join IndicadoresLogro il on (igo.idIndicadorIndicgo = il.idIndicadorLogro) " +
             "left join TablasTabla tgo on (igo.idGrupoocupacionalIndicgo = tgo.codigoTab) " +
 
-            "left join EvaluacionIndicadoresLogro eil on (o.idobra = eil.idObraEvalindlog and p.idPersonal = eil.idPersonalEvalindlog and igo.idIndicgo = eil.idIndicgoEvalindlog) " +
+            "left join EvaluacionIndicadoresLogro eil on (o.idobra = eil.idObraEvalindlog and p.idPersonal = eil.idPersonalEvalindlog and igo.idIndicgo = eil.idIndicgoEvalindlog) " + //igo.idIndicgo
 
             "where o.idobra = ?1 " +
             "and pe.idGrupoOcupacionalPereval = ?2 " +

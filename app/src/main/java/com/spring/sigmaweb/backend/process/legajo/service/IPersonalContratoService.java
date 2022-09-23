@@ -78,5 +78,5 @@ public interface IPersonalContratoService {
                                                                             Long idPercontHistvila,
                                                                             String tipo);
 
-
+    public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLabMasActual(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipo, Integer periodoIni, Integer periodoFin);
 }

@@ -273,7 +273,9 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "psn.apePaternoPers," +
             "psn.apeMaternoPers," +
             "psn.nombrePers," +
-
+            "tdocu.codigoTab as idTipoDocPers," +
+            "tdocu.descrip2Tab as tipoDocPers," +
+            "psn.nroDocPers," +
             "pvl.idPervila," +
             "pc.idPerCont," +
             "tcont.codigoTab as idTipoPercont," +
@@ -304,6 +306,7 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila = pp.idPervilaPerpuest) " +
             "left join Puestos pst on (pp.idPuestoPerpuest = pst.idPuesto and o.idobra = pst.idObraPues) " +
             "left join TablasTabla tcont on (pc.idTipoPercont = tcont.codigoTab) " +
+            "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
             "left join TablasTabla tgroc on (coalesce(pst.idTipoGoPues, pp.idAreaPerpuest) = tgroc.codigoTab) " + /*pp.idAreaPerpuest */
             "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "where o.idobra =?1 and " +
@@ -312,8 +315,8 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "and coalesce(tcont.codigoTab,0) = (case ?5 when 0 then coalesce(tcont.codigoTab,0) else ?5 end ) " +
             "and coalesce(tgroc.codigoTab,0) = (case ?3 when 0 then coalesce(tgroc.codigoTab,0) else ?3 end ) " +
             "and coalesce(pp.idTipoNivelPlanillaPerpuest,0) = (case ?4 when 0 then coalesce(pp.idTipoNivelPlanillaPerpuest,0) else ?4 end )" +
-            "and ( (?6 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercont, '%Y%m%d'), SIGNED), ?6)  and coalesce(CONVERT( DATE_FORMAT(  pc.fechaFinPercont, '%Y%m%d'), SIGNED), ?7) ) " +
-            " or (?7 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercont, '%Y%m%d'), SIGNED), ?6)  and coalesce(CONVERT( DATE_FORMAT(  pc.fechaFinPercont, '%Y%m%d'), SIGNED), ?7) ) " +
+            "and ( (?7 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercont, '%Y%m%d'), SIGNED), ?7)  and coalesce(CONVERT( DATE_FORMAT(  pc.fechaFinPercont, '%Y%m%d'), SIGNED), ?8) ) " +
+            " or (?8 between coalesce( CONVERT(DATE_FORMAT(  pc.fechaIniPercont, '%Y%m%d'), SIGNED), ?7)  and coalesce(CONVERT( DATE_FORMAT(  pc.fechaFinPercont, '%Y%m%d'), SIGNED), ?8) ) " +
             ") "+
             "order by o.idobra, concat(coalesce(psn.apePaternoPers, ''),coalesce(psn.apeMaternoPers, ''),coalesce(psn.nombrePers, '')), " +
             "pc.fechaIniPercont desc, phv.fechaCambioHistvila desc "

@@ -43,7 +43,7 @@ public class PersonalHistorico implements Serializable {
     @Column(name = "tipo_hist", nullable = false, length = 6)
     private String tipoHist;
 
-    @Column(name = "direccion_hist", nullable = true, length = 150)
+    @Column(name = "direccion_hist", nullable = true, length = 300)
     private String direccionHist;
 
     @Column(name = "tipo_estcivil_hist", nullable = true)

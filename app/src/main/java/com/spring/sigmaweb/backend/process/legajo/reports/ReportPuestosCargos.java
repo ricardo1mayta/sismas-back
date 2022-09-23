@@ -47,6 +47,7 @@ public class ReportPuestosCargos implements Serializable {
 
     private Boolean estadoPerpuest;
     private Double bonifCargoPerpuest;
+    private Double jornadaActual;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -78,7 +79,7 @@ public class ReportPuestosCargos implements Serializable {
 
     private String creaPorPercargo;
 
-    public ReportPuestosCargos(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerpuest, Long idPuestoPerpuest, String puestoPerpuest, Integer idAreaPerpuest, String areaPerpuest, Integer idTipoNivelPlanillaPerpuest, String tipoNivelPlanillaPerpuest, Boolean flgPuestoDirePerpuest, Boolean flgPuestoConfiPerpuest, Boolean flgPuestoNofilcalPerpuest, Boolean flgPuestoNoAplicaPerpuest, String observacionesPerpuest, Date fechaIniPerpuest, Date fechaFinPerpuest, Boolean estadoPerpuest, Double bonifCargoPerpuest, Date fechaIngPerpuest, String creaPorPerpuest, Long idPercargo, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercargo, String areaPercargo, String observacionesPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Date fechaIngPercargo, String creaPorPercargo) {
+    public ReportPuestosCargos(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerpuest, Long idPuestoPerpuest, String puestoPerpuest, Integer idAreaPerpuest, String areaPerpuest, Integer idTipoNivelPlanillaPerpuest, String tipoNivelPlanillaPerpuest, Boolean flgPuestoDirePerpuest, Boolean flgPuestoConfiPerpuest, Boolean flgPuestoNofilcalPerpuest, Boolean flgPuestoNoAplicaPerpuest, String observacionesPerpuest, Date fechaIniPerpuest, Date fechaFinPerpuest, Boolean estadoPerpuest, Double bonifCargoPerpuest, Date fechaIngPerpuest, String creaPorPerpuest, Long idPercargo, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercargo, String areaPercargo, String observacionesPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Date fechaIngPercargo, String creaPorPercargo, Double jornadaActual) {
         this.idobra = idobra;
         this.nombreobra = nombreobra;
         this.idPersonal = idPersonal;
@@ -121,6 +122,7 @@ public class ReportPuestosCargos implements Serializable {
         this.bonifCargoPercargo = bonifCargoPercargo;
         this.fechaIngPercargo = fechaIngPercargo;
         this.creaPorPercargo = creaPorPercargo;
+        this.jornadaActual = jornadaActual;
     }
 
     public String getIdobra() {
@@ -457,6 +459,14 @@ public class ReportPuestosCargos implements Serializable {
 
     public void setCreaPorPercargo(String creaPorPercargo) {
         this.creaPorPercargo = creaPorPercargo;
+    }
+
+    public Double getJornadaActual() {
+        return jornadaActual;
+    }
+
+    public void setJornadaActual(Double jornadaActual) {
+        this.jornadaActual = jornadaActual;
     }
 }
 

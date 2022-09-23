@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface IObraService {
     public List<Obra> findAll();
     public Optional<Obra> findById(String id);
+
+    public List<Obra> findAllAddCristoStamar();
 }

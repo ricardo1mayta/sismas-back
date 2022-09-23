@@ -31,6 +31,14 @@ public class PersonalEvaluacionRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/personalevalnombresobralistcristostamar/{idobra}")
+    public List<PersonalEvaluacionDTO> showPersonalEvaluacionDistinctListMasCristoStamar(@PathVariable String idobra){
+        return personalevaluacionservice.findByIdObraPerevalDistinctListCristoStamar(idobra);
+    }
+
+
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalevalcargospuestoporpersonal/{idobra}/{idpersonal}/{esPrincipal}")
     public List<PersonalEvaluacionDTO> showPuestosCargosPersonalEval(@PathVariable String idobra, @PathVariable Long idpersonal, @PathVariable Integer esPrincipal){
         return personalevaluacionservice.findByIdObraPersonallListCargosPuestos(idobra, idpersonal, esPrincipal);

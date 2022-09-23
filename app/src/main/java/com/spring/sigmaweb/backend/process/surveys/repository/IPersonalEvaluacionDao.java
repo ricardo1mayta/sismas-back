@@ -80,6 +80,35 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctList(String idobra);
 
+
+    @Query("select Distinct new com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO (" +
+            "pe.idEventoPereval," +
+            "ep.nombreEvent," +
+            "o.idobra as idObraPereval," +
+            "p.idPersonal," +
+            "psn.nombrePers," +
+            "psn.apePaternoPers," +
+            "psn.apeMaternoPers," +
+            "TRIM( concat(COALESCE(concat(psn.apePaternoPers,' '), ''), COALESCE(concat(psn.apeMaternoPers, ' '), ''), COALESCE(psn.nombrePers, '')) ) as nomCompleto, " +
+
+            "pe.idPeriodoPereval," +
+            "per.anioPeri," +
+            "pe.codigoperPereval," +
+            "tgo.codigoTab as idGrupoOcupacionalPereval," +
+            "tgo.descripTab as nombreGrupoOcupacionalPereval " +
+            ") " +
+            "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
+            "inner join Personal p on (pe.idPersonalPereval = p.idPersonal and o.idobra = p.obraPer and pe.flgExternoPereval= false) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona and o.idobra=psn.obraPers) " +
+            "inner join Periodo per on (pe.idPeriodoPereval = per.idPeriodo) " +
+            "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
+            "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
+            "where o.idobra = (case when ?1 in ('CRISTO', 'STAMAR') then 'SECTOR' else ?1 end) " +
+            "and coalesce(pe.idNivelPlanillaPereval, 0) = (case ?1 when 'SECTOR' then 0 when 'CRISTO' then 30305 when 'STAMAR' then 30307 else coalesce(pe.idNivelPlanillaPereval, 0) end)  " +
+            "and ep.idObraEvent ='SECTOR' "
+    )
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListCristoStamar(String idobra);
+
     @Query("select new com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO (" +
             "pe.idPereval," +
             "pe.idEventoPereval," +

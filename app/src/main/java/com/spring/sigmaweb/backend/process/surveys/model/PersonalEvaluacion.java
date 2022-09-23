@@ -45,6 +45,9 @@ public class PersonalEvaluacion implements Serializable {
     @Column(nullable = false, name = "id_grupo_ocupacional_pereval")
     private Integer idGrupoOcupacionalPereval;
 
+    @Column(nullable = false, name = "id_nivel_planilla_pereval")
+    private Integer idNivelPlanillaPereval;
+
     @Column(nullable = false, name = "fechaing_pereval")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -171,6 +174,14 @@ public class PersonalEvaluacion implements Serializable {
 
     public void setFlgPrincipalEvalPereval(Boolean flgPrincipalEvalPereval) {
         this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
+    }
+
+    public Integer getIdNivelPlanillaPereval() {
+        return idNivelPlanillaPereval;
+    }
+
+    public void setIdNivelPlanillaPereval(Integer idNivelPlanillaPereval) {
+        this.idNivelPlanillaPereval = idNivelPlanillaPereval;
     }
 
     public Boolean getFlgExternoPereval() {

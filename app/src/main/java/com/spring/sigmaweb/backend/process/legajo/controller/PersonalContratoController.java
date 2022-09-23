@@ -49,6 +49,12 @@ public class PersonalContratoController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/pruebahistoricomasactual/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}/{periodoIni}/{periodoFin}")
+    public HistoricoVilaLabotalDTO showpruebaactual(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo, Integer periodoIni, Integer periodoFin){
+        return personalcontratoservice.findByUltimoCambioHistoricoVidaLabMasActual(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo, periodoIni, periodoFin);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/contratoidcontrato/{idPerCont}")
     public PersonalContrato showContratoPorIdContrato(@PathVariable Long idPerCont){
         return personalcontratoservice.findByIdPerCont(idPerCont);

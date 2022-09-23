@@ -19,7 +19,7 @@ public class AsientoDTO {
     private String objeto;
     private Integer cuentaDebe;
     private Integer cuentaHaber;
-    private Long idCentroResponsabilidad;
+    private CentroResponsabilidadDTO centroResponsabilidad;
     private BigDecimal importe;
     private String numeroComprobante;
     private Long idProcesoRecuperacion;
@@ -37,6 +37,7 @@ public class AsientoDTO {
     private String modiporPer;
     private Date fechaActualiza;
     private Boolean flgEstado;
-    private Long idDitribucionPonderacion;
+    private Integer idTipoDistribucion;
+    private Long idDistribucionPonderacion;
     private Long idDistribucionPonderacionDet;
 }

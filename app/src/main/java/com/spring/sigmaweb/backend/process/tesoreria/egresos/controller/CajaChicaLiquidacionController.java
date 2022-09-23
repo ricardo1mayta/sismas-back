@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajaChicaLiquid
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.DocumentoEgresoDto;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.RendicionCajaChicaLiquidacionDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CajaChicaLiquidacionDatosDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Asiento;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajaChicaLiquidacion;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CajaChicaLiquidacionService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -61,8 +63,16 @@ public class CajaChicaLiquidacionController {
 
 
     @PutMapping
-    public CajaChicaLiquidacionDto modificar(@RequestBody DocumentoEgresoDto bodyDTO){
-        return null;
+    public CajaChicaLiquidacionDto modificar(@RequestBody RendicionCajaChicaLiquidacionDTO bodyDTO){
+
+
+        return  mapper.map(cajaChicaLiquidacionService.modificarTransaccional(
+                        mapper.map(
+                                bodyDTO.getCajaChicaLiquidacion(),
+                                CajaChicaLiquidacion.class),
+                                bodyDTO.getAsientoDTOList().stream().map(a->mapper.map(a, Asiento.class)).collect(Collectors.toList())
+                        ),
+                CajaChicaLiquidacionDto.class);
     }
 
     @DeleteMapping
@@ -71,7 +81,10 @@ public class CajaChicaLiquidacionController {
     }
 
     @PutMapping("/confirmar-rendicion")
-    public Boolean confirmarRendicion(Long idDocumentoEgreso, BigDecimal montoEntregado,BigDecimal totalRendir,BigDecimal diferencia){
+    public Boolean confirmarRendicion(@RequestParam Long idDocumentoEgreso,
+                                      @RequestParam BigDecimal montoEntregado,
+                                      @RequestParam BigDecimal totalRendir,
+                                      @RequestParam BigDecimal diferencia){
         return cajaChicaLiquidacionService.confirmarRendicion(idDocumentoEgreso,montoEntregado,totalRendir,diferencia);
     }
 

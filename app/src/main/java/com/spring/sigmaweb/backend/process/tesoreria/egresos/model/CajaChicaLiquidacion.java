@@ -16,6 +16,7 @@ import java.util.Date;
 @Table(name = "mt_caja_chica_liquidacion")
 public class CajaChicaLiquidacion {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCajaChicaLiquidacion;
 
     private String idObra;

@@ -8,8 +8,8 @@ import java.util.Date;
 
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Builder
@@ -18,12 +18,16 @@ public class Asiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAsiento;
+
     private String idObra;
     private Long idObjeto;
     private String objeto;
     private Integer cuentaDebe;
     private Integer cuentaHaber;
-    private Long idCentroResponsabilidad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_centro_responsabilidad")
+    private CentroResponsabilidad centroResponsabilidad;
     private BigDecimal importe;
     private String numeroComprobante;
     private Long idProcesoRecuperacion;
@@ -42,6 +46,7 @@ public class Asiento {
     private String modiporPer;
     private Date fechaActualiza;
     private Boolean flgEstado;
+    private Integer idTipoDistribucion;
     private Long idDistribucionPonderacion;
     private Long idDistribucionPonderacionDet;
 }

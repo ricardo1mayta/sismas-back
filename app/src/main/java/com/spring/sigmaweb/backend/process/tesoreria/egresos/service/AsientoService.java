@@ -7,4 +7,5 @@ import java.util.List;
 public interface AsientoService extends ICRUD<Asiento,Long>{
 
     List<Asiento> listarPorIdObjectoYObjecto(Long idObjeto, String objeto, String IdOra);
+
 }

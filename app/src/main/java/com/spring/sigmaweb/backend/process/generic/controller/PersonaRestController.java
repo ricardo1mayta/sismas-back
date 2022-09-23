@@ -28,7 +28,8 @@ public class PersonaRestController {
 
     @GetMapping("/buscar/obra")
     public ResponseEntity< List<PersonaDTO>> findByObraPers(@RequestParam String idObra){
-        return new ResponseEntity<>(personaService.findByObraPers(idObra).stream().map(p->mapper.map(p,PersonaDTO.class)).collect(Collectors.toList()), HttpStatus.OK);
+
+       return new ResponseEntity<>(personaService.findByObraPers(idObra).stream().map(p->mapper.map(p,PersonaDTO.class)).collect(Collectors.toList()), HttpStatus.OK);
 
     }
 

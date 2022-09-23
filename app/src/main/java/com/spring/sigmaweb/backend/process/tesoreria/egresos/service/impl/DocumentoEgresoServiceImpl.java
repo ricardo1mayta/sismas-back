@@ -153,7 +153,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                     asiento.setCreaporPer(documentoEgresoBody.getCreaporPer());
                     asiento.setFlgEstado(Constants.FLAG_ESTADO.ACTIVO);
 
-                    asiento.setIdCentroResponsabilidad(sd.getCentroResponsabilidad().getIdCentroResponsabilidad());
+                    asiento.setCentroResponsabilidad(sd.getCentroResponsabilidad());
                     asiento.setImporte(sd.getImporte());
                     asientoService.registrar(asiento);
                 } catch (Exception e) {
@@ -169,7 +169,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
                 asiento.setObjeto(Constants.OBJETO_NAME.SOLICITUD_GENERAL);
                 asiento.setCuentaDebe(solicitudGeneral.getPlanContable().getCuentaPlanContable());
                 asiento.setCuentaHaber(null);
-                asiento.setIdCentroResponsabilidad(null);
+                asiento.setCentroResponsabilidad(null);
                 asiento.setNumeroComprobante(documentoEgresoBody.getNumeroDocumentoReferencia());
                 asiento.setIdProcesoRecuperacion(null);
                 if(solicitudGeneral.getPersonaCargo()!=null){

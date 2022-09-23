@@ -21,8 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -83,7 +85,7 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
                     .objeto(Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION)
                     .cuentaDebe(cajaChicaLiquidacion.getPlanContable().getCuentaPlanContable())
                     .cuentaHaber(null)
-                    .idCentroResponsabilidad(cr.getIdCentroResponsabilidad())
+                    .centroResponsabilidad(mapper.map(cr.getCentroResponsabilidad(),CentroResponsabilidad.class) )
                     .importe(cr.getImporte())
                     .numeroComprobante(cajaChicaLiquidacion.getNumeroDocumento())
                     .idObjetoCargo(cajaChicaLiquidacion.getEntidadProveedor().getIdEntidad())
@@ -195,15 +197,141 @@ public class CajaChicaLiquidacionServiceImpl extends CRUDImpl<CajaChicaLiquidaci
         return rendicion;
     }
 
+    @Override
+    @Transactional
+    public CajaChicaLiquidacion modificarTransaccional(CajaChicaLiquidacion cajaChicaLiquidacion, List<Asiento> asientoDTOList) {
+        TipoCambio tipoCambio = tipoCambioRepo.findByIdOBraAndDate(cajaChicaLiquidacion.getIdObra(), new Date());
+        CajaChicaLiquidacion cajaChicaLiquidacionActual = repo.findById(cajaChicaLiquidacion.getIdCajaChicaLiquidacion()).orElse(null);
+        List<Asiento> asientoListOld = asientoRepo.listarPorIdObjectoYObjecto(cajaChicaLiquidacionActual.getIdCajaChicaLiquidacion(), Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION, cajaChicaLiquidacion.getIdObra());
+        List<Asiento> asientoListActual = asientoDTOList;
+        List<Asiento> asientoListAuxOld = new ArrayList<>();
+        List<Asiento> asientoListAuxOld2 = asientoRepo.listarPorIdObjectoYObjecto(cajaChicaLiquidacionActual.getIdCajaChicaLiquidacion(), Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION, cajaChicaLiquidacion.getIdObra());
+        List<Asiento> asientoListFinal = new ArrayList<>();
+
+        if (asientoListOld.size() > 0) {
+            //validar coincidencias
+            asientoListOld.forEach(sdo -> {
+                asientoListActual.forEach(sda -> {
+                    if (Objects.equals(sdo.getCentroResponsabilidad().getIdCentroResponsabilidad(), sda.getCentroResponsabilidad().getIdCentroResponsabilidad())) {
+                        sda.setIdAsiento(sdo.getIdAsiento());
+                        asientoListAuxOld.add(sdo);// Coincidencias modificar
+                        asientoListFinal.add(sda);
+                    }
+                });
+            });
+            CajaChicaLiquidacion cajaChicaLiquidacionActualNew = repo.findById(cajaChicaLiquidacion.getIdCajaChicaLiquidacion()).orElse(null);
+            List<Asiento> asientoListOld2 = asientoRepo.listarPorIdObjectoYObjecto(cajaChicaLiquidacionActual.getIdCajaChicaLiquidacion(), Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION, cajaChicaLiquidacion.getIdObra());
+            List<Asiento> asientoListAuxdNew = new ArrayList<>();
+            List<Asiento> asientoListAuxNew2 = asientoDTOList;
+
+            asientoListActual.forEach(sda->{
+                asientoListOld2.forEach(sdo->{
+                    if(Objects.equals(sda.getCentroResponsabilidad().getIdCentroResponsabilidad(), sdo.getCentroResponsabilidad().getIdCentroResponsabilidad())){
+                        if(sda.getIdAsiento()!=null){
+                            sda.setIdAsiento(sdo.getIdAsiento());
+                        }
+                        asientoListAuxdNew.add(sda);
+                    }
+                });
+            });
+
+            if (asientoListAuxOld.size()>0){
+                asientoListAuxOld2.removeAll(asientoListAuxOld);
+                asientoRepo.deleteAll(asientoListAuxOld2);
+            }
+
+            if(asientoListAuxOld.size()==0){
+                asientoRepo.deleteAll(asientoListOld);
+            }
+
+            if(asientoListAuxdNew.size()>0){
+                asientoListAuxNew2.removeAll(asientoListAuxdNew);
+                asientoListFinal.addAll(asientoListAuxNew2);
+            }
+            if(asientoListAuxdNew.size()==0){
+                asientoListFinal.addAll((asientoListAuxNew2));
+            }
+
+            List<Asiento> asientoList= new ArrayList<>();
+
+            for (Asiento det:asientoListFinal){
+                if(det.getIdAsiento()==null){
+                    det.setIdObra(cajaChicaLiquidacion.getIdObra());
+                    det.setIdObjeto(cajaChicaLiquidacionActual.getIdCajaChicaLiquidacion());
+                    det.setObjeto(Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION);
+                    det.setCuentaDebe(cajaChicaLiquidacion.getPlanContable().getCuentaPlanContable());
+                    det.setNumeroComprobante(cajaChicaLiquidacion.getNumeroDocumento());
+                    det.setIdObjetoCargo(cajaChicaLiquidacion.getEntidadProveedor().getIdEntidad());
+                    det.setIdTipoMoneda(cajaChicaLiquidacionActual.getDocumentoEgreso().getIdTipoMoneda());
+                    det.setTipoCambio(tipoCambio.getTipoCambioVenta());
+                    det.setIdTipoCambio(tipoCambio.getIdTipoCambio());
+                    det.setIdTipoOperacion(1);
+                    det.setFechaOperacion(new Date());
+                    det.setFechaDocumento(cajaChicaLiquidacionActual.getFechaLiquidacion());
+                    det.setAnio(Utils.toYear(new Date()));
+                    det.setMes(Utils.toMonth(new Date()));
+                    det.setIdTipoDocumento(cajaChicaLiquidacion.getIdTipoDocumento());
+                    det.setCreaporPer(cajaChicaLiquidacion.getCreaporPer());
+                    det.setFlgEstado(Boolean.TRUE);
+                    det.setFechaRegistro(new Date());
+                    asientoRepo.save(det);
+                }else{
+                    Asiento asiento= asientoRepo.findById(det.getIdAsiento()).orElse(null);
+                    asiento.setModiporPer(det.getModiporPer());
+                    asiento.setFechaActualiza(new Date());
+                    asiento.setModiporPer(det.getModiporPer());
+                    asiento.setIdDistribucionPonderacion(det.getIdDistribucionPonderacion());
+                    asiento.setIdTipoDistribucion(det.getIdTipoDistribucion());
+                    asiento.setImporte(det.getImporte());
+                    asientoList.add(asiento);
+                }
+                asientoRepo.saveAll(asientoList);
+            }
+        }else {
+            for (Asiento det:asientoDTOList){
+                det.setIdObra(cajaChicaLiquidacion.getIdObra());
+                det.setIdObjeto(cajaChicaLiquidacionActual.getIdCajaChicaLiquidacion());
+                det.setObjeto(Constants.OBJETO_NAME.CAJA_CHICA_LIQUIDACION);
+                det.setCuentaDebe(cajaChicaLiquidacion.getPlanContable().getCuentaPlanContable());
+                det.setNumeroComprobante(cajaChicaLiquidacion.getNumeroDocumento());
+                det.setIdObjetoCargo(cajaChicaLiquidacion.getEntidadProveedor().getIdEntidad());
+                det.setIdTipoMoneda(cajaChicaLiquidacionActual.getDocumentoEgreso().getIdTipoMoneda());
+                det.setTipoCambio(tipoCambio.getTipoCambioVenta());
+                det.setIdTipoCambio(tipoCambio.getIdTipoCambio());
+                det.setIdTipoOperacion(1);
+                det.setFechaOperacion(new Date());
+                det.setFechaDocumento(cajaChicaLiquidacionActual.getFechaLiquidacion());
+                det.setAnio(Utils.toYear(new Date()));
+                det.setMes(Utils.toMonth(new Date()));
+                det.setIdTipoDocumento(cajaChicaLiquidacion.getIdTipoDocumento());
+                det.setCreaporPer(cajaChicaLiquidacion.getCreaporPer());
+                det.setFlgEstado(Boolean.TRUE);
+                det.setFechaRegistro(new Date());
+                asientoRepo.save(det);
+            }
+        }
+
+        cajaChicaLiquidacionActual.setImporte(cajaChicaLiquidacion.getImporte());
+        cajaChicaLiquidacionActual.setDescuento(cajaChicaLiquidacion.getDescuento());
+        cajaChicaLiquidacionActual.setImpuesto(cajaChicaLiquidacion.getImpuesto());
+        cajaChicaLiquidacionActual.setIdTipoDocumento(cajaChicaLiquidacion.getIdTipoDocumento());
+        cajaChicaLiquidacionActual.setNumeroDocumento(cajaChicaLiquidacion.getNumeroDocumento());
+        cajaChicaLiquidacionActual.setPlanContable(cajaChicaLiquidacion.getPlanContable());
+        cajaChicaLiquidacionActual.setDescripcion(cajaChicaLiquidacion.getDescripcion());
+
+        return repo.save(cajaChicaLiquidacionActual);
+    }
+
     private BigDecimal calcularImporteDistribuido(SolicitudGeneralDetalle solicitudGeneralDetalle){
         BigDecimal importe=null;
         if(solicitudGeneralDetalle.getIdTipoDistribucion().equals(Constants.TIPO_DISTRIBUCION.DIVISION) || solicitudGeneralDetalle.getIdTipoDistribucion().equals(Constants.TIPO_DISTRIBUCION.PERSONALIZADA)){
             importe=solicitudGeneralDetalle.getImporte().divide(new BigDecimal(3));
         }
         if(solicitudGeneralDetalle.getIdTipoDistribucion().equals(Constants.TIPO_DISTRIBUCION.ASIGNACION_DIRECTA)){
-           DistribucionPonderacionDetalle distribucionPonderacionDetalle= distribucionCRDetalleRepo.findById(solicitudGeneralDetalle.getIdDistribucionPonderacionDet()).orElse(null);
+            DistribucionPonderacionDetalle distribucionPonderacionDetalle= distribucionCRDetalleRepo.findById(solicitudGeneralDetalle.getIdDistribucionPonderacionDet()).orElse(null);
             importe=(distribucionPonderacionDetalle.getMedidaPorcentual().multiply(solicitudGeneralDetalle.getImporte())).divide(new BigDecimal(100));
         }
         return importe;
     }
+
 }

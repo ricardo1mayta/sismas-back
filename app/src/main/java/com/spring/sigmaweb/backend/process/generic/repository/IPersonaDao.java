@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.generic.model.Persona;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
     public Persona findByNroDocPersAndObraPers(String nroDocPers, String obraPers);
 
-    @Query(value = "FROM Persona  p where p.obraPers=:obraPers and p.estadoPer=true order by p.idPersona desc ")
-    List<Persona> findByObraPers(String obraPers);
+    @Query(value = "FROM Persona  p where p.obraPers= :obraPers  order by p.idPersona desc ")
+    List<Persona> findByObraPers(@Param("obraPers") String obraPers);
 }

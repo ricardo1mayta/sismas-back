@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.service;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.AsientoDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.RendicionCajaChicaLiquidacionDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CajaChicaLiquidacionDatosDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Asiento;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajaChicaLiquidacion;
 import org.springframework.data.domain.Page;
 
@@ -15,4 +16,5 @@ public interface CajaChicaLiquidacionService extends ICRUD<CajaChicaLiquidacion,
     List<CajaChicaLiquidacionDatosDTO> listarPorIdDocumentoEgreso(Long idDocumentoEgreso);
     Boolean confirmarRendicion(Long idDocumentoEgreso, BigDecimal montoEntregado, BigDecimal totalRendir, BigDecimal diferencia);
     RendicionCajaChicaLiquidacionDTO buscarPorIdRendicion(Long idCajaChicaLiquidacion);
+    CajaChicaLiquidacion modificarTransaccional(CajaChicaLiquidacion cajaChicaLiquidacion, List<Asiento> asientoDTOList);
 }

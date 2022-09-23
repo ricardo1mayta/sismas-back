@@ -179,7 +179,8 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "pc.estadoPercargo," +
             "pc.bonifCargoPercargo," +
             "pc.fechaIngPercargo," +
-            "pc.creaPorPercargo" +
+            "pc.creaPorPercargo," +
+            "0.0 as jornadaActual" +
             ")" +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
@@ -260,7 +261,8 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "pc.estadoPercargo," +
             "pc.bonifCargoPercargo," +
             "pc.fechaIngPercargo," +
-            "pc.creaPorPercargo" +
+            "pc.creaPorPercargo," +
+            "0.0 as jornadaActual" +
             ")" +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
@@ -269,7 +271,7 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "left join Puestos cp on (pp.idPuestoPerpuest = cp.idPuesto and o.idobra= cp.idObraPues) " +
             "left join PersonalCargo pc on (o.idobra = pc.idObraPercargo and p.idPersonal=pc.idPersonalPercargo and pvl.idPervila = pc.idPervilaPercargo ) " +
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
-            "left join TablasTabla tgrocp on (oalesce(cp.idTipoGoPues, pp.idAreaPerpuest) = tgrocp.codigoTab ) " +
+            "left join TablasTabla tgrocp on (coalesce(cp.idTipoGoPues, pp.idAreaPerpuest) = tgrocp.codigoTab ) " +
             "left join TablasTabla tgrplp on (pp.idTipoNivelPlanillaPerpuest = tgrplp.codigoTab and tgrplp.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
             "left join TablasTabla tgrocc on (pc.idAreaPercargo = tgrocc.codigoTab ) " +
             "left join TablasTabla tgrplc on (pc.idTipoNivelPlanillaPercargo = tgrplc.codigoTab and tgrplc.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +

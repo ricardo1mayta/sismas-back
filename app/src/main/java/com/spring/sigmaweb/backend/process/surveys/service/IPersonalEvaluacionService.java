@@ -12,6 +12,7 @@ public interface IPersonalEvaluacionService {
 
     public List<PersonalEvaluacionDTO> findByIdObraPersonallListCargosPuestos(String idobra, Long idpersonal, Integer esPrincipal);
 
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListCristoStamar(String idobra);
 
     //EXTERNOS
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListExternos(String idobra);

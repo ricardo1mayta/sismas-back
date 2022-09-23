@@ -65,7 +65,24 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
         }
         return result;
     }
-//EXTERNOS
+
+    @Override
+    public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListCristoStamar(String idobra) {
+        List<PersonalEvaluacionDTO> result =personalevaluaciondao.findByIdObraPerevalDistinctListCristoStamar(idobra);
+        List<PersonalEvaluacionDTO> externos = new ArrayList<PersonalEvaluacionDTO>();
+        String obraDep = idobra.equals("CRISTO") || idobra.equals("STAMAR") ? "SECTOR" : idobra;
+
+        if(obraDep.equals("SECTOR")){
+            externos = personalevaluaciondao.findByIdObraPerevalDistinctListExternos(obraDep);
+            if(externos.size()>0){
+                result.addAll(externos);
+            }
+        }
+
+        return result;
+    }
+
+    //EXTERNOS
     @Override
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListExternos(String idobra) {
         return personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);

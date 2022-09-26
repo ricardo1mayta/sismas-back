@@ -10,6 +10,7 @@ import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.ITipoSolici
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,7 +91,10 @@ public class SolicitudGeneralController {
     @PutMapping
     public SolicitudGeneralDTO modificarSolicitudGeneral (@RequestBody SolicitudGeneralDTO bodyDTO) throws Exception {
         bodyDTO.setFechaSolicitud(new Date());
-        return mapper.map(solicitudGeneralService.modificar( mapper.map(bodyDTO, SolicitudGeneral.class) ),SolicitudGeneralDTO.class);
+        SolicitudGeneral so=mapper.map(bodyDTO, SolicitudGeneral.class);
+        SolicitudGeneral so2 =solicitudGeneralService.modificar(so);
+        return mapper.map(solicitudGeneralService.modificar( mapper.map(so, SolicitudGeneral.class) ),SolicitudGeneralDTO.class);
+
     }
 
     @PutMapping("/aprobar")

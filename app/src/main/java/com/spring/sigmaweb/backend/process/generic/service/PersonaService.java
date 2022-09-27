@@ -43,7 +43,7 @@ public class PersonaService implements IPersonaService{
         persona.setReligionProfesaPers("");
         persona.setTipoViaDomiPers(14501);
         persona.setTipoZonaDomiPers(31001);
-        persona.setEstadoPer(Constants.FLAG_ESTADO.ACTIVO);
+        persona.setEstadoPers(Constants.FLAG_ESTADO.ACTIVO);
         return personaDao.save(persona);
     }
 

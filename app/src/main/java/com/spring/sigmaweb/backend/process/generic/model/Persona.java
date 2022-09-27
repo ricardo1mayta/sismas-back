@@ -163,7 +163,7 @@ public class Persona implements Serializable {
     @Column(nullable = true, name = "cod_inter_pers")
     private Long codInterPers;
 
-    private Boolean estadoPer;
+    private Boolean estadoPers;
 
     private String referenciaContactoPers;
     //---------------------------- * ----------------------------
@@ -456,12 +456,12 @@ public class Persona implements Serializable {
         this.codInterPers = codInterPers;
     }
 
-    public Boolean getEstadoPer() {
-        return estadoPer;
+    public Boolean getEstadoPers() {
+        return estadoPers;
     }
 
-    public void setEstadoPer(Boolean estadoPer) {
-        this.estadoPer = estadoPer;
+    public void setEstadoPers(Boolean estadoPers) {
+        this.estadoPers = estadoPers;
     }
 
     public String getReferenciaContactoPers() {

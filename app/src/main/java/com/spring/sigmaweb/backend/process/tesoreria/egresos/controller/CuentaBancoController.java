@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.generic.service.IPersonaService;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDatosListDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CuentaBancoDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.TarjetaCreditoDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CuentaBancoListDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CuentaBanco;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CuentaBancoService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,13 @@ public class CuentaBancoController {
             }
         return  listaCuentaBancoDTO;
     }
+
+    @GetMapping("/listar/obra")
+    private List<CuentaBancoListDTO> listarPorObraCuentaBancoDTO(@RequestParam String idObra){
+
+        return cuentaBancoService.listarPorObraCuentaBancoDTO(idObra) ;
+    }
+
     @GetMapping("listar/obra/tipomoneda")
     private List<CuentaBancoDTO> listarPorTipoMonedaYObraCuentaBanco(@RequestParam String idObra,@RequestParam Integer idTipoMoneda){
 

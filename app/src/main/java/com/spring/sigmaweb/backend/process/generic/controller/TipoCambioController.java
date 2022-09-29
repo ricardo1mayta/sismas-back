@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -22,17 +19,29 @@ public class TipoCambioController {
     private final ModelMapper mapper;
 
     @GetMapping("buscar/idtipocambio")
-    public ResponseEntity<TipoCambio>findByIdTipoCambio(@RequestParam Long idTipoCambio){
-        return new ResponseEntity<>(tipoCambioService.findByIdTipoCambio(idTipoCambio),HttpStatus.OK);
+    public ResponseEntity<TipoCambio> findByIdTipoCambio(@RequestParam Long idTipoCambio) {
+        return new ResponseEntity<>(tipoCambioService.findByIdTipoCambio(idTipoCambio), HttpStatus.OK);
     }
 
     @GetMapping("buscar/obra/fecha")
-    public ResponseEntity<TipoCambio>findByIdOBraAndDate(@RequestParam String idObra,@RequestParam Date fecha){
-        return new ResponseEntity<>(tipoCambioService.findByIdOBraAndDate(idObra,fecha),HttpStatus.OK);
+    public ResponseEntity<TipoCambio> findByIdOBraAndDate(@RequestParam String idObra, @RequestParam Date fecha) {
+        return new ResponseEntity<>(tipoCambioService.findByIdOBraAndDate(idObra, fecha), HttpStatus.OK);
     }
 
     @GetMapping("buscar/obra")
-    public ResponseEntity<List<TipoCambio>>findByidObra(@RequestParam String idObra){
-        return new ResponseEntity<>(tipoCambioService.findByidObra(idObra),HttpStatus.OK);
+    public ResponseEntity<List<TipoCambio>> findByidObra(@RequestParam String idObra) {
+        return new ResponseEntity<>(tipoCambioService.findByidObra(idObra), HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<TipoCambio> saveTipoCambio(@RequestBody TipoCambio body){
+        body.setFechaRegistro(new Date());
+        return  new ResponseEntity<>(tipoCambioService.save(body),HttpStatus.OK);
+    }
+
+    @PutMapping()
+    public ResponseEntity<TipoCambio> udpateTipoCambio(@RequestBody TipoCambio body){
+
+        return  new ResponseEntity<>(tipoCambioService.save(body),HttpStatus.OK);
     }
 }

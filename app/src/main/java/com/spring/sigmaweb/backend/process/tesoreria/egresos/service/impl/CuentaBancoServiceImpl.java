@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.service.impl;
 
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.dtoResumen.CuentaBancoListDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CuentaBanco;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.CuentaBancoRepository;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.IGenericRepo;
@@ -34,6 +35,11 @@ public class CuentaBancoServiceImpl extends CRUDImpl<CuentaBanco,Long > implemen
     @Override
     public CuentaBanco buscarPorIdCuentaBanco(Long idCuentaBanco) {
         return repo.buscarPorIdCuentaBanco(idCuentaBanco);
+    }
+
+    @Override
+    public List<CuentaBancoListDTO> listarPorObraCuentaBancoDTO(String idObra) {
+        return repo.listarPorObraCuentaBancoDTO(idObra);
     }
 
 }

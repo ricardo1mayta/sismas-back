@@ -15,6 +15,10 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, Long idHistvila
     );
 
+    public PersonalHistoricoVinculoLaboral findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPuestoCargoHistvilaAndTipoHistvilaAndIdHistvila(
+            String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Long idHistvila
+    );
+
 
 
     @Query("select hvl " +
@@ -148,7 +152,8 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "hvl.tipoHistvila," +
             "hvl.fechaCambioHistvila," +
             "coalesce(hvl.jornadaSemaNewHistvila, pc.jornadaSemanalPercont) as jornadaSemaNewHistvila," +
-            "coalesce(hvl.remuneracionNewHistvila, remuneracionPercont) as remuneracionNewHistvila," +
+            "coalesce(hvl.remuneracionNewHistvila, pc.remuneracionPercont) as remuneracionNewHistvila," +
+            "coalesce(hvl.bonificacionNewHistvila, 0) as bonificacionNewHistvila," +
             "hvl.fechaIngHistvila," +
             "hvl.creaPorHistvila" +
             ") " +
@@ -167,6 +172,38 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
                                                                     Long idPercontHistvila,
                                                                     String tipo);
 
+    @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO(" +
+            "hvl.idHistvila, " +
+            "hvl.idObraHistvila," +
+            "p.idPersonal as idPersonalHistvila," +
+            "pc.idPerCont as idPercontHistvila," +
+            "pvl.idPervila as idPervilaHistvila," +
+            "hvl.motivoHistvila," +
+            "tmo.descripTab as textMotivoHistvila, " +
+            "hvl.tipoHistvila," +
+            "hvl.fechaCambioHistvila," +
+            "coalesce(hvl.jornadaSemaNewHistvila, pc.jornadaSemanalPercont) as jornadaSemaNewHistvila," +
+            "coalesce(hvl.remuneracionNewHistvila, pc.remuneracionPercont) as remuneracionNewHistvila," +
+            "coalesce(hvl.bonificacionNewHistvila, 0) as bonificacionNewHistvila," +
+            "hvl.fechaIngHistvila," +
+            "hvl.creaPorHistvila" +
+            ") " +
+            "from PersonalHistoricoVinculoLaboral hvl inner join Personal p on (hvl.idPersonalHistvila = p.idPersonal and hvl.idObraHistvila = p.obraPer) " +
+            "inner join Persona psn on (p.idPersona = psn.idPersona) " +
+            "inner join PersonalVidaLaboral pvl on (hvl.idPervilaHistvila = pvl.idPervila and hvl.idObraHistvila = pvl.idObraPervila) " +
+            "inner join Obra o on (hvl.idObraHistvila = o.idobra) " +
+            "inner join PersonalContrato pc on (hvl.idPercontHistvila = pc.idPerCont and hvl.idObraHistvila = pc.idObraPercont) " +
+            "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
+            "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2  and hvl.idPervilaHistvila = ?3 " +
+            "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) and hvl.tipoHistvila = ?5 " +
+            "and hvl.idPuestoCargoHistvila = ?6 " +
+            "order by hvl.fechaCambioHistvila desc, hvl.idHistvila desc")
+    public List<HistoricoVilaLabotalDTO> findByUltimoCambioHistoricoCargosVidaLab(String idObraHistvila,
+                                                                            Long idPersonalHistvila,
+                                                                            Long idPervilaHistvila,
+                                                                            Long idPercontHistvila,
+                                                                            String tipo, Long idCargoHistvila);
+
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.HistoricoVilaLabotalDTO(" +
             "hvl.idHistvila, " +
@@ -180,6 +217,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "hvl.fechaCambioHistvila," +
             "coalesce(hvl.jornadaSemaNewHistvila, pc.jornadaSemanalPercont) as jornadaSemaNewHistvila," +
             "coalesce(hvl.remuneracionNewHistvila, pc.remuneracionPercont) as remuneracionNewHistvila," +
+            "coalesce(hvl.bonificacionNewHistvila, 0) as bonificacionNewHistvila," +
             "hvl.fechaIngHistvila," +
             "hvl.creaPorHistvila" +
             ") " +

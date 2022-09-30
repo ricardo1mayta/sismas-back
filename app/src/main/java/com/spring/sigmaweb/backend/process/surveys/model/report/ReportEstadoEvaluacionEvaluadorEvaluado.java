@@ -20,7 +20,8 @@ import java.io.Serializable;
         @FieldResult(name = "descTipoNivelPlanilla", column = "descTipoNivelPlanilla"),
         @FieldResult(name = "programados", column = "programados"),
         @FieldResult(name = "completos", column = "completos"),
-        @FieldResult(name = "pendientes", column = "pendientes"),}
+        @FieldResult(name = "pendientes", column = "pendientes"),
+        @FieldResult(name = "completoAuto", column = "completoAuto"),}
     )
 )
 
@@ -44,12 +45,13 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
     private Integer programados;
     private Integer completos;
     private Integer pendientes;
+    private Integer completoAuto;
 
     public ReportEstadoEvaluacionEvaluadorEvaluado(){
         super();
     }
 
-    public ReportEstadoEvaluacionEvaluadorEvaluado(Long id, String idObra, Long idPerido, Integer anioPerido, Long idEvento, Long idPersonalMaev, String nomCompletoEvaluador, String nomCompletoEvaluado, String codigoperPereval, String nrodocPers, Integer idTipoGo, String descripcionTipoGo, Integer idTipoNivelPlanilla, String descTipoNivelPlanilla, Integer programados, Integer completos, Integer pendientes) {
+    public ReportEstadoEvaluacionEvaluadorEvaluado(Long id, String idObra, Long idPerido, Integer anioPerido, Long idEvento, Long idPersonalMaev, String nomCompletoEvaluador, String nomCompletoEvaluado, String codigoperPereval, String nrodocPers, Integer idTipoGo, String descripcionTipoGo, Integer idTipoNivelPlanilla, String descTipoNivelPlanilla, Integer programados, Integer completos, Integer pendientes,Integer completoAuto) {
         this.id = id;
         this.idObra = idObra;
         this.idPerido = idPerido;
@@ -67,6 +69,7 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
         this.programados = programados;
         this.completos = completos;
         this.pendientes = pendientes;
+        this.completoAuto = completoAuto;
     }
 
     public Long getId() {
@@ -203,5 +206,13 @@ public class ReportEstadoEvaluacionEvaluadorEvaluado implements Serializable {
 
     public void setNrodocPers(String nrodocPers) {
         this.nrodocPers = nrodocPers;
+    }
+
+    public Integer getCompletoAuto() {
+        return completoAuto;
+    }
+
+    public void setCompletoAuto(Integer completoAuto) {
+        this.completoAuto = completoAuto;
     }
 }

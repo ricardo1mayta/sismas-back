@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.surveys.repository;
 
+import com.spring.sigmaweb.backend.process.surveys.model.CierreEvaluacionDesemp;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -29,4 +30,13 @@ public interface IEncuestaDao extends CrudRepository<Encuesta,Long> {
     )
     public Encuesta findByIdEncuestaAndIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(Long idEncuesta, Long idMatrizevalEncuesta, String idObraEncuesta, Long idevento);
 
+    @Query("select ced  " +
+            "from EventosPeriodo ep inner join Obra o on (ep.idObraEvent = o.idobra ) " +
+            "inner join Periodo p on (ep.idPeriodoEvent = p.idPeriodo and p.idObraPeri = o.idobra) " +
+            "inner join CierreEvaluacionDesemp ced on (ep.idEvento = ced.idEventoCierreeval and ced.idObraCierreeval=?1) " +
+            "where o.idobra='SECTOR' " +
+            "and ced.idObraCierreeval = ?1 and ep.idEvento = ?2 " +
+            "and CONVERT(DATE_FORMAT(ced.fechaCierreeval, '%Y%m%d'), SIGNED) < CONVERT(DATE_FORMAT(now(), '%Y%m%d'), SIGNED)   "
+    )
+    public CierreEvaluacionDesemp findEstadoCierreEvaluacion(String idobra, Long idevento);
 }

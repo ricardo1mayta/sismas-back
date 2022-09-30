@@ -23,6 +23,8 @@ public interface IPersonalCargoService {
 
     public List<PersonalCargosDTO> findPersonalAndObraListDto(Long idpersona, String idobra, Long idpervila);
 
+    public List<PersonalCargosDTO> findPersonalAndObraUltimaBonificacionListDto(Long idpersona, String idobra, Long idpervila);
+
     public PersonalCargo save(PersonalCargo cargo);
 
     public void personalcargodelete(PersonalCargo personalcargo);

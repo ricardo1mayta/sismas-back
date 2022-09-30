@@ -1,6 +1,7 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportCumpleaniosPersonal;
+import com.spring.sigmaweb.backend.process.surveys.model.CierreEvaluacionDesemp;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
@@ -101,6 +102,21 @@ public class EncuestaService implements IEncuestaService{
 
         return result;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean findEstadoCierreEvaluacion(String idobra, Long idevento) {
+        CierreEvaluacionDesemp result = encuestaDao.findEstadoCierreEvaluacion(idobra, idevento);
+        Boolean estado = false;
+
+        if(result == null){
+            estado = false;
+        } else {
+            estado=true;
+        }
+        return estado;
+    }
+
     //detalle de encuesta
     @Override
     @Transactional
@@ -109,6 +125,7 @@ public class EncuestaService implements IEncuestaService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EncuestaDet> findByIdEncuestaEncdetAndIdObraEncdet(Long idencuestaencdet, String idobraencdet) {
         return encuestaDetDao.findByIdEncuestaEncdetAndIdObraEncdet(idencuestaencdet, idobraencdet);
     }

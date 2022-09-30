@@ -240,7 +240,12 @@ public class PersonalContratoService implements IPersonalContratoService{
     public HistoricoVilaLabotalDTO findByUltimoCambioHistoricoVidaLab(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipo) {
 
         List<HistoricoVilaLabotalDTO> all = historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo);
-        return all.get(0);
+        if(all.size()>0){
+            return all.get(0);
+        } else {
+            return null;
+        }
+
     }
 
     @Override

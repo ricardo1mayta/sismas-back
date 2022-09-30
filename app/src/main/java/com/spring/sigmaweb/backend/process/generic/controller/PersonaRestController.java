@@ -54,7 +54,7 @@ public class PersonaRestController {
     @PutMapping("update/estado")
     public Persona updatePersona(@RequestParam Long idPersona){
         Persona entidad= personaService.findByIdPersona(idPersona);
-        entidad.setEstadoPer(Constants.FLAG_ESTADO.INACTIVO);
+        entidad.setEstadoPers(Constants.FLAG_ESTADO.INACTIVO);
         return personaService.save(entidad);
     }
 }

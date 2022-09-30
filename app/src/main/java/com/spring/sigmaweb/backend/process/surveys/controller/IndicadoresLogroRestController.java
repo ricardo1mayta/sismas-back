@@ -40,6 +40,8 @@ public class IndicadoresLogroRestController {
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/evaluacionindicadoreslogro/{idobra}/{idgo}/{idpuesto}/{idevento}")
     public List<EvaluacionIndicadoresLogroDTO> showEvalucionIndicadoresLogro(@PathVariable String idobra, @PathVariable Integer idgo, @PathVariable Long idpuesto, @PathVariable Long idevento){
+
+
         return indicadoresLogroService.findByEvaluacionObraGrupoocupacionalEvento(idobra, idgo, idpuesto, idevento);
     }
 

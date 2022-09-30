@@ -36,6 +36,18 @@ public class EncuestaRestController {
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/cierreencuestaevaluacion/{idobra}/{idevento}")
+    public Boolean cierreEncuestaEvaluacion(@PathVariable String idobra, @PathVariable Long idevento){
+        Boolean result = encuestaService.findEstadoCierreEvaluacion(idobra,idevento);
+
+        if(result != null){
+            return result;
+        } else {
+            return false;
+        }
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @PostMapping("/encuestasave")
     public ResponseEntity<?> createEncuesta(@RequestBody EncuestaDTO encuesta, BindingResult result) {
         Encuesta encuestaNew= null;
@@ -138,6 +150,7 @@ public class EncuestaRestController {
         }
         try {
             //Valida si ya esta creada la evaluacion para la misma matriz
+            Encuesta encuestaUpdate = encuestaService.findByIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(idMatriz, idobra, idEvento);
             List<EncuestaDet> findEncuesta = encuestaService.findByIdEncuestaEncdetAndIdObraEncdet(idencuesta, idobra);
 
             if(findEncuesta.size() > 0){
@@ -149,12 +162,12 @@ public class EncuestaRestController {
             encuestaService.saveEncuestaDet(encuestasDet);
 
             //Actualiza encuesta
-            Encuesta encuestaUpdate = encuestaService.findByIdMatrizevalEncuestaAndIdObraEncuestaAndEvento(idMatriz, idobra, idEvento);
+
             if (encuestaUpdate != null) {
                 encuestaUpdate.setTotalPreguntasEncuesta(encuestasDet.size());
                 encuestaUpdate.setFlgEstadoEncuesta("F");
                 encuestaUpdate.setFechaFinEncuesta(new Date());
-                encuestaUpdate.setModiporEncuesta(encuestasDet.get(0).getCreaporEncdet());
+                //encuestaUpdate.setModiporEncuesta(encuestasDet.get(0).getCreaporEncdet());
                 encuestaUpdate.setFechamodiEncuesta(new Date());
 
                 encuestaService.saveEncuesta(encuestaUpdate);

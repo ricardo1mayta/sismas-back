@@ -26,7 +26,7 @@ public class PersonalHistoricoVinculoLaboral implements Serializable {
     @Column(name = "id_pervila_histvila", nullable = false)
     private Long idPervilaHistvila;
 
-    @Column(name = "id_puesto_cargo_histvila", nullable = false)
+    @Column(name = "id_puesto_cargo_histvila", nullable = true)
     private Long idPuestoCargoHistvila;
 
 

@@ -23,6 +23,8 @@ public interface IEncuestaService {
 
     public List<ListaEvaluadosEvaluador> listaEvaluadosEvaluador(String idObra, Long idPersonal, Long idEvento);
 
+    public Boolean findEstadoCierreEvaluacion(String idobra, Long idevento);//cierre encuesta
+
     //detalle Encuesta
 
     public void saveEncuestaDet(List<EncuestaDet> encuestadet);

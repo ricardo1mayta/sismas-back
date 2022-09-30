@@ -53,7 +53,10 @@ public class PersonalPuestoRestController {
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/personalpuestopersonalobraviladto/{idpersona}/{idobra}/{idpervila}")
     public List<PersonalPuestoDTO> showPersonalPuestoForPersonalAndObraAndVilaDTO(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpervila){
-        return personalpuestoservice.findByObraPersonalVidaLab(idpersona, idobra, idpervila);
+        List<PersonalPuestoDTO> result = personalpuestoservice.findByObraPersonalVidaLab(idpersona, idobra, idpervila);
+        Double bonificacion  = result.get(0).getBonifCargoPerpuest();
+
+        return result;
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
@@ -142,10 +145,23 @@ public class PersonalPuestoRestController {
             perpuestoAct.setFechaIniPerpuest(personalpuesto.getFechaIniPerpuest());
             perpuestoAct.setFechaFinPerpuest(personalpuesto.getFechaFinPerpuest());
             perpuestoAct.setEstadoPerpuest(personalpuesto.getEstadoPerpuest());
-            perpuestoAct.setBonifCargoPerpuest(personalpuesto.getBonifCargoPerpuest());
+            //perpuestoAct.setBonifCargoPerpuest(personalpuesto.getBonifCargoPerpuest()); //actualiza en el historico
             perpuestoAct.setFechaModiPerpuest(new Date());
             perpuestoAct.setModiPorPerpuest(personalpuesto.getModiPorPerpuest());
 
+        }
+        return personalpuestoservice.save(perpuestoAct);
+    }
+    @PutMapping("/perpuestobonificacionupdate/{idperpuesto}/{idpersonal}/{obraname}/{idpervila}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonalPuesto updatePersonalPuestoBonificacionDTO  (@RequestBody PersonalPuestoDTO personalpuesto, @PathVariable Long idperpuesto, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
+
+        PersonalPuesto perpuestoAct = personalpuestoservice.findByIdPersonalAndIdobraAndIdPervilaAndId(idpersonal, obraname, idpervila, idperpuesto);
+
+        if(perpuestoAct !=null) {
+            perpuestoAct.setBonifCargoPerpuest(personalpuesto.getBonifCargoPerpuest()); //actualiza en el historico
+            perpuestoAct.setFechaModiPerpuest(new Date());
+            perpuestoAct.setModiPorPerpuest(personalpuesto.getModiPorPerpuest());
         }
         return personalpuestoservice.save(perpuestoAct);
     }

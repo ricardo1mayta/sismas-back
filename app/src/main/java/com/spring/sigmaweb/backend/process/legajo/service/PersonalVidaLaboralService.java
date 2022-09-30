@@ -5,11 +5,9 @@ import com.spring.sigmaweb.backend.process.core.dto.SidenavItemDTO;
 import com.spring.sigmaweb.backend.process.core.model.Rol;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
-import com.spring.sigmaweb.backend.process.legajo.repository.IContratoDao;
-import com.spring.sigmaweb.backend.process.legajo.repository.IConvenioDao;
-import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalCargosDao;
-import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalVidaLaboralDao;
+import com.spring.sigmaweb.backend.process.legajo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +29,9 @@ public class PersonalVidaLaboralService implements IPersonalVidaLaboralService{
 
     @Autowired
     IPersonalCargosDao cargoDao;
+
+    @Autowired
+    IPersonalHistoricoVinculoLaboralDao personalHistoricoVinculoLaboralDao;
 
 
     @Override
@@ -183,5 +184,11 @@ public class PersonalVidaLaboralService implements IPersonalVidaLaboralService{
             return null;
         }
         return listItem;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PersonalHistoricoVinculoLaboral findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPuestoCargoHistvilaAndTipoHistvilaAndIdHistvila(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Long idHistvila) {
+        return personalHistoricoVinculoLaboralDao.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPuestoCargoHistvilaAndTipoHistvilaAndIdHistvila(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPuestoCargoHistvila, TipoHistvila, idHistvila);
     }
 }

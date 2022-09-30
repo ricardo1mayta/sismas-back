@@ -3,6 +3,7 @@ package com.spring.sigmaweb.backend.process.legajo.service;
 import com.spring.sigmaweb.backend.process.legajo.dto.ItemListVidaLaboralDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalVidaLabDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalContrato;
+import com.spring.sigmaweb.backend.process.legajo.model.PersonalHistoricoVinculoLaboral;
 import com.spring.sigmaweb.backend.process.legajo.model.PersonalVidaLaboral;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface IPersonalVidaLaboralService {
     public PersonalVidaLaboral save(PersonalVidaLaboral vidalaboral);
 
     public List<ItemListVidaLaboralDTO> findItemsVidaLaboral(String idobra, Long idpersonal, Long idpervila, String estado);
+
+    public PersonalHistoricoVinculoLaboral findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPuestoCargoHistvilaAndTipoHistvilaAndIdHistvila(
+            String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Long idHistvila
+    );
 
 }

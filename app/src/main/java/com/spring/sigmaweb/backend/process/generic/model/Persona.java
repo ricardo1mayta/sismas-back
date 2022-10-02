@@ -160,6 +160,7 @@ public class Persona implements Serializable {
     @Column(nullable = true, name = "cod_inter_pers")
     private Long codInterPers;
 
+
     @Column(nullable = true, name = "estado_pers")
     private Boolean estadoPers;
 

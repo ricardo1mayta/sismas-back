@@ -18,7 +18,7 @@ import java.util.List;
 public class CuentaBancoDTO {
 
     private Long idCuentaBanco;
-    private EntidadDataSelectDTO entidadBanco;
+    private EntidadDatosDTO entidadBanco;
     private String numeroCuenta;
     private Integer cuentaContableBanco;
     private Integer idTipoCuentaBanco;

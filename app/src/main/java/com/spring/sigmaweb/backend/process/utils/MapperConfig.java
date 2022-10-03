@@ -1,4 +1,4 @@
-package com.spring.sigmaweb.backend.utils;
+package com.spring.sigmaweb.backend.process.utils;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

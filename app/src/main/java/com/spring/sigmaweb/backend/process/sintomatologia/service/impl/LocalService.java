@@ -6,7 +6,7 @@ import com.spring.sigmaweb.backend.process.sintomatologia.model.FichaSintomatolo
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaEnfermedadDao;
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSintomaDao;
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSintomatologicaDao;
-import com.spring.sigmaweb.backend.utils.Utils;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

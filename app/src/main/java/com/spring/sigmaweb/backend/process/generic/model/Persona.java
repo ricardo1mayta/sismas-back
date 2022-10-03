@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -18,8 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -163,6 +160,12 @@ public class Persona implements Serializable {
     @Column(nullable = true, name = "cod_inter_pers")
     private Long codInterPers;
 
+
+    @Column(nullable = true, name = "estado_pers")
+    private Boolean estadoPers;
+
+    @Column(nullable = true, name = "referencia_contacto_pers")
+    private String referenciaContactoPers;
     //---------------------------- * ----------------------------
 
     @JsonIgnoreProperties({"idPersona", "hibernateLazyInitializer", "handler"})
@@ -451,5 +454,21 @@ public class Persona implements Serializable {
 
     public void setCodInterPers(Long codInterPers) {
         this.codInterPers = codInterPers;
+    }
+
+    public Boolean getEstadoPers() {
+        return estadoPers;
+    }
+
+    public void setEstadoPers(Boolean estadoPers) {
+        this.estadoPers = estadoPers;
+    }
+
+    public String getReferenciaContactoPers() {
+        return referenciaContactoPers;
+    }
+
+    public void setReferenciaContactoPers(String referenciaContactoPers) {
+        this.referenciaContactoPers = referenciaContactoPers;
     }
 }

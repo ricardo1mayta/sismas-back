@@ -4,6 +4,7 @@ import com.spring.sigmaweb.backend.process.core.service.IUsuarioService;
 import com.spring.sigmaweb.backend.process.legajo.dto.*;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportContract;
+import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalHistoricoVinculoLaboralDao;
 import com.spring.sigmaweb.backend.process.legajo.service.IDocumentEmployeeService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalContratoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
@@ -35,6 +36,7 @@ public class PersonalContratoController {
     @Autowired
     private IPersonalVidaLaboralService personalvidalaboralservice;
 
+
     @Autowired
     private IUsuarioService usuarioservice;
 
@@ -43,14 +45,14 @@ public class PersonalContratoController {
 
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/pruebahistorico/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}")
-    public HistoricoVilaLabotalDTO showprueba(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo){
+    @GetMapping("/historicoactualportipo/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}")
+    public HistoricoVilaLabotalDTO showHistoricoActualTipo(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo){
         return personalcontratoservice.findByUltimoCambioHistoricoVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/pruebahistoricomasactual/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}/{periodoIni}/{periodoFin}")
-    public HistoricoVilaLabotalDTO showpruebaactual(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo, Integer periodoIni, Integer periodoFin){
+    @GetMapping("/historicomasactualtipofecha/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}/{periodoIni}/{periodoFin}")
+    public HistoricoVilaLabotalDTO showHistoricoACtualTipoFecha(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo, Integer periodoIni, Integer periodoFin){
         return personalcontratoservice.findByUltimoCambioHistoricoVidaLabMasActual(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo, periodoIni, periodoFin);
     }
 
@@ -455,10 +457,17 @@ public class PersonalContratoController {
 
             if(historico.getTipoHistvila().equals("REMU")) {
                 historicoInsert.setJornadaSemaNewHistvila(null);
+                historicoInsert.setBonificacionNewHistvila(null);
                 historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
             } else if(historico.getTipoHistvila().equals("JORN")) {
                 historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
                 historicoInsert.setRemuneracionNewHistvila(null);
+                historicoInsert.setBonificacionNewHistvila(null);
+            } else if(historico.getTipoHistvila().equals("BONIP") || historico.getTipoHistvila().equals("BONIC")) {
+                historicoInsert.setJornadaSemaNewHistvila(null);
+                historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
+                historicoInsert.setJornadaSemaNewHistvila(null);
+                historicoInsert.setIdPuestoCargoHistvila(historico.getIdPuestoCargoHistvila());
             }
 
             historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
@@ -487,7 +496,14 @@ public class PersonalContratoController {
     public PersonalHistoricoVinculoLaboral updateHistoricoVidaLabUpdate(@RequestBody HistoricoVilaLabotalDTO historico, @PathVariable String idObra, @PathVariable Long idPersonal,
                                                  @PathVariable Long idPervila, @PathVariable Long idPercont,
                                                  @PathVariable Long idHistvila) {
-        PersonalHistoricoVinculoLaboral historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,idPercont, idHistvila);
+
+        PersonalHistoricoVinculoLaboral historicoAct = null;
+        if(historico.getTipoHistvila().equals("BONIC") || historico.getTipoHistvila().equals("BONIP")){
+
+            historicoAct = personalvidalaboralservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPuestoCargoHistvilaAndTipoHistvilaAndIdHistvila(idObra, idPersonal, idPervila, historico.getIdPuestoCargoHistvila() , historico.getTipoHistvila(), idHistvila);
+        } else {
+            historicoAct = personalcontratoservice.findByIdObraHistvilaAndIdPersonalHistvilaAndIdPervilaHistvilaAndIdPercontHistvilaAndIdHistvila(idObra, idPersonal, idPervila,idPercont, idHistvila);
+        };
 
         if(historicoAct != null) {
             historicoAct.setMotivoHistvila(historico.getMotivoHistvila());
@@ -501,9 +517,15 @@ public class PersonalContratoController {
             if(historico.getTipoHistvila().equals("REMU")) {
                 historicoAct.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
                 historicoAct.setJornadaSemaNewHistvila(null);
+                historicoAct.setBonificacionNewHistvila(null);
             } else if(historico.getTipoHistvila().equals("JORN")) {
                 historicoAct.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
                 historicoAct.setRemuneracionNewHistvila(null);
+                historicoAct.setBonificacionNewHistvila(null);
+            } else if(historico.getTipoHistvila().equals("BONIP") || historico.getTipoHistvila().equals("BONIC")) {
+                historicoAct.setJornadaSemaNewHistvila(null);
+                historicoAct.setRemuneracionNewHistvila(null);
+                historicoAct.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
             }
 
             historicoAct.setFechaModiHistvila(new Date());

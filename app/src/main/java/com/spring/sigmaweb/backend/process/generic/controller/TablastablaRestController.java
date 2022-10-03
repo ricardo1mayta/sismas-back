@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-@RequestMapping("/sigmaweb/api")
+    @RequestMapping("/sigmaweb/api")
 public class TablastablaRestController {
     @Autowired
     private ITablasTablaService tablastablaservice;
@@ -23,6 +23,11 @@ public class TablastablaRestController {
         return tablastablaservice.findByTipoTab(tipotab);
     }
 
+    @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/tablastipo/tipomodopago/{tipotab}")
+    public List<TablasTabla> showTipoModoPago(@PathVariable Integer tipotab) {
+        return tablastablaservice.findBYTipoModoPago(tipotab);
+    }
     @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/tablastipolistin/{tipotab}/{listcodigos}")
     public List<TablasTabla> showListCodigoIn(@PathVariable Integer tipotab,@PathVariable String listcodigos) {

@@ -217,7 +217,7 @@ public interface IFichaSintomatologicaDao extends JpaRepository<FichaSintomatolo
             + " inner join Persona ps on (p.idPersona.idPersona = ps.idPersona) "
             + " where p.obraPer.idobra =:obraName "
             + " and pp.idTipoNivelPlanillaPerpuest in (30301,30302)"
-            + " and p.estadoPer=true and p.flgNotificacion = true")
+            + " and p.estadoPer=true and p.flgNotificacion =true ")
     public List<FichaExport> personalforSector(@Param("obraName") String obraName);
 
     @Query("select new com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO(p.idPersonal,"

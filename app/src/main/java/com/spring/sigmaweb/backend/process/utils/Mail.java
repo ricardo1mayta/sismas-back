@@ -1,4 +1,4 @@
-package com.spring.sigmaweb.backend.utils;
+package com.spring.sigmaweb.backend.process.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -108,7 +108,7 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
     }
 
     @Override
-    public List<ReportGeneralEvaluacionDesemp> reportGeneralEvaluacionDesemps(Long idpersonal, String idobra, Double pesoCar, Double pesoEsp, Double pesoIl, String orderPromedio)  {
+    public List<ReportGeneralEvaluacionDesemp> reportGeneralEvaluacionDesemps(Long idpersonal, String idobra, Double pesoCar, Double pesoEsp, Double pesoIl, String orderPromedio, Integer go)  {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("spu_calcula_promedios_general", "ReportGeneralEvaluacionDesemp");
         query.registerStoredProcedureParameter("p_id_personal", Long.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_obra", String.class, ParameterMode.IN);
@@ -116,6 +116,7 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
         query.registerStoredProcedureParameter("p_peso_esp", Double.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_peso_il", Double.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("p_ordenPromedio", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("p_go", Integer.class, ParameterMode.IN);
 
         query.setParameter("p_id_personal", idpersonal);
         query.setParameter("p_obra", idobra);
@@ -123,6 +124,7 @@ public class ReportesEvaluacionDesService implements IReportesEvaluacionDesServi
         query.setParameter("p_peso_esp", pesoEsp);
         query.setParameter("p_peso_il", pesoIl);
         query.setParameter("p_ordenPromedio", orderPromedio);
+        query.setParameter("p_go", go);
 
         List<ReportGeneralEvaluacionDesemp> result = query.getResultList();
 

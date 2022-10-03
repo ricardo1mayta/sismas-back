@@ -287,9 +287,9 @@ public class Personal implements Serializable {
     @JsonIgnoreProperties({ "idPersonalPerdesv", "hibernateLazyInitializer", "handler" })
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idPersonalPerdesv", cascade = CascadeType.ALL)
     private List<PersonalDesvinculacion> personalDesvinculacion;
-    
+
     private Boolean flgNotificacion;
-    
+
     public Personal(Long idPersonal) {
         this.idPersonal=idPersonal;
     }
@@ -817,7 +817,7 @@ public class Personal implements Serializable {
         this.flgPermitirCambioHaberesPer = flgPermitirCambioHaberesPer;
     }
 
-     public Boolean getFlgNotificacion() {
+    public Boolean getFlgNotificacion() {
         return flgNotificacion;
     }
 

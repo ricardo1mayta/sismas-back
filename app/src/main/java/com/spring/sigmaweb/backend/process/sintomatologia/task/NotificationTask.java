@@ -3,14 +3,14 @@ package com.spring.sigmaweb.backend.process.sintomatologia.task;
 import com.spring.sigmaweb.backend.process.sintomatologia.dto.FichaSintomatologicaDTO;
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.IFichaSintomatologicaDao;
 import com.spring.sigmaweb.backend.process.sintomatologia.service.impl.LocalService;
-import com.spring.sigmaweb.backend.utils.Mail;
-import com.spring.sigmaweb.backend.utils.Utils;
+import com.spring.sigmaweb.backend.process.utils.Mail;
+import com.spring.sigmaweb.backend.process.utils.Utils;
+
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
 
 import org.springframework.core.env.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -34,7 +34,7 @@ public class NotificationTask {
     private final LocalService service;
 
     private final Environment env;
-    
+
     @Scheduled(cron = "0 30 16 * * 0-4", zone = "America/Lima")
 
     public void sendNotificactionPendingRegister(){
@@ -46,7 +46,7 @@ public class NotificationTask {
         List<FichaSintomatologicaDTO> listEmailNotification = ficha.listMailNotification("SECTOR", new Date());
         List<FichaSintomatologicaDTO> fsFinal= new ArrayList<>();
         String flgActiveTask = env.getProperty("flgActiveTask");
-        
+
         //VALIDACION DE PERSONAL SIN FICHA
         boolean flag= false;
         for (FichaSintomatologicaDTO f: listPersonalNotification){
@@ -62,8 +62,8 @@ public class NotificationTask {
 
         for (FichaSintomatologicaDTO dto: fsFinal){
             try {
-            
-                 if(flgActiveTask.equals("1")){
+
+                if(flgActiveTask.equals("1")){
                     if(!dto.getEmailPers().isEmpty() || dto.getEmailPers()!=null){
                         sendMessageNotification(dto);
                     }
@@ -141,12 +141,12 @@ public class NotificationTask {
 
         String notification =
                 "<h1 style=\"color: #5e9ca0; text-align: center;\">GESTION DEL TALENTO</h1>\n" +
-                "<h3>Notificaci&oacute;n de Ficha Sintomatológica </h3>\n" +
-                "<p>Estimado(a) PERSONAL_NAME</p>\n" +
-                "<p>Recordatorio, Usted. tiene pendiente el registro de la ficha sintomatológica correspondiente al día <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigma para realizar el registro.</p>\n" +
-                "<br/>LINK FICHA SINTOMATOLÓGICA<br/>\n" +
-                "<p><strong>Hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/ficha/buscar target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
-                "<p>&nbsp;</p>";
+                        "<h3>Notificaci&oacute;n de Ficha Sintomatológica </h3>\n" +
+                        "<p>Estimado(a) PERSONAL_NAME</p>\n" +
+                        "<p>Recordatorio, Usted. tiene pendiente el registro de la ficha sintomatológica correspondiente al día <strong>DIA_REG</strong> .<br />Ingrese a la p&aacute;gina de Sigma para realizar el registro.</p>\n" +
+                        "<br/>LINK FICHA SINTOMATOLÓGICA<br/>\n" +
+                        "<p><strong>Hacer click en el siguiente enlace. <a href=https://maristas.sigmaversion.net/#/ficha/buscar target=\"_blank\">Click Aqu&Iacute;</a></p>\n" +
+                        "<p>&nbsp;</p>";
         String message=notification.replace("PERSONAL_NAME", fichaDTO.getNombrePers())
                 .replace("DIA_REG", Utils.toDateMoreDay(new Date()));
         helper.setText(message, true); // Use this or above line.

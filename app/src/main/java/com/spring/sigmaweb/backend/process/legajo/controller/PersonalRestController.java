@@ -1004,5 +1004,8 @@ public class PersonalRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
-
+    @GetMapping("buscar/usuario/{idUsuario}")
+    public PersonalDatosListDTO personal(@PathVariable Long idUsuario){
+        return personalservice.findByIdUser(idUsuario);
+    }
 }

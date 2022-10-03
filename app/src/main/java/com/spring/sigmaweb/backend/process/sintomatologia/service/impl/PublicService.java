@@ -3,7 +3,7 @@ package com.spring.sigmaweb.backend.process.sintomatologia.service.impl;
 import com.spring.sigmaweb.backend.process.sintomatologia.dto.*;
 import com.spring.sigmaweb.backend.process.sintomatologia.model.*;
 import com.spring.sigmaweb.backend.process.sintomatologia.repository.*;
-import com.spring.sigmaweb.backend.utils.Utils;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;

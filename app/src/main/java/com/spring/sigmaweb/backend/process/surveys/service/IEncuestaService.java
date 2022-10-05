@@ -1,6 +1,7 @@
 package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.legajo.reports.ReportFamiliaresPersonal;
+import com.spring.sigmaweb.backend.process.surveys.model.CierreEvaluacionDesemp;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
@@ -31,5 +32,8 @@ public interface IEncuestaService {
 
     public List<EncuestaDet> findByIdEncuestaEncdetAndIdObraEncdet(Long idencuestaencdet, String idobraencdet);
 
+    //Cierre encuesta
+    public CierreEvaluacionDesemp findByIdObraCierreevalAndIdEventoCierreeval(String idobra, Long idevento);
 
+    public CierreEvaluacionDesemp saveCierreEncuesta(CierreEvaluacionDesemp cierreEvaluacionDesemp);
 }

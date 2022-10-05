@@ -5,6 +5,7 @@ import com.spring.sigmaweb.backend.process.surveys.model.CierreEvaluacionDesemp;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.report.ListaEvaluadosEvaluador;
+import com.spring.sigmaweb.backend.process.surveys.repository.ICierreEncuestaDao;
 import com.spring.sigmaweb.backend.process.surveys.repository.IEncuestaDao;
 import com.spring.sigmaweb.backend.process.surveys.repository.IEncuestaDetDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class EncuestaService implements IEncuestaService{
 
     @Autowired
     private IEncuestaDetDao encuestaDetDao;
+
+    @Autowired
+    private ICierreEncuestaDao cierreEncuestaDao;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -107,6 +111,7 @@ public class EncuestaService implements IEncuestaService{
     @Transactional(readOnly = true)
     public Boolean findEstadoCierreEvaluacion(String idobra, Long idevento) {
         CierreEvaluacionDesemp result = encuestaDao.findEstadoCierreEvaluacion(idobra, idevento);
+
         Boolean estado = false;
 
         if(result == null){
@@ -114,6 +119,7 @@ public class EncuestaService implements IEncuestaService{
         } else {
             estado=true;
         }
+
         return estado;
     }
 
@@ -128,5 +134,19 @@ public class EncuestaService implements IEncuestaService{
     @Transactional(readOnly = true)
     public List<EncuestaDet> findByIdEncuestaEncdetAndIdObraEncdet(Long idencuestaencdet, String idobraencdet) {
         return encuestaDetDao.findByIdEncuestaEncdetAndIdObraEncdet(idencuestaencdet, idobraencdet);
+    }
+
+    //Cierre de encuesta
+    @Override
+    @Transactional(readOnly = true)
+    public CierreEvaluacionDesemp findByIdObraCierreevalAndIdEventoCierreeval(String idobra, Long idevento) {
+        return cierreEncuestaDao.findByIdObraCierreevalAndIdEventoCierreeval(idobra, idevento);
+    }
+
+    @Override
+    @Transactional()
+    public CierreEvaluacionDesemp saveCierreEncuesta(CierreEvaluacionDesemp cierreEvaluacionDesemp) {
+
+        return cierreEncuestaDao.save(cierreEvaluacionDesemp);
     }
 }

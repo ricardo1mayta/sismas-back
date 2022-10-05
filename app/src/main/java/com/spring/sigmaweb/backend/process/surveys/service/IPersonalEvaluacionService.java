@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.surveys.service;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IPersonalEvaluacionService {
@@ -16,5 +17,8 @@ public interface IPersonalEvaluacionService {
 
     //EXTERNOS
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListExternos(String idobra);
-    
+    //CIERRE
+    public List<PersonalEvaluacionDTO> findEstadoBloqueoEncuesta(String idobra, Long idevento, Long idpersonal, Integer idgrupoocu);
+
+    public Integer updateBloqueoPersonalEval(Integer estado, Long idpersonal, String obraname, Long idevento);
 }

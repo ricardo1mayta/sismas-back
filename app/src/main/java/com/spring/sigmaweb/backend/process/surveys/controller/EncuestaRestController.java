@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.surveys.controller;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.EncuestaDTO;
 import com.spring.sigmaweb.backend.process.surveys.dto.MatrizEvaluacionDTO;
+import com.spring.sigmaweb.backend.process.surveys.model.CierreEvaluacionDesemp;
 import com.spring.sigmaweb.backend.process.surveys.model.Encuesta;
 import com.spring.sigmaweb.backend.process.surveys.model.EncuestaDet;
 import com.spring.sigmaweb.backend.process.surveys.model.MatrizEvaluacion;
@@ -40,11 +41,9 @@ public class EncuestaRestController {
     public Boolean cierreEncuestaEvaluacion(@PathVariable String idobra, @PathVariable Long idevento){
         Boolean result = encuestaService.findEstadoCierreEvaluacion(idobra,idevento);
 
-        if(result != null){
+
             return result;
-        } else {
-            return false;
-        }
+
     }
 
     @Secured({"ROLE_ADMI", "ROLE_COLA"})
@@ -183,6 +182,68 @@ public class EncuestaRestController {
         response.put("encuesta", encuestaNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
+
+    //cierre encuesta
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/estadocierreevaldesemp/{idobra}/{idevento}")
+    public CierreEvaluacionDesemp estadoCierreEvaluacionDesempenioo(@PathVariable String idobra, @PathVariable Long idevento){
+        return encuestaService.findByIdObraCierreevalAndIdEventoCierreeval(idobra, idevento);
+    }
+
+    @Secured({"ROLE_ADMI", "ROLE_COLA"})
+    @PostMapping("/saveupdatecierreevaldesemp/{idobra}/{idEvento}")
+    public ResponseEntity<?> createSaveEvalDesempenio(@RequestBody CierreEvaluacionDesemp cierreencuesta, @PathVariable String idobra, @PathVariable Long idEvento, BindingResult result) {
+        CierreEvaluacionDesemp cierreEdit= null;
+        CierreEvaluacionDesemp cierreNew= null;
+        String mensaje="";
+
+        Map<String, Object> response = new HashMap<>();
+        if(result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            //Valida si ya esta creada la evaluacion para la misma matriz
+            cierreEdit = encuestaService.findByIdObraCierreevalAndIdEventoCierreeval(idobra,idEvento);
+
+            if(cierreEdit != null){
+                //actualiza
+                cierreEdit.setFechaCierreeval(cierreencuesta.getFechaCierreeval());
+                cierreEdit.setFechamodiCierreeval(new Date());
+                cierreEdit.setHoraCierreeval(cierreencuesta.getHoraCierreeval());
+                cierreEdit.setModiporCierreeval(cierreencuesta.getModiporCierreeval());
+                mensaje= "Fecha de Cierre Actualizado";
+            } else {
+                //inserta
+                cierreEdit.setIdEventoCierreeval(cierreencuesta.getIdEventoCierreeval());
+                cierreEdit.setIdObraCierreeval(cierreencuesta.getIdObraCierreeval());
+                cierreEdit.setFechaCierreeval(cierreencuesta.getFechaCierreeval());
+                cierreEdit.setHoraCierreeval(cierreencuesta.getHoraCierreeval());
+                cierreEdit.setFechaingCierreeval(cierreencuesta.getFechaingCierreeval());
+                cierreEdit.setCreaporCierreeval(cierreencuesta.getCreaporCierreeval());
+                mensaje= "Fecha de Cierre Creado";
+            }
+
+            cierreNew=encuestaService.saveCierreEncuesta(cierreEdit);
+
+
+
+        } catch (DataAccessException e){
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", mensaje);
+        response.put("cierreevaluaciondesemp", cierreNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
 
 
 

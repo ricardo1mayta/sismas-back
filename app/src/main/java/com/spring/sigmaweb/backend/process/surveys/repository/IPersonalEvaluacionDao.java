@@ -107,7 +107,7 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
             "inner join EventosPeriodo ep on (pe.idEventoPereval = ep.idEvento and ep.idPeriodoEvent=per.idPeriodo) " + //and o.idobra = ep.idObraEvent
             "inner join TablasTabla tgo on (pe.idGrupoOcupacionalPereval = tgo.codigoTab and 305 = tgo.tipoTab) " +
             "where o.idobra = (case when ?1 in ('CRISTO', 'STAMAR') then 'SECTOR' else ?1 end) " +
-            "and coalesce(pe.idNivelPlanillaPereval, 0) = (case ?1 when 'SECTOR' then 0 when 'CRISTO' then 30305 when 'STAMAR' then 30307 else coalesce(pe.idNivelPlanillaPereval, 0) end)  " +
+            "and (case when ?1 = 'SECTOR' and coalesce(pe.idNivelPlanillaPereval, 0) not in (30307, 30305) then 0 else coalesce(pe.idNivelPlanillaPereval, 0) end) = (case ?1 when 'SECTOR' then 0 when 'CRISTO' then 30305 when 'STAMAR' then 30307 else coalesce(pe.idNivelPlanillaPereval, 0) end)  " +
             "and ep.idObraEvent ='SECTOR' "
     )
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListCristoStamar(String idobra);

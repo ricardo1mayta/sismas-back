@@ -48,6 +48,9 @@ public class PersonalEvaluacion implements Serializable {
     @Column(nullable = false, name = "id_nivel_planilla_pereval")
     private Integer idNivelPlanillaPereval;
 
+    @Column(nullable = false, name = "flg_cierre_encuesta_pereval", columnDefinition = "boolean default false")
+    private Boolean flgCierreEncuestaPereval;
+
     @Column(nullable = false, name = "fechaing_pereval")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -190,6 +193,14 @@ public class PersonalEvaluacion implements Serializable {
 
     public void setFlgExternoPereval(Boolean flgExternoPereval) {
         this.flgExternoPereval = flgExternoPereval;
+    }
+
+    public Boolean getFlgCierreEncuestaPereval() {
+        return flgCierreEncuestaPereval;
+    }
+
+    public void setFlgCierreEncuestaPereval(Boolean flgCierreEncuestaPereval) {
+        this.flgCierreEncuestaPereval = flgCierreEncuestaPereval;
     }
 
     private static final long serialVersionUID = 1L;

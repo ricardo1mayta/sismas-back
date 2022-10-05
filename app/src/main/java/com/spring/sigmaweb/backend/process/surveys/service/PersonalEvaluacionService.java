@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -84,7 +85,21 @@ public class PersonalEvaluacionService implements IPersonalEvaluacionService {
 
     //EXTERNOS
     @Override
+    @Transactional(readOnly = true)
     public List<PersonalEvaluacionDTO> findByIdObraPerevalDistinctListExternos(String idobra) {
         return personalevaluaciondao.findByIdObraPerevalDistinctListExternos(idobra);
+    }
+    //CIERRE
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonalEvaluacionDTO> findEstadoBloqueoEncuesta(String idobra, Long idevento, Long idpersonal, Integer idgrupoocu) {
+        return personalevaluaciondao.findEstadoBloqueoEncuesta(idobra, idevento , idpersonal, idgrupoocu);
+    }
+
+    @Override
+    @Transactional
+    public Integer updateBloqueoPersonalEval(Integer estado, Long idpersonal, String obraname, Long idevento) {
+        Boolean bloqueo= estado==1 ? true : false;
+        return personalevaluaciondao.updateBloqueoPersonalEval(bloqueo, idpersonal, obraname, idevento);
     }
 }

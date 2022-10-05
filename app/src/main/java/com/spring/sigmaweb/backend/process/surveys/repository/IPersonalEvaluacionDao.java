@@ -2,9 +2,12 @@ package com.spring.sigmaweb.backend.process.surveys.repository;
 
 import com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO;
 import com.spring.sigmaweb.backend.process.surveys.model.PersonalEvaluacion;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacion, Long> {
@@ -248,5 +251,29 @@ public interface IPersonalEvaluacionDao extends CrudRepository<PersonalEvaluacio
     public List<PersonalEvaluacionDTO> findByIdObraPerevalListExterno(String idobra, Integer idgruoocu , Long idpuesto, Long idcargo, Integer principal);
 
 
+    // estado cierre de evaluacion
+    @Query("select new com.spring.sigmaweb.backend.process.surveys.dto.PersonalEvaluacionDTO(" +
+            "pe.idPereval," +
+            "pe.idEventoPereval," +
+            "pe.idPersonalPereval as idPersonal," +
+            "pe.flgCierreEncuestaPereval" +
+            ") " +
+            "from PersonalEvaluacion pe inner join Obra o on (pe.idObraPereval=o.idobra) " +
+            "where o.idobra = ?1 " +
+            "and pe.idEventoPereval = ?2 " +
+            "and pe.idPersonalPereval = (case ?3 when -1 then pe.idPersonalPereval else ?3 end ) " +
+            "and pe.idGrupoOcupacionalPereval = (case ?4 when -1 then pe.idGrupoOcupacionalPereval else ?4 end ) " +
+            "and pe.flgPrincipalEvalPereval=true "
+    )
+    public List<PersonalEvaluacionDTO> findEstadoBloqueoEncuesta(String idobra, Long idevento, Long idpersonal, Integer idgrupoocu);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("update PersonalEvaluacion p set flgCierreEncuestaPereval = ?1  " +
+            "where p.idPersonalPereval = ?2 " +
+            "and p.idObraPereval = ?3 " +
+            "and p.idEventoPereval = ?4 "
+    )
+    public Integer updateBloqueoPersonalEval(Boolean estado, Long idpersonal, String obraname, Long idevento);
 
 }

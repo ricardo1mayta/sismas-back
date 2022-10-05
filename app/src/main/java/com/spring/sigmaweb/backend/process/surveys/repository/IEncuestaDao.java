@@ -36,7 +36,7 @@ public interface IEncuestaDao extends CrudRepository<Encuesta,Long> {
             "inner join CierreEvaluacionDesemp ced on (ep.idEvento = ced.idEventoCierreeval and ced.idObraCierreeval=?1) " +
             "where o.idobra='SECTOR' " +
             "and ced.idObraCierreeval = ?1 and ep.idEvento = ?2 " +
-            "and CONVERT(DATE_FORMAT(ced.fechaCierreeval, '%Y%m%d'), SIGNED) < CONVERT(DATE_FORMAT(now(), '%Y%m%d'), SIGNED)   "
+            "and CONVERT( concat(DATE_FORMAT(ced.fechaCierreeval, '%Y%m%d'), coalesce(ced.horaCierreeval, '2359')), SIGNED) < CONVERT(DATE_FORMAT(now(), '%Y%m%d%H%i'), SIGNED)   "
     )
     public CierreEvaluacionDesemp findEstadoCierreEvaluacion(String idobra, Long idevento);
 }

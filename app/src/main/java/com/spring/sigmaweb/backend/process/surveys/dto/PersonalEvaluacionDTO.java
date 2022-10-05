@@ -28,6 +28,7 @@ public class PersonalEvaluacionDTO implements Serializable {
     private Boolean flgPrincipalEvalPereval;
     private Integer idGrupoOcupacionalPereval;
     private String nombreGrupoOcupacionalPereval;
+    private Boolean flgCierreEncuestaPereval;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Temporal(TemporalType.TIMESTAMP)
@@ -95,6 +96,13 @@ public class PersonalEvaluacionDTO implements Serializable {
         this.nombreCargoPuestoPereval = nombreCargoPuestoPereval;
         this.flgEsCargoprincipalPereval = flgEsCargoprincipalPereval;
         this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
+    }
+
+    public PersonalEvaluacionDTO(Long idPereval, Long idEventoPereval, Long idPersonal, Boolean flgCierreEncuestaPereval) {
+        this.idPereval = idPereval;
+        this.idEventoPereval = idEventoPereval;
+        this.idPersonal = idPersonal;
+        this.flgCierreEncuestaPereval = flgCierreEncuestaPereval;
     }
 
     public String getNomCompleto() {
@@ -271,5 +279,13 @@ public class PersonalEvaluacionDTO implements Serializable {
 
     public void setFlgPrincipalEvalPereval(Boolean flgPrincipalEvalPereval) {
         this.flgPrincipalEvalPereval = flgPrincipalEvalPereval;
+    }
+
+    public Boolean getFlgCierreEncuestaPereval() {
+        return flgCierreEncuestaPereval;
+    }
+
+    public void setFlgCierreEncuestaPereval(Boolean flgCierreEncuestaPereval) {
+        this.flgCierreEncuestaPereval = flgCierreEncuestaPereval;
     }
 }

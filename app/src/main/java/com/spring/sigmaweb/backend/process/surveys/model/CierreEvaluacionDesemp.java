@@ -11,7 +11,7 @@ import java.util.Date;
 public class CierreEvaluacionDesemp implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_cierre_evaldes",nullable = false)
+    @Column(name="id_cierre_evaldes",nullable = false, unique = true)
     private Long idCierreEvaldes;
 
     @Column(name = "id_evento_cierreeval", nullable = false)
@@ -38,8 +38,17 @@ public class CierreEvaluacionDesemp implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodiCierreeval;
 
+    @Column(nullable = false, length = 6, name = "hora_cierreeval")
+    private String horaCierreeval;
+
     @Column(nullable = true, name = "modipor_cierreeval", length = 100)
     private String modiporCierreeval;
+
+    @PrePersist
+    public void prePersist() {
+        this.fechaingCierreeval = new Date();
+
+    }
 
     public Long getIdCierreEvaldes() {
         return idCierreEvaldes;
@@ -103,6 +112,14 @@ public class CierreEvaluacionDesemp implements Serializable {
 
     public void setModiporCierreeval(String modiporCierreeval) {
         this.modiporCierreeval = modiporCierreeval;
+    }
+
+    public String getHoraCierreeval() {
+        return horaCierreeval;
+    }
+
+    public void setHoraCierreeval(String horaCierreeval) {
+        this.horaCierreeval = horaCierreeval;
     }
 
     private static final long serialVersionUID = 1L;

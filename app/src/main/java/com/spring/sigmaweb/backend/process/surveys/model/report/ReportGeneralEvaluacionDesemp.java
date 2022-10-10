@@ -15,7 +15,8 @@ import javax.persistence.*;
         @FieldResult(name = "promedioAuto", column = "promedioAuto"),
         @FieldResult(name = "promedio", column = "promedio"),
         @FieldResult(name = "promedio_ponderado", column = "promedio_ponderado"),
-        @FieldResult(name = "peso_compe", column = "peso_compe"),}
+        @FieldResult(name = "completo", column = "completo"),
+        @FieldResult(name = "peso_compe", column = "peso_compe"), }
     )
 )
 
@@ -33,13 +34,14 @@ public class ReportGeneralEvaluacionDesemp {
     private Double promedioAuto;
     private Double promedio;
     private Double promedio_ponderado;
+    private Boolean completo;
     private Double peso_compe;
 
     public ReportGeneralEvaluacionDesemp(){
         super();
     }
 
-    public ReportGeneralEvaluacionDesemp(Long id, Long id_personal, String grupo_ocupacional, String tipo_competencia_prome, Long id_competencia, String descripcion_compe, Double promedioCompe, Double promedioAuto, Double promedio, Double promedio_ponderado, Double peso_compe) {
+    public ReportGeneralEvaluacionDesemp(Long id, Long id_personal, String grupo_ocupacional, String tipo_competencia_prome, Long id_competencia, String descripcion_compe, Double promedioCompe, Double promedioAuto, Double promedio, Double promedio_ponderado, Boolean completo, Double peso_compe) {
         this.id = id;
         this.id_personal = id_personal;
         this.grupo_ocupacional = grupo_ocupacional;
@@ -50,6 +52,7 @@ public class ReportGeneralEvaluacionDesemp {
         this.promedioAuto = promedioAuto;
         this.promedio = promedio;
         this.promedio_ponderado = promedio_ponderado;
+        this.completo = completo;
         this.peso_compe = peso_compe;
     }
 
@@ -131,6 +134,14 @@ public class ReportGeneralEvaluacionDesemp {
 
     public void setPromedio_ponderado(Double promedio_ponderado) {
         this.promedio_ponderado = promedio_ponderado;
+    }
+
+    public Boolean getCompleto() {
+        return completo;
+    }
+
+    public void setCompleto(Boolean completo) {
+        this.completo = completo;
     }
 
     public Double getPeso_compe() {

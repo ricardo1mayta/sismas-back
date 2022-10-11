@@ -301,7 +301,7 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
             "inner join PersonalVidaLaboral pvl on (o.idobra = pvl.idObraPervila and p.idPersonal = pvl.idPersonalPervila and pvl.estadoPervila in ('ACTIVO', 'FINALIZADO')) " +
             "left join PersonalContrato pc on (pc.idObraPercont=o.idobra and pc.idPersonalPercont = p.idPersonal and pc.idPervilaPercont=pvl.idPervila ) " +
-            "left join PersonalHistoricoVinculoLaboral phv on (o.idobra = phv.idObraHistvila and p.idPersonal = phv.idPersonalHistvila and pc.idPerCont = phv.idPercontHistvila and pvl.idPervila = phv.idPervilaHistvila) " +
+            "left join PersonalHistoricoVinculoLaboral phv on (o.idobra = phv.idObraHistvila and p.idPersonal = phv.idPersonalHistvila and pc.idPerCont = phv.idPercontHistvila and pvl.idPervila = phv.idPervilaHistvila and phv.tipoHistvila IN ('JORN', 'REMU')) " +
             "left join TablasTabla tmoti on (phv.motivoHistvila = tmoti.codigoTab) " +
             "left join PersonalPuesto pp on (o.idobra = pp.idObraPerpuest and p.idPersonal=pp.idPersonalPerpuest and pvl.idPervila = pp.idPervilaPerpuest) " +
             "left join Puestos pst on (pp.idPuestoPerpuest = pst.idPuesto and o.idobra = pst.idObraPues) " +
@@ -309,8 +309,8 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "left join TablasTabla tdocu on (psn.idTipoDocPers = tdocu.codigoTab) " +
             "left join TablasTabla tgroc on (coalesce(pst.idTipoGoPues, pp.idAreaPerpuest) = tgroc.codigoTab) " + /*pp.idAreaPerpuest */
             "left join TablasTabla tgrpl on (pp.idTipoNivelPlanillaPerpuest = tgrpl.codigoTab and tgrpl.tipoTab = (case ?1 when 'SECTOR' then 303 else 302 end) ) " +
-            "where o.idobra =?1 and " +
-            "p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
+            "where o.idobra =?1 " +
+            "and p.estadoPer = (case ?2 when 1 then true when 0 then false else p.estadoPer end ) " +
             "and concat(coalesce(psn.apePaternoPers, ''), ' ',coalesce(psn.apeMaternoPers, ''), ' ',coalesce(psn.nombrePers, '')) like concat('%',?6,'%') " +
             "and coalesce(tcont.codigoTab,0) = (case ?5 when 0 then coalesce(tcont.codigoTab,0) else ?5 end ) " +
             "and coalesce(tgroc.codigoTab,0) = (case ?3 when 0 then coalesce(tgroc.codigoTab,0) else ?3 end ) " +

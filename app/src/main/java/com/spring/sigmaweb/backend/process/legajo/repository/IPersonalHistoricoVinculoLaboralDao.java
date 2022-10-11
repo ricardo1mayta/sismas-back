@@ -196,7 +196,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
             "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2  and hvl.idPervilaHistvila = ?3 " +
             "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) and hvl.tipoHistvila = ?5 " +
-         /*   "and hvl.idPuestoCargoHistvila = ?6 " +*/
+            "and hvl.idPuestoCargoHistvila = (case ?6 when -1 then hvl.idPuestoCargoHistvila else ?6 end) " +
             "order by hvl.fechaCambioHistvila desc, hvl.idHistvila desc")
     public List<HistoricoVilaLabotalDTO> findByUltimoCambioHistoricoCargosVidaLab(String idObraHistvila,
                                                                             Long idPersonalHistvila,
@@ -241,5 +241,56 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
                                                                             String tipo,
                                                                             Integer periodoIni,
                                                                             Integer periodoFin);
+
+    @Query(value="select sum(suma) " +
+            "from (" +
+            "select coalesce(hist.bonificacion_new_histvila, pp.bonificacion_puesto_perpuest, 0) as suma " +
+            "from mo_personalpuesto pp inner join " +
+            "(select h.id_obra_histvila,h.id_personal_histvila,h.id_pervila_histvila, h.bonificacion_new_histvila " +
+            "from mo_historico_vinculolaboral h " +
+            "left join (select hvl.id_obra_histvila, hvl.id_personal_histvila, hvl.id_pervila_histvila, max(date_format(hvl.fecha_cambio_histvila, '%Y%m%d')) as old_fecha " +
+            "from mo_historico_vinculolaboral hvl where hvl.id_obra_histvila= ?1 " +
+            "and hvl.id_personal_histvila= ?2 " +
+            "and hvl.id_pervila_histvila= ?3 " +
+            "and hvl.tipo_histvila='BONIP' " +
+            "group by hvl.id_obra_histvila, hvl.id_personal_histvila, hvl.id_pervila_histvila " +
+            ") as t on (h.id_obra_histvila = t.id_obra_histvila and h.id_personal_histvila = t.id_personal_histvila and h.id_pervila_histvila=t.id_pervila_histvila and date_format(h.fecha_cambio_histvila, '%Y%m%d') = t.old_fecha) " +
+            "where h.id_obra_histvila=  ?1  " +
+            "and h.id_personal_histvila= ?2  " +
+            "and h.id_pervila_histvila= ?3 " +
+            "and h.tipo_histvila='BONIP' " +
+            "order by h.id_histvila desc) as hist on (pp.id_personal_perpuest = hist.id_personal_histvila and pp.id_obra_perpuest=hist.id_obra_histvila and pp.id_pervila_perpuest = hist.id_pervila_histvila) " +
+            "where pp.id_obra_perpuest =  ?1  " +
+            "and pp.id_personal_perpuest= ?2  " +
+            "and pp.id_pervila_perpuest= ?3     " +
+            "union " +
+            "select sum(coalesce(hist.bonificacion_new_histvila, pc.bonificacion_cargo_percargo, 0)) as suma " +
+            "from mo_personalcargo pc left join   " +
+            "(select h.id_obra_histvila,h.id_personal_histvila,h.id_pervila_histvila, h.id_puesto_cargo_histvila, h.bonificacion_new_histvila " +
+            "from mo_historico_vinculolaboral h  " +
+            "left join (select hvl.id_obra_histvila, hvl.id_personal_histvila, hvl.id_pervila_histvila, hvl.id_puesto_cargo_histvila, max(date_format(hvl.fecha_cambio_histvila, '%Y%m%d')) as old_fecha " +
+            "from mo_historico_vinculolaboral hvl where hvl.id_obra_histvila=  ?1  " +
+            "and hvl.id_personal_histvila= ?2  " +
+            "and hvl.id_pervila_histvila= ?3 " +
+            "and hvl.tipo_histvila='BONIC' " +
+            "group by hvl.id_obra_histvila, hvl.id_personal_histvila, hvl.id_pervila_histvila, hvl.id_puesto_cargo_histvila " +
+            ") as t on (h.id_obra_histvila = t.id_obra_histvila and h.id_personal_histvila = t.id_personal_histvila and h.id_pervila_histvila=t.id_pervila_histvila  " +
+            "and h.id_puesto_cargo_histvila = t.id_puesto_cargo_histvila and date_format(h.fecha_cambio_histvila, '%Y%m%d') = t.old_fecha) " +
+            "where h.id_obra_histvila=  ?1  " +
+            "and h.id_personal_histvila= ?2  " +
+            "and h.id_pervila_histvila= ?3 " +
+            "and h.tipo_histvila='BONIC' " +
+            "order by h.id_histvila desc " +
+            ") as hist on (pc.id_personal_percargo = hist.id_personal_histvila  " +
+            "and pc.id_obra_percargo=hist.id_obra_histvila and pc.id_pervila_percargo = hist.id_pervila_histvila and pc.id_percargo = hist.id_puesto_cargo_histvila ) " +
+            "where pc.id_obra_percargo =  ?1 " +
+            "and pc.id_personal_percargo =  ?2 " +
+            "and pc.id_pervila_percargo =  ?3 " +
+            ") as final " +
+            ";" +
+            "", nativeQuery = true)
+    Double sumBonificacionPuestoyCargos(String idObraHistvila,
+                                        Long idPersonalHistvila,
+                                        Long idPervilaHistvila);
 
 }

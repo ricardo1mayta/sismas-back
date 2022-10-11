@@ -238,7 +238,25 @@ public class PersonalContratoService implements IPersonalContratoService{
     @Override
     @Transactional(readOnly = true)
     public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike, Integer periodoIni, Integer periodoFin) {
-        return contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike, periodoIni, periodoFin);
+        List<ReportContract> result = contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike, periodoIni, periodoFin);
+        Double newBoniCArgo = 0.0;
+        if(result.size()>0){
+            for (ReportContract c : result) {
+                newBoniCArgo = historicovinculolaboralDao.sumBonificacionPuestoyCargos(c.getIdobra(),c.getIdPersonal(),c.getIdPervila());
+
+                if(newBoniCArgo != null){
+                    if(newBoniCArgo != 0){
+                        System.out.println("obra: " + c.getIdobra() + "  personal: " + c.getIdPersonal()+ " vidalab: " + c.getIdPervila() + " nueva bonificacion: " +newBoniCArgo);
+                    }
+
+                }
+
+
+            }
+        }
+
+
+        return result;
     }
 
     @Override

@@ -196,7 +196,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             "left join TablasTabla tmo on (hvl.motivoHistvila = tmo.codigoTab) " +
             "where hvl.idObraHistvila = ?1 and hvl.idPersonalHistvila = ?2  and hvl.idPervilaHistvila = ?3 " +
             "and hvl.idPercontHistvila = (case ?4 when -1 then hvl.idPercontHistvila else ?4 end) and hvl.tipoHistvila = ?5 " +
-            "and hvl.idPuestoCargoHistvila = ?6 " +
+         /*   "and hvl.idPuestoCargoHistvila = ?6 " +*/
             "order by hvl.fechaCambioHistvila desc, hvl.idHistvila desc")
     public List<HistoricoVilaLabotalDTO> findByUltimoCambioHistoricoCargosVidaLab(String idObraHistvila,
                                                                             Long idPersonalHistvila,

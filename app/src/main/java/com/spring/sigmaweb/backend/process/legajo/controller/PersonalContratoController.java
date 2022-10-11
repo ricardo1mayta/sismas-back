@@ -51,6 +51,12 @@ public class PersonalContratoController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/historicoactualcargoportipo/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}/{idCargoHistvila}")
+    public List<HistoricoVilaLabotalDTO> showHistoricoActualCargoTipo(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo, @PathVariable Long idCargoHistvila){
+        return personalcontratoservice.findByUltimoCambioHistoricoCargosVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo, idCargoHistvila);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/historicomasactualtipofecha/{idObraHistvila}/{idPersonalHistvila}/{idPervilaHistvila}/{idPercontHistvila}/{tipo}/{periodoIni}/{periodoFin}")
     public HistoricoVilaLabotalDTO showHistoricoACtualTipoFecha(@PathVariable String idObraHistvila, @PathVariable Long idPersonalHistvila, @PathVariable Long idPervilaHistvila, @PathVariable Long idPercontHistvila, @PathVariable String tipo, Integer periodoIni, Integer periodoFin){
         return personalcontratoservice.findByUltimoCambioHistoricoVidaLabMasActual(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo, periodoIni, periodoFin);

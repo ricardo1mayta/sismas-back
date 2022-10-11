@@ -175,6 +175,12 @@ public class PersonalContratoService implements IPersonalContratoService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<HistoricoVilaLabotalDTO> findByUltimoCambioHistoricoCargosVidaLab(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipo, Long idCargoHistvila) {
+        return historicovinculolaboralDao.findByUltimoCambioHistoricoCargosVidaLab(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipo, idCargoHistvila);
+    }
+
+    @Override
     @Transactional
     public PersonalHistoricoVinculoLaboral saveHistVidaLab(PersonalHistoricoVinculoLaboral historico) {
         return historicovinculolaboralDao.save(historico);

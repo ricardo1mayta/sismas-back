@@ -120,7 +120,7 @@ public class PersonalDEsvinculacionRestController {
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
         }
 
         response.put("mensaje", "El item ha sido creado con éxito!");

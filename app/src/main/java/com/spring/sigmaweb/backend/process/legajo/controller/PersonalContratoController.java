@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.MediaSizeName;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -434,6 +435,7 @@ public class PersonalContratoController {
     public ResponseEntity<?> createHistoricoVidaLab(@RequestBody HistoricoVilaLabotalDTO historico, BindingResult result) {
         PersonalHistoricoVinculoLaboral HistoricoNew = null;
         PersonalHistoricoVinculoLaboral historicoInsert = null;
+        List<PersonalHistoricoVinculoLaboral> existeEnfecha=null;
 
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()) {
@@ -447,43 +449,55 @@ public class PersonalContratoController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            historicoInsert = new PersonalHistoricoVinculoLaboral();
-            historicoInsert.setIdObraHistvila(historico.getIdObraHistvila());
-            historicoInsert.setIdPersonalHistvila(historico.getIdPersonalHistvila());
-            historicoInsert.setIdPercontHistvila(historico.getIdPercontHistvila());
-            historicoInsert.setIdPervilaHistvila(historico.getIdPervilaHistvila());
+            //Busca si ya se ingreso un cambio en la misma fecha , por tipo
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String dateDesv = sdf.format(historico.getFechaCambioHistvila());
 
-            historicoInsert.setMotivoHistvila(historico.getMotivoHistvila());
-            historicoInsert.setTipoHistvila(historico.getTipoHistvila());
-            historicoInsert.setFechaCambioHistvila(historico.getFechaCambioHistvila());
-            historicoInsert.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
-            historicoInsert.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
-            historicoInsert.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
+            existeEnfecha = personalcontratoservice.findByHistoricosPorFecha(historico.getIdObraHistvila(),historico.getIdPersonalHistvila(),
+                    historico.getIdPervilaHistvila(), historico.getIdPercontHistvila(),
+                    historico.getIdPuestoCargoHistvila(), historico.getTipoHistvila(),Integer.parseInt( dateDesv));
+            if(existeEnfecha.size()>0){
+                response.put("mensaje", "No se puede registrar el mismo cambio dos veces en un día");
+                response.put("error", "Duplicado");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                historicoInsert = new PersonalHistoricoVinculoLaboral();
+                historicoInsert.setIdObraHistvila(historico.getIdObraHistvila());
+                historicoInsert.setIdPersonalHistvila(historico.getIdPersonalHistvila());
+                historicoInsert.setIdPercontHistvila(historico.getIdPercontHistvila());
+                historicoInsert.setIdPervilaHistvila(historico.getIdPervilaHistvila());
+
+                historicoInsert.setMotivoHistvila(historico.getMotivoHistvila());
+                historicoInsert.setTipoHistvila(historico.getTipoHistvila());
+                historicoInsert.setFechaCambioHistvila(historico.getFechaCambioHistvila());
+                historicoInsert.setJornadaSemaOldHistvila(historico.getJornadaSemaOldHistvila());
+                historicoInsert.setBonificacionOldHistvila(historico.getBonificacionOldHistvila());
+                historicoInsert.setRemuneracionOldHistvila(historico.getRemuneracionOldHistvila());
 
 
-            if(historico.getTipoHistvila().equals("REMU")) {
-                historicoInsert.setJornadaSemaNewHistvila(null);
-                historicoInsert.setBonificacionNewHistvila(null);
-                historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
-            } else if(historico.getTipoHistvila().equals("JORN")) {
-                historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
-                historicoInsert.setRemuneracionNewHistvila(null);
-                historicoInsert.setBonificacionNewHistvila(null);
-            } else if(historico.getTipoHistvila().equals("BONIP") || historico.getTipoHistvila().equals("BONIC")) {
-                historicoInsert.setJornadaSemaNewHistvila(null);
+                if(historico.getTipoHistvila().equals("REMU")) {
+                    historicoInsert.setJornadaSemaNewHistvila(null);
+                    historicoInsert.setBonificacionNewHistvila(null);
+                    historicoInsert.setRemuneracionNewHistvila(historico.getRemuneracionNewHistvila());
+                } else if(historico.getTipoHistvila().equals("JORN")) {
+                    historicoInsert.setJornadaSemaNewHistvila(historico.getJornadaSemaNewHistvila());
+                    historicoInsert.setRemuneracionNewHistvila(null);
+                    historicoInsert.setBonificacionNewHistvila(null);
+                } else if(historico.getTipoHistvila().equals("BONIP") || historico.getTipoHistvila().equals("BONIC")) {
+                    historicoInsert.setJornadaSemaNewHistvila(null);
+                    historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
+                    historicoInsert.setJornadaSemaNewHistvila(null);
+                    historicoInsert.setIdPuestoCargoHistvila(historico.getIdPuestoCargoHistvila());
+                }
+
                 historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
-                historicoInsert.setJornadaSemaNewHistvila(null);
-                historicoInsert.setIdPuestoCargoHistvila(historico.getIdPuestoCargoHistvila());
+
+                historicoInsert.setFechaIngHistvila(new Date());
+                historicoInsert.setCreaPorHistvila(historico.getCreaPorHistvila());
+                historicoInsert.setEstadoHistvila(historico.getEstadoHistvila());
+
+                HistoricoNew = personalcontratoservice.saveHistVidaLab(historicoInsert);
             }
-
-            historicoInsert.setBonificacionNewHistvila(historico.getBonificacionNewHistvila());
-
-            historicoInsert.setFechaIngHistvila(new Date());
-            historicoInsert.setCreaPorHistvila(historico.getCreaPorHistvila());
-            historicoInsert.setEstadoHistvila(historico.getEstadoHistvila());
-
-            HistoricoNew = personalcontratoservice.saveHistVidaLab(historicoInsert);
-
         } catch(DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en la base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

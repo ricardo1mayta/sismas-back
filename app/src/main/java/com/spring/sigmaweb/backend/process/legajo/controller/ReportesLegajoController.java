@@ -108,7 +108,7 @@ public class ReportesLegajoController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reportconvenioscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipoconvenio}/{periodoini}/{periodofin}")
     public List<ReportAgreement> reporteConveniosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipoconvenio, @PathVariable Integer periodoini, @PathVariable Integer periodofin){
-        return personalconvenioservice.reportConveniosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio, periodoini, periodofin);
+        return personalconvenioservice.reportConveniosPorColaborador(idobra,estado, grupoocacional, tipoplanilla, idtipoconvenio, periodoini, periodofin);
     }
 
     //========================= REPORTES PUESTOS Y CARGOS =========================

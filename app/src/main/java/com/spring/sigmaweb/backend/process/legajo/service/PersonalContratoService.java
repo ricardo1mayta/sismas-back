@@ -169,6 +169,11 @@ public class PersonalContratoService implements IPersonalContratoService{
     }
 
     @Override
+    public List<PersonalHistoricoVinculoLaboral> findByHistoricosPorFecha(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long IdPercontHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Integer fecha) {
+        return historicovinculolaboralDao.findByHistoricosPorFecha(idObraHistvila, idPersonalHistvila, idPervilaHistvila, IdPercontHistvila, idPuestoCargoHistvila, TipoHistvila, (fecha + ""));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<HistoricoVilaLabotalDTO> findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila) {
         return historicovinculolaboralDao.findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(idObraHistvila, idPersonalHistvila, idPervilaHistvila, idPercontHistvila, tipoHistvila);
@@ -239,19 +244,24 @@ public class PersonalContratoService implements IPersonalContratoService{
     @Transactional(readOnly = true)
     public List<ReportContract> reportContratosHistoricoPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String textolike, Integer periodoIni, Integer periodoFin) {
         List<ReportContract> result = contratoDao.reportContratosHistoricoPorObra(idobra,estadoper,tipogrupo,tipoplanilla,idtipocontrato,textolike, periodoIni, periodoFin);
-        Double newBoniCArgo = 0.0;
+        Double newBoniCargo = 0.0;
+        Long idPerOld =null;
         if(result.size()>0){
+
             for (ReportContract c : result) {
-                newBoniCArgo = historicovinculolaboralDao.sumBonificacionPuestoyCargos(c.getIdobra(),c.getIdPersonal(),c.getIdPervila());
-
-                if(newBoniCArgo != null){
-                    if(newBoniCArgo != 0){
-                        System.out.println("obra: " + c.getIdobra() + "  personal: " + c.getIdPersonal()+ " vidalab: " + c.getIdPervila() + " nueva bonificacion: " +newBoniCArgo);
+                newBoniCargo=0.0;
+                if(idPerOld != c.getIdPersonal()){
+                    newBoniCargo = historicovinculolaboralDao.sumBonificacionPuestoyCargos(c.getIdobra(),c.getIdPersonal(),c.getIdPervila());
+                    if(newBoniCargo != null){
+                        if(newBoniCargo != 0){
+                            c.setSumBonifiCargosPuestoAct(newBoniCargo);
+                        }
                     }
-
+                } else {
+                    c.setSumBonifiCargosPuestoAct(0.0);
                 }
 
-
+                idPerOld = result.get(0).getIdPersonal();
             }
         }
 

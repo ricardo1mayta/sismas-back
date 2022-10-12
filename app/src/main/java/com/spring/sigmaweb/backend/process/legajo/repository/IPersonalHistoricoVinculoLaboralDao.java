@@ -19,6 +19,23 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Long idHistvila
     );
 
+    @Query("select phvl " +
+            "from PersonalHistoricoVinculoLaboral phvl " +
+            "where phvl.idObraHistvila = ?1 " +
+            "And phvl.idPersonalHistvila = ?2 " +
+            "And phvl.idPervilaHistvila = ?3 " +
+            "and phvl.idPercontHistvila = ?4 " +
+            "And coalesce(phvl.idPuestoCargoHistvila, 0) = coalesce(?5, 0) " +
+            "And phvl.tipoHistvila = ?6 " +
+            "And date_format(phvl.fechaCambioHistvila, '%Y%m%d') = ?7")
+    public List<PersonalHistoricoVinculoLaboral> findByHistoricosPorFecha(String idObraHistvila,
+                                                                          Long idPersonalHistvila,
+                                                                          Long idPervilaHistvila,
+                                                                          Long IdPercontHistvila,
+                                                                          Long idPuestoCargoHistvila,
+                                                                          String TipoHistvila,
+                                                                          String fecha);
+
 
 
     @Query("select hvl " +
@@ -245,7 +262,7 @@ public interface IPersonalHistoricoVinculoLaboralDao extends CrudRepository<Pers
     @Query(value="select sum(suma) " +
             "from (" +
             "select coalesce(hist.bonificacion_new_histvila, pp.bonificacion_puesto_perpuest, 0) as suma " +
-            "from mo_personalpuesto pp inner join " +
+            "from mo_personalpuesto pp left join " +
             "(select h.id_obra_histvila,h.id_personal_histvila,h.id_pervila_histvila, h.bonificacion_new_histvila " +
             "from mo_historico_vinculolaboral h " +
             "left join (select hvl.id_obra_histvila, hvl.id_personal_histvila, hvl.id_pervila_histvila, max(date_format(hvl.fecha_cambio_histvila, '%Y%m%d')) as old_fecha " +

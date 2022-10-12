@@ -295,7 +295,8 @@ public interface IContratoDao extends CrudRepository<PersonalContrato, Long> {
             "phv.tipoHistvila," +
             "phv.fechaCambioHistvila," +
             "phv.jornadaSemaNewHistvila," +
-            "phv.remuneracionNewHistvila" +
+            "phv.remuneracionNewHistvila," +
+            "0.00 as sumBonifiCargosPuestoAct" +
             ") " +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +

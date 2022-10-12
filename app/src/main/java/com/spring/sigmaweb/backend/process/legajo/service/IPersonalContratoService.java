@@ -60,6 +60,8 @@ public interface IPersonalContratoService {
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
     );
 
+    public List<PersonalHistoricoVinculoLaboral> findByHistoricosPorFecha(String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long IdPercontHistvila, Long idPuestoCargoHistvila, String TipoHistvila, Integer fecha);
+
     public List<HistoricoVilaLabotalDTO> findByObraAndPersonalAndVidaLabAndContratoAndtipoListDto(
             String idObraHistvila, Long idPersonalHistvila, Long idPervilaHistvila, Long idPercontHistvila, String tipoHistvila
     );

@@ -54,8 +54,9 @@ public class PersonalPuestoService implements IPersonalPuestoService{
     }
 
     @Override
-    public List<ReportPuestosCargos> reportPuestosCargosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String ordenOpcion, Integer periodoIni, Integer periodoFin) {
+    public List<ReportPuestosCargos> reportPuestosCargosPorObra(String idobra, Integer estadoper, Integer tipogrupo, Integer tipoplanilla, Integer idtipocontrato, String ordenOpcion, Integer periodoIni, Integer periodoFin, Boolean verBonificacion) {
         List<HistoricoVilaLabotalDTO> jornadaLab ;
+        List<HistoricoVilaLabotalDTO> bonificacion;
 
         Sort sortPlanilla = Sort.by(Sort.Direction.ASC, "tgrplp.descripTab");
         Sort sortOcupacional = Sort.by(Sort.Direction.ASC, "tgrocp.descripTab");
@@ -79,14 +80,25 @@ public class PersonalPuestoService implements IPersonalPuestoService{
 
             for (ReportPuestosCargos item : result) {
                 jornadaLab = historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLabActual(item.getIdobra(), item.getIdPersonal(), item.getIdPervila(), Long.parseLong("-1"),"JORN", periodoIni, periodoFin);
-
                 if(jornadaLab != null){
                     if(jornadaLab.size()>0){
 
                         item.setJornadaActual( jornadaLab.get(0).getJornadaSemaNewHistvila() );
                     }
                 }
-
+                if(verBonificacion){
+                    if (item.getIdPuestoPerpuest() !=null){
+                        bonificacion = historicovinculolaboralDao.findByUltimoCambioHistoricoCargosPeriodoVidaLab(item.getIdobra(), item.getIdPersonal(), item.getIdPervila(), Long.parseLong("-1"),"BONIP", item.getIdPerpuest(),periodoIni, periodoFin);
+                        if(bonificacion.size()>0){
+                            item.setBonifCargoPerpuest(bonificacion.get(0).getBonificacionNewHistvila());
+                        }
+                    } else {
+                        bonificacion = historicovinculolaboralDao.findByUltimoCambioHistoricoCargosPeriodoVidaLab(item.getIdobra(), item.getIdPersonal(), item.getIdPervila(), Long.parseLong("-1"),"BONIC", item.getIdPercargo(), periodoIni, periodoFin);
+                        if(bonificacion.size()>0){
+                            item.setBonifCargoPercargo(bonificacion.get(0).getBonificacionNewHistvila());
+                        }
+                    }
+                }
             }
         }
 

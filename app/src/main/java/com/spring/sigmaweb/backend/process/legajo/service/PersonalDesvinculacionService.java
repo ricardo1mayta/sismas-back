@@ -195,10 +195,15 @@ public class PersonalDesvinculacionService implements IPersonalDesvinculacionSer
                 idPer = item.getIdPersonal();
                 idVila = item.getIdPervila();
             }
-            item.setTipoUltPercont(data.get(0).getTipoContrato());
-            item.setFechaFinUltPercont(data.get(0).getFechaFinPercont());
-            item.setFechaTerminoUltPercont(data.get(0).getFechaTerminoPercont());
-            item.setFechaIniUltPercont(data.get(0).getFechaIniPercont());
+            if(data !=null) {
+                if(data.size()>0){
+                    item.setTipoUltPercont(data.get(0).getTipoContrato());
+                    item.setFechaFinUltPercont(data.get(0).getFechaFinPercont());
+                    item.setFechaTerminoUltPercont(data.get(0).getFechaTerminoPercont());
+                    item.setFechaIniUltPercont(data.get(0).getFechaIniPercont());
+                }
+            }
+
         }
 
         return result;

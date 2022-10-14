@@ -117,7 +117,13 @@ public class ReportesLegajoController {
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
     @GetMapping("/reportpuestoscargoscolaborador/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipopuesto}/{ordenOpcion}/{periodoIni}/{periodoFin}")
     public List<ReportPuestosCargos> reportePuestosCargosPorColaborador(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipopuesto, @PathVariable String ordenOpcion, @PathVariable Integer periodoIni, @PathVariable Integer periodoFin){
-        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion, periodoIni, periodoFin);
+        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion, periodoIni, periodoFin, false);
+    }
+
+    @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportpuestoscargoscolaboradormasboni/{idobra}/{estado}/{grupoocacional}/{tipoplanilla}/{idtipopuesto}/{ordenOpcion}/{periodoIni}/{periodoFin}")
+    public List<ReportPuestosCargos> reportePuestosCargosPorColaboradorMasBoni(@PathVariable String idobra, @PathVariable Integer estado, @PathVariable Integer grupoocacional, @PathVariable Integer tipoplanilla, @PathVariable Integer idtipopuesto, @PathVariable String ordenOpcion, @PathVariable Integer periodoIni, @PathVariable Integer periodoFin){
+        return personalpuestoservice.reportPuestosCargosPorObra(idobra,estado, grupoocacional, tipoplanilla, idtipopuesto,ordenOpcion, periodoIni, periodoFin, true);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})

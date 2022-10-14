@@ -93,6 +93,8 @@ public class PersonalCargoService implements IPersonalCargoService{
         personalcargoDao.delete(personalcargo);
     }
 
+
+
     //CARGO
 
     @Override

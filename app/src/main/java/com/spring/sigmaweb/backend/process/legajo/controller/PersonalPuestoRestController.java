@@ -54,7 +54,10 @@ public class PersonalPuestoRestController {
     @GetMapping("/personalpuestopersonalobraviladto/{idpersona}/{idobra}/{idpervila}")
     public List<PersonalPuestoDTO> showPersonalPuestoForPersonalAndObraAndVilaDTO(@PathVariable Long idpersona, @PathVariable String idobra, @PathVariable Long idpervila){
         List<PersonalPuestoDTO> result = personalpuestoservice.findByObraPersonalVidaLab(idpersona, idobra, idpervila);
-        Double bonificacion  = result.get(0).getBonifCargoPerpuest();
+        if(result.size()>0){
+            Double bonificacion  = result.get(0).getBonifCargoPerpuest();
+        }
+
 
         return result;
     }

@@ -53,6 +53,7 @@ public class ReportContract implements Serializable {
 
     private Double jornadaSemanalAct;
     private Double remuneracionPerAct;
+    private Double sumBonifiCargosPuestoAct;
 
     private String observacionesPercont;
 
@@ -110,7 +111,7 @@ public class ReportContract implements Serializable {
     }
 
     //historico contrato
-    public ReportContract(String idobra, String nombreobra, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerCont, Integer idTipoPercont, String tipoPercont, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String estadoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Date fecIniPruebaPercont, Date fecFinPruebaPercont, Integer motivoHistvila, String descMotivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaNewHistvila, Double remuneracionNewHistvila) {
+    public ReportContract(String idobra, String nombreobra, Long idPersonal, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerCont, Integer idTipoPercont, String tipoPercont, Date fechaIniPercont, Date fechaFinPercont, Date fechaTerminoPercont, String estadoPercont, Double jornadaSemanalPercont, Double remuneracionPercont, Date fecIniPruebaPercont, Date fecFinPruebaPercont, Integer motivoHistvila, String descMotivoHistvila, String tipoHistvila, Date fechaCambioHistvila, Double jornadaSemaNewHistvila, Double remuneracionNewHistvila, Double sumBonifiCargosPuestoAct) {
         this.idobra = idobra;
         this.nombreobra = nombreobra;
         this.idPersonal = idPersonal;
@@ -141,6 +142,7 @@ public class ReportContract implements Serializable {
         this.fechaCambioHistvila = fechaCambioHistvila;
         this.jornadaSemaNewHistvila = jornadaSemaNewHistvila;
         this.remuneracionNewHistvila = remuneracionNewHistvila;
+        this.sumBonifiCargosPuestoAct = sumBonifiCargosPuestoAct;
     }
 
     public String getIdobra() {
@@ -423,4 +425,11 @@ public class ReportContract implements Serializable {
         this.remuneracionNewHistvila = remuneracionNewHistvila;
     }
 
+    public Double getSumBonifiCargosPuestoAct() {
+        return sumBonifiCargosPuestoAct;
+    }
+
+    public void setSumBonifiCargosPuestoAct(Double sumBonifiCargosPuestoAct) {
+        this.sumBonifiCargosPuestoAct = sumBonifiCargosPuestoAct;
+    }
 }

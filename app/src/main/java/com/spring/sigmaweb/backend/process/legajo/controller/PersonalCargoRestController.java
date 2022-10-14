@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.legajo.controller;
 
 import com.spring.sigmaweb.backend.process.legajo.dto.CargosDto;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalCargosDTO;
+import com.spring.sigmaweb.backend.process.legajo.dto.PersonalPuestoDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.*;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalCargoService;
 import com.spring.sigmaweb.backend.process.legajo.service.IPersonalService;
@@ -291,6 +292,21 @@ public class PersonalCargoRestController {
         response.put("mensaje", " Se elimino el registro correctamente");
         response.put("matrizevaluadorDel", personalcargodelete);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/percargobonificacionupdate/{idpercargo}/{idpersonal}/{obraname}/{idpervila}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonalCargo updatePersonalPuestoBonificacionDTO  (@RequestBody PersonalCargosDTO personalcargo, @PathVariable Long idpercargo, @PathVariable Long idpersonal, @PathVariable String obraname, @PathVariable Long idpervila) {
+
+        //PersonalCargo percargoAct = personalCargoService.findByIdPersonalAndIdobraAndIdPervilaAndId(idpersonal, obraname, idpervila, idperpuesto);
+        PersonalCargo percargoAct = personalCargoService.findByPersonalAndObraAndIdCargo(idpersonal, obraname, idpercargo, idpervila);
+        if(percargoAct !=null) {
+            percargoAct.setBonifCargoPercargo(personalcargo.getBonifCargoPercargo()); //actualiza en el historico
+            percargoAct.setFechaModiPercargo(new Date());
+            percargoAct.setModiPorPercargo(personalcargo.getModiPorPercargo());
+        }
+        return personalCargoService.save(percargoAct);
     }
 
 }

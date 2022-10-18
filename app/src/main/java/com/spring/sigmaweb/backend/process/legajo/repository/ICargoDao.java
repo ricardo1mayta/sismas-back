@@ -12,7 +12,12 @@ public interface ICargoDao extends CrudRepository<Cargo, Long> {
 
     public List<Cargo> findAllByOrderByNombreCar();
 
-    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar);
+    @Query("select c " +
+            "from Cargo c " +
+            "where c.idTipoGoCar=?1 and c.estadoCar=?2 " +
+            "and c.flgEsCargosectorCar = (case ?3 when 1 then true when 0 then false else c.flgEsCargosectorCar end) " +
+            "order by c.nombreCar")
+    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar, Integer flgescargosectorcar);
 
     @Query("select new com.spring.sigmaweb.backend.process.legajo.dto.CargosDto( c.idCargo," +
             "c.nombreCar," +

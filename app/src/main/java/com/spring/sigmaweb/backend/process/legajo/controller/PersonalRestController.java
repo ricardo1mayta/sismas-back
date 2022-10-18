@@ -428,8 +428,8 @@ public class PersonalRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Personal updatepersonalInfopersonalesDTO(@RequestBody PersonalDatosPersonalesDTO personalDTO, @PathVariable Long idpersonal, @PathVariable String obraname) {
 
-        Personal PersonalAct = personalservice.findByIdPersonalAndObraname(idpersonal, obraname);
-        Persona personaAct = personaService.findByIdPersona(idpersonal);
+        Personal personalAct = personalservice.findByIdPersonalAndObraname(idpersonal, obraname);
+        Persona personaAct = personaService.findByIdPersona( personalAct.getIdPersona().getIdPersona() );
         Obra obra = obraservice.findById(obraname).get();
 
         List<PersonalHistorico> historico = new ArrayList<PersonalHistorico>();
@@ -452,7 +452,7 @@ public class PersonalRestController {
         personaAct.setNombrePers(personalDTO.getNombrePers());
         personaAct.setApePaternoPers(personalDTO.getApePaternoPers());
         personaAct.setApeMaternoPers(personalDTO.getApeMaternoPers());
-        PersonalAct.setFotoPer(personalDTO.getFotoPer());
+        personalAct.setFotoPer(personalDTO.getFotoPer());
         personaAct.setIdTipoDocPers(tablaT);
         personaAct.setNroDocPers(personalDTO.getNroDocPers());
         personaAct.setIdPaisDocPers(personalDTO.getIdPaisDocPers());
@@ -460,8 +460,8 @@ public class PersonalRestController {
         if(!personaAct.getEstCivilPers().getCodigoTab().equals( personalDTO.getEstCivilPer() ) ) {
 
             //guarda en historico
-            itemHist.setTipoEstCivilHist(PersonalAct.getIdPersona().getEstCivilPers().getCodigoTab());
-            itemHist.setFechaCambECHist(PersonalAct.getIdPersona().getFecCambioEstCivilPers());
+            itemHist.setTipoEstCivilHist(personalAct.getIdPersona().getEstCivilPers().getCodigoTab());
+            itemHist.setFechaCambECHist(personalAct.getIdPersona().getFecCambioEstCivilPers());
             itemHist.setCreaPorHist(personalDTO.getModiPorPer());
             itemHist.setObraHist(obra);//PersonalAct.getObraPer());
             itemHist.setTipoHist("ESTCIV");
@@ -478,23 +478,23 @@ public class PersonalRestController {
         personaAct.setTelefonoFijoPers(personalDTO.getTelefonoFijoPers());
         personaAct.setEmailPers(personalDTO.getEmailPers());
         personaAct.setEmailCorPers(personalDTO.getEmailCorPers());
-        PersonalAct.setEstadoPer(personalDTO.getEstadoPer());
-        PersonalAct.setContactoEmerPer(personalDTO.getContactoEmerPer());
-        PersonalAct.setTelefContEmerPer(personalDTO.getTelefContEmerPer());
-        PersonalAct.setIdParentContEmerPer(personalDTO.getIdParentContEmerPer());
+        personalAct.setEstadoPer(personalDTO.getEstadoPer());
+        personalAct.setContactoEmerPer(personalDTO.getContactoEmerPer());
+        personalAct.setTelefContEmerPer(personalDTO.getTelefContEmerPer());
+        personalAct.setIdParentContEmerPer(personalDTO.getIdParentContEmerPer());
         personaAct.setReligionProfesaPers(personalDTO.getReligionProfesaPers());
-        PersonalAct.setNumeroEssaludPer(personalDTO.getNumeroEssaludPer());
-        PersonalAct.setNumeroEpsPer(personalDTO.getNumeroEpsPer());
-        PersonalAct.setIdEntidadEpsPer(personalDTO.getIdEntEPS());
-        PersonalAct.setNumeroPensionPer(personalDTO.getNumeroPensionPer());
-        PersonalAct.setIdEntidadPensPer(personalDTO.getIdEntPen());
-        PersonalAct.setIdTipoPensionPer(personalDTO.getIdTipoPensionPer());
+        personalAct.setNumeroEssaludPer(personalDTO.getNumeroEssaludPer());
+        personalAct.setNumeroEpsPer(personalDTO.getNumeroEpsPer());
+        personalAct.setIdEntidadEpsPer(personalDTO.getIdEntEPS());
+        personalAct.setNumeroPensionPer(personalDTO.getNumeroPensionPer());
+        personalAct.setIdEntidadPensPer(personalDTO.getIdEntPen());
+        personalAct.setIdTipoPensionPer(personalDTO.getIdTipoPensionPer());
         personaAct.setFechaNacPers(personalDTO.getFechaNacPers());
         personaAct.setIdPaisNacPers(personalDTO.getIdPaisNacPers());
         personaAct.setNacionalidadPers(personalDTO.getNacionalidadPers());
         personaAct.setIdDistNacPers(personalDTO.getIdDistNacPers());
         personaAct.setObservaNacPers(personalDTO.getObservaNacPers());
-        PersonalAct.setCodigoPer(personalDTO.getCodigoPer());
+        personalAct.setCodigoPer(personalDTO.getCodigoPer());
 
         if (!personaAct.getTipoViaDomiPers().equals(personalDTO.getTipoViaDomiPers()) ||
                 !personaAct.getDomicilioPers().trim().equals(personalDTO.getDomicilioPers().trim()) ||
@@ -531,22 +531,24 @@ public class PersonalRestController {
         personaAct.setIdDistDomiPers( distDomi.get());
 
         personaAct.setObservacionDomiPers(personalDTO.getObservacionDomiPers());
-        PersonalAct.setFlgEsDiscapacitadoPer(personalDTO.getFlgEsDiscapacitadoPer());
-        PersonalAct.setEspecDiscapacidadPer(personalDTO.getEspecDiscapacidadPer());
-        PersonalAct.setFechaActivoPer(personalDTO.getFechaActivoPer());
-        PersonalAct.setFechaBajaPer(personalDTO.getFechaBajaPer());
-        PersonalAct.setModiPorPer(personalDTO.getModiPorPer());
-        PersonalAct.setFechaModiPer(new Date());
-        PersonalAct.setIdPersona(personaAct);
+        personaAct.setFechaModiPers(new Date());
+        personaAct.setModiPorPers(personalDTO.getModiPorPer());
+        personalAct.setFlgEsDiscapacitadoPer(personalDTO.getFlgEsDiscapacitadoPer());
+        personalAct.setEspecDiscapacidadPer(personalDTO.getEspecDiscapacidadPer());
+        personalAct.setFechaActivoPer(personalDTO.getFechaActivoPer());
+        personalAct.setFechaBajaPer(personalDTO.getFechaBajaPer());
+        personalAct.setModiPorPer(personalDTO.getModiPorPer());
+        personalAct.setFechaModiPer(new Date());
+        personalAct.setIdPersona(personaAct);
 
         if (historico.size() > 0) {
             for (PersonalHistorico h : historico) {
-                h.setPersonalHist(PersonalAct);
+                h.setPersonalHist(personalAct);
             }
             personalservice.saveAll(historico);
         }
-        PersonalAct.setObraPer(obra);
-        return personalservice.save(PersonalAct);
+        personalAct.setObraPer(obra);
+        return personalservice.save(personalAct);
     }
 
     @PutMapping("/personalmedicoupdate/{idpersonal}/{obraname}")

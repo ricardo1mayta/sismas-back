@@ -111,8 +111,8 @@ public class PersonalCargoService implements IPersonalCargoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar) {
-        return cargoDao.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Idtipogocar, estadocar);
+    public List<Cargo> findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Integer Idtipogocar, Boolean estadocar, Integer cargosSector) {
+        return cargoDao.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(Idtipogocar, estadocar, cargosSector);
     }
 
     @Override

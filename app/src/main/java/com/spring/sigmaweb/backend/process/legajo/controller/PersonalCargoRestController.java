@@ -81,10 +81,10 @@ public class PersonalCargoRestController {
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})
-    @GetMapping("/cargoporgoestado/{idgo}/{estadocargo}")
-    public List<Cargo> showCargoPorGrupoOcupaAndEstado(@PathVariable Integer idgo, @PathVariable Integer estadocargo){
+    @GetMapping("/cargoporgoestado/{idgo}/{estadocargo}/{cargosSector}")
+    public List<Cargo> showCargoPorGrupoOcupaAndEstado(@PathVariable Integer idgo, @PathVariable Integer estadocargo, @PathVariable Integer cargosSector){
         Boolean estado = (estadocargo == 1 ? true : false);
-        return personalCargoService.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(idgo, estado);
+        return personalCargoService.findByIdTipoGoCarAndEstadoCarOrderByNombreCar(idgo, estado, cargosSector);
     }
 
     @Secured({"ROLE_FAMI","ROLE_ADMI", "ROLE_COLA"})

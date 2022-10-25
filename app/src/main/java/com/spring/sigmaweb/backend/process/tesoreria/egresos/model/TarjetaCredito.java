@@ -3,6 +3,8 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.model;
 import com.spring.sigmaweb.backend.process.legajo.model.Personal;
 import lombok.*;
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class TarjetaCredito {
 
     private String numeroTarjeta;
     private String idObra;
-    private String fechaRegistro;
-    private String fechaActualiza;
+    private Date fechaRegistro;
+    private Date fechaActualiza;
     private Boolean flgEstado;
 }

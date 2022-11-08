@@ -70,6 +70,7 @@ public class TarjetaCreditoController {
         newTarjeta.setIdObra(bodyDTO.getIdObra());
         newTarjeta.setFechaRegistro(new Date());
 
+
         return  new ResponseEntity<>(tarjetaCreditoService.save(newTarjeta), HttpStatus.OK);
         //return mapper.map(tipoConceptoService.registrar( mapper.map(bodyDTO, TipoConcepto.class) ),TipoConceptoDTO.class);
     }

@@ -68,6 +68,11 @@ public class DocumentoEgresoController {
         return tipoCambioService.findByIdOBraAndDate(idObra,fecha);
     }
 
+    @GetMapping("tipos-cambio-moneda")
+    public TipoCambio buscarPorIdObrayFechayMonedaTipoCambio(@RequestParam String idObra, @RequestParam Date fecha, @RequestParam Integer moneda){
+        return tipoCambioService.findByIdOBraAndDateAndMoneda(idObra,fecha, moneda);
+    }
+
     @GetMapping("numeracion-documentos")
     public NumeracionDocumento buscarPorIdObraYTipoMoneday(@RequestParam String idObra,@RequestParam Integer idTipoModoPago, @RequestParam  Integer idTipoMoneda){
             return numeracionDocumentoService.findByIdTipoModoPagoAndTipoMoneda(idTipoModoPago,idObra,idTipoMoneda);

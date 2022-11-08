@@ -78,8 +78,9 @@ public class ReportPuestosCargos implements Serializable {
     private Date fechaIngPercargo;
 
     private String creaPorPercargo;
+    private Boolean tieneContrato;
 
-    public ReportPuestosCargos(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerpuest, Long idPuestoPerpuest, String puestoPerpuest, Integer idAreaPerpuest, String areaPerpuest, Integer idTipoNivelPlanillaPerpuest, String tipoNivelPlanillaPerpuest, Boolean flgPuestoDirePerpuest, Boolean flgPuestoConfiPerpuest, Boolean flgPuestoNofilcalPerpuest, Boolean flgPuestoNoAplicaPerpuest, String observacionesPerpuest, Date fechaIniPerpuest, Date fechaFinPerpuest, Boolean estadoPerpuest, Double bonifCargoPerpuest, Date fechaIngPerpuest, String creaPorPerpuest, Long idPercargo, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercargo, String areaPercargo, String observacionesPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Date fechaIngPercargo, String creaPorPercargo, Double jornadaActual) {
+    public ReportPuestosCargos(String idobra, String nombreobra, Long idPersonal, String codigoPer, String estadoPer, String apePaternoPers, String apeMaternoPers, String nombrePers, Integer idTipoDocPers, String tipoDocPers, String nroDocPers, Long idPervila, Long idPerpuest, Long idPuestoPerpuest, String puestoPerpuest, Integer idAreaPerpuest, String areaPerpuest, Integer idTipoNivelPlanillaPerpuest, String tipoNivelPlanillaPerpuest, Boolean flgPuestoDirePerpuest, Boolean flgPuestoConfiPerpuest, Boolean flgPuestoNofilcalPerpuest, Boolean flgPuestoNoAplicaPerpuest, String observacionesPerpuest, Date fechaIniPerpuest, Date fechaFinPerpuest, Boolean estadoPerpuest, Double bonifCargoPerpuest, Date fechaIngPerpuest, String creaPorPerpuest, Long idPercargo, Long idCargoPercargo, String cargoPercargo, Integer idAreaPercargo, String areaPercargo, String observacionesPercargo, Date fechaIniPercargo, Date fechaFinPercargo, Boolean estadoPercargo, Double bonifCargoPercargo, Date fechaIngPercargo, String creaPorPercargo, Double jornadaActual, Boolean tieneContrato) {
         this.idobra = idobra;
         this.nombreobra = nombreobra;
         this.idPersonal = idPersonal;
@@ -123,6 +124,7 @@ public class ReportPuestosCargos implements Serializable {
         this.fechaIngPercargo = fechaIngPercargo;
         this.creaPorPercargo = creaPorPercargo;
         this.jornadaActual = jornadaActual;
+        this.tieneContrato = tieneContrato;
     }
 
     public String getIdobra() {
@@ -467,6 +469,14 @@ public class ReportPuestosCargos implements Serializable {
 
     public void setJornadaActual(Double jornadaActual) {
         this.jornadaActual = jornadaActual;
+    }
+
+    public Boolean getTieneContrato() {
+        return tieneContrato;
+    }
+
+    public void setTieneContrato(Boolean tieneContrato) {
+        this.tieneContrato = tieneContrato;
     }
 }
 

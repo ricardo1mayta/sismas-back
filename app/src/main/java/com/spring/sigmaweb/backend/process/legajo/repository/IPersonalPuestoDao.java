@@ -180,7 +180,8 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "pc.bonifCargoPercargo," +
             "pc.fechaIngPercargo," +
             "pc.creaPorPercargo," +
-            "0.0 as jornadaActual" +
+            "0.0 as jornadaActual," +
+            "false " +
             ")" +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +
@@ -262,7 +263,8 @@ public interface IPersonalPuestoDao extends CrudRepository<PersonalPuesto, Long>
             "pc.bonifCargoPercargo," +
             "pc.fechaIngPercargo," +
             "pc.creaPorPercargo," +
-            "0.0 as jornadaActual" +
+            "0.0 as jornadaActual," +
+            "false" +
             ")" +
             "from Personal p inner join Obra o on (p.obraPer=o.idobra) " +
             "inner join Persona psn on (o.idobra = psn.obraPers and p.idPersona = psn.idPersona) " +

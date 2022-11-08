@@ -35,7 +35,7 @@ public interface TarjetaCreditoRepository extends IGenericRepo<TarjetaCredito,Lo
             "tc.fechaRegistro, " +
             "tc.fechaActualiza, " +
             "tc.flgEstado " +
-            ")" +
+            ") " +
             "from TarjetaCredito tc inner join Obra o on (tc.idObra = o.idobra) " +
             "inner join Personal p on (tc.personal = p.idPersonal and p.obraPer = o.idobra) " +
             "inner join Persona psn on (p.idPersona =psn.idPersona and o.idobra= psn.obraPers) " +

@@ -55,8 +55,13 @@ public class SolicitudGeneralServiceImpl extends CRUDImpl<SolicitudGeneral, Long
     }
 
     @Override
-    public Page<SolicitudGeneralListaDTO> listarPorObraIdTipoEstadoSolicitudGeneral(String obraName, Integer idEstado, Integer page, Integer size) {
-        return repo.listarPorObraIdTipoEstadoSolicitudGeneral(obraName,idEstado,PageRequest.of(page,size));
+    public Page<SolicitudGeneralListaDTO> listarPorObraIdTipoEstadoSolicitudGeneral(String obraName, String idEstado, Integer page, Integer size) {
+        String[] lista= idEstado.split(",");
+        Integer[] listaInt=new Integer[lista.length];
+        for(int i = 0;i < lista.length;i++) {
+            listaInt[i] = Integer.parseInt(lista[i]);
+        }
+        return repo.listarPorObraIdTipoEstadoSolicitudGeneral(obraName,listaInt,PageRequest.of(page,size));
     }
 
     @Transactional

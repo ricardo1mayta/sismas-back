@@ -13,6 +13,12 @@ public  class Constants {
         public static final Integer NO_AUTORIZADO=50405;
     }
 
+    public  static class TIPO_MONEDA{
+        public static final Integer SOLES=50101;
+        public static final Integer DOLARES=50102;
+        public static final Integer EUROS=50103;
+    }
+
 //    public  static class ESTADO_SOLICITUD{
 //        public static final Integer PENDIENTE=35110;
 //        public static final Integer AUTORIZADO=35111;

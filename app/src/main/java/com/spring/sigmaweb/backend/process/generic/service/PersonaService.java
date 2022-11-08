@@ -74,7 +74,8 @@ public class PersonaService implements IPersonaService{
 
     @Override
     public List<Persona> findByObraPers(String obraPers) {
-        return personaDao.findByObraPers(obraPers);
+        //return personaDao.findByObraPers(obraPers);
+        return personaDao.findByObraPersOrderByObraPers(obraPers);
     }
 
 

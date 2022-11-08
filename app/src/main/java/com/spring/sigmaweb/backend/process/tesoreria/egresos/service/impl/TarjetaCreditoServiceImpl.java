@@ -40,7 +40,6 @@ public class TarjetaCreditoServiceImpl extends CRUDImpl<TarjetaCredito,Long > im
 
     @Override
     public TarjetaCredito save(TarjetaCredito tarjetaCredito) {
-        /*return repo.save(tarjetaCredito);*/
-        return null;
+        return repo.save(tarjetaCredito);
     }
 }

@@ -41,8 +41,15 @@ public class PersonaRestController {
 
     @PostMapping
     public Persona create(@RequestBody PersonaDTO persona){
-//        return personaService.save(persona);
-        return   personaService.save(mapper.map(persona,Persona.class));
+//      return personaService.save(persona);
+
+        Persona findPersonaNroDoc = personaService.findByNroDocPersAndObraPers(persona.getNroDocPers(), persona.getObraPers());
+
+        if (findPersonaNroDoc == null) {
+            return   personaService.save(mapper.map(persona,Persona.class));
+        } else {
+            return null;
+        }
     }
 
     @PutMapping

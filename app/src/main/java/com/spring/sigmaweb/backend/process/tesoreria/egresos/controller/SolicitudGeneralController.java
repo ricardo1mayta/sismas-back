@@ -44,7 +44,7 @@ public class SolicitudGeneralController {
     public ResponseEntity<Page<SolicitudGeneralListaDTO>>listarPorObraIdTipoEstadoSolicitudGeneral(@RequestParam String idObra,
                                                                                                  @RequestParam Integer page,
                                                                                                  @RequestParam Integer size,
-                                                                                                  @RequestParam Integer idTipoEstado){
+                                                                                                  @RequestParam String idTipoEstado){
         return new ResponseEntity<>(solicitudGeneralService.listarPorObraIdTipoEstadoSolicitudGeneral(idObra,idTipoEstado,page,size),HttpStatus.OK);
     }
 

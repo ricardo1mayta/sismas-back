@@ -9,7 +9,7 @@ public interface ISolicitudGeneralService extends  ICRUD<SolicitudGeneral,Long> 
     SolicitudGeneral registrarTransaccional( SolicitudGeneral s) ;
 
     Page<SolicitudGeneralListaDTO> listarResumenSolicitudGeneral(String obraName, Integer page, Integer size);
-    Page<SolicitudGeneralListaDTO> listarPorObraIdTipoEstadoSolicitudGeneral(String obraName,Integer idEstado , Integer page, Integer size);
+    Page<SolicitudGeneralListaDTO> listarPorObraIdTipoEstadoSolicitudGeneral(String obraName,String idEstado , Integer page, Integer size);
     SolicitudGeneral aprobarSolicitudGeneral(SolicitudGeneral s);
     SolicitudGeneral desaprobarSolicitudGenertal(SolicitudGeneral s);
     SolicitudGeneral modificarEstadoSolicitudGeneral(Long idSolicitudGeneral, Integer idEstadoSolicitud, String userUpdate);

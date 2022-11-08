@@ -68,9 +68,10 @@ public interface SolicitudGeneralRespository extends IGenericRepo<SolicitudGener
             + " left join TablasTabla t on( s.idEstado=t.codigoTab)"
             + " left join TablasTabla tm on (s.idTipoMoneda=tm.codigoTab)"
             + " left join TablasTabla mp on (s.idTipoModoPago=mp.codigoTab)"
-            + " where s.idObra = :idObra and s.idEstado=:idEstado"
+            + " where s.idObra = :idObra " +
+            " and s.idEstado in :idEstado "
             + " order by s.idSolicitudGeneral desc")
-    Page<SolicitudGeneralListaDTO>listarPorObraIdTipoEstadoSolicitudGeneral(@Param("idObra")String idObra, @Param("idEstado") Integer idEstado ,Pageable pageable);
+    Page<SolicitudGeneralListaDTO>listarPorObraIdTipoEstadoSolicitudGeneral(@Param("idObra")String idObra, @Param("idEstado") Integer[] idEstado ,Pageable pageable);
 
     @Modifying
     @Query("update SolicitudGeneral  set idEstado=:idEstado  where idSolicitudGeneral=:idSolicitudGeneral ")

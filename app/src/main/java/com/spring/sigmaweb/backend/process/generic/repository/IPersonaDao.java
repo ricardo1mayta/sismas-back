@@ -15,6 +15,6 @@ public interface IPersonaDao extends CrudRepository<Persona, Long> {
 
     public Persona findByNroDocPersAndObraPers(String nroDocPers, String obraPers);
 
-    @Query(value = "FROM Persona  p where p.obraPers= :obraPers  order by p.idPersona desc ")
-    List<Persona> findByObraPers(@Param("obraPers") String obraPers);
+    //@Query(value = "FROM Persona p where p.obraPers= :obraPers  order by p.idPersona desc ")
+    List<Persona> findByObraPersOrderByObraPers(@Param("obraPers") String obraPers);
 }

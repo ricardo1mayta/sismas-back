@@ -1,30 +1,32 @@
-package com.spring.sigmaweb.backend.process.generic.model;
+package com.spring.sigmaweb.backend.process.generic.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@Table(name="mt_tipo_cambio")
-public class TipoCambio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@AllArgsConstructor
+@NoArgsConstructor
+public class TipoCambioDTO implements Serializable {
     private Long idTipoCambio;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private Date fecha;
+
     private Integer idTipoMoneda;
+    private String tipoMoneda;
     private Float tipoCambioVenta;
     private Float tipoCambioCompra;
     private String creaporPer;
     private Date fechaRegistro;
     private String idObra;
     private Boolean flgEstado;
+
+
 }

@@ -51,4 +51,5 @@ public class PersonaDTO {
     private String creaPorPers;
     private Date fechaIngPers;
     private String referenciaContactoPers;
+
 }

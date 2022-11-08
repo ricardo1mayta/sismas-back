@@ -19,6 +19,7 @@ public class CentroResponsabilidadController {
 
     @GetMapping
     public List<CentroResponsabilidad> listarCentroResponsabilidad(@RequestParam String idObra) throws Exception {
+
         if(idObra.equals("SECTOR")){
             return centroResponsabilidadService.listarPorOPbraCR(0);
         }else{

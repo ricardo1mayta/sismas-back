@@ -65,7 +65,10 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
 
         SolicitudGeneral solicitudGeneral=solicitudGeneralService.buscarPorId(documentoEgresoBody.getSolicitudGeneral().getIdSolicitudGeneral());
         List<SolicitudGeneralDetalle> solicitudGeneralDetalleList=solicitudGeneral.getSolicitudGeneralDetalle();
-        TipoCambio tipoCambio=tipoCambioService.findByIdOBraAndDate(solicitudGeneral.getIdObra(),new Date());
+
+        Integer tipoMonedaCambio = solicitudGeneral.getIdTipoMoneda().equals(Constants.TIPO_MONEDA.SOLES) ? Constants.TIPO_MONEDA.DOLARES : solicitudGeneral.getIdTipoMoneda();
+
+        TipoCambio tipoCambio=tipoCambioService.findByIdOBraAndDateAndMoneda(solicitudGeneral.getIdObra(),new Date(), tipoMonedaCambio);
         NumeracionDocumento numeracionDocumento;
 
         if(documentoEgresoBody.getIdTipoModoPago().equals(Constants.TIPO_MODO_PAGO.CHEQUE)){

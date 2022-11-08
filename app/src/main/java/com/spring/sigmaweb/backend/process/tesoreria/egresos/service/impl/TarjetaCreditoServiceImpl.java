@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.service.impl;
 
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.TarjetaCreditoDataDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.TarjetaCredito;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.IGenericRepo;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.TarjetaCreditoRepository;
@@ -30,5 +31,15 @@ public class TarjetaCreditoServiceImpl extends CRUDImpl<TarjetaCredito,Long > im
     @Override
     public List<TarjetaCredito> listarPorIdCuentaBancoYObra(Long idCuentaBanco, String idObra) {
         return repo.findByIdAndCuentaBancoAndIdObra(idObra ,idCuentaBanco);
+    }
+
+    @Override
+    public List<TarjetaCreditoDataDTO> findByidObraEstado(String idObra, Integer estado) {
+        return repo.findByidObraEstado(idObra, estado);
+    }
+
+    @Override
+    public TarjetaCredito save(TarjetaCredito tarjetaCredito) {
+        return repo.save(tarjetaCredito);
     }
 }

@@ -82,7 +82,11 @@ public class PersonalPuestoService implements IPersonalPuestoService{
                 jornadaLab = historicovinculolaboralDao.findByUltimoCambioHistoricoVidaLabActual(item.getIdobra(), item.getIdPersonal(), item.getIdPervila(), Long.parseLong("-1"),"JORN", periodoIni, periodoFin);
                 if(jornadaLab != null){
                     if(jornadaLab.size()>0){
-
+                        if(jornadaLab.get(0).getIdPercontHistvila() == null){
+                            item.setTieneContrato(false);
+                        } else {
+                            item.setTieneContrato(true);
+                        }
                         item.setJornadaActual( jornadaLab.get(0).getJornadaSemaNewHistvila() );
                     }
                 }

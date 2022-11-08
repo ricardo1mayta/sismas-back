@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.generic.service.impl;
 
+import com.spring.sigmaweb.backend.process.generic.dto.TipoCambioDTO;
 import com.spring.sigmaweb.backend.process.generic.model.TipoCambio;
 import com.spring.sigmaweb.backend.process.generic.repository.ITipoCambioDao;
 import com.spring.sigmaweb.backend.process.generic.service.ITipoCambioService;
@@ -44,5 +45,15 @@ public class TipoCambioServiceImpl implements ITipoCambioService {
     @Override
     public TipoCambio findByIdOBraAndDate(String idObra, Date fecha) {
         return tipoCambioDao.findByIdOBraAndDate(idObra,fecha);
+    }
+
+    @Override
+    public List<TipoCambioDTO> findByIdObraDto(String idObra) {
+        return tipoCambioDao.findByIdObraDto(idObra);
+    }
+
+    @Override
+    public TipoCambio findByIdOBraAndDateAndMoneda(String idObra, Date fecha, Integer moneda) {
+        return tipoCambioDao.findByIdOBraAndDateAndMoneda(idObra, fecha, moneda);
     }
 }

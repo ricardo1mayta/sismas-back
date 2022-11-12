@@ -69,6 +69,55 @@ public class Utils {
         return condition;
     }
 
+    public static Integer idObraNumerico (String idobra){
+        Integer rtn= -1;
+        switch (idobra) {
+            case "BARINA" :
+                rtn = 1; break;
+            case "CHAMPC" :
+                rtn = 2; break;
+            case "CHAMPS" :
+                rtn = 3; break;
+            case "SANJOC" :
+                rtn = 4; break;
+            case "SANJOH" :
+                rtn = 5; break;
+            case "SANJOS" :
+                rtn = 6; break;
+            case "SANLUI" :
+                rtn = 7; break;
+            case "STAROS" :
+                rtn = 8; break;
+            case "SECTOR" :
+                rtn = 0; break;
+        }
+        return rtn;
+    }
+
+    public static Integer idTipoDocLegajoNumerico(String documento){
+        Integer rtn= -1;
+        switch (documento) {
+            case "CARGO" :
+                rtn = 1; break;
+            case "CONTRATO" :
+                rtn = 2; break;
+            case "DESVINCULA" :
+                rtn = 3; break;
+            case "CONVENIO" :
+                rtn = 4; break;
+            case "FAMILIARES":
+                rtn = 5; break;
+            case "PERSONALES" :
+                rtn = 6; break;
+            case "DESVINCDOC":
+                rtn = 31; break;
+
+        }
+        return rtn;
+    }
+
+
+
     public static String addNumberCorrelativeAndOne(Integer number){
         return String.format("%010d",number+1);
     }

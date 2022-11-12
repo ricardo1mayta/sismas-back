@@ -1,12 +1,14 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.service.impl;
 
-import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Asiento;
+
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.CajaRepository;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.IGenericRepo;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CajaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -23,6 +25,12 @@ public class CajaServiceImpl extends CRUDImpl<Caja,Long> implements CajaService 
     @Override
     public Caja findByIdObraAndIdCaja(String idobra, Long idcaja) {
         return repo.findByIdObraAndIdCaja(idobra, idcaja);
+    }
+
+    @Override
+    @Transactional
+    public Caja save(Caja caja) {
+        return repo.save(caja);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.spring.sigmaweb.backend.process.legajo.service;
 
+import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
 import com.spring.sigmaweb.backend.process.legajo.dto.DocumentEmployeeDTO;
 import com.spring.sigmaweb.backend.process.legajo.dto.PersonalDocDesvDTO;
 import com.spring.sigmaweb.backend.process.legajo.model.DocumentEmployee;
@@ -10,6 +11,7 @@ import com.spring.sigmaweb.backend.process.legajo.repository.IDocumentEmployeeDa
 import com.spring.sigmaweb.backend.process.legajo.repository.IDocumentoDesvinculacionDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.IPersonalDocDesvinculacionDao;
 import com.spring.sigmaweb.backend.process.legajo.repository.ITipoDocumentoDao;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,12 +76,12 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
     @Override
     @Transactional(readOnly = true)
     public String generateIdFile(Long idpersonal, String idobra, String tipodocumento, Long idIPadre, Long opcion) {
-        Integer indexObra= null;
-        Integer indexTipo= null;
+        Integer indexObra= Utils.idObraNumerico(idobra);
+        Integer indexTipo= Utils.idTipoDocLegajoNumerico(tipodocumento);
         String rtn = "";
         String txt="";
         String txtopcion="";
-        switch (idobra) {
+        /*switch (idobra) {
             case "BARINA" :
                 indexObra = 1; break;
             case "CHAMPC" :
@@ -115,7 +117,7 @@ public class DocumentEmployeeService implements IDocumentEmployeeService{
             case "DESVINCDOC":
                 indexTipo = 31; break;
 
-        }
+        }*/
 
         Double divide = Double.parseDouble(((idpersonal.toString() + idIPadre.toString()+"").length() / 3 )+"");
         double parteDecimal = divide % 1;

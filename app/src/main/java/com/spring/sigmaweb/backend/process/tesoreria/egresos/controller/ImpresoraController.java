@@ -1,16 +1,17 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.controller;
 
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.ImpresoraCajaDTO;
-import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Impresora;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.ImpresoraCaja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.IImpresoraService;
+import com.spring.sigmaweb.backend.process.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -33,6 +34,54 @@ public class ImpresoraController {
     @GetMapping("/buscarimpresorasCaja/obra/caja/flgestado")
     public List<ImpresoraCajaDTO> listasImpresorascaja(@RequestParam String idobra, @RequestParam Long idcaja, @RequestParam Integer flgestado) throws Exception{
         return impresoraService.findByImpresorasCajaSelect(idobra, idcaja, flgestado);
+    }
+
+    @PostMapping("/impresoraCaja")
+    public Integer guardarImpresoraCaja (@RequestBody List<ImpresoraCaja> body,@RequestParam String idobra, @RequestParam Long idcaja) throws Exception {
+        List<ImpresoraCaja> newItems= body;
+        //String idobra = newItems.get(0).getIdObra();
+        //Long idcaja = newItems.get(0).getIdCaja();
+        Impresora impresora = null;
+        String idimpresoracaja="";
+        Integer countInsert =0;
+        List<ImpresoraCaja> impresoras = impresoraService.findByImpresorasCajaObraTodos(idobra,idcaja);
+
+        for (ImpresoraCaja item : impresoras) {
+            idimpresoracaja="";
+            for (ImpresoraCaja find: newItems) {
+                if(item.getIdObra().equals(find.getIdObra()) &&
+                    item.getIdCaja().equals(find.getIdCaja()) &&
+                    item.getIdImpresora().equals(find.getIdImpresora())
+                ){
+                    idimpresoracaja = item.getIdImpresoraCaja();
+                }
+            }
+            if(idimpresoracaja.equals("")){
+                //Elimina
+                impresoraService.deleteImpresoraCaja(idobra, idcaja, item.getIdImpresora() );
+            }
+        }
+
+        for (ImpresoraCaja item: newItems) {
+            idimpresoracaja="";
+            for (ImpresoraCaja find: impresoras) {
+                if(item.getIdObra().equals(find.getIdObra()) &&
+                        item.getIdCaja().equals(find.getIdCaja()) &&
+                        item.getIdImpresora().equals(find.getIdImpresora())
+                ){
+                    idimpresoracaja = find.getIdImpresoraCaja();
+                }
+            }
+            if(idimpresoracaja.equals("")) {
+                item.setIdImpresoraCaja(Utils.idObraNumerico(idobra) + "-" + idcaja + "-" + item.getIdImpresora());
+                item.setFechaRegistro(new Date());
+                this.impresoraService.saveImpresoraCaja(item);
+                countInsert += 1;
+            }
+        }
+
+        return countInsert;
+
     }
 
 }

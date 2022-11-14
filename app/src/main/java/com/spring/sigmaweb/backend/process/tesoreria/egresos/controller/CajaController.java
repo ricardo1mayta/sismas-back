@@ -46,6 +46,7 @@ public class CajaController {
         newItem.setHostIp(body.getHostIp());
         newItem.setHostName(body.getHostName());
         newItem.setMac(body.getMac());
+        newItem.setFlgEstado(body.getFlgEstado());
         newItem.setCreaporPer(body.getCreaporPer());
         newItem.setFechaRegistro((new Date()));
 
@@ -56,10 +57,10 @@ public class CajaController {
     @PutMapping
     public Caja modificarCaja (@RequestBody Caja body) throws Exception {
         body.setFechaActualiza(new Date());
-        Caja so=mapper.map(body, Caja.class);
-        Caja so2 =cajaService.modificar(so);
+        //Caja so=mapper.map(body, Caja.class);
+        //Caja so2 =cajaService.modificar(so);
 
-        return mapper.map(cajaService.modificar( mapper.map(so, Caja.class) ),Caja.class);
+        return cajaService.save(body);//mapper.map(cajaService.modificar( mapper.map(so, Caja.class) ),Caja.class);
 
     }
 

@@ -1,4 +1,4 @@
-package com.spring.sigmaweb.backend.process.generic.model;
+package com.spring.sigmaweb.backend.process.tesoreria.egresos.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -17,15 +17,15 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "mt_impresora_caja")
-public class ImpresoraCaja implements Serializable {
+@Table(name = "mt_cajero_caja")
+public class CajeroCaja implements Serializable {
     @Id
-    private String idImpresoraCaja;
-
+    private String idCajeroCaja ;
     private Long idCaja;
-    private Long idImpresora;
+    private Long idUsuario;
     private String idObra;
-    private Integer idTipoDocumento;
+    private Date fechaInicio;
+    private Date fechaFin;
     private Boolean flgEstado;
     private String creapor;
 
@@ -35,4 +35,5 @@ public class ImpresoraCaja implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaActualiza;
+
 }

@@ -52,6 +52,12 @@ public class UsuarioRestController {
         return usuarioService.findAll();
     }
 
+    @GetMapping("/usuariosobraid/{idobra}/{iduser}")
+    public usuarioDTO UsuarioPorObraAndId(@PathVariable String idobra, @PathVariable Long iduser) {
+        return usuarioService.findByObraAndIdUserDTO(idobra, iduser);
+    }
+
+
     @GetMapping("/usuariosporrolandobra/{idroles}/{idobra}")
     public List<usuarioDTO> showUsuariosPorRolAndObra(@PathVariable String idroles, @PathVariable String idobra) {
         String[] lista= idroles.split(",");

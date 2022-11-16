@@ -13,4 +13,6 @@ public interface IParametrosReporteService {
     public List<Reporte> findByIdModuloTipoRepoEstadoRepoGrupo(String idmodulo, String tiporepo, Boolean estadorepo, Integer idgrupo, String idobra);
 
     public List<Reporte> findByIdModuloTipoRepoEstadoRepoGrupoRol(String idmodulo, String tiporepo, Boolean estadorepo, Integer idgrupo, String idobra, String idrol);
+
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepoNotInGrupo(String idmodulo, String tiporepo, Boolean estadorepo, String idgrupos, String idobra);
 }

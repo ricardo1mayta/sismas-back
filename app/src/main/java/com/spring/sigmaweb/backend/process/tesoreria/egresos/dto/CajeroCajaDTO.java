@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 public class CajeroCajaDTO {
 
-    private String idCajero_caja ;
+    private Long idCajeroCaja ;
     private String idObra;
 
     private Long idCaja;
@@ -19,9 +19,10 @@ public class CajeroCajaDTO {
 
     private Long idUsuario;
     private String username;
+    private String emailuser;
     private String apePaternoUsuario;
     private String apeMaternoUsuario;
-    private String apeNombresUsuario;
+    private String nombresUsuario;
     private Boolean activoUsuario;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -41,17 +42,18 @@ public class CajeroCajaDTO {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private Date fechaActualiza;
 
-    public CajeroCajaDTO(String idCajero_caja, String idObra, Long idCaja, String nombreCaja, Boolean flgEstadoCaja, Long idUsuario, String username, String apePaternoUsuario, String apeMaternoUsuario, String apeNombresUsuario, Boolean activoUsuario, Date fechaInicio, Date fechaFin, Boolean flgEstado, String creapor, Date fechaRegistro, String modificadoPor, Date fechaActualiza) {
-        this.idCajero_caja = idCajero_caja;
+    public CajeroCajaDTO(Long idCajeroCaja, String idObra, Long idCaja, String nombreCaja, Boolean flgEstadoCaja, Long idUsuario, String username, String emailuser, String apePaternoUsuario, String apeMaternoUsuario, String nombresUsuario, Boolean activoUsuario, Date fechaInicio, Date fechaFin, Boolean flgEstado, String creapor, Date fechaRegistro, String modificadoPor, Date fechaActualiza) {
+        this.idCajeroCaja = idCajeroCaja;
         this.idObra = idObra;
         this.idCaja = idCaja;
         this.nombreCaja = nombreCaja;
         this.flgEstadoCaja = flgEstadoCaja;
         this.idUsuario = idUsuario;
         this.username = username;
+        this.emailuser = emailuser;
         this.apePaternoUsuario = apePaternoUsuario;
         this.apeMaternoUsuario = apeMaternoUsuario;
-        this.apeNombresUsuario = apeNombresUsuario;
+        this.nombresUsuario = nombresUsuario;
         this.activoUsuario = activoUsuario;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;

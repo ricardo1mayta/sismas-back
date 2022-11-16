@@ -57,9 +57,7 @@ public class ImpresoraServiceImpl extends CRUDImpl<Impresora,Long> implements II
     @Override
     @Transactional
     public Integer deleteImpresoraCaja(String idobra, Long idcaja, Long idimpresora) {
-        System.out.println(idobra);
-        System.out.println(idcaja);
-        System.out.println(idimpresora);
+
         return repo.deleteImpresoraCaja(idobra,idcaja,idimpresora);
     }
 

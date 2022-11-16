@@ -75,4 +75,16 @@ public class ParametrosReporteService implements IParametrosReporteService{
         }
         return listReporGrupo;
     }
+
+    @Override
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepoNotInGrupo(String idmodulo, String tiporepo, Boolean estadorepo, String idgrupos, String idobra) {
+        String[] lista= idgrupos.split(",");
+        Integer[] listaInt=new Integer[lista.length];
+        for(int i = 0;i < lista.length;i++)
+        {
+            listaInt[i] = Integer.parseInt(lista[i]);
+        }
+
+        return reportesDao.findByIdModuloTipoRepoEstadoRepoNotInGrupo(idmodulo, tiporepo, estadorepo, listaInt, idobra);
+    }
 }

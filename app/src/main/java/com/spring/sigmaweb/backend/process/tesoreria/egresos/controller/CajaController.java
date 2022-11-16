@@ -31,6 +31,13 @@ public class CajaController {
         return cajaService.findByIdObra(idobra);
     }
 
+    @GetMapping("listar/obra/flgestado")
+    public List<Caja> listasCajaPorObras(@RequestParam String idobra, @RequestParam Integer flgestado) throws Exception{
+        Boolean estado = flgestado == 1 ? true : false;
+
+        return cajaService.findByIdObraAndFlgEstado(idobra, estado);
+    }
+
     @GetMapping("buscar/obra/id")
     public Caja listasCajaPorObras(@RequestParam String idobra, @RequestParam Long idcaja) throws Exception{
         return cajaService.findByIdObraAndIdCaja(idobra, idcaja);

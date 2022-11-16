@@ -34,6 +34,17 @@ public interface IReportesDao extends CrudRepository<Reporte, Long> {
     )
     public List<Reporte> findByIdModuloTipoRepoEstadoRepoGrupo(String idmodulo, String tiporepo, Boolean estadorepo, Integer idgrupo, String idobra);
 
+    @Query("select r " +
+            "from Reporte r inner join GruposReportes gr on (r.idRepo = gr.idRepoGrupr) " +
+            "Where r.idModuloRepo = ?1 " +
+            "and r.tipoRepo = ( case ?2 when '_' then r.tipoRepo else ?2 end) " +
+            "and r.estadoRepo = ( case ?3 when 1 then true when 0 then false else r.estadoRepo end) " +
+            "and gr.idGruporepGrupr not in ?4 " +
+            "and gr.idObraGrupr = ?5 " +
+            "order by r.descripcionRepo"
+    )
+    public List<Reporte> findByIdModuloTipoRepoEstadoRepoNotInGrupo(String idmodulo, String tiporepo, Boolean estadorepo, Integer[] idgrupo, String idobra);
+
     @Query("select pr " +
             "from PerfilReport pr " +
             "where pr.idRolPerr in ?1 and pr.idObraPerr = ?2"

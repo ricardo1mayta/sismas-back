@@ -1,6 +1,8 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.controller;
 
+import com.spring.sigmaweb.backend.process.core.dto.usuarioDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajeroCajaDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajeroCaja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CajeroCajaService;
 import com.spring.sigmaweb.backend.process.utils.Utils;
@@ -30,13 +32,16 @@ public class CajeroCajaController {
         return cajeroCajaService.findByIdObraAndIdCajaAndIdUsuarioDTO(idobra, idcaja);
     }
 
+    @GetMapping("listarcajerossincaja/obra")
+    public List<usuarioDTO> listasCajerosSinCajaPorObra(@RequestParam String idobra){
+        return cajeroCajaService.findByIdObraSinCajaDTO(idobra);
+    }
+
     @PostMapping
     public ResponseEntity<CajeroCaja> guardaCajeroCaja(@RequestBody CajeroCaja body) throws Exception {
         CajeroCaja newItem= null;
-        String idItem = Utils.idObraNumerico(body.getIdObra()) + "-"  + body.getIdCaja() + "-" + body.getIdUsuario();
         newItem = new CajeroCaja();
 
-        newItem.setIdCajeroCaja(idItem);
         newItem.setIdCaja(body.getIdCaja());
         newItem.setIdUsuario(body.getIdUsuario());
         newItem.setIdObra(body.getIdObra());
@@ -47,6 +52,31 @@ public class CajeroCajaController {
         newItem.setFechaRegistro(new Date());
 
         return  new ResponseEntity<>(cajeroCajaService.saveCajeroCaja(newItem), HttpStatus.OK);
+    }
+
+    @PutMapping
+    public CajeroCaja modificarCajero (@RequestBody CajeroCaja body) throws Exception {
+
+        CajeroCaja newItem = cajeroCajaService.findByIdObraAndIdCajeroCaja(body.getIdObra(), body.getIdCajeroCaja());
+        if(newItem != null){
+            newItem.setIdCaja(body.getIdCaja());
+            newItem.setFechaInicio(body.getFechaInicio());
+            newItem.setFechaFin(body.getFechaFin());
+            newItem.setFlgEstado(body.getFlgEstado());
+
+            newItem.setModificadoPor(body.getModificadoPor());
+            newItem.setFechaActualiza(new Date());
+
+            return cajeroCajaService.saveCajeroCaja(newItem);
+        } else {
+            return null;
+        }
+
+        //Caja so=mapper.map(body, Caja.class);
+        //Caja so2 =cajaService.modificar(so);
+
+        //return cajeroCajaService.saveCajeroCaja(newItem); //mapper.map(cajaService.modificar( mapper.map(so, Caja.class) ),Caja.class);
+
     }
 
 

@@ -9,6 +9,7 @@ import com.spring.sigmaweb.backend.process.tesoreria.egresos.service.CajeroCajaS
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.spring.sigmaweb.backend.process.core.dto.usuarioDTO;
 
 import java.util.List;
 
@@ -16,6 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CajeroCajaServiceImpl extends CRUDImpl<CajeroCaja,String> implements CajeroCajaService {
     private final CajeroCajaRepository repo;
+
+    @Override
+    public CajeroCaja findByIdObraAndIdCajeroCaja(String idobra, Long idCajeroCaja) {
+        return repo.findByIdObraAndIdCajeroCaja(idobra, idCajeroCaja);
+    }
 
     @Override
     public CajeroCaja findByIdObraAndIdCajaAndIdUsuario(String idobra, Long idcaja, Long idusuario) {
@@ -40,6 +46,11 @@ public class CajeroCajaServiceImpl extends CRUDImpl<CajeroCaja,String> implement
     @Override
     public List<CajeroCajaDTO> findByIdObraAndIdCajaAndIdUsuarioDistintDTO(String idobra) {
         return repo.findByIdObraAndIdCajaAndIdUsuarioDistintDTO(idobra);
+    }
+
+    @Override
+    public List<usuarioDTO> findByIdObraSinCajaDTO(String idobra) {
+        return repo.findByIdObraSinCajaDTO(idobra);
     }
 
     @Override

@@ -40,4 +40,12 @@ public class ParametrosReportesController {
         return parametrosReporteService.findByIdModuloTipoRepoEstadoRepoGrupoRol(idmodulo, tiporepo,estado, idgrupo, idobra, idrol);
     }
 
+    @Secured({"ROLE_FAMI", "ROLE_ADMI", "ROLE_COLA"})
+    @GetMapping("/reportesnotgrupolist/{idmodulo}/{tiporepo}/{estadorepo}/{idgrupo}/{idobra}")
+    public List<Reporte> showReporteporModuloTipoEstadonotingrupoid(@PathVariable String idmodulo,@PathVariable String tiporepo,@PathVariable Integer estadorepo,@PathVariable String idgrupo,@PathVariable String idobra){
+        Boolean estado = false;
+        if(estadorepo == 1){estado = true;}
+        return parametrosReporteService.findByIdModuloTipoRepoEstadoRepoNotInGrupo(idmodulo, tiporepo,estado, idgrupo, idobra);
+    }
+
 }

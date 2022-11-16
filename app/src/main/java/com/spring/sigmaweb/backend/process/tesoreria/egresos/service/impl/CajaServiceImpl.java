@@ -23,6 +23,11 @@ public class CajaServiceImpl extends CRUDImpl<Caja,Long> implements CajaService 
     }
 
     @Override
+    public List<Caja> findByIdObraAndFlgEstado(String idobra, Boolean flgestado) {
+        return repo.findByIdObraAndFlgEstado(idobra, flgestado);
+    }
+
+    @Override
     public Caja findByIdObraAndIdCaja(String idobra, Long idcaja) {
         return repo.findByIdObraAndIdCaja(idobra, idcaja);
     }

@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,12 +18,20 @@ import java.util.Date;
 @Table(name = "mt_cajero_caja")
 public class CajeroCaja implements Serializable {
     @Id
-    private String idCajeroCaja ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
+    private Long idCajeroCaja ;
+
     private Long idCaja;
     private Long idUsuario;
     private String idObra;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaInicio;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
+
     private Boolean flgEstado;
     private String creapor;
 

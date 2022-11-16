@@ -107,6 +107,11 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
         return usuarioDao.findByIdUser(idUser);
     }
 
+    @Override
+    public usuarioDTO findByObraAndIdUserDTO(String obraname, Long iduser) {
+        return usuarioDao.findByObraAndIdUserDTO(obraname, iduser);
+    }
+
 
     @Override
     @Transactional(readOnly=true)

@@ -1,0 +1,66 @@
+package com.spring.sigmaweb.backend.process.tesoreria.egresos.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Getter
+@Setter
+public class CajeroCajaDTO {
+
+    private Long idCajeroCaja ;
+    private String idObra;
+
+    private Long idCaja;
+    private String nombreCaja;
+    private Boolean flgEstadoCaja;
+
+    private Long idUsuario;
+    private String username;
+    private String emailuser;
+    private String apePaternoUsuario;
+    private String apeMaternoUsuario;
+    private String nombresUsuario;
+    private Boolean activoUsuario;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaInicio;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fechaFin;
+
+    private Boolean flgEstado;
+    private String creapor;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaRegistro;
+
+    private String modificadoPor;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    private Date fechaActualiza;
+
+    public CajeroCajaDTO(Long idCajeroCaja, String idObra, Long idCaja, String nombreCaja, Boolean flgEstadoCaja, Long idUsuario, String username, String emailuser, String apePaternoUsuario, String apeMaternoUsuario, String nombresUsuario, Boolean activoUsuario, Date fechaInicio, Date fechaFin, Boolean flgEstado, String creapor, Date fechaRegistro, String modificadoPor, Date fechaActualiza) {
+        this.idCajeroCaja = idCajeroCaja;
+        this.idObra = idObra;
+        this.idCaja = idCaja;
+        this.nombreCaja = nombreCaja;
+        this.flgEstadoCaja = flgEstadoCaja;
+        this.idUsuario = idUsuario;
+        this.username = username;
+        this.emailuser = emailuser;
+        this.apePaternoUsuario = apePaternoUsuario;
+        this.apeMaternoUsuario = apeMaternoUsuario;
+        this.nombresUsuario = nombresUsuario;
+        this.activoUsuario = activoUsuario;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.flgEstado = flgEstado;
+        this.creapor = creapor;
+        this.fechaRegistro = fechaRegistro;
+        this.modificadoPor = modificadoPor;
+        this.fechaActualiza = fechaActualiza;
+    }
+}

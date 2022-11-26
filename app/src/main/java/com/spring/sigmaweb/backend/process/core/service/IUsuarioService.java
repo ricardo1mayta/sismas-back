@@ -27,6 +27,8 @@ public interface IUsuarioService {
 
     public Usuario findByIdUserAndObra(Long iduser, String idobra);
 
+    public List<usuarioDTO> findByIdUserAndObraArrayDTO (String iduser, String idobra);
+
     public List<Rol> usuariosRolesPorUsuario(Long iduser, String idobra);
 
     public usuarioDTO findByUsernameAndObraDTO (String username, String idobra);

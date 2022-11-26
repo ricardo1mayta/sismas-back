@@ -54,6 +54,13 @@ public class RolRestController {
         return rolService.findByNombreRolAndIdObraRol(nombrerol, idobra);
     }
 
+    @Secured({"ROLE_ADMI", "ROLE_COLA", "ROLE_SYST"})
+    @GetMapping("/rolesobranombrelist/{nombreroles}/{idobra}")
+    public List<Rol> findRolesObraList(@PathVariable String nombreroles, @PathVariable String idobra) {
+        String[] lista= nombreroles.split(",");
+        return rolService.findByNombreRolListAndObra(lista, idobra);
+    }
+
     @Secured({"ROLE_ADMI"})
     @DeleteMapping("/roldelete/{idrol}/{obraname}")
     public ResponseEntity<?> deleteRol(@RequestBody Rol rolDelete){

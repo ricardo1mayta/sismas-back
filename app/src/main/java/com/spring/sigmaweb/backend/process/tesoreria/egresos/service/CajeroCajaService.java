@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.service;
 
 import com.spring.sigmaweb.backend.process.core.dto.usuarioDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajeroCajaDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajeroCaja;
 import org.springframework.data.repository.query.Param;
 
@@ -22,6 +23,8 @@ public interface CajeroCajaService {
     List<CajeroCajaDTO> findByIdObraAndIdCajaAndIdUsuarioDistintDTO (String idobra);
 
     List<usuarioDTO> findByIdObraSinCajaDTO (@Param("idobra") String idobra);
+
+    List<Caja> findByCajasSinCajero (@Param("idobra") String idobra);
 
     CajeroCaja saveCajeroCaja (CajeroCaja cajeroCaja);
 

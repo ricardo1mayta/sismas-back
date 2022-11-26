@@ -1,6 +1,7 @@
 package com.spring.sigmaweb.backend.process.tesoreria.egresos.service.impl;
 
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajeroCajaDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajeroCaja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.CajeroCajaRepository;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.repository.IGenericRepo;
@@ -51,6 +52,12 @@ public class CajeroCajaServiceImpl extends CRUDImpl<CajeroCaja,String> implement
     @Override
     public List<usuarioDTO> findByIdObraSinCajaDTO(String idobra) {
         return repo.findByIdObraSinCajaDTO(idobra);
+    }
+
+    @Override
+    public List<Caja> findByCajasSinCajero(String idobra) {
+        List<Caja> result = repo.findByCajasSinCajero(idobra);
+        return result;
     }
 
     @Override

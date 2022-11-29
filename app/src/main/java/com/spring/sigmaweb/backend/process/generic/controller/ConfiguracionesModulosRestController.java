@@ -64,11 +64,6 @@ public class ConfiguracionesModulosRestController {
         }
         try {
             newItem=new ConfiguracionesModulos();
-            System.out.println(body.getIdObra());
-            System.out.println(body.getIdModulo());
-            System.out.println(body.getCodigoGrupo());
-            System.out.println(body.getCodigoSubgrupo1());
-            System.out.println(body.getCodigoOpcion());
 
             if(findExist == null){
                 newItem.setIdObra(body.getIdObra());

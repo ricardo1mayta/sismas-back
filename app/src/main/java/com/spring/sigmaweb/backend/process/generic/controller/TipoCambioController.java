@@ -31,6 +31,7 @@ public class TipoCambioController {
 
     @GetMapping("buscar/obra/fecha/moneda")
     public ResponseEntity<TipoCambio> findByIdOBraAndDateAndMoneda(@RequestParam String idObra, @RequestParam Date fecha, @RequestParam Integer moneda) {
+
         return new ResponseEntity<>(tipoCambioService.findByIdOBraAndDateAndMoneda(idObra, fecha, moneda), HttpStatus.OK);
     }
 

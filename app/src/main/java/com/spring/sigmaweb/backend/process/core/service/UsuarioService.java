@@ -225,6 +225,21 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
         return usuarioDao.findByIdUserAndObra(iduser, idobra);
     }
 
+    @Override
+    public List<usuarioDTO> findByIdUserAndObraArrayDTO(String iduser, String idobra) {
+        String[] lista= iduser.split(",");
+        Long[] ids = new Long[lista.length];
+        Integer i=0;
+        for (String item : lista) {
+            //RolSelect.add(rolService.findByIdRol(Long.parseLong(item)));
+            ids[i]= Long.parseLong(item);
+            i++;
+        }
+
+        List<usuarioDTO> result = usuarioDao.findByIdUserAndObraArrayDTO(ids, idobra);
+        return result;
+    }
+
     private String nomCompleto(String apePat, String apeMat, String nombre) {
         String name="";
         if (apePat != null && apeMat != null && nombre != null) {

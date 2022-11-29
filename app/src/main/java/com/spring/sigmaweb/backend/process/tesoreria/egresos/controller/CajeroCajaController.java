@@ -27,6 +27,16 @@ public class CajeroCajaController {
         return cajeroCajaService.findByIdObraAndIdCajaAndIdUsuarioDistintDTO(idobra);
     }
 
+    @GetMapping("buscar/obra/idusuario")
+    public CajeroCaja buscarForObraAndUsuario(@RequestParam String idobra,@RequestParam Long idusuario){
+        List<CajeroCaja> result = cajeroCajaService.findByIdObraAndIdUsuario(idobra, idusuario);
+
+       if (result.size() != 1 ){
+            return null;
+        }
+       return result.get(0);
+    }
+
     @GetMapping("listar/obra/caja")
     public List<CajeroCajaDTO> listasCajerosPorObra(@RequestParam String idobra, @RequestParam long idcaja){
         return cajeroCajaService.findByIdObraAndIdCajaAndIdUsuarioDTO(idobra, idcaja);
@@ -35,6 +45,11 @@ public class CajeroCajaController {
     @GetMapping("listarcajerossincaja/obra")
     public List<usuarioDTO> listasCajerosSinCajaPorObra(@RequestParam String idobra){
         return cajeroCajaService.findByIdObraSinCajaDTO(idobra);
+    }
+
+    @GetMapping("listarcajassincajero/obra")
+    public List<Caja> listasCajasSinCajeroPorObra(@RequestParam String idobra){
+        return cajeroCajaService.findByCajasSinCajero(idobra);
     }
 
     @PostMapping

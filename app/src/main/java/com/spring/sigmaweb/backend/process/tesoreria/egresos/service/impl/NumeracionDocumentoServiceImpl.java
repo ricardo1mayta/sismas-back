@@ -33,7 +33,10 @@ public class NumeracionDocumentoServiceImpl extends  CRUDImpl<NumeracionDocument
         }else {
             numeracionDocumento=repo.findByIdTipoModoPago(idTipoModoPago,idObra);
         }
-        numeracionDocumento.setNumeracionActual(numeracionDocumento.aumentarNumeracion());
+        if(numeracionDocumento != null) {
+            numeracionDocumento.setNumeracionActual(numeracionDocumento.aumentarNumeracion());
+        }
+
         return numeracionDocumento;
     }
 }

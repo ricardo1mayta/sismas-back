@@ -127,6 +127,25 @@ public interface IUsuarioDao extends CrudRepository<Usuario,Long> {
     )
     public usuarioDTO findByUsernameAndObraDTO (String username, String idobra);
 
+    @Query("select new com.spring.sigmaweb.backend.process.core.dto.usuarioDTO ( u.idUser, "
+            +"u.username, "
+            +"'--hide--' as password, "
+            +"u.emailUser, "
+            +"u.Activo, "
+            +"u.tipoUser, "
+            +"u.idcodTipoUser, "
+            +"('') as roles,"
+            +"ps.apePaternoPers as apePaternoUser, "
+            +"ps.apeMaternoPers as apeMaternoUser, "
+            +"ps.nombrePers as nombresUser, "
+            + "(case when coalesce(p.idPersonal, -1) = -1 then u.emailUser else concat(coalesce(ps.apePaternoPers,''),' ', coalesce(ps.apeMaternoPers,''),' ',coalesce(ps.nombrePers,'')  ) end) as nomComplUser) "
+            + "from Usuario u inner join Obra o on (u.obraUs = o.idobra) "
+            + "left join Personal p on (u.idcodTipoUser=p.idPersonal and p.obraPer=o.idobra and u.tipoUser='COLAB') "
+            + "left join Persona ps on (p.idPersona = ps.idPersona) "
+            + "where u.idUser in ?1 and o.idobra=?2"
+    )
+    public List<usuarioDTO> findByIdUserAndObraArrayDTO (Long[] iduser, String idobra);
+
     @Query("select u "
             + "from Usuario u inner join Obra o on u.obraUs = o.idobra "
             + "where u.idUser=?1 and o.idobra=?2")
@@ -138,4 +157,6 @@ public interface IUsuarioDao extends CrudRepository<Usuario,Long> {
             + "where u.idUser in ?1 and o.idobra=?2"
     )
     public List<Rol> usuariosRolesPorUsuario(Long iduser, String idobra);
+
+
 }

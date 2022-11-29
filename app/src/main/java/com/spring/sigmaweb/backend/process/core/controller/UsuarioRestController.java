@@ -68,6 +68,7 @@ public class UsuarioRestController {
         for (String item : lista) {
             //RolSelect.add(rolService.findByIdRol(Long.parseLong(item)));
             listaR[i]= Long.parseLong(item);
+            i++;
         }
         return usuarioService.findByIdRolAndObra(listaR, idobra);
     }
@@ -89,6 +90,7 @@ public class UsuarioRestController {
         for (String item : lista) {
             //RolSelect.add(rolService.findByIdRol(Long.parseLong(item)));
             listaR[i]= Long.parseLong(item);
+            i++;
         }
         return usuarioService.findByNotIdRolAndObra(listaR, idobra);
     }
@@ -101,6 +103,11 @@ public class UsuarioRestController {
     @GetMapping("/usuariosporobraandtipousuario/{idobra}/{tipouser}/{estado}")
     public List<usuarioDTO> showUsuariosPorObraAndTipoUsuario(@PathVariable String idobra, @PathVariable String tipouser,@PathVariable Integer estado) {
         return usuarioService.findByObraAndTipoUser(idobra, tipouser, estado);
+    }
+
+    @GetMapping("/usuarioslistaids/{iduser}/{idobra}")
+    public List<usuarioDTO> showListaUsuariosIds(@PathVariable String iduser, @PathVariable String idobra) {
+        return usuarioService.findByIdUserAndObraArrayDTO(iduser, idobra);
     }
 
     @PutMapping("/usuarionew/{obraname}")

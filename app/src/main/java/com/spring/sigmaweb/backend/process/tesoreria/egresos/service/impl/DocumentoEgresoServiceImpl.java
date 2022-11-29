@@ -43,9 +43,7 @@ public class DocumentoEgresoServiceImpl extends CRUDImpl<DocumentoEgreso,Long> i
 
     @Override
     public List<DocumentoEgreso> listarPorObraDocumentoEgreso(String idObra) {
-
         return repo.listarPorObraDocumentoEgreso(idObra);
-
     }
 
     @Override

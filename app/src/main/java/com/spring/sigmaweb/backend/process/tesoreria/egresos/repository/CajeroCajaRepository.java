@@ -2,6 +2,7 @@ package com.spring.sigmaweb.backend.process.tesoreria.egresos.repository;
 
 import com.spring.sigmaweb.backend.process.core.dto.usuarioDTO;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.dto.CajeroCajaDTO;
+import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.Caja;
 import com.spring.sigmaweb.backend.process.tesoreria.egresos.model.CajeroCaja;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -105,5 +106,14 @@ public interface CajeroCajaRepository extends IGenericRepo<CajeroCaja, Long>{
             "order by ps.apePaternoPers, ps.apeMaternoPers,ps.nombrePers"
     )
     List<usuarioDTO> findByIdObraSinCajaDTO (@Param("idobra") String idobra);
+
+    @Query("select c " +
+            "from Caja c inner join Obra o on (c.idObra = o.idobra) " +
+            "left join CajeroCaja cc on (o.idobra = cc.idObra and c.idCaja = cc.idCaja) " +
+            "where o.idobra = :idobra " +
+            "and c.flgEstado = true " +
+            "and coalesce(cc.idCaja, -1) = -1"
+    )
+    List<Caja> findByCajasSinCajero (@Param("idobra") String idobra);
 
 }

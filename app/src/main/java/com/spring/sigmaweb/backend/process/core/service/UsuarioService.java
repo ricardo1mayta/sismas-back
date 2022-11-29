@@ -126,7 +126,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
             userRol = usuarioDao.usuariosRolesPorUsuario(usu.getIdUser(), obraname);
             rolesString ="";
             for (Rol rol : userRol) {
-                rolesString += rol.getNombreRol() + " ";
+                rolesString += rol.getNombreRol() + ",";
             }
 
             usu.setRoles(rolesString);
@@ -160,7 +160,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
         for (usuarioDTO usu : users) {
             userRol = usuarioDao.usuariosRolesPorUsuario(usu.getIdUser(), idobra);
             for (Rol rol : userRol) {
-                rolesString = rol.getNombreRol() + " ";
+                rolesString += rol.getNombreRol() + ",";
             }
             usu.setNomComplUser("");
             usu.setRoles(rolesString);
@@ -194,7 +194,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
         for (usuarioDTO usu : users) {
             userRol = usuarioDao.usuariosRolesPorUsuario(usu.getIdUser(), idobra);
             for (Rol rol : userRol) {
-                rolesString = rol.getNombreRol() + " ";
+                rolesString += rol.getNombreRol() + ",";
             }
             usu.setRoles(rolesString);
             if(usu.getTipoUser().equals("FAMIL")) {
@@ -277,7 +277,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService{
 
         userRol = usuarioDao.usuariosRolesPorUsuario(users.getIdUser(), idobra);
         for (Rol rol : userRol) {
-            rolesString = rol.getNombreRol() + " ";
+            rolesString += rol.getNombreRol() + ",";
         }
         users.setRoles(rolesString);
         if(users.getTipoUser().equals("FAMIL")) {

@@ -159,7 +159,7 @@ public class CajaGeneralController {
 
     @PutMapping("/cierrecaja")
     public CajaGeneral updateCloseCajaGeneral(@RequestBody CajaGeneral body) {
-        System.out.println(body.getIdCajaGeneral());
+
         CajaGeneral cajaUpdate = cajageneralService.findByCajaAperturadaAndObra(body.getIdObra(), body.getIdUsuario());
         CajaGeneral cajaReturn = null;
         if(cajaUpdate != null){
@@ -169,11 +169,11 @@ public class CajaGeneralController {
                 cajaUpdate.setFechaCierre(body.getFechaCierre());
                 cajaUpdate.setFechaActualiza(new Date());
                 cajaUpdate.setModificadoPor(body.getModificadoPor());
-                System.out.println("entro a cerrar");
+
                 cajaReturn = cajageneralService.save(cajaUpdate);
             }
         }
-        System.out.println("ultima linea");
+
         return  cajaReturn;
     }
 

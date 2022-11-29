@@ -119,7 +119,7 @@ public interface IUsuarioDao extends CrudRepository<Usuario,Long> {
             +"ps.apeMaternoPers as apeMaternoUser, "
             +"ps.nombrePers as nombresUser, "
             + "('') as nomComplUser) "
-            + "from Usuario u join u.roles ur "
+            + "from Usuario u "
             + "inner join Obra o on (u.obraUs = o.idobra) "
             + "left join Personal p on (u.idcodTipoUser=p.idPersonal and p.obraPer=o.idobra and u.tipoUser='COLAB') "
             + "left join Persona ps on (p.idPersona = ps.idPersona) "
